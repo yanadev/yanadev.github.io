@@ -18,8 +18,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://github.com/yanadev/yanadev.github.io/2019/10/16/JavaScript高级-01/1571208798824.png">
 <meta property="og:image" content="https://github.com/yanadev/yanadev.github.io/2019/10/16/JavaScript高级-01/1571210145954.png">
-<meta property="og:image" content="https://github.com/yanadev/yanadev.github.io/2019/10/16/JavaScript高级-01/1571233114884.png">
-<meta property="og:updated_time" content="2019-10-16T18:00:13.853Z">
+<meta property="og:updated_time" content="2019-10-16T18:17:10.462Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript高级-01">
 <meta name="twitter:description" content="JavaScript高级知识点-1 封装：把属性和方法封装在对象中  对象：具体值某个事物，有特征（属性）和行为（方法）  创建对象的三种方式：  系统构造函数 1var obj=new Object();  字面值 1var obj=&amp;#123;&amp;#125;;  自定义构造函数（优化后的工厂模式） 12345678910111213//自定义构造函数function Person(name,ag">
@@ -167,11 +166,6 @@
   	<time datetime="2019-10-16T13:58:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-16</time>
 </a>
 
-        <!-- 不蒜子统计 -->
-        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
-              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
-        </span>
-
 
         
           <div style="margin-top:10px;">
@@ -280,14 +274,13 @@
 <li><p><strong>浅拷贝</strong>：在堆中实现原型属性和方法的拷贝，原对象中的仍然存在部分不可拷贝的方法和属性</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">((<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      </span><br><span class="line">    &#125;</span><br><span class="line">    Person.prototype.age=<span class="number">10</span>;</span><br><span class="line">    Person.prototype.sex=<span class="string">"male"</span>;</span><br><span class="line">    Person.prototype.weight=<span class="string">"50kg"</span>;</span><br><span class="line">    Person.prototype.play=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"Have a good time!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">window</span>.Person=Person;</span><br><span class="line">&#125;)());</span><br><span class="line"><span class="keyword">var</span> obj2=&#123;&#125;;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> Person.prototype)&#123;</span><br><span class="line">    obj2[key]=Person.prototype[key];</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.dir(obj2);</span><br><span class="line">obj2.play();</span><br></pre></td></tr></table></figure>
 
-<h4 id="运行结果：-2"><a href="#运行结果：-2" class="headerlink" title="运行结果："></a>运行结果：</h4><p><img src="//github.com/yanadev/yanadev.github.io/2019/10/16/JavaScript高级-01/1571233114884.png" alt="1571233114884"></p>
-</li>
+<h4 id="运行结果：-2"><a href="#运行结果：-2" class="headerlink" title="运行结果："></a>运行结果：</h4></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-
+<pre><code>![1571233114884](JavaScript高级-01/1571233114884.png)</code></pre>
       
 
       
@@ -440,16 +433,6 @@
       	</div>
     </div>
   </div>
-  
-        <!-- 不蒜子统计 -->
-        <span id="busuanzi_container_site_pv">
-                本站总访问量<span id="busuanzi_value_site_pv"></span>次
-        </span>
-        <span class="post-meta-divider">|</span>
-        <span id="busuanzi_container_site_uv" style='display:none'>
-                本站访客数<span id="busuanzi_value_site_uv"></span>人
-        </span>
-        <script async src="/busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
   
 </footer>
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
