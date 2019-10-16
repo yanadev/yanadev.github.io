@@ -145,92 +145,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-pic" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/17/pic/">pic</a>
-    </h1>
-  
-
-        
-        <a href="/2019/10/17/pic/" class="archive-article-date">
-  	<time datetime="2019-10-16T18:19:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-17</time>
-</a>
-
-
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">0字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">1分</span>
-      </span>
-    </span>
-</div>
-          
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/pic/1571208798824.png" alt="img"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/17/pic/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-JavaScript高级-01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -274,37 +188,30 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h5 id="JavaScript高级"><a href="#JavaScript高级" class="headerlink" title="JavaScript高级"></a>JavaScript高级</h5><h5 id="知识点-1"><a href="#知识点-1" class="headerlink" title="知识点-1"></a>知识点-1</h5><ul>
-<li><p>封装：把属性和方法封装在对象中</p>
-</li>
-<li><p>对象：具体值某个事物，有特征（属性）和行为（方法）</p>
-</li>
-<li><p>创建对象的三种方式：</p>
-<ul>
+        <ul>
+<li><h3 id="封装：把属性和方法封装在对象中"><a href="#封装：把属性和方法封装在对象中" class="headerlink" title="封装：把属性和方法封装在对象中"></a>封装：把属性和方法封装在对象中</h3></li>
+<li><h3 id="对象：具体值某个事物，有特征（属性）和行为（方法）"><a href="#对象：具体值某个事物，有特征（属性）和行为（方法）" class="headerlink" title="对象：具体值某个事物，有特征（属性）和行为（方法）"></a>对象：具体值某个事物，有特征（属性）和行为（方法）</h3></li>
+<li><h3 id="创建对象的三种方式："><a href="#创建对象的三种方式：" class="headerlink" title="创建对象的三种方式："></a>创建对象的三种方式：</h3><ul>
 <li><p>系统构造函数</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj=<span class="keyword">new</span> <span class="built_in">Object</span>();</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>字面值</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj=&#123;&#125;;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>自定义构造函数（优化后的工厂模式）</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//自定义构造函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age,gender</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name=name;</span><br><span class="line">    <span class="keyword">this</span>.age=age;</span><br><span class="line">    <span class="keyword">this</span>.gender=gender;</span><br><span class="line">    <span class="keyword">this</span>.work=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.name+<span class="string">"is working"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> per3=<span class="keyword">new</span> Person(<span class="string">"wang"</span>,<span class="number">50</span>,<span class="string">"male"</span>);</span><br><span class="line">per3.work();</span><br><span class="line"><span class="built_in">console</span>.log(per3.work);</span><br><span class="line"><span class="built_in">console</span>.log(per3 <span class="keyword">instanceof</span> Person);<span class="comment">//可以判断类型</span></span><br></pre></td></tr></table></figure>
+<li><h4 id="自定义构造函数（优化后的工厂模式）"><a href="#自定义构造函数（优化后的工厂模式）" class="headerlink" title="自定义构造函数（优化后的工厂模式）"></a>自定义构造函数（优化后的工厂模式）</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//自定义构造函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age,gender</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name=name;</span><br><span class="line">    <span class="keyword">this</span>.age=age;</span><br><span class="line">    <span class="keyword">this</span>.gender=gender;</span><br><span class="line">    <span class="keyword">this</span>.work=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.name+<span class="string">"is working"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> per3=<span class="keyword">new</span> Person(<span class="string">"wang"</span>,<span class="number">50</span>,<span class="string">"male"</span>);</span><br><span class="line">per3.work();</span><br><span class="line"><span class="built_in">console</span>.log(per3.work);</span><br><span class="line"><span class="built_in">console</span>.log(per3 <span class="keyword">instanceof</span> Person);<span class="comment">//可以判断类型</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
-<li><p>工厂模式（推论）</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//工厂模式</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createObject</span>(<span class="params">name,age,gender</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> obj=<span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line">    obj.name=name;</span><br><span class="line">    obj.age=age;</span><br><span class="line">    obj.gender=gender;</span><br><span class="line">    obj.sleep=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="keyword">this</span>.name+<span class="string">" is sleeping"</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> per4=createObject(<span class="string">"July"</span>,<span class="number">18</span>,<span class="string">"female"</span>);</span><br><span class="line">per4.sleep();</span><br></pre></td></tr></table></figure>
+<li><h5 id="工厂模式（推论）"><a href="#工厂模式（推论）" class="headerlink" title="工厂模式（推论）"></a>工厂模式（推论）</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//工厂模式</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createObject</span>(<span class="params">name,age,gender</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> obj=<span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line">    obj.name=name;</span><br><span class="line">    obj.age=age;</span><br><span class="line">    obj.gender=gender;</span><br><span class="line">    obj.sleep=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="keyword">this</span>.name+<span class="string">" is sleeping"</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> per4=createObject(<span class="string">"July"</span>,<span class="number">18</span>,<span class="string">"female"</span>);</span><br><span class="line">per4.sleep();</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>自定义构造函数创建对象（4个步骤）</p>
-<ul>
+<li><h4 id="自定义构造函数创建对象（4个步骤）"><a href="#自定义构造函数创建对象（4个步骤）" class="headerlink" title="自定义构造函数创建对象（4个步骤）"></a>自定义构造函数创建对象（4个步骤）</h4><ul>
 <li>在内存中申请一块空闲的空间，存储创建的对象</li>
 <li>this指当前实例化的对象</li>
 <li>设置对象的属性和方法</li>
 <li>返回创建后的对象</li>
 </ul>
 </li>
-<li><p>原型：</p>
-<ul>
+<li><h3 id="原型："><a href="#原型：" class="headerlink" title="原型："></a>原型：</h3><ul>
 <li><p>构造函数中为prototype，程序员使用</p>
 </li>
 <li><p>实例对象中为<strong>proto</strong>，浏览器使用，不是很标准</p>
@@ -316,32 +223,29 @@
 <li><p>当系统内置对象的属性或者方法无法满足需求的时候，可以通过原型为内置对象添加属性或者方法</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span>.prototype.ffff=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br></pre></td></tr></table></figure>
 </li>
+<li><h5 id="简单的原型写法注意事项："><a href="#简单的原型写法注意事项：" class="headerlink" title="简单的原型写法注意事项："></a>简单的原型写法注意事项：</h5></li>
 </ul>
-</li>
-<li><p>简单的原型写法注意事项：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Per.prototype=&#123;</span><br><span class="line"><span class="comment">//缺少构造器，需要手动指向构造函数</span></span><br><span class="line">	<span class="keyword">constructor</span>:Person</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
 </li>
-</ul>
-<ul>
-<li><p>继承</p>
-<ul>
+<li><h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><ul>
 <li><p>通过原型实现，改变原型的指向</p>
 </li>
-<li><p>借用构造函数继承的时候，不能继承方法</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//自调用函数</span></span><br><span class="line">    (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age,sex,weight</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.name=name;</span><br><span class="line">            <span class="keyword">this</span>.age=age;</span><br><span class="line">            <span class="keyword">this</span>.sex=sex;</span><br><span class="line">            <span class="keyword">this</span>.weight=weight;</span><br><span class="line">        &#125;</span><br><span class="line">        Person.prototype.hello=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"Hello!My name is "</span>+<span class="keyword">this</span>.name+<span class="string">" This is my message: age:"</span>+<span class="keyword">this</span>.age+<span class="string">" sex:"</span>+<span class="keyword">this</span>.sex+<span class="string">" weight:"</span>+<span class="keyword">this</span>.weight);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">window</span>.Person=Person;</span><br><span class="line">    &#125;());</span><br><span class="line">    <span class="comment">//test</span></span><br><span class="line">    <span class="keyword">var</span> per1=<span class="keyword">new</span> Person(<span class="string">"Ming"</span>,<span class="number">15</span>,<span class="string">"female"</span>,<span class="string">"45kg"</span>);</span><br><span class="line">    per1.hello();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//自调用函数</span></span><br><span class="line">    ((<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//----START--------</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">Student</span>(<span class="params">score,name,age,sex,weight</span>)</span>&#123;</span><br><span class="line">            Person.call(<span class="keyword">this</span>,name,age,sex,weight);<span class="comment">//=======借用构造函数==========</span></span><br><span class="line">            <span class="keyword">this</span>.score=score;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//--------END-------------</span></span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        Student.prototype.myScore=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="keyword">this</span>.name+<span class="string">"======"</span>+<span class="keyword">this</span>.age+<span class="string">"============="</span>+<span class="keyword">this</span>.sex+<span class="string">"==========="</span>+<span class="keyword">this</span>.weight+<span class="string">"============"</span>+<span class="keyword">this</span>.score);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">window</span>.Student=Student;</span><br><span class="line">        <span class="comment">// Student.prototype.hello=function()&#123;</span></span><br><span class="line">        <span class="comment">//     console.log("Student's hello");</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line">    &#125;)());</span><br><span class="line">    <span class="comment">//test</span></span><br><span class="line">    <span class="keyword">var</span> stu1=<span class="keyword">new</span> Student(<span class="number">94</span>,<span class="string">"Li"</span>,<span class="number">45</span>,<span class="string">"male"</span>,<span class="string">"95kg"</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(stu1.myScore);<span class="comment">//输出代码内容</span></span><br><span class="line">    stu1.myScore();</span><br><span class="line">    stu1.hello();<span class="comment">//=========报错（该方法无法实现方法的共享）</span></span><br></pre></td></tr></table></figure>
+<li><h6 id="借用构造函数继承的时候，不能继承方法"><a href="#借用构造函数继承的时候，不能继承方法" class="headerlink" title="借用构造函数继承的时候，不能继承方法"></a><strong>借用构造函数继承</strong>的时候，不能继承方法</h6><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//自调用函数</span></span><br><span class="line">    (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age,sex,weight</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.name=name;</span><br><span class="line">            <span class="keyword">this</span>.age=age;</span><br><span class="line">            <span class="keyword">this</span>.sex=sex;</span><br><span class="line">            <span class="keyword">this</span>.weight=weight;</span><br><span class="line">        &#125;</span><br><span class="line">        Person.prototype.hello=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"Hello!My name is "</span>+<span class="keyword">this</span>.name+<span class="string">" This is my message: age:"</span>+<span class="keyword">this</span>.age+<span class="string">" sex:"</span>+<span class="keyword">this</span>.sex+<span class="string">" weight:"</span>+<span class="keyword">this</span>.weight);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">window</span>.Person=Person;</span><br><span class="line">    &#125;());</span><br><span class="line">    <span class="comment">//test</span></span><br><span class="line">    <span class="keyword">var</span> per1=<span class="keyword">new</span> Person(<span class="string">"Ming"</span>,<span class="number">15</span>,<span class="string">"female"</span>,<span class="string">"45kg"</span>);</span><br><span class="line">    per1.hello();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//自调用函数</span></span><br><span class="line">    ((<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//----START--------</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">Student</span>(<span class="params">score,name,age,sex,weight</span>)</span>&#123;</span><br><span class="line">            Person.call(<span class="keyword">this</span>,name,age,sex,weight);<span class="comment">//=======借用构造函数==========</span></span><br><span class="line">            <span class="keyword">this</span>.score=score;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//--------END-------------</span></span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        Student.prototype.myScore=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="keyword">this</span>.name+<span class="string">"======"</span>+<span class="keyword">this</span>.age+<span class="string">"============="</span>+<span class="keyword">this</span>.sex+<span class="string">"==========="</span>+<span class="keyword">this</span>.weight+<span class="string">"============"</span>+<span class="keyword">this</span>.score);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">window</span>.Student=Student;</span><br><span class="line">        <span class="comment">// Student.prototype.hello=function()&#123;</span></span><br><span class="line">        <span class="comment">//     console.log("Student's hello");</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line">    &#125;)());</span><br><span class="line">    <span class="comment">//test</span></span><br><span class="line">    <span class="keyword">var</span> stu1=<span class="keyword">new</span> Student(<span class="number">94</span>,<span class="string">"Li"</span>,<span class="number">45</span>,<span class="string">"male"</span>,<span class="string">"95kg"</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(stu1.myScore);<span class="comment">//输出代码内容</span></span><br><span class="line">    stu1.myScore();</span><br><span class="line">    stu1.hello();<span class="comment">//=========报错（该方法无法实现方法的共享）</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="运行结果："><a href="#运行结果：" class="headerlink" title="运行结果："></a>运行结果：</h4><p><img src="//github.com/yanadev/yanadev.github.io/2019/10/16/JavaScript高级-01/1571208798824.png" alt="1571208798824"></p>
+<p><strong>运行结果：</strong></p>
+<img src="/2019/10/16/JavaScript高级-01/1571208798824.png" width="1571208798824">
 </li>
-<li><p>组合继承：<strong>借用构造函数继承属性，同时改变原型的指向</strong>，可以解决属性和方法的继承问题</p>
+<li><h4 id="组合继承："><a href="#组合继承：" class="headerlink" title="组合继承："></a>组合继承：</h4><ul>
+<li>借用构造函数继承属性，同时改变原型的指向，可以解决属性和方法的继承问题</li>
+</ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//自调用函数</span></span><br><span class="line">    (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age,sex,weight</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.name=name;</span><br><span class="line">            <span class="keyword">this</span>.age=age;</span><br><span class="line">            <span class="keyword">this</span>.sex=sex;</span><br><span class="line">            <span class="keyword">this</span>.weight=weight;</span><br><span class="line">        &#125;</span><br><span class="line">        Person.prototype.hello=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"Hello!My name is "</span>+<span class="keyword">this</span>.name+<span class="string">" This is my message: age:"</span>+<span class="keyword">this</span>.age+<span class="string">" sex:"</span>+<span class="keyword">this</span>.sex+<span class="string">" weight:"</span>+<span class="keyword">this</span>.weight);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">window</span>.Person=Person;</span><br><span class="line">    &#125;());</span><br><span class="line">    <span class="comment">//test</span></span><br><span class="line">    <span class="keyword">var</span> per1=<span class="keyword">new</span> Person(<span class="string">"Ming"</span>,<span class="number">15</span>,<span class="string">"female"</span>,<span class="string">"45kg"</span>);</span><br><span class="line">    per1.hello();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//自调用函数</span></span><br><span class="line">    ((<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">Student</span>(<span class="params">score,name,age,sex,weight</span>)</span>&#123;</span><br><span class="line">            Person.call(<span class="keyword">this</span>,name,age,sex,weight);<span class="comment">//=================借用构造函数</span></span><br><span class="line">            <span class="keyword">this</span>.score=score;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//-------------------START---------------------</span></span><br><span class="line">        Student.prototype=<span class="keyword">new</span> Person();<span class="comment">//不传值，改变原型的指向</span></span><br><span class="line">        <span class="comment">//-------------------end---------------------</span></span><br><span class="line">        Student.prototype.myScore=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="keyword">this</span>.name+<span class="string">"======"</span>+<span class="keyword">this</span>.age+<span class="string">"============="</span>+<span class="keyword">this</span>.sex+<span class="string">"==========="</span>+<span class="keyword">this</span>.weight+<span class="string">"============"</span>+<span class="keyword">this</span>.score);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">window</span>.Student=Student;</span><br><span class="line">    &#125;)());</span><br><span class="line">    <span class="comment">//test</span></span><br><span class="line">    <span class="keyword">var</span> stu1=<span class="keyword">new</span> Student(<span class="number">94</span>,<span class="string">"Li"</span>,<span class="number">45</span>,<span class="string">"male"</span>,<span class="string">"95kg"</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(stu1.myScore);<span class="comment">//输出代码内容</span></span><br><span class="line">    stu1.myScore();</span><br><span class="line">    <span class="comment">// console.log(stu1);/////////////////==================不改变指向的时候__proto__指向Student构造函数原型</span></span><br><span class="line">    <span class="comment">// stu1.hello();//=========报错（该方法无法实现方法的共享）</span></span><br><span class="line">    <span class="built_in">console</span>.log(stu1);<span class="comment">/////////////////==================改变指向的时候__proto__指向Person构造函数原型</span></span><br><span class="line">    stu1.hello();<span class="comment">//实现方法共享</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="运行结果：-1"><a href="#运行结果：-1" class="headerlink" title="运行结果："></a>运行结果：</h4><p><img src="//github.com/yanadev/yanadev.github.io/2019/10/16/JavaScript高级-01/1571210145954.png" alt="1571210145954"></p>
+<p><strong>运行结果：</strong></p>
+<img src="/2019/10/16/JavaScript高级-01/1571210145954.png" width="1571210145954">
 </li>
-<li><p>拷贝继承：即把对象中原型的所有属性和方法使用遍历的方式复制一份给另一个对象</p>
-<ul>
+<li><h4 id="拷贝继承："><a href="#拷贝继承：" class="headerlink" title="拷贝继承："></a>拷贝继承：</h4><ul>
+<li><p>即把对象中原型的所有属性和方法使用遍历的方式复制一份给另一个对象</p>
+</li>
 <li><p><strong>直接传址，非拷贝</strong></p>
 <ul>
 <li><p>方式一：</p>
@@ -352,16 +256,20 @@
 </li>
 </ul>
 </li>
-<li><p><strong>浅拷贝</strong>：在堆中实现原型属性和方法的拷贝，原对象中的仍然存在部分不可拷贝的方法和属性</p>
+<li><h5 id="浅拷贝："><a href="#浅拷贝：" class="headerlink" title="浅拷贝："></a><strong>浅拷贝</strong>：</h5><ul>
+<li>在堆中实现原型属性和方法的拷贝，原对象中的仍然存在部分不可拷贝的方法和属性</li>
+</ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">((<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      </span><br><span class="line">    &#125;</span><br><span class="line">    Person.prototype.age=<span class="number">10</span>;</span><br><span class="line">    Person.prototype.sex=<span class="string">"male"</span>;</span><br><span class="line">    Person.prototype.weight=<span class="string">"50kg"</span>;</span><br><span class="line">    Person.prototype.play=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"Have a good time!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">window</span>.Person=Person;</span><br><span class="line">&#125;)());</span><br><span class="line"><span class="keyword">var</span> obj2=&#123;&#125;;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> Person.prototype)&#123;</span><br><span class="line">    obj2[key]=Person.prototype[key];</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.dir(obj2);</span><br><span class="line">obj2.play();</span><br></pre></td></tr></table></figure>
 
-<h4 id="运行结果：-2"><a href="#运行结果：-2" class="headerlink" title="运行结果："></a>运行结果：</h4></li>
-</ul>
+<p><strong>运行结果：</strong></p>
+<img src="/2019/10/16/JavaScript高级-01/1571233114884.png" width="1571233114884">
 </li>
 </ul>
 </li>
 </ul>
-<pre><code>![1571233114884](JavaScript高级-01/1571233114884.png)</code></pre>
+</li>
+</ul>
+
       
 
       
@@ -369,6 +277,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">创建对象 原型 继承 浅拷贝 传址</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -773,6 +692,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">创建对象 原型 继承 浅拷贝 传址</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">test</a>
