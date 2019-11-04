@@ -6,15 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://yanadev.github.io">
-  <title>Yanadev</title>
+  <title>02-PHP特性与基本操作 | Yanadev</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="静态网站与动态网站动态网站：每次请求的时候服务端动态生成html返回给用户的这种网站      静态网站： 纯粹HTML格式的网页通常被称为“静态网页”   - 网页快速截图    ![1572247606140](D:\A前端\视频\08-PHP后台开发\php后台学习02.assets\1572247606140.png)PHP1.PHP安装 直接解压即可  修改apache文件下的httpd">
-<meta name="keywords" content="前端,Student,Coder,Hexo,JavaScript,CSS,HTML">
+  <meta name="description" content="静态网站与动态网站动态网站：每次请求的时候服务端动态生成html返回给用户的这种网站      静态网站： 纯粹HTML格式的网页通常被称为“静态网页”">
+<meta name="keywords" content="Apache配置php相关信息">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Yanadev">
+<meta property="og:title" content="02-PHP特性与基本操作">
 <meta property="og:url" content="https://yanadev.github.io/2019/11/05/02-PHP特性与基本操作/index.html">
 <meta property="og:site_name" content="Yanadev">
-<meta property="og:description" content="静态网站与动态网站动态网站：每次请求的时候服务端动态生成html返回给用户的这种网站      静态网站： 纯粹HTML格式的网页通常被称为“静态网页”   - 网页快速截图    ![1572247606140](D:\A前端\视频\08-PHP后台开发\php后台学习02.assets\1572247606140.png)PHP1.PHP安装 直接解压即可  修改apache文件下的httpd">
+<meta property="og:description" content="静态网站与动态网站动态网站：每次请求的时候服务端动态生成html返回给用户的这种网站      静态网站： 纯粹HTML格式的网页通常被称为“静态网页”">
 <meta property="og:locale" content="enf">
 <meta property="og:image" content="https://yanadev.github.io/2019/11/05/02-PHP特性与基本操作/1572259908755.png">
 <meta property="og:image" content="https://yanadev.github.io/2019/11/05/02-PHP特性与基本操作/1572259973471.png">
@@ -28,10 +28,10 @@
 <meta property="og:image" content="https://yanadev.github.io/2019/11/05/02-PHP特性与基本操作/image-20191101211851684.png">
 <meta property="og:image" content="https://yanadev.github.io/2019/11/05/02-PHP特性与基本操作/image-20191101213112973.png">
 <meta property="og:image" content="https://yanadev.github.io/2019/11/05/02-PHP特性与基本操作/image-20191101214551177.png">
-<meta property="og:updated_time" content="2019-11-04T18:19:32.683Z">
+<meta property="og:updated_time" content="2019-11-04T18:45:24.803Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Yanadev">
-<meta name="twitter:description" content="静态网站与动态网站动态网站：每次请求的时候服务端动态生成html返回给用户的这种网站      静态网站： 纯粹HTML格式的网页通常被称为“静态网页”   - 网页快速截图    ![1572247606140](D:\A前端\视频\08-PHP后台开发\php后台学习02.assets\1572247606140.png)PHP1.PHP安装 直接解压即可  修改apache文件下的httpd">
+<meta name="twitter:title" content="02-PHP特性与基本操作">
+<meta name="twitter:description" content="静态网站与动态网站动态网站：每次请求的时候服务端动态生成html返回给用户的这种网站      静态网站： 纯粹HTML格式的网页通常被称为“静态网页”">
 <meta name="twitter:image" content="https://yanadev.github.io/2019/11/05/02-PHP特性与基本操作/1572259908755.png">
   
     <link rel="alternative" href="/atom.xml" title="Yanadev" type="application/atom+xml">
@@ -163,15 +163,51 @@
             <article id="post-02-PHP特性与基本操作" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      02-PHP特性与基本操作
+    </h1>
+  
+
+        
+        <a href="/2019/11/05/02-PHP特性与基本操作/" class="archive-article-date">
+  	<time datetime="2019-11-04T18:33:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-05</time>
+</a>
+
+
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">2.4k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">10分</span>
+      </span>
+    </span>
+</div>
+          
+
+        
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="静态网站与动态网站"><a href="#静态网站与动态网站" class="headerlink" title="静态网站与动态网站"></a><code>静态网站与动态网站</code></h3><pre><code>动态网站：每次请求的时候服务端动态生成html返回给用户的这种网站    
 
-静态网站： 纯粹HTML格式的网页通常被称为“静态网页” 
+静态网站： 纯粹HTML格式的网页通常被称为“静态网页” </code></pre><a id="more"></a>
 
-- 网页快速截图
-
-  ![1572247606140](D:\A前端\视频\08-PHP后台开发\php后台学习02.assets\1572247606140.png)</code></pre><h3 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a><code>PHP</code></h3><h4 id="1-PHP安装"><a href="#1-PHP安装" class="headerlink" title="1.PHP安装"></a>1.PHP安装</h4><ul>
+<h3 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a><code>PHP</code></h3><h4 id="1-PHP安装"><a href="#1-PHP安装" class="headerlink" title="1.PHP安装"></a>1.PHP安装</h4><ul>
 <li><p>直接解压即可</p>
 </li>
 <li><p>修改apache文件下的httpd.conf文件</p>
@@ -371,7 +407,6 @@
 <li><p>格式化一个指定的时间戳 </p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可以通过 strtotime() 将有格式的时间字符串转换为时间戳</span><br></pre></td></tr></table></figure>
 
-
 </li>
 </ul>
 <h4 id="6-文件操作"><a href="#6-文件操作" class="headerlink" title="6.文件操作"></a>6.文件操作</h4><table>
@@ -487,17 +522,12 @@
 <td>删除文件。</td>
 <td>3</td>
 </tr>
-<tr>
-<td>### PHP扩展</td>
-<td></td>
-<td></td>
-</tr>
 </tbody></table>
-<ul>
-<li><p>php与apache之间就是apache唤醒php的关系</p>
-<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4></li>
-<li><p>每次修改了配置文件信息之后一定要重启Apache，否则不会生效</p>
-</li>
+<h3 id="PHP扩展"><a href="#PHP扩展" class="headerlink" title="PHP扩展"></a>PHP扩展</h3><ul>
+<li>php与apache之间就是apache唤醒php的关系</li>
+</ul>
+<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><ul>
+<li>每次修改了配置文件信息之后一定要重启Apache，否则不会生效</li>
 </ul>
 <h4 id="配置步骤"><a href="#配置步骤" class="headerlink" title="配置步骤"></a>配置步骤</h4><ol>
 <li><p>在PHP的安装目录下创建一个<code>php.ini</code>文件</p>
@@ -511,11 +541,7 @@
 <li><p>使用phpinfo()函数可以查看php配置信息</p>
 <p><img src="//yanadev.github.io/2019/11/05/02-PHP特性与基本操作/image-20191101211851684.png" alt="image-20191101211851684"></p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 由此可知php.ini默认文件位置是C:\WINDOWS</span></span><br><span class="line"><span class="comment"># 可以选择将php.ini文件移动到该目录下</span></span><br><span class="line"><span class="comment"># 但是更好的选择是修改Apache中指向该文件的路径，方便管理</span></span><br></pre></td></tr></table></figure>
-
-
 </li>
-</ol>
-<ol start="5">
 <li><p>打开Apache配置文件httpd.conf</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 告知Apache==&gt;php.ini文件所在的路径</span></span><br><span class="line">PHPIniDir E:/Develop/php</span><br></pre></td></tr></table></figure>
 
@@ -533,6 +559,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Apache配置php相关信息</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -601,14 +638,14 @@
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          (no title)
+          03-解析文本文件呈现表格
         
       </div>
     </a>
   
   
-    <a href="/2019/11/05/01-Apache配置与安装/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title"></div>
+    <a href="/2019/11/05/Apache配置与安装/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">01-Apache配置与安装</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -635,7 +672,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#静态网站与动态网站"><span class="toc-number">1.</span> <span class="toc-text">静态网站与动态网站</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP"><span class="toc-number">2.</span> <span class="toc-text">PHP</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-PHP安装"><span class="toc-number">2.1.</span> <span class="toc-text">1.PHP安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Apache与PHP："><span class="toc-number">2.2.</span> <span class="toc-text">2.Apache与PHP：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-1-PHP完成的事情"><span class="toc-number">2.2.1.</span> <span class="toc-text">2.1 PHP完成的事情</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-2-使用-PHP-的目的"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.2 使用 PHP 的目的</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-PHP使用"><span class="toc-number">2.3.</span> <span class="toc-text">3.PHP使用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-标记"><span class="toc-number">2.3.1.</span> <span class="toc-text">3.1 标记</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-2-省略结束标记"><span class="toc-number">2.3.2.</span> <span class="toc-text">3.2 省略结束标记</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-3-输出内容方式"><span class="toc-number">2.3.3.</span> <span class="toc-text">3.3 输出内容方式</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#3-3-1-echo"><span class="toc-number">2.3.3.1.</span> <span class="toc-text">3.3.1 echo</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-3-2print"><span class="toc-number">2.3.3.2.</span> <span class="toc-text">3.3.2print</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-3-3-var-dump"><span class="toc-number">2.3.3.3.</span> <span class="toc-text">3.3.3 var_dump</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-3-4-总结："><span class="toc-number">2.3.3.4.</span> <span class="toc-text">3.3.4 总结：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-与HTML混编"><span class="toc-number">2.4.</span> <span class="toc-text">4.与HTML混编</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-普通嵌入"><span class="toc-number">2.4.1.</span> <span class="toc-text">4.1 普通嵌入</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-2-语句混编"><span class="toc-number">2.4.2.</span> <span class="toc-text">4.2 语句混编</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-3-指令式语句"><span class="toc-number">2.4.3.</span> <span class="toc-text">4.3 指令式语句</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-注释"><span class="toc-number">2.5.</span> <span class="toc-text">5.注释</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-变量"><span class="toc-number">2.6.</span> <span class="toc-text">6.变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-数据类型"><span class="toc-number">2.7.</span> <span class="toc-text">7.数据类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-字符串"><span class="toc-number">2.8.</span> <span class="toc-text">8.字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#8-1-单引号"><span class="toc-number">2.8.1.</span> <span class="toc-text">8.1 单引号</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#8-2-双引号"><span class="toc-number">2.8.2.</span> <span class="toc-text">8.2 双引号</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-数组"><span class="toc-number">2.9.</span> <span class="toc-text">9. 数组</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#9-1-索引数组"><span class="toc-number">2.9.1.</span> <span class="toc-text">9.1 索引数组</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#9-2-关联数组"><span class="toc-number">2.9.2.</span> <span class="toc-text">9.2 关联数组</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#9-3-数据类型转换"><span class="toc-number">2.9.3.</span> <span class="toc-text">9.3 数据类型转换</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-运算符"><span class="toc-number">2.10.</span> <span class="toc-text">10. 运算符</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP特性"><span class="toc-number">3.</span> <span class="toc-text">PHP特性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-变量作用域"><span class="toc-number">3.1.</span> <span class="toc-text">1. 变量作用域</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-1-访问全局变量"><span class="toc-number">3.1.1.</span> <span class="toc-text">1.1 访问全局变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-超全局变量"><span class="toc-number">3.1.2.</span> <span class="toc-text">1.2 超全局变量</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#GLOBALS"><span class="toc-number">3.1.2.1.</span> <span class="toc-text">$GLOBALS</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-1-常量"><span class="toc-number">3.1.3.</span> <span class="toc-text">1.2.1 常量</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-载入其他文件"><span class="toc-number">3.2.</span> <span class="toc-text">2. 载入其他文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-字符串处理函数"><span class="toc-number">3.3.</span> <span class="toc-text">3.字符串处理函数</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#字符串截取"><span class="toc-number">3.3.1.</span> <span class="toc-text">字符串截取</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#字符串长度"><span class="toc-number">3.3.2.</span> <span class="toc-text">字符串长度</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#大小写转换"><span class="toc-number">3.3.3.</span> <span class="toc-text">大小写转换</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#去除首尾空白字符"><span class="toc-number">3.3.4.</span> <span class="toc-text">去除首尾空白字符</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#查找字符串中某些字符首次出现位置"><span class="toc-number">3.3.5.</span> <span class="toc-text">查找字符串中某些字符首次出现位置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#字符串替换"><span class="toc-number">3.3.6.</span> <span class="toc-text">字符串替换</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#重复字符串"><span class="toc-number">3.3.7.</span> <span class="toc-text">重复字符串</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#字符串分割"><span class="toc-number">3.3.8.</span> <span class="toc-text">字符串分割</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-数组处理函数"><span class="toc-number">3.4.</span> <span class="toc-text">4. 数组处理函数</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#获取关联数组中全部的键-值"><span class="toc-number">3.4.1.</span> <span class="toc-text">获取关联数组中全部的键 / 值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#判断关联数组中是否存在某个键"><span class="toc-number">3.4.2.</span> <span class="toc-text">判断关联数组中是否存在某个键</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#去除重复的元素"><span class="toc-number">3.4.3.</span> <span class="toc-text">去除重复的元素</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#将一个或多个元素追加到数组中"><span class="toc-number">3.4.4.</span> <span class="toc-text">将一个或多个元素追加到数组中</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#删除数组中后一个元素"><span class="toc-number">3.4.5.</span> <span class="toc-text">删除数组中后一个元素</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#数组长度"><span class="toc-number">3.4.6.</span> <span class="toc-text">数组长度</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#检测存在"><span class="toc-number">3.4.7.</span> <span class="toc-text">检测存在</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-时间处理"><span class="toc-number">3.5.</span> <span class="toc-text">5. 时间处理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#时间戳"><span class="toc-number">3.5.1.</span> <span class="toc-text">时间戳</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#格式化日期"><span class="toc-number">3.5.2.</span> <span class="toc-text">格式化日期</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取有格式的当前时间"><span class="toc-number">3.5.3.</span> <span class="toc-text">获取有格式的当前时间</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-文件操作"><span class="toc-number">3.6.</span> <span class="toc-text">6.文件操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注意"><span class="toc-number">3.7.</span> <span class="toc-text">注意</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置步骤"><span class="toc-number">3.8.</span> <span class="toc-text">配置步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用"><span class="toc-number">3.9.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#浏览器渲染效果"><span class="toc-number">3.10.</span> <span class="toc-text">浏览器渲染效果</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#静态网站与动态网站"><span class="toc-number">1.</span> <span class="toc-text">静态网站与动态网站</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP"><span class="toc-number">2.</span> <span class="toc-text">PHP</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-PHP安装"><span class="toc-number">2.1.</span> <span class="toc-text">1.PHP安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Apache与PHP："><span class="toc-number">2.2.</span> <span class="toc-text">2.Apache与PHP：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-1-PHP完成的事情"><span class="toc-number">2.2.1.</span> <span class="toc-text">2.1 PHP完成的事情</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-2-使用-PHP-的目的"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.2 使用 PHP 的目的</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-PHP使用"><span class="toc-number">2.3.</span> <span class="toc-text">3.PHP使用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-标记"><span class="toc-number">2.3.1.</span> <span class="toc-text">3.1 标记</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-2-省略结束标记"><span class="toc-number">2.3.2.</span> <span class="toc-text">3.2 省略结束标记</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-3-输出内容方式"><span class="toc-number">2.3.3.</span> <span class="toc-text">3.3 输出内容方式</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#3-3-1-echo"><span class="toc-number">2.3.3.1.</span> <span class="toc-text">3.3.1 echo</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-3-2print"><span class="toc-number">2.3.3.2.</span> <span class="toc-text">3.3.2print</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-3-3-var-dump"><span class="toc-number">2.3.3.3.</span> <span class="toc-text">3.3.3 var_dump</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-3-4-总结："><span class="toc-number">2.3.3.4.</span> <span class="toc-text">3.3.4 总结：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-与HTML混编"><span class="toc-number">2.4.</span> <span class="toc-text">4.与HTML混编</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-普通嵌入"><span class="toc-number">2.4.1.</span> <span class="toc-text">4.1 普通嵌入</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-2-语句混编"><span class="toc-number">2.4.2.</span> <span class="toc-text">4.2 语句混编</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-3-指令式语句"><span class="toc-number">2.4.3.</span> <span class="toc-text">4.3 指令式语句</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-注释"><span class="toc-number">2.5.</span> <span class="toc-text">5.注释</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-变量"><span class="toc-number">2.6.</span> <span class="toc-text">6.变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-数据类型"><span class="toc-number">2.7.</span> <span class="toc-text">7.数据类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-字符串"><span class="toc-number">2.8.</span> <span class="toc-text">8.字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#8-1-单引号"><span class="toc-number">2.8.1.</span> <span class="toc-text">8.1 单引号</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#8-2-双引号"><span class="toc-number">2.8.2.</span> <span class="toc-text">8.2 双引号</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-数组"><span class="toc-number">2.9.</span> <span class="toc-text">9. 数组</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#9-1-索引数组"><span class="toc-number">2.9.1.</span> <span class="toc-text">9.1 索引数组</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#9-2-关联数组"><span class="toc-number">2.9.2.</span> <span class="toc-text">9.2 关联数组</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#9-3-数据类型转换"><span class="toc-number">2.9.3.</span> <span class="toc-text">9.3 数据类型转换</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-运算符"><span class="toc-number">2.10.</span> <span class="toc-text">10. 运算符</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP特性"><span class="toc-number">3.</span> <span class="toc-text">PHP特性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-变量作用域"><span class="toc-number">3.1.</span> <span class="toc-text">1. 变量作用域</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-1-访问全局变量"><span class="toc-number">3.1.1.</span> <span class="toc-text">1.1 访问全局变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-超全局变量"><span class="toc-number">3.1.2.</span> <span class="toc-text">1.2 超全局变量</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#GLOBALS"><span class="toc-number">3.1.2.1.</span> <span class="toc-text">$GLOBALS</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-1-常量"><span class="toc-number">3.1.3.</span> <span class="toc-text">1.2.1 常量</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-载入其他文件"><span class="toc-number">3.2.</span> <span class="toc-text">2. 载入其他文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-字符串处理函数"><span class="toc-number">3.3.</span> <span class="toc-text">3.字符串处理函数</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#字符串截取"><span class="toc-number">3.3.1.</span> <span class="toc-text">字符串截取</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#字符串长度"><span class="toc-number">3.3.2.</span> <span class="toc-text">字符串长度</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#大小写转换"><span class="toc-number">3.3.3.</span> <span class="toc-text">大小写转换</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#去除首尾空白字符"><span class="toc-number">3.3.4.</span> <span class="toc-text">去除首尾空白字符</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#查找字符串中某些字符首次出现位置"><span class="toc-number">3.3.5.</span> <span class="toc-text">查找字符串中某些字符首次出现位置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#字符串替换"><span class="toc-number">3.3.6.</span> <span class="toc-text">字符串替换</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#重复字符串"><span class="toc-number">3.3.7.</span> <span class="toc-text">重复字符串</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#字符串分割"><span class="toc-number">3.3.8.</span> <span class="toc-text">字符串分割</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-数组处理函数"><span class="toc-number">3.4.</span> <span class="toc-text">4. 数组处理函数</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#获取关联数组中全部的键-值"><span class="toc-number">3.4.1.</span> <span class="toc-text">获取关联数组中全部的键 / 值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#判断关联数组中是否存在某个键"><span class="toc-number">3.4.2.</span> <span class="toc-text">判断关联数组中是否存在某个键</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#去除重复的元素"><span class="toc-number">3.4.3.</span> <span class="toc-text">去除重复的元素</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#将一个或多个元素追加到数组中"><span class="toc-number">3.4.4.</span> <span class="toc-text">将一个或多个元素追加到数组中</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#删除数组中后一个元素"><span class="toc-number">3.4.5.</span> <span class="toc-text">删除数组中后一个元素</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#数组长度"><span class="toc-number">3.4.6.</span> <span class="toc-text">数组长度</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#检测存在"><span class="toc-number">3.4.7.</span> <span class="toc-text">检测存在</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-时间处理"><span class="toc-number">3.5.</span> <span class="toc-text">5. 时间处理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#时间戳"><span class="toc-number">3.5.1.</span> <span class="toc-text">时间戳</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#格式化日期"><span class="toc-number">3.5.2.</span> <span class="toc-text">格式化日期</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取有格式的当前时间"><span class="toc-number">3.5.3.</span> <span class="toc-text">获取有格式的当前时间</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-文件操作"><span class="toc-number">3.6.</span> <span class="toc-text">6.文件操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP扩展"><span class="toc-number">4.</span> <span class="toc-text">PHP扩展</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#注意"><span class="toc-number">4.1.</span> <span class="toc-text">注意</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置步骤"><span class="toc-number">4.2.</span> <span class="toc-text">配置步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用"><span class="toc-number">4.3.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#浏览器渲染效果"><span class="toc-number">4.4.</span> <span class="toc-text">浏览器渲染效果</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -757,7 +794,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">创建对象 原型 继承 浅拷贝 传址</a>
+                <a href="javascript:void(0)" class="js-tag color5">php读取文件 字符串 数组</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">自建服务器 Apache配置</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -765,7 +806,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">创建对象 原型 继承 浅拷贝 传址</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">test</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Apache配置php相关信息</a>
               </li>
             
             <div class="clearfix"></div>

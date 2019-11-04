@@ -6,43 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://yanadev.github.io">
-  <title>Yanadev</title>
+  <title>JavaScript高级-01 | Yanadev</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="完整的Web网站，需要123456789# 搭建WEB服务器（提供网站服务的机器）# HTTP（浏览器和服务端的通讯协议）# 服务端开发（动态网页技术）# 数据库操作（服务端存储数据方式）# AJAX（浏览器与服务短的数据交互方式）  搭建Web服务器服务器软件1# 不是绝对捆绑关系   Nginx——————————反向代理 Apache—————————-PHP IIS————————————">
-<meta name="keywords" content="前端,Student,Coder,Hexo,JavaScript,CSS,HTML">
+  <meta name="description" content="封装：把属性和方法封装在对象中 对象：具体值某个事物，有特征（属性）和行为（方法） 创建对象的三种方式：">
+<meta name="keywords" content="创建对象 原型 继承 浅拷贝 传址">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Yanadev">
-<meta property="og:url" content="https://yanadev.github.io/2019/11/05/01-Apache配置与安装/index.html">
+<meta property="og:title" content="JavaScript高级-01">
+<meta property="og:url" content="https://yanadev.github.io/2019/10/16/JS创造对象三种方式/index.html">
 <meta property="og:site_name" content="Yanadev">
-<meta property="og:description" content="完整的Web网站，需要123456789# 搭建WEB服务器（提供网站服务的机器）# HTTP（浏览器和服务端的通讯协议）# 服务端开发（动态网页技术）# 数据库操作（服务端存储数据方式）# AJAX（浏览器与服务短的数据交互方式）  搭建Web服务器服务器软件1# 不是绝对捆绑关系   Nginx——————————反向代理 Apache—————————-PHP IIS————————————">
+<meta property="og:description" content="封装：把属性和方法封装在对象中 对象：具体值某个事物，有特征（属性）和行为（方法） 创建对象的三种方式：">
 <meta property="og:locale" content="enf">
-<meta property="og:image" content="https://yanadev.github.io/2019/11/05/01-Apache配置与安装/E:%5CDevelop%5Cnodejs%5CmyBlog%5Csource%5Cimages%5C01-Apache%E9%85%8D%E7%BD%AE%E4%B8%8E%E5%AE%89%E8%A3%85.assets%5C1571380686086.png">
-<meta property="og:image" content="https://yanadev.github.io/2019/11/05/01-Apache配置与安装/1571382060267.png">
-<meta property="og:image" content="https://yanadev.github.io/2019/11/05/01-Apache配置与安装/1571383304838.png">
-<meta property="og:image" content="https://yanadev.github.io/2019/11/05/01-Apache配置与安装/1571387453851.png">
-<meta property="og:image" content="https://yanadev.github.io/2019/11/05/01-Apache配置与安装/1571387784271.png">
-<meta property="og:image" content="https://yanadev.github.io/2019/11/05/01-Apache配置与安装/1571389321433.png">
-<meta property="og:image" content="https://yanadev.github.io/2019/11/05/01-Apache配置与安装/1571388024563.png">
-<meta property="og:image" content="https://yanadev.github.io/2019/11/05/01-Apache配置与安装/1571389403939.png">
-<meta property="og:image" content="https://yanadev.github.io/2019/11/05/01-Apache配置与安装/1571388852980.png">
-<meta property="og:image" content="https://yanadev.github.io/2019/11/05/01-Apache配置与安装/1571390026654.png">
-<meta property="og:image" content="https://yanadev.github.io/2019/11/05/01-Apache配置与安装/1571390099085.png">
-<meta property="og:image" content="https://yanadev.github.io/2019/11/05/01-Apache配置与安装/1571670741992.png">
-<meta property="og:image" content="https://yanadev.github.io/2019/11/05/01-Apache配置与安装/1571670921714.png">
-<meta property="og:image" content="https://yanadev.github.io/2019/11/05/01-Apache配置与安装/1571671027455.png">
-<meta property="og:image" content="https://yanadev.github.io/2019/11/05/01-Apache配置与安装/1571671865157.png">
-<meta property="og:image" content="https://yanadev.github.io/2019/11/05/01-Apache配置与安装/1571671994902.png">
-<meta property="og:image" content="https://yanadev.github.io/2019/11/05/01-Apache配置与安装/1571672576012.png">
-<meta property="og:image" content="https://yanadev.github.io/2019/11/05/01-Apache配置与安装/1571672557689.png">
-<meta property="og:image" content="https://yanadev.github.io/2019/11/05/01-Apache配置与安装/1571673408628.png">
-<meta property="og:image" content="https://yanadev.github.io/2019/11/05/01-Apache配置与安装/1571673615189.png">
-<meta property="og:image" content="https://yanadev.github.io/2019/11/05/01-Apache配置与安装/1571673671443.png">
-<meta property="og:image" content="https://yanadev.github.io/2019/11/05/01-Apache配置与安装/1572246555897.png">
-<meta property="og:updated_time" content="2019-11-04T18:15:22.642Z">
+<meta property="og:image" content="https://yanadev.github.io/2019/10/16/JS创造对象三种方式/1571208798824.png">
+<meta property="og:image" content="https://yanadev.github.io/2019/10/16/JS创造对象三种方式/1571210145954.png">
+<meta property="og:image" content="https://yanadev.github.io/2019/10/16/JS创造对象三种方式/1571233114884.png">
+<meta property="og:updated_time" content="2019-11-04T18:44:13.987Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Yanadev">
-<meta name="twitter:description" content="完整的Web网站，需要123456789# 搭建WEB服务器（提供网站服务的机器）# HTTP（浏览器和服务端的通讯协议）# 服务端开发（动态网页技术）# 数据库操作（服务端存储数据方式）# AJAX（浏览器与服务短的数据交互方式）  搭建Web服务器服务器软件1# 不是绝对捆绑关系   Nginx——————————反向代理 Apache—————————-PHP IIS————————————">
-<meta name="twitter:image" content="https://yanadev.github.io/2019/11/05/01-Apache配置与安装/E:%5CDevelop%5Cnodejs%5CmyBlog%5Csource%5Cimages%5C01-Apache%E9%85%8D%E7%BD%AE%E4%B8%8E%E5%AE%89%E8%A3%85.assets%5C1571380686086.png">
+<meta name="twitter:title" content="JavaScript高级-01">
+<meta name="twitter:description" content="封装：把属性和方法封装在对象中 对象：具体值某个事物，有特征（属性）和行为（方法） 创建对象的三种方式：">
+<meta name="twitter:image" content="https://yanadev.github.io/2019/10/16/JS创造对象三种方式/1571208798824.png">
   
     <link rel="alternative" href="/atom.xml" title="Yanadev" type="application/atom+xml">
   
@@ -170,85 +151,130 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-01-Apache配置与安装" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-JS创造对象三种方式" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JavaScript高级-01
+    </h1>
+  
+
+        
+        <a href="/2019/10/16/JS创造对象三种方式/" class="archive-article-date">
+  	<time datetime="2019-10-16T13:58:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-16</time>
+</a>
+
+
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">1.1k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">5分</span>
+      </span>
+    </span>
+</div>
+          
+
+        
+      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="完整的Web网站，需要"><a href="#完整的Web网站，需要" class="headerlink" title="完整的Web网站，需要"></a><code>完整的Web网站，需要</code></h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 搭建WEB服务器（提供网站服务的机器）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># HTTP（浏览器和服务端的通讯协议）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 服务端开发（动态网页技术）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据库操作（服务端存储数据方式）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># AJAX（浏览器与服务短的数据交互方式）</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="搭建Web服务器"><a href="#搭建Web服务器" class="headerlink" title="搭建Web服务器"></a><code>搭建Web服务器</code></h4><h5 id="服务器软件"><a href="#服务器软件" class="headerlink" title="服务器软件"></a>服务器软件</h5><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不是绝对捆绑关系</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>Nginx</code>——————————<code>反向代理</code></li>
-<li><code>Apache</code>—————————-<code>PHP</code></li>
-<li><code>IIS</code>————————————<code>ASP.NET</code></li>
-<li><code>Tomat</code>——————————-<code>Java</code></li>
-</ul>
-<h4 id="Apache安装"><a href="#Apache安装" class="headerlink" title="Apache安装"></a><code>Apache安装</code></h4><h5 id="安装服务"><a href="#安装服务" class="headerlink" title="安装服务"></a>安装服务</h5><ul>
-<li>在命令行中，使用管理员模式，转到Apache的安装路径下的bin文件夹中</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">httpd -k install -n <span class="string">"&lt;服务名称&gt;Apache"</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="卸载服务"><a href="#卸载服务" class="headerlink" title="卸载服务"></a>卸载服务</h5><ul>
-<li>在命令行中，使用管理员模式，转到Apache的安装路径下的bin文件夹中</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">httpd.exe -k uninstall -n <span class="string">"&lt;服务名称&gt;Apache"</span></span><br></pre></td></tr></table></figure>
+        <ul>
+<li><h3 id="封装：把属性和方法封装在对象中"><a href="#封装：把属性和方法封装在对象中" class="headerlink" title="封装：把属性和方法封装在对象中"></a>封装：把属性和方法封装在对象中</h3></li>
+<li><h3 id="对象：具体值某个事物，有特征（属性）和行为（方法）"><a href="#对象：具体值某个事物，有特征（属性）和行为（方法）" class="headerlink" title="对象：具体值某个事物，有特征（属性）和行为（方法）"></a>对象：具体值某个事物，有特征（属性）和行为（方法）</h3></li>
+<li><h3 id="创建对象的三种方式："><a href="#创建对象的三种方式：" class="headerlink" title="创建对象的三种方式："></a>创建对象的三种方式：</h3><a id="more"></a>
 
 <ul>
-<li><img src="//yanadev.github.io/2019/11/05/01-Apache配置与安装/E:%5CDevelop%5Cnodejs%5CmyBlog%5Csource%5Cimages%5C01-Apache%E9%85%8D%E7%BD%AE%E4%B8%8E%E5%AE%89%E8%A3%85.assets%5C1571380686086.png" alt="1571380686086"></li>
-</ul>
-<h4 id="配置Apache文件"><a href="#配置Apache文件" class="headerlink" title="配置Apache文件"></a><code>配置Apache文件</code></h4><h5 id="1-设置ServerRoot-服务器根目录"><a href="#1-设置ServerRoot-服务器根目录" class="headerlink" title="1. 设置ServerRoot(服务器根目录)"></a>1. 设置ServerRoot(服务器根目录)</h5><ul>
-<li><img src="//yanadev.github.io/2019/11/05/01-Apache配置与安装/1571382060267.png" alt="1571382060267"></li>
-</ul>
-<h5 id="2-设置主机地址"><a href="#2-设置主机地址" class="headerlink" title="2. 设置主机地址"></a>2. 设置主机地址</h5><ul>
-<li>ServerName localhost</li>
-</ul>
-<h5 id="3-命令行"><a href="#3-命令行" class="headerlink" title="3. 命令行"></a>3. 命令行</h5><ul>
-<li>在命令行中bin目录下执行  “https   -t”——————-&gt;检测是否安装成功，修改bug</li>
-</ul>
-<h5 id="4-启动Apache服务"><a href="#4-启动Apache服务" class="headerlink" title="4. 启动Apache服务"></a>4. 启动Apache服务</h5><p><img src="//yanadev.github.io/2019/11/05/01-Apache配置与安装/1571383304838.png" alt="1571383304838"></p>
-<h5 id="5-监听本机端口的使用"><a href="#5-监听本机端口的使用" class="headerlink" title="5. 监听本机端口的使用"></a>5. 监听本机端口的使用</h5><p><img src="//yanadev.github.io/2019/11/05/01-Apache配置与安装/1571387453851.png" alt="1571387453851"></p>
-<h5 id="6-设置访问权限"><a href="#6-设置访问权限" class="headerlink" title="6. 设置访问权限"></a>6. 设置访问权限</h5><h6 id="step1"><a href="#step1" class="headerlink" title="step1"></a>step1</h6><ul>
-<li>先禁止所有目录的访问</li>
-</ul>
-<p><img src="//yanadev.github.io/2019/11/05/01-Apache配置与安装/1571387784271.png" alt="1571387784271"></p>
-<h6 id="step2"><a href="#step2" class="headerlink" title="step2"></a>step2</h6><ul>
-<li>再开放某些目录的访问权限(设置网站根目录—存放静态页面)</li>
-</ul>
-<p><img src="//yanadev.github.io/2019/11/05/01-Apache配置与安装/1571389321433.png" alt="1571389321433"></p>
-<p><img src="//yanadev.github.io/2019/11/05/01-Apache配置与安装/1571388024563.png" alt="  "></p>
-<h5 id="7-默认文档"><a href="#7-默认文档" class="headerlink" title="7. 默认文档"></a>7. 默认文档</h5><ul>
-<li><p>可修改</p>
+<li><p>系统构造函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj=<span class="keyword">new</span> <span class="built_in">Object</span>();</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>当客户端访问的是一个目录而非具体文件时，服务端默认返回该目录下的某个文档，即默认文档（一般为index）</p>
+<li><p>字面值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj=&#123;&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><h4 id="自定义构造函数（优化后的工厂模式）"><a href="#自定义构造函数（优化后的工厂模式）" class="headerlink" title="自定义构造函数（优化后的工厂模式）"></a>自定义构造函数（优化后的工厂模式）</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//自定义构造函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age,gender</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name=name;</span><br><span class="line">    <span class="keyword">this</span>.age=age;</span><br><span class="line">    <span class="keyword">this</span>.gender=gender;</span><br><span class="line">    <span class="keyword">this</span>.work=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.name+<span class="string">"is working"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> per3=<span class="keyword">new</span> Person(<span class="string">"wang"</span>,<span class="number">50</span>,<span class="string">"male"</span>);</span><br><span class="line">per3.work();</span><br><span class="line"><span class="built_in">console</span>.log(per3.work);</span><br><span class="line"><span class="built_in">console</span>.log(per3 <span class="keyword">instanceof</span> Person);<span class="comment">//可以判断类型</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p><img src="//yanadev.github.io/2019/11/05/01-Apache配置与安装/1571389403939.png" alt="1571389403939"></p>
-<h5 id="8-目录文档"><a href="#8-目录文档" class="headerlink" title="8. 目录文档"></a>8. 目录文档</h5><p><img src="//yanadev.github.io/2019/11/05/01-Apache配置与安装/1571388852980.png" alt="1571388852980"></p>
-<h6 id="1-开启的情况下"><a href="#1-开启的情况下" class="headerlink" title="1.开启的情况下"></a>1.开启的情况下</h6><p><img src="//yanadev.github.io/2019/11/05/01-Apache配置与安装/1571390026654.png" alt="1571390026654"></p>
-<h6 id="2-关闭的时候"><a href="#2-关闭的时候" class="headerlink" title="2.关闭的时候"></a>2.关闭的时候</h6><p><img src="//yanadev.github.io/2019/11/05/01-Apache配置与安装/1571390099085.png" alt="1571390099085"></p>
-<h5 id="9-虚拟主机配置"><a href="#9-虚拟主机配置" class="headerlink" title="9. 虚拟主机配置"></a>9. 虚拟主机配置</h5><h6 id="9-1-引入配置文件"><a href="#9-1-引入配置文件" class="headerlink" title="9.1 引入配置文件"></a>9.1 引入配置文件</h6><p><img src="//yanadev.github.io/2019/11/05/01-Apache配置与安装/1571670741992.png" alt="1571670741992"></p>
-<p><img src="//yanadev.github.io/2019/11/05/01-Apache配置与安装/1571670921714.png" alt="1571670921714"></p>
-<p><img src="//yanadev.github.io/2019/11/05/01-Apache配置与安装/1571671027455.png" alt="1571671027455"></p>
-<p><img src="//yanadev.github.io/2019/11/05/01-Apache配置与安装/1571671865157.png" alt="1571671865157"></p>
-<p><img src="//yanadev.github.io/2019/11/05/01-Apache配置与安装/1571671994902.png" alt="1571671994902"></p>
-<h6 id="9-2-特别注意"><a href="#9-2-特别注意" class="headerlink" title="9.2 特别注意"></a>9.2 特别注意</h6><ul>
-<li><strong>如果使用的网站域名后缀非常奇怪，在浏览器输入的时候要写全”http://“</strong></li>
+</li>
+<li><h5 id="工厂模式（推论）"><a href="#工厂模式（推论）" class="headerlink" title="工厂模式（推论）"></a>工厂模式（推论）</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//工厂模式</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createObject</span>(<span class="params">name,age,gender</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> obj=<span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line">    obj.name=name;</span><br><span class="line">    obj.age=age;</span><br><span class="line">    obj.gender=gender;</span><br><span class="line">    obj.sleep=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="keyword">this</span>.name+<span class="string">" is sleeping"</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> per4=createObject(<span class="string">"July"</span>,<span class="number">18</span>,<span class="string">"female"</span>);</span><br><span class="line">per4.sleep();</span><br></pre></td></tr></table></figure>
+</li>
+<li><h4 id="自定义构造函数创建对象（4个步骤）"><a href="#自定义构造函数创建对象（4个步骤）" class="headerlink" title="自定义构造函数创建对象（4个步骤）"></a>自定义构造函数创建对象（4个步骤）</h4><ul>
+<li>在内存中申请一块空闲的空间，存储创建的对象</li>
+<li>this指当前实例化的对象</li>
+<li>设置对象的属性和方法</li>
+<li>返回创建后的对象</li>
 </ul>
-<p><img src="//yanadev.github.io/2019/11/05/01-Apache配置与安装/1571672576012.png" alt="1571672576012"></p>
-<p><img src="//yanadev.github.io/2019/11/05/01-Apache配置与安装/1571672557689.png" alt="1571672557689"></p>
-<h6 id="9-3-浏览器缓存问题"><a href="#9-3-浏览器缓存问题" class="headerlink" title="9.3 浏览器缓存问题"></a>9.3 浏览器缓存问题</h6><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### 一定要在host文件中声明域名指向，否则直接在浏览器输入之后，DNS就会有缓存，host文件中的声明就会失效（如果无法修改，右键host文件-&gt;属行-&gt;安全信息-&gt;给你的用户名赋予完全控制的权限，再用管理员身份运行编辑器软件打开host）</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><h3 id="原型："><a href="#原型：" class="headerlink" title="原型："></a>原型：</h3><ul>
+<li><p>构造函数中为prototype，程序员使用</p>
+</li>
+<li><p>实例对象中为<strong>proto</strong>，浏览器使用，不是很标准</p>
+</li>
+<li><p>实例对象中的<strong>proto</strong>指向该实例对象的构造函数中的prototype</p>
+</li>
+<li><p>构造函数中的prototype属性和方法，可通过实例对象调用</p>
+</li>
+<li><p>当系统内置对象的属性或者方法无法满足需求的时候，可以通过原型为内置对象添加属性或者方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span>.prototype.ffff=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><h5 id="简单的原型写法注意事项："><a href="#简单的原型写法注意事项：" class="headerlink" title="简单的原型写法注意事项："></a>简单的原型写法注意事项：</h5></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Per.prototype=&#123;</span><br><span class="line"><span class="comment">//缺少构造器，需要手动指向构造函数</span></span><br><span class="line">	<span class="keyword">constructor</span>:Person</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><ul>
+<li><p>通过原型实现，改变原型的指向</p>
+</li>
+<li><h6 id="借用构造函数继承的时候，不能继承方法"><a href="#借用构造函数继承的时候，不能继承方法" class="headerlink" title="借用构造函数继承的时候，不能继承方法"></a><strong>借用构造函数继承</strong>的时候，不能继承方法</h6><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//自调用函数</span></span><br><span class="line">    (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age,sex,weight</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.name=name;</span><br><span class="line">            <span class="keyword">this</span>.age=age;</span><br><span class="line">            <span class="keyword">this</span>.sex=sex;</span><br><span class="line">            <span class="keyword">this</span>.weight=weight;</span><br><span class="line">        &#125;</span><br><span class="line">        Person.prototype.hello=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"Hello!My name is "</span>+<span class="keyword">this</span>.name+<span class="string">" This is my message: age:"</span>+<span class="keyword">this</span>.age+<span class="string">" sex:"</span>+<span class="keyword">this</span>.sex+<span class="string">" weight:"</span>+<span class="keyword">this</span>.weight);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">window</span>.Person=Person;</span><br><span class="line">    &#125;());</span><br><span class="line">    <span class="comment">//test</span></span><br><span class="line">    <span class="keyword">var</span> per1=<span class="keyword">new</span> Person(<span class="string">"Ming"</span>,<span class="number">15</span>,<span class="string">"female"</span>,<span class="string">"45kg"</span>);</span><br><span class="line">    per1.hello();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//自调用函数</span></span><br><span class="line">    ((<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//----START--------</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">Student</span>(<span class="params">score,name,age,sex,weight</span>)</span>&#123;</span><br><span class="line">            Person.call(<span class="keyword">this</span>,name,age,sex,weight);<span class="comment">//=======借用构造函数==========</span></span><br><span class="line">            <span class="keyword">this</span>.score=score;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//--------END-------------</span></span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        Student.prototype.myScore=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="keyword">this</span>.name+<span class="string">"======"</span>+<span class="keyword">this</span>.age+<span class="string">"============="</span>+<span class="keyword">this</span>.sex+<span class="string">"==========="</span>+<span class="keyword">this</span>.weight+<span class="string">"============"</span>+<span class="keyword">this</span>.score);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">window</span>.Student=Student;</span><br><span class="line">        <span class="comment">// Student.prototype.hello=function()&#123;</span></span><br><span class="line">        <span class="comment">//     console.log("Student's hello");</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line">    &#125;)());</span><br><span class="line">    <span class="comment">//test</span></span><br><span class="line">    <span class="keyword">var</span> stu1=<span class="keyword">new</span> Student(<span class="number">94</span>,<span class="string">"Li"</span>,<span class="number">45</span>,<span class="string">"male"</span>,<span class="string">"95kg"</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(stu1.myScore);<span class="comment">//输出代码内容</span></span><br><span class="line">    stu1.myScore();</span><br><span class="line">    stu1.hello();<span class="comment">//=========报错（该方法无法实现方法的共享）</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="//yanadev.github.io/2019/11/05/01-Apache配置与安装/1571673408628.png" alt="1571673408628"></p>
-<p><img src="//yanadev.github.io/2019/11/05/01-Apache配置与安装/1571673615189.png" alt="1571673615189"></p>
-<h6 id="9-4-虚拟主机与默认主机"><a href="#9-4-虚拟主机与默认主机" class="headerlink" title="9.4 虚拟主机与默认主机"></a>9.4 虚拟主机与默认主机</h6><ul>
-<li><strong>虚拟主机生效之后，默认主机将自动失效</strong></li>
+<p><strong>运行结果：</strong></p>
+<p><img src="//yanadev.github.io/2019/10/16/JS创造对象三种方式/1571208798824.png" alt="1571208798824"></p>
+</li>
+<li><h4 id="组合继承："><a href="#组合继承：" class="headerlink" title="组合继承："></a>组合继承：</h4><ul>
+<li>借用构造函数继承属性，同时改变原型的指向，可以解决属性和方法的继承问题</li>
 </ul>
-<p><img src="//yanadev.github.io/2019/11/05/01-Apache配置与安装/1571673671443.png" alt="1571673671443"></p>
-<h6 id="9-5-虚拟主机的作用"><a href="#9-5-虚拟主机的作用" class="headerlink" title="9.5 虚拟主机的作用"></a>9.5 虚拟主机的作用</h6><ul>
-<li><p>每次配置虚拟主机要配置好根目录的访问权限（SeverName要和本机host文件设置的一致）</p>
-<p><img src="//yanadev.github.io/2019/11/05/01-Apache配置与安装/1572246555897.png" alt="1572246555897"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//自调用函数</span></span><br><span class="line">    (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age,sex,weight</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.name=name;</span><br><span class="line">            <span class="keyword">this</span>.age=age;</span><br><span class="line">            <span class="keyword">this</span>.sex=sex;</span><br><span class="line">            <span class="keyword">this</span>.weight=weight;</span><br><span class="line">        &#125;</span><br><span class="line">        Person.prototype.hello=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"Hello!My name is "</span>+<span class="keyword">this</span>.name+<span class="string">" This is my message: age:"</span>+<span class="keyword">this</span>.age+<span class="string">" sex:"</span>+<span class="keyword">this</span>.sex+<span class="string">" weight:"</span>+<span class="keyword">this</span>.weight);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">window</span>.Person=Person;</span><br><span class="line">    &#125;());</span><br><span class="line">    <span class="comment">//test</span></span><br><span class="line">    <span class="keyword">var</span> per1=<span class="keyword">new</span> Person(<span class="string">"Ming"</span>,<span class="number">15</span>,<span class="string">"female"</span>,<span class="string">"45kg"</span>);</span><br><span class="line">    per1.hello();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//自调用函数</span></span><br><span class="line">    ((<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">Student</span>(<span class="params">score,name,age,sex,weight</span>)</span>&#123;</span><br><span class="line">            Person.call(<span class="keyword">this</span>,name,age,sex,weight);<span class="comment">//=================借用构造函数</span></span><br><span class="line">            <span class="keyword">this</span>.score=score;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//-------------------START---------------------</span></span><br><span class="line">        Student.prototype=<span class="keyword">new</span> Person();<span class="comment">//不传值，改变原型的指向</span></span><br><span class="line">        <span class="comment">//-------------------end---------------------</span></span><br><span class="line">        Student.prototype.myScore=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="keyword">this</span>.name+<span class="string">"======"</span>+<span class="keyword">this</span>.age+<span class="string">"============="</span>+<span class="keyword">this</span>.sex+<span class="string">"==========="</span>+<span class="keyword">this</span>.weight+<span class="string">"============"</span>+<span class="keyword">this</span>.score);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">window</span>.Student=Student;</span><br><span class="line">    &#125;)());</span><br><span class="line">    <span class="comment">//test</span></span><br><span class="line">    <span class="keyword">var</span> stu1=<span class="keyword">new</span> Student(<span class="number">94</span>,<span class="string">"Li"</span>,<span class="number">45</span>,<span class="string">"male"</span>,<span class="string">"95kg"</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(stu1.myScore);<span class="comment">//输出代码内容</span></span><br><span class="line">    stu1.myScore();</span><br><span class="line">    <span class="comment">// console.log(stu1);/////////////////==================不改变指向的时候__proto__指向Student构造函数原型</span></span><br><span class="line">    <span class="comment">// stu1.hello();//=========报错（该方法无法实现方法的共享）</span></span><br><span class="line">    <span class="built_in">console</span>.log(stu1);<span class="comment">/////////////////==================改变指向的时候__proto__指向Person构造函数原型</span></span><br><span class="line">    stu1.hello();<span class="comment">//实现方法共享</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>运行结果：</strong></p>
+<p><img src="//yanadev.github.io/2019/10/16/JS创造对象三种方式/1571210145954.png" alt="1571210145954"></p>
+</li>
+<li><h4 id="拷贝继承："><a href="#拷贝继承：" class="headerlink" title="拷贝继承："></a>拷贝继承：</h4><ul>
+<li><p>即把对象中原型的所有属性和方法使用遍历的方式复制一份给另一个对象</p>
+</li>
+<li><p><strong>直接传址，非拷贝</strong></p>
+<ul>
+<li><p>方式一：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj1=&#123;</span><br><span class="line">      name:<span class="string">"MIMI"</span>,</span><br><span class="line">      age:<span class="number">20</span>,</span><br><span class="line">      sleep:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">"sleeping"</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">var</span> obj2=obj1;<span class="comment">//栈中=====传址</span></span><br><span class="line">    <span class="built_in">console</span>.log(obj2.name,obj2.age);</span><br><span class="line">    obj2.sleep();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方式二：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj1=&#123;</span><br><span class="line">      name:<span class="string">"MIMI"</span>,</span><br><span class="line">      age:<span class="number">20</span>,</span><br><span class="line">      sleep:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">"sleeping"</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">var</span> obj2=&#123;&#125;;<span class="comment">//栈中=====传址</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> obj1)&#123;</span><br><span class="line">        obj2[key]=obj1[key];<span class="comment">//JS是动态类型的语言，书写键值对相当于与"."出了属性</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(obj2);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><h5 id="浅拷贝："><a href="#浅拷贝：" class="headerlink" title="浅拷贝："></a><strong>浅拷贝</strong>：</h5><ul>
+<li>在堆中实现原型属性和方法的拷贝，原对象中的仍然存在部分不可拷贝的方法和属性</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">((<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      </span><br><span class="line">    &#125;</span><br><span class="line">    Person.prototype.age=<span class="number">10</span>;</span><br><span class="line">    Person.prototype.sex=<span class="string">"male"</span>;</span><br><span class="line">    Person.prototype.weight=<span class="string">"50kg"</span>;</span><br><span class="line">    Person.prototype.play=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"Have a good time!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">window</span>.Person=Person;</span><br><span class="line">&#125;)());</span><br><span class="line"><span class="keyword">var</span> obj2=&#123;&#125;;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> Person.prototype)&#123;</span><br><span class="line">    obj2[key]=Person.prototype[key];</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.dir(obj2);</span><br><span class="line">obj2.play();</span><br></pre></td></tr></table></figure>
+
+<p><strong>运行结果：</strong></p>
+<p><img src="//yanadev.github.io/2019/10/16/JS创造对象三种方式/1571233114884.png" alt="1571233114884"></p>
+</li>
+</ul>
+</li>
+</ul>
 </li>
 </ul>
 
@@ -259,6 +285,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">创建对象 原型 继承 浅拷贝 传址</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -309,7 +346,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://yanadev.github.io/2019/11/05/01-Apache配置与安装/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://yanadev.github.io/2019/10/16/JS创造对象三种方式/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -323,18 +360,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/11/05/02-PHP特性与基本操作/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/11/05/Apache配置与安装/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          (no title)
+          01-Apache配置与安装
         
       </div>
     </a>
   
   
-    <a href="/2019/10/16/JavaScript高级-01/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">JavaScript高级-01</div>
+    <a href="/2019/10/16/hexo博客的使用/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">hexo博客的使用</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -361,7 +398,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#完整的Web网站，需要"><span class="toc-number">1.</span> <span class="toc-text">完整的Web网站，需要</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#搭建Web服务器"><span class="toc-number">2.</span> <span class="toc-text">搭建Web服务器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#服务器软件"><span class="toc-number">2.1.</span> <span class="toc-text">服务器软件</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Apache安装"><span class="toc-number">3.</span> <span class="toc-text">Apache安装</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#安装服务"><span class="toc-number">3.1.</span> <span class="toc-text">安装服务</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#卸载服务"><span class="toc-number">3.2.</span> <span class="toc-text">卸载服务</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置Apache文件"><span class="toc-number">4.</span> <span class="toc-text">配置Apache文件</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-设置ServerRoot-服务器根目录"><span class="toc-number">4.1.</span> <span class="toc-text">1. 设置ServerRoot(服务器根目录)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-设置主机地址"><span class="toc-number">4.2.</span> <span class="toc-text">2. 设置主机地址</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-命令行"><span class="toc-number">4.3.</span> <span class="toc-text">3. 命令行</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-启动Apache服务"><span class="toc-number">4.4.</span> <span class="toc-text">4. 启动Apache服务</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-监听本机端口的使用"><span class="toc-number">4.5.</span> <span class="toc-text">5. 监听本机端口的使用</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6-设置访问权限"><span class="toc-number">4.6.</span> <span class="toc-text">6. 设置访问权限</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#step1"><span class="toc-number">4.6.1.</span> <span class="toc-text">step1</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#step2"><span class="toc-number">4.6.2.</span> <span class="toc-text">step2</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-默认文档"><span class="toc-number">4.7.</span> <span class="toc-text">7. 默认文档</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#8-目录文档"><span class="toc-number">4.8.</span> <span class="toc-text">8. 目录文档</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1-开启的情况下"><span class="toc-number">4.8.1.</span> <span class="toc-text">1.开启的情况下</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2-关闭的时候"><span class="toc-number">4.8.2.</span> <span class="toc-text">2.关闭的时候</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#9-虚拟主机配置"><span class="toc-number">4.9.</span> <span class="toc-text">9. 虚拟主机配置</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#9-1-引入配置文件"><span class="toc-number">4.9.1.</span> <span class="toc-text">9.1 引入配置文件</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#9-2-特别注意"><span class="toc-number">4.9.2.</span> <span class="toc-text">9.2 特别注意</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#9-3-浏览器缓存问题"><span class="toc-number">4.9.3.</span> <span class="toc-text">9.3 浏览器缓存问题</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#9-4-虚拟主机与默认主机"><span class="toc-number">4.9.4.</span> <span class="toc-text">9.4 虚拟主机与默认主机</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#9-5-虚拟主机的作用"><span class="toc-number">4.9.5.</span> <span class="toc-text">9.5 虚拟主机的作用</span></a></li></ol></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#封装：把属性和方法封装在对象中"><span class="toc-number">1.</span> <span class="toc-text">封装：把属性和方法封装在对象中</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对象：具体值某个事物，有特征（属性）和行为（方法）"><span class="toc-number">2.</span> <span class="toc-text">对象：具体值某个事物，有特征（属性）和行为（方法）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建对象的三种方式："><span class="toc-number">3.</span> <span class="toc-text">创建对象的三种方式：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#自定义构造函数（优化后的工厂模式）"><span class="toc-number">3.1.</span> <span class="toc-text">自定义构造函数（优化后的工厂模式）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#工厂模式（推论）"><span class="toc-number">3.1.1.</span> <span class="toc-text">工厂模式（推论）</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#自定义构造函数创建对象（4个步骤）"><span class="toc-number">3.2.</span> <span class="toc-text">自定义构造函数创建对象（4个步骤）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#原型："><span class="toc-number">4.</span> <span class="toc-text">原型：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#简单的原型写法注意事项："><span class="toc-number">4.0.1.</span> <span class="toc-text">简单的原型写法注意事项：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#继承"><span class="toc-number">5.</span> <span class="toc-text">继承</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#借用构造函数继承的时候，不能继承方法"><span class="toc-number">5.0.0.1.</span> <span class="toc-text">借用构造函数继承的时候，不能继承方法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#组合继承："><span class="toc-number">5.1.</span> <span class="toc-text">组合继承：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#拷贝继承："><span class="toc-number">5.2.</span> <span class="toc-text">拷贝继承：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#浅拷贝："><span class="toc-number">5.2.1.</span> <span class="toc-text">浅拷贝：</span></a></li></ol></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -483,7 +520,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">创建对象 原型 继承 浅拷贝 传址</a>
+                <a href="javascript:void(0)" class="js-tag color5">php读取文件 字符串 数组</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">自建服务器 Apache配置</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -491,7 +532,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">创建对象 原型 继承 浅拷贝 传址</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">test</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Apache配置php相关信息</a>
               </li>
             
             <div class="clearfix"></div>
