@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://yanadev.github.io/2019/11/05/Apache配置与安装/1571673615189-1572925595477.png">
 <meta property="og:image" content="https://yanadev.github.io/2019/11/05/Apache配置与安装/1571673671443-1572925592818.png">
 <meta property="og:image" content="https://yanadev.github.io/2019/11/05/Apache配置与安装/1572246555897-1572925588677.png">
-<meta property="og:updated_time" content="2019-11-05T04:19:38.500Z">
+<meta property="og:updated_time" content="2019-11-05T04:22:43.441Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Apache配置与安装">
 <meta name="twitter:description" content="完整的Web网站，需要">
@@ -193,7 +193,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">570字</span>
+        <span class="post-count">579字</span>
       </span>
     </span>
 
@@ -233,44 +233,32 @@
 
 <p><img src="//yanadev.github.io/2019/11/05/Apache配置与安装/1571380686086-1572893617816.png" alt="1571380686086"></p>
 <h4 id="配置Apache文件"><a href="#配置Apache文件" class="headerlink" title="配置Apache文件"></a>配置Apache文件</h4><blockquote>
-<ol>
-<li>设置ServerRoot(服务器根目录)</li>
-</ol>
+<p>1.设置ServerRoot(服务器根目录)</p>
 </blockquote>
 <p><img src="//yanadev.github.io/2019/11/05/Apache配置与安装/1571382060267.png" alt="1571382060267"></p>
 <blockquote>
-<ol start="2">
-<li>设置主机地址 </li>
-</ol>
+<p>2.设置主机地址 </p>
 </blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ServerName localhost</span><br></pre></td></tr></table></figure>
 
 <blockquote>
-<ol start="3">
-<li>在命令行中bin目录下执行</li>
-</ol>
+<p>3.在命令行中bin目录下执行</p>
 </blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">“https   -t”-------------------&gt;检测是否安装成功，修改bug</span><br></pre></td></tr></table></figure>
 
 <blockquote>
-<ol start="4">
-<li>启动Apache服务</li>
-</ol>
+<p>4.启动Apache服务</p>
 </blockquote>
 <p><img src="//yanadev.github.io/2019/11/05/Apache配置与安装/1571383304838.png" alt="1571383304838"></p>
 <blockquote>
-<ol start="5">
-<li>监听本机端口的使用</li>
-</ol>
+<p>5.监听本机端口的使用</p>
 </blockquote>
 <p><img src="//yanadev.github.io/2019/11/05/Apache配置与安装/1571387453851.png" alt="1571387453851"></p>
 <blockquote>
-<ol start="6">
-<li>设置访问权限<ul>
+<p>6.设置访问权限</p>
+<ul>
 <li>先禁止所有目录的访问</li>
 </ul>
-</li>
-</ol>
 </blockquote>
 <p><img src="//yanadev.github.io/2019/11/05/Apache配置与安装/1571387784271.png" alt="1571387784271"></p>
 <blockquote>
@@ -280,9 +268,7 @@
 </blockquote>
 <p><img src="//yanadev.github.io/2019/11/05/Apache配置与安装/1571389321433.png" alt="1571389321433"><br><img src="//yanadev.github.io/2019/11/05/Apache配置与安装/1571388024563.png" alt="  "></p>
 <blockquote>
-<ol start="7">
-<li>默认文档</li>
-</ol>
+<p>7.默认文档</p>
 <ul>
 <li>可修改</li>
 <li>当客户端访问的是一个目录而非具体文件时，服务端默认返回该目录下的某个文档，即默认文档（一般为index）</li>
@@ -290,27 +276,19 @@
 </blockquote>
 <p><img src="//yanadev.github.io/2019/11/05/Apache配置与安装/1571389403939.png" alt="1571389403939"></p>
 <blockquote>
-<ol start="8">
-<li>目录文档</li>
-</ol>
+<p>8.目录文档</p>
 </blockquote>
 <p><img src="//yanadev.github.io/2019/11/05/Apache配置与安装/1571388852980.png" alt="1571388852980"></p>
 <blockquote>
-<ul>
-<li><input checked disabled type="checkbox"> <strong>开启的情况下</strong></li>
-</ul>
+<p><strong>开启的情况下</strong></p>
 </blockquote>
 <p><img src="//yanadev.github.io/2019/11/05/Apache配置与安装/1571390026654.png" alt="1571390026654"></p>
 <blockquote>
-<ul>
-<li><input checked disabled type="checkbox"> <strong>关闭的时候</strong></li>
-</ul>
+<p><strong>关闭的时候</strong></p>
 </blockquote>
 <p><img src="//yanadev.github.io/2019/11/05/Apache配置与安装/1571390099085.png" alt="1571390099085"></p>
 <blockquote>
-<ol start="9">
-<li>虚拟主机配置</li>
-</ol>
+<p>9虚拟主机配置</p>
 <ul>
 <li>引入配置文件</li>
 </ul>
@@ -585,11 +563,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">自建服务器 Apache配置</a>
+                <a href="javascript:void(0)" class="js-tag color3">创建对象 原型 继承 浅拷贝 传址</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">创建对象 原型 继承 浅拷贝 传址</a>
+                <a href="javascript:void(0)" class="js-tag color5">自建服务器 Apache配置</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -597,11 +575,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">php读取文件 字符串 数组</a>
+                <a href="javascript:void(0)" class="js-tag color5">test</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">test</a>
+                <a href="javascript:void(0)" class="js-tag color5">php读取文件 字符串 数组</a>
               </li>
              
               <li class="article-tag-list-item">
