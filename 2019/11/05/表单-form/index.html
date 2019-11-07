@@ -8,18 +8,20 @@
   <link rel="dns-prefetch" href="https://yanadev.github.io">
   <title>表单(form) | Yanadev</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="表单处理收集指定用户的信息 1信息交互：展示信息、收集信息。  表单基本使用&amp;lt;form&amp;gt;是HTML中专门用于提交数据的标签，通过该标签可以收集用户输入 一个完整的表单应包括两个部分：表单对象和应用程序  form标签有两个必要属性：  action：表单提交地址（将数据交给谁）  method：以什么形式提交表单   如果希望被提交，表单元素（表单域）必须有name 表单中一定要有一个">
-<meta name="keywords" content="前端,Student,Coder,Hexo,JavaScript,CSS,HTML">
+  <meta name="description" content="表单处理收集指定用户的信息 1信息交互：展示信息、收集信息。  表单基本使用">
+<meta name="keywords" content="form action method enctype 文件域 表单">
 <meta property="og:type" content="article">
 <meta property="og:title" content="表单(form)">
 <meta property="og:url" content="https://yanadev.github.io/2019/11/05/表单-form/index.html">
 <meta property="og:site_name" content="Yanadev">
-<meta property="og:description" content="表单处理收集指定用户的信息 1信息交互：展示信息、收集信息。  表单基本使用&amp;lt;form&amp;gt;是HTML中专门用于提交数据的标签，通过该标签可以收集用户输入 一个完整的表单应包括两个部分：表单对象和应用程序  form标签有两个必要属性：  action：表单提交地址（将数据交给谁）  method：以什么形式提交表单   如果希望被提交，表单元素（表单域）必须有name 表单中一定要有一个">
+<meta property="og:description" content="表单处理收集指定用户的信息 1信息交互：展示信息、收集信息。  表单基本使用">
 <meta property="og:locale" content="enf">
-<meta property="og:updated_time" content="2019-11-06T03:52:13.237Z">
+<meta property="og:image" content="https://yanadev.github.io/2019/11/05/表单-form/image-20191107215845450.png">
+<meta property="og:updated_time" content="2019-11-07T17:36:41.245Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="表单(form)">
-<meta name="twitter:description" content="表单处理收集指定用户的信息 1信息交互：展示信息、收集信息。  表单基本使用&amp;lt;form&amp;gt;是HTML中专门用于提交数据的标签，通过该标签可以收集用户输入 一个完整的表单应包括两个部分：表单对象和应用程序  form标签有两个必要属性：  action：表单提交地址（将数据交给谁）  method：以什么形式提交表单   如果希望被提交，表单元素（表单域）必须有name 表单中一定要有一个">
+<meta name="twitter:description" content="表单处理收集指定用户的信息 1信息交互：展示信息、收集信息。  表单基本使用">
+<meta name="twitter:image" content="https://yanadev.github.io/2019/11/05/表单-form/image-20191107215845450.png">
   
     <link rel="alternative" href="/atom.xml" title="Yanadev" type="application/atom+xml">
   
@@ -170,7 +172,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">1.3k字</span>
+        <span class="post-count">1.8k字</span>
       </span>
     </span>
 
@@ -179,7 +181,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">5分</span>
+        <span class="post-count">7分</span>
       </span>
     </span>
 </div>
@@ -193,7 +195,9 @@
         <h4 id="表单处理"><a href="#表单处理" class="headerlink" title="表单处理"></a>表单处理</h4><p>收集指定用户的信息</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">信息交互：展示信息、收集信息。</span><br></pre></td></tr></table></figure>
 
-<h4 id="表单基本使用"><a href="#表单基本使用" class="headerlink" title="表单基本使用"></a>表单基本使用</h4><p><code>&lt;form&gt;</code>是HTML中专门用于提交数据的标签，通过该标签可以<code>收集用户输入</code></p>
+<h4 id="表单基本使用"><a href="#表单基本使用" class="headerlink" title="表单基本使用"></a>表单基本使用</h4><a id="more"></a>
+
+<p><code>&lt;form&gt;</code>是HTML中专门用于提交数据的标签，通过该标签可以<code>收集用户输入</code></p>
 <p>一个完整的表单应包括两个部分：<code>表单对象</code>和<code>应用程序</code></p>
 <blockquote>
 <p>form标签有两个必要属性：</p>
@@ -282,6 +286,26 @@
 </blockquote>
 <h5 id="选择框"><a href="#选择框" class="headerlink" title="选择框"></a>选择框</h5><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">name</span>=<span class="string">"subject"</span>&gt;</span>   </span><br><span class="line">    <span class="tag">&lt;<span class="name">!‐‐</span> 设置 <span class="attr">value</span> 提交 <span class="attr">value</span> ‐‐&gt;</span>   </span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"1"</span>&gt;</span>语文<span class="tag">&lt;/<span class="name">option</span>&gt;</span>   </span><br><span class="line">    <span class="tag">&lt;<span class="name">!‐‐</span> 没有设置 <span class="attr">value</span> 提交 <span class="attr">innerText</span> ‐‐&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span>&gt;</span>数学<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
+<h4 id="文件域"><a href="#文件域" class="headerlink" title="文件域"></a>文件域</h4><blockquote>
+<p>$_FILES超全局成员接收上传的文件 </p>
+<ul>
+<li><p>$_FILES[‘***’]  接收到的是一个 <code>关联数组</code></p>
+</li>
+<li><p>上传文件必须使用 method=”post” ,enctype=”multipart/form-data”;</p>
+</li>
+</ul>
+<p>enctype 默认是 urlencoded 格式 key1=value1&amp;key2=value2</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>move_uploaded_file ( source_path , target_path )  ：将服务端临时文件移动到网站目录中</li>
+</ul>
+<p>is_dir(‘./directory’) ：判断是否为目录，是==&gt;TRUE</p>
+<p>mkdir(‘./newDir’) ：创建新目录</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line"></span><br><span class="line">function upload()&#123;</span><br><span class="line">	global $message;</span><br><span class="line">	if(!isset($_FILES[&apos;avatar&apos;]))&#123;</span><br><span class="line">		//客户端提交的表单内容中根本没有文件域</span><br><span class="line">		$message = &quot;请选择需要上传的文件&quot;;</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">	$avatar=$_FILES[&apos;avatar&apos;];</span><br><span class="line">	/*</span><br><span class="line">	$avatar=====&gt;关联数组</span><br><span class="line">		array(5) &#123;</span><br><span class="line">		  [&quot;name&quot;]=&gt;</span><br><span class="line">		  string(10) &quot;avatar.jpg&quot;</span><br><span class="line">		  [&quot;type&quot;]=&gt;</span><br><span class="line">		  string(10) &quot;image/jpeg&quot;</span><br><span class="line">		  [&quot;tmp_name&quot;]=&gt;</span><br><span class="line">		  string(27) &quot;C:\Windows\Temp\phpA8F2.tmp&quot;</span><br><span class="line">		  [&quot;error&quot;]=&gt;</span><br><span class="line">		  int(0)</span><br><span class="line">		  [&quot;size&quot;]=&gt;</span><br><span class="line">		  int(27719)</span><br><span class="line">		&#125;</span><br><span class="line">	 */</span><br><span class="line">	if($avatar[&apos;error&apos;]!==UPLOAD_ERR_OK)&#123;</span><br><span class="line">		//服务端没有接收到上传的文件</span><br><span class="line">		$message = &apos;上传失败&apos;;</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">	//接收到了文件</span><br><span class="line">	//将文件从临时目录移动到网站范围之内</span><br><span class="line">	$source=$avatar[&apos;tmp_name&apos;];</span><br><span class="line">	//=&gt;&quot;C:\Windows\Temp\phpA8F2.tmp&quot;</span><br><span class="line">	if(!is_dir(&apos;./uploads&apos;))&#123;</span><br><span class="line">		//目录不存在，创建目录</span><br><span class="line">		mkdir(&apos;./uploads&apos;);</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">	$target=&apos;./uploads/&apos;.$avatar[&apos;name&apos;];</span><br><span class="line">	//=&gt;&apos;./uploads/avatar.jpg&apos;</span><br><span class="line">	$moved=move_uploaded_file($source, $target);</span><br><span class="line">	if(!$moved)&#123;</span><br><span class="line">		$message = &apos;上传失败&apos;;</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">	//移动成功（上传整个过程ok）</span><br><span class="line">	$message = &apos;上传成功&apos;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if($_SERVER[&apos;REQUEST_METHOD&apos;]===&apos;POST&apos;)&#123;</span><br><span class="line">//接受文件使用 $_FILES 超全局成员</span><br><span class="line">	upload();</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">?&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;!-- 如果一个表单中有文本域（文件上传），必须将表单的 method 设置为 post ，enctype 设置为 multipart/form-data --&gt;</span><br><span class="line">	&lt;!-- enctype 默认是 urlencoded 格式 key1=value1&amp;key2=value2 --&gt;</span><br><span class="line">	&lt;form action=&quot;&lt;?php echo $_SERVER[&apos;PHP_SELF&apos;]; ?&gt;&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;</span><br><span class="line">		&lt;input type=&quot;file&quot; name=&quot;avatar&quot; id=&quot;&quot;&gt;</span><br><span class="line">		&lt;button&gt;上传&lt;/button&gt;</span><br><span class="line">		&lt;?php if (isset($message)): ?&gt;</span><br><span class="line">			&lt;p&gt;&lt;?php echo $message; ?&gt;&lt;/p&gt;</span><br><span class="line">		&lt;?php endif ?&gt;</span><br><span class="line">	&lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="//yanadev.github.io/2019/11/05/表单-form/image-20191107215845450.png" alt="image-20191107215845450"></p>
 <h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><blockquote>
 <ul>
 <li>将表单的处理逻辑放在HTML之前，为了更灵活的控制HTML的输出</li>
@@ -303,6 +327,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">form action method enctype 文件域 表单</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -405,7 +440,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#表单处理"><span class="toc-number">1.</span> <span class="toc-text">表单处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#表单基本使用"><span class="toc-number">2.</span> <span class="toc-text">表单基本使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#提交地址"><span class="toc-number">3.</span> <span class="toc-text">提交地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#提交方式"><span class="toc-number">4.</span> <span class="toc-text">提交方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#常见表单元素处理"><span class="toc-number">5.</span> <span class="toc-text">常见表单元素处理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#单选按钮"><span class="toc-number">5.1.</span> <span class="toc-text">单选按钮</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#复选按钮"><span class="toc-number">5.2.</span> <span class="toc-text">复选按钮</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#选择框"><span class="toc-number">5.3.</span> <span class="toc-text">选择框</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注意事项"><span class="toc-number">6.</span> <span class="toc-text">注意事项</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#表单处理"><span class="toc-number">1.</span> <span class="toc-text">表单处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#表单基本使用"><span class="toc-number">2.</span> <span class="toc-text">表单基本使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#提交地址"><span class="toc-number">3.</span> <span class="toc-text">提交地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#提交方式"><span class="toc-number">4.</span> <span class="toc-text">提交方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#常见表单元素处理"><span class="toc-number">5.</span> <span class="toc-text">常见表单元素处理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#单选按钮"><span class="toc-number">5.1.</span> <span class="toc-text">单选按钮</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#复选按钮"><span class="toc-number">5.2.</span> <span class="toc-text">复选按钮</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#选择框"><span class="toc-number">5.3.</span> <span class="toc-text">选择框</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文件域"><span class="toc-number">6.</span> <span class="toc-text">文件域</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注意事项"><span class="toc-number">7.</span> <span class="toc-text">注意事项</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -527,15 +562,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">自建服务器 Apache配置</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">创建对象 原型 继承 浅拷贝 传址</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">test</a>
+                <a href="javascript:void(0)" class="js-tag color5">自建服务器 Apache配置</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">PHP错误信息说明 UPLOAD_ERR_OK... PHP语义化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Sublime软件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -543,11 +582,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">test</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">form action method enctype 文件域 表单</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">php读取文件 字符串 数组</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Apache配置php相关信息</a>
+                <a href="javascript:void(0)" class="js-tag color3">Apache配置php相关信息 超全局变量  作用域 文件操作 PHP扩展</a>
               </li>
             
             <div class="clearfix"></div>
