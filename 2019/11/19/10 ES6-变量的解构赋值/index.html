@@ -54,7 +54,7 @@
 <meta property="og:site_name" content="YanaChen">
 <meta property="og:description" content="解构( Destructuring ) 从数组和对象中提取值，对变量进行赋值 before : 变量赋值只能直接指定值123let a = 1;let b = 2;let c = 3;ES6 : 可从数组中提取值，按照对应的位置，对变量赋值1let [a, b, c] = [1, 2, 3]; 该写法本质上属于 模式匹配：只要等号两边模式相同，左边的变量就会被赋予对应的值。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-23T16:27:01.145Z">
+<meta property="og:updated_time" content="2019-11-25T16:49:24.735Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ES6-变量的解构赋值">
 <meta name="twitter:description" content="解构( Destructuring ) 从数组和对象中提取值，对变量进行赋值 before : 变量赋值只能直接指定值123let a = 1;let b = 2;let c = 3;ES6 : 可从数组中提取值，按照对应的位置，对变量赋值1let [a, b, c] = [1, 2, 3]; 该写法本质上属于 模式匹配：只要等号两边模式相同，左边的变量就会被赋予对应的值。">
@@ -149,17 +149,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">11</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">14</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">7</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">10</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">13</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">17</span></a>
 
   </li>
   </ul>
@@ -218,7 +218,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-24 00:27:01" itemprop="dateModified" datetime="2019-11-24T00:27:01+08:00">2019-11-24</time>
+                <time title="修改时间：2019-11-26 00:49:24" itemprop="dateModified" datetime="2019-11-26T00:49:24+08:00">2019-11-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -245,7 +245,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.9k</span>
+              <span>4.6k</span>
             </span>
 
         </div>
@@ -356,7 +356,29 @@
 <p>语法错误，因为 JavaScirpt 引擎会将 <code>{x}</code> 理解成一个代码块<br>只有不把大括号写在行首，避免 Javascirpt 将其解释成代码块，才能解决这个问题</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x;</span><br><span class="line">(&#123;x&#125; = &#123;<span class="attr">x</span>: <span class="number">1</span>&#125;);</span><br></pre></td></tr></table></figure>
 
-<p><a href="https://yanadev.github.io/2019/11/08/03 PHP错误信息说明">PHP错误信息</a></p>
+<ol start="2">
+<li>解构赋值允许等号左边的模式中，不放置任何变量名=====&gt;可以写出非常古怪的赋值表达式</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(&#123;&#125; = [<span class="literal">true</span>, <span class="literal">false</span>]);</span><br><span class="line">(&#123;&#125; = <span class="string">'abc'</span>);</span><br><span class="line">(&#123;&#125; = []);</span><br><span class="line"><span class="comment">// 以上表达式虽然毫无意义，但是语法合法，可执行</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>可以对数组进行对象属性的解构====&gt;数组的本质是特殊的对象</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]; <span class="comment">// arr = &#123;index0 : arr[index0], index1 : arr[index1]...&#125;</span></span><br><span class="line"><span class="keyword">let</span> &#123;<span class="number">0</span> : first, [arr.length - <span class="number">1</span>] : last&#125; = arr;</span><br><span class="line">first <span class="comment">// 1</span></span><br><span class="line">last <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="字符串的解构赋值"><a href="#字符串的解构赋值" class="headerlink" title="字符串的解构赋值"></a>字符串的解构赋值</h4><p>字符串被转换成一个类似数组的对象=====&gt;可以解构赋值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> [a, b, c, d, e] = <span class="string">'hello'</span>;</span><br><span class="line">a <span class="comment">// "h"</span></span><br><span class="line">b <span class="comment">// "e"</span></span><br><span class="line">c <span class="comment">// "l"</span></span><br><span class="line">d <span class="comment">// "l"</span></span><br><span class="line">e <span class="comment">// "o"</span></span><br></pre></td></tr></table></figure>
+
+<p>类似数组的对象都有一个 <code>length</code> 属性====&gt;可以对该属性解构赋值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> &#123;<span class="attr">length</span> : len&#125; = <span class="string">'hello'</span>;</span><br><span class="line">len <span class="comment">// 5</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="数值和布尔值的解构赋值"><a href="#数值和布尔值的解构赋值" class="headerlink" title="数值和布尔值的解构赋值"></a>数值和布尔值的解构赋值</h4><p>等号右边是数值或者布尔值的时候，会先转成对象</p>
+<h4 id="函数参数的解构赋值"><a href="#函数参数的解构赋值" class="headerlink" title="函数参数的解构赋值"></a>函数参数的解构赋值</h4><p>函数参数也可以使用解构赋值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">[x, y]</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x + y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">add([<span class="number">1</span>, <span class="number">2</span>]); <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+
+<p>函数 <code>add</code> 参数表面上是一个数组，但在传入参数的那一刻，数组参数就被结构成变量 <code>x</code> 和 <code>y</code> 。对于函数内部的代码而言，它们能感受到的参数就是 <code>x</code> 和 <code>y</code> 。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[x, y] = [num1, num2];</span><br><span class="line">x <span class="comment">// num1</span></span><br><span class="line">y <span class="comment">// num2</span></span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -389,6 +411,9 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+                <a href="/2019/11/30/11 AJAX动态加载技术/" rel="prev" title="AJAX 动态加载技术">
+                  AJAX 动态加载技术 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
       </footer>
@@ -427,7 +452,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#解构-Destructuring"><span class="nav-number">1.</span> <span class="nav-text">解构( Destructuring )</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组的解构赋值"><span class="nav-number">2.</span> <span class="nav-text">数组的解构赋值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#嵌套数组进行解构"><span class="nav-number">2.1.</span> <span class="nav-text">嵌套数组进行解构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#默认值"><span class="nav-number">2.2.</span> <span class="nav-text">默认值</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象的解构赋值"><span class="nav-number">3.</span> <span class="nav-text">对象的解构赋值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#与数组的区别"><span class="nav-number">3.1.</span> <span class="nav-text">与数组的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优点"><span class="nav-number">3.2.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注意"><span class="nav-number">3.3.</span> <span class="nav-text">注意</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内部机制"><span class="nav-number">3.4.</span> <span class="nav-text">内部机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用于嵌套结构的对象"><span class="nav-number">3.5.</span> <span class="nav-text">用于嵌套结构的对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#嵌套赋值"><span class="nav-number">3.6.</span> <span class="nav-text">嵌套赋值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注意点"><span class="nav-number">3.7.</span> <span class="nav-text">注意点</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#解构-Destructuring"><span class="nav-number">1.</span> <span class="nav-text">解构( Destructuring )</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组的解构赋值"><span class="nav-number">2.</span> <span class="nav-text">数组的解构赋值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#嵌套数组进行解构"><span class="nav-number">2.1.</span> <span class="nav-text">嵌套数组进行解构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#默认值"><span class="nav-number">2.2.</span> <span class="nav-text">默认值</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象的解构赋值"><span class="nav-number">3.</span> <span class="nav-text">对象的解构赋值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#与数组的区别"><span class="nav-number">3.1.</span> <span class="nav-text">与数组的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优点"><span class="nav-number">3.2.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注意"><span class="nav-number">3.3.</span> <span class="nav-text">注意</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内部机制"><span class="nav-number">3.4.</span> <span class="nav-text">内部机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用于嵌套结构的对象"><span class="nav-number">3.5.</span> <span class="nav-text">用于嵌套结构的对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#嵌套赋值"><span class="nav-number">3.6.</span> <span class="nav-text">嵌套赋值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注意点"><span class="nav-number">3.7.</span> <span class="nav-text">注意点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串的解构赋值"><span class="nav-number">3.8.</span> <span class="nav-text">字符串的解构赋值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数值和布尔值的解构赋值"><span class="nav-number">3.9.</span> <span class="nav-text">数值和布尔值的解构赋值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#函数参数的解构赋值"><span class="nav-number">3.10.</span> <span class="nav-text">函数参数的解构赋值</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -443,20 +468,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -503,7 +528,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">29k</span>
+    <span title="站点总字数">36k</span>
 </div>
 
         
