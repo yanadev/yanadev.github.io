@@ -148,17 +148,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">14</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">2</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">10</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">1</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">52</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">56</span></a>
 
   </li>
   </ul>
@@ -187,7 +187,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/01/02/20-参考一些内容管理系统/">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/31/v-clock-text-html-使用区别/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -201,7 +201,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/02/20-参考一些内容管理系统/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2020/03/31/v-clock-text-html-使用区别/" class="post-title-link" itemprop="url">v-clock/text/html 使用区别</a>
         </h1>
 
         <div class="post-meta">
@@ -212,7 +212,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-01-02 15:41:13 / 修改时间：16:34:21" itemprop="dateCreated datePublished" datetime="2020-01-02T15:41:13+08:00">2020-01-02</time>
+              <time title="创建时间：2020-03-31 15:57:14 / 修改时间：15:57:26" itemprop="dateCreated datePublished" datetime="2020-03-31T15:57:14+08:00">2020-03-31</time>
             </span>
 
           <br>
@@ -221,7 +221,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>244</span>
+              <span>1.4k</span>
             </span>
 
         </div>
@@ -233,124 +233,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <ol>
-<li><p>解压源码文件</p>
-<ul>
-<li>将源文件放置到 <code>你想放的文件目录</code> 下</li>
-</ul>
-<p><img src="//yanadev.github.io/2020/01/02/20-参考一些内容管理系统/image-20200102154707960.png" alt="image-20200102154707960"></p>
-</li>
-<li><p>配置虚拟主机</p>
-<ul>
-<li>打开 服务器软件 （我使用的是 Apache ）</li>
-<li>在 <code>https-vhosts</code> 文件中设置配置信息</li>
-</ul>
-<p><img src="//yanadev.github.io/2020/01/02/20-参考一些内容管理系统/image-20200102155110873.png" alt="image-20200102155110873"></p>
-<p><img src="//yanadev.github.io/2020/01/02/20-参考一些内容管理系统/image-20200102155640151.png" alt="image-20200102155640151"></p>
-</li>
-<li><p>在本地hosts文件中设置 IP 地址</p>
-<ul>
-<li>用记事本打开即可</li>
-<li><img src="//yanadev.github.io/2020/01/02/20-参考一些内容管理系统/image-20200102155855941.png" alt="image-20200102155855941"></li>
-<li><img src="//yanadev.github.io/2020/01/02/20-参考一些内容管理系统/image-20200102160019678.png" alt="image-20200102160019678"></li>
-<li>保存文件</li>
-</ul>
-</li>
-<li><p>重启 Apache ，即可在浏览器中访问 <code>typecho.com</code></p>
-</li>
-<li><p>跟随提示接着往下执行</p>
-<p><img src="//yanadev.github.io/2020/01/02/20-参考一些内容管理系统/image-20200102160524422.png" alt="image-20200102160524422"></p>
-</li>
-<li><p>要使用<code>数据库适配器</code>，需要开启 <code>php</code> 中的一些文件扩展-</p>
-<ul>
-<li>打开 <code>php.ini</code> 文件，打开所有带 <code>pdo</code> 的扩展</li>
-<li><img src="//yanadev.github.io/2020/01/02/20-参考一些内容管理系统/image-20200102160917012.png" alt="image-20200102160917012"></li>
-</ul>
-</li>
-<li><p>改完配置文件之后 一定要重启  Apache</p>
-</li>
-<li><p>继续填写相关信息</p>
-<ul>
-<li>自行创建一个空的数据库即可，表的结构无需自己创建</li>
-</ul>
-<p><img src="//yanadev.github.io/2020/01/02/20-参考一些内容管理系统/image-20200102161959579.png" alt="image-20200102161959579"></p>
-</li>
-<li><p>直接访问即可</p>
-<p><img src="//yanadev.github.io/2020/01/02/20-参考一些内容管理系统/image-20200102163311314.png" alt="image-20200102163311314"></p>
-</li>
+          <h4 id="v-cloak、v-text、v-html区别"><a href="#v-cloak、v-text、v-html区别" class="headerlink" title="v-cloak、v-text、v-html区别"></a>v-cloak、v-text、v-html区别</h4><ol>
+<li>使用 v-cloak 能解决插值表达时闪烁的问题，默认 v-text 没有闪烁问题</li>
+<li>v-text 会覆盖元素中原本的内容，但是 插值表达式 只会替代自己的占位符</li>
+<li>v-html 可以输出渲染HTML标签</li>
 </ol>
-      
-    </div>
-
-    
-    
-    
-
-    <div>
-      
-    </div>
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/01/01/18-在php7中使用 mysqli 扩展/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Yana">
-      <meta itemprop="description" content="Never give up！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YanaChen">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/01/01/18-在php7中使用 mysqli 扩展/" class="post-title-link" itemprop="url">未命名</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-01-01 16:40:27 / 修改时间：16:41:48" itemprop="dateCreated datePublished" datetime="2020-01-01T16:40:27+08:00">2020-01-01</time>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>495</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>第一步：因为php7安装目录中没有php.ini文件所以可以复制php.ini-development这个文件改名为php.ini。</p><p>第二步：在php中的配置文件“；”相当于注释，在php.ini中找到extension=php_mysqli.dll这一行把前面的“；”去掉。</p><p>第三步：在Apache24安装目录中找到conf目录下的httpd.conf文件打开并在最后添加：</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/01/01/18-在php7中使用 mysqli 扩展/#more" rel="contents">
+              <a class="btn" href="/2020/03/31/v-clock-text-html-使用区别/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -378,7 +268,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/01/01/17- mysql字符集与校对规则/">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/31/sublime常用快捷键/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -392,7 +282,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/01/17- mysql字符集与校对规则/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2020/03/31/sublime常用快捷键/" class="post-title-link" itemprop="url">sublime常用快捷键</a>
         </h1>
 
         <div class="post-meta">
@@ -403,7 +293,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-01-01 01:12:39 / 修改时间：01:21:38" itemprop="dateCreated datePublished" datetime="2020-01-01T01:12:39+08:00">2020-01-01</time>
+              <time title="创建时间：2020-03-31 15:55:45 / 修改时间：15:55:57" itemprop="dateCreated datePublished" datetime="2020-03-31T15:55:45+08:00">2020-03-31</time>
             </span>
 
           <br>
@@ -412,7 +302,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>145</span>
+              <span>1.7k</span>
             </span>
 
         </div>
@@ -424,16 +314,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>在 Linux 下数据库名、表名、列名、别名大小写的默认规则为：</p><ol>
-<li><p>数据库名 、 表名 、表的别名 、 变量名（甘薯和存储过程） 严格区分大小写</p>
-</li>
-<li><p>列名 与 列的别名 在所有情况下 忽略 大小写</p>
-</li>
-<li><p>字段内容（即数据）默认情况下 大小写不敏感</p>
-</li>
-</ol><blockquote>
-<p>原文链接 ：<a href="https://blog.51cto.com/arthur376/1927162" target="_blank" rel="noopener">https://blog.51cto.com/arthur376/1927162</a> </p>
-</blockquote>
+          <h3 id="选择类"><a href="#选择类" class="headerlink" title="选择类"></a><strong>选择类</strong></h3><p><code>Ctrl+D</code> 选中光标所占的文本，继续操作则会选中下一个相同的文本。</p>
+<p><code>Alt+F3</code> 选中文本按下快捷键，即可一次性选择全部的相同文本进行同时编辑。</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># 快速选中并更改所有相同的变量名、函数名等。</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/31/sublime常用快捷键/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -456,7 +347,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2019/12/31/16-php与MySQL的使用/">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/31/form表单使用（全）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -470,7 +361,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2019/12/31/16-php与MySQL的使用/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2020/03/31/form表单使用（全）/" class="post-title-link" itemprop="url">form表单使用（全）</a>
         </h1>
 
         <div class="post-meta">
@@ -479,16 +370,168 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2019-12-31 02:06:29" itemprop="dateCreated datePublished" datetime="2019-12-31T02:06:29+08:00">2019-12-31</time>
+              <time title="创建时间：2020-03-31 15:54:54 / 修改时间：15:55:13" itemprop="dateCreated datePublished" datetime="2020-03-31T15:54:54+08:00">2020-03-31</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-01-01 16:40:03" itemprop="dateModified" datetime="2020-01-01T16:40:03+08:00">2020-01-01</time>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
               </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.2k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="表单处理"><a href="#表单处理" class="headerlink" title="表单处理"></a>表单处理</h4><p>收集指定用户的信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">信息交互：展示信息、收集信息。</span><br></pre></td></tr></table></figure>
+
+<h4 id="表单基本使用"><a href="#表单基本使用" class="headerlink" title="表单基本使用"></a>表单基本使用</h4>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/31/form表单使用（全）/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+    </div>
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/31/PHP使用-解析文本文件呈现表格案例/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yana">
+      <meta itemprop="description" content="Never give up！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanaChen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/31/PHP使用-解析文本文件呈现表格案例/" class="post-title-link" itemprop="url">PHP使用 解析文本文件呈现表格案例</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-31 15:53:40 / 修改时间：15:53:58" itemprop="dateCreated datePublished" datetime="2020-03-31T15:53:40+08:00">2020-03-31</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.5k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="案例练习"><a href="#案例练习" class="headerlink" title="案例练习"></a>案例练习</h4><blockquote>
+<p>解析文本文件呈现表格</p></blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/31/PHP使用-解析文本文件呈现表格案例/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+    </div>
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/31/PHP-isset-与empty-使用区别/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yana">
+      <meta itemprop="description" content="Never give up！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanaChen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/31/PHP-isset-与empty-使用区别/" class="post-title-link" itemprop="url">PHP isset()与empty()使用区别</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-31 15:49:55 / 修改时间：15:50:19" itemprop="dateCreated datePublished" datetime="2020-03-31T15:49:55+08:00">2020-03-31</time>
+            </span>
 
           <br>
             <span class="post-meta-item" title="本文字数">
@@ -508,13 +551,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>php7新版，不再兼容mysql.dll 而是推荐使用mysqli.dll 和pdo_mysql.dll </p>
-<p>因此，像mysql_escape_string此类的函数都不再支持，需要注意</p>
-</blockquote><p>思路：连接服务器 =&gt; 创建数据库 =&gt; 连接数据库 =&gt; 创建数据表</p><p>01-在 php 文件中设置 Content-Type 类型和 字符集 charset （一般是 utf-8）</p>
+          <h3 id="isset"><a href="#isset" class="headerlink" title="isset"></a>isset</h3><p>bool isset ( mixed $var [,mixed $…])：检测是否<code>声明</code>变量并且为<code>非NULL</code></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/12/31/16-php与MySQL的使用/#more" rel="contents">
+              <a class="btn" href="/2020/03/31/PHP-isset-与empty-使用区别/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -542,7 +582,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2019/12/28/15-安装 MySQL 过程/">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/31/原型与继承/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -556,92 +596,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2019/12/28/15-安装 MySQL 过程/" class="post-title-link" itemprop="url">未命名</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-12-28 23:43:16" itemprop="dateCreated datePublished" datetime="2019-12-28T23:43:16+08:00">2019-12-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-31 02:06:19" itemprop="dateModified" datetime="2019-12-31T02:06:19+08:00">2019-12-31</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>843</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h6 id="01-删除已有的服务"><a href="#01-删除已有的服务" class="headerlink" title="01-删除已有的服务"></a>01-删除已有的服务</h6><p>管理员身份打开命令行，使用 <code>sc [command] [serviceName]</code>操作服务</p><blockquote>
-<p>sc delete MySQL  # 删除已有的 MySQL 服务 (其中服务的名字要在详情中查看)</p>
-</blockquote><p><img src="//yanadev.github.io/2019/12/28/15-安装 MySQL 过程/image-20191228234930948.png" alt="image-20191228234930948"></p><h6 id="02-删除安装目录下的-data-文件夹"><a href="#02-删除安装目录下的-data-文件夹" class="headerlink" title="02-删除安装目录下的 data 文件夹"></a>02-删除安装目录下的 <code>data</code> 文件夹</h6><h6 id="03-重新初始化数据库"><a href="#03-重新初始化数据库" class="headerlink" title="03-重新初始化数据库"></a>03-重新初始化数据库</h6><p>命令行切换到安装目录下的 <code>bin</code>文件夹</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/12/28/15-安装 MySQL 过程/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <div>
-      
-    </div>
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2019/12/03/14-模板引擎的引用/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Yana">
-      <meta itemprop="description" content="Never give up！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YanaChen">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/03/14-模板引擎的引用/" class="post-title-link" itemprop="url">14 模板引擎的引用</a>
+            <a href="/2020/03/31/原型与继承/" class="post-title-link" itemprop="url">原型与继承</a>
         </h1>
 
         <div class="post-meta">
@@ -652,18 +607,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2019-12-03 01:42:36 / 修改时间：02:05:30" itemprop="dateCreated datePublished" datetime="2019-12-03T01:42:36+08:00">2019-12-03</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/模板引擎/" itemprop="url" rel="index">
-                    <span itemprop="name">模板引擎</span>
-                  </a>
-                </span>
+              <time title="创建时间：2020-03-31 15:47:25 / 修改时间：15:48:12" itemprop="dateCreated datePublished" datetime="2020-03-31T15:47:25+08:00">2020-03-31</time>
             </span>
 
           <br>
@@ -672,7 +616,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.1k</span>
+              <span>3.6k</span>
             </span>
 
         </div>
@@ -684,15 +628,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h4 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a>使用步骤</h4><ol>
-<li><p>选择一个模板引擎</p>
-</li>
-<li><p>下载模板引擎 JS 文件  <a href="https://unpkg.com/art-template@4.13.2/lib/template-web.js" target="_blank" rel="noopener">https://unpkg.com/art-template@4.13.2/lib/template-web.js</a> </p>
-</li>
-<li><p>引入到页面中</p></li></ol>
+          <h3 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h3><blockquote>
+<p>构造函数中为prototype，程序员使用</p>
+<p>实例对象中为<strong>proto</strong>，浏览器使用，不是很标准</p>
+<p>实例对象中的<strong>proto</strong>指向该实例对象的构造函数中的prototype</p>
+<p>构造函数中的prototype属性和方法，可通过实例对象调用</p>
+<p>当系统内置对象的属性或者方法无法满足需求的时候，可以通过原型为内置对象添加属性或者方法</p>
+</blockquote>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/12/03/14-模板引擎的引用/#more" rel="contents">
+              <a class="btn" href="/2020/03/31/原型与继承/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -720,7 +665,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2019/12/02/13 GET和POST两种基本请求方法的区别/">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/31/原生JS创建对象/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -734,7 +679,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2019/12/02/13 GET和POST两种基本请求方法的区别/" class="post-title-link" itemprop="url">13 GET和POST两种基本请求方法的区别</a>
+            <a href="/2020/03/31/原生JS创建对象/" class="post-title-link" itemprop="url">原生JS创建对象</a>
         </h1>
 
         <div class="post-meta">
@@ -743,26 +688,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2019-12-02 23:24:43" itemprop="dateCreated datePublished" datetime="2019-12-02T23:24:43+08:00">2019-12-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-03 01:42:10" itemprop="dateModified" datetime="2019-12-03T01:42:10+08:00">2019-12-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/HTTP协议/" itemprop="url" rel="index">
-                    <span itemprop="name">HTTP协议</span>
-                  </a>
-                </span>
+              <time title="创建时间：2020-03-31 15:45:50 / 修改时间：15:46:21" itemprop="dateCreated datePublished" datetime="2020-03-31T15:45:50+08:00">2020-03-31</time>
             </span>
 
           <br>
@@ -771,7 +699,244 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1k</span>
+              <span>692</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 封装：把属性和方法封装在对象中</span><br><span class="line"># 对象：具体值某个事物，有特征（属性）和行为（方法）</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建对象的三种方式"><a href="#创建对象的三种方式" class="headerlink" title="创建对象的三种方式"></a>创建对象的三种方式</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/31/原生JS创建对象/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+    </div>
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/31/PHP错误信息说明/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yana">
+      <meta itemprop="description" content="Never give up！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanaChen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/31/PHP错误信息说明/" class="post-title-link" itemprop="url">PHP错误信息说明</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-31 15:44:55 / 修改时间：15:45:00" itemprop="dateCreated datePublished" datetime="2020-03-31T15:44:55+08:00">2020-03-31</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>335</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>UPLOAD_ERR_OK</strong></p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># 值为 <span class="number">0</span>，没有错误发生，文件上传成功。</span><br></pre></td></tr></table></figure>
+
+<p><strong>UPLOAD_ERR_INI_SIZE</strong></p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#值为 <span class="number">1</span>，上传的文件超过了 php.ini 中[upload_max_filesize]选项限制的值。</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/31/PHP错误信息说明/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+    </div>
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/31/PHP扩展/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yana">
+      <meta itemprop="description" content="Never give up！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanaChen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/31/PHP扩展/" class="post-title-link" itemprop="url">PHP扩展</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-31 15:43:41 / 修改时间：15:43:50" itemprop="dateCreated datePublished" datetime="2020-03-31T15:43:41+08:00">2020-03-31</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>664</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>php与apache之间就是apache<code>唤醒</code>php的关系</p><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 注意</span><br><span class="line"># 每次修改了配置文件信息之后一定要重启Apache，否则不会生效</span><br></pre></td></tr></table></figure><p>配置步骤<br>    1.在PHP的安装目录下创建一个<code>php.ini</code>文件</p><pre><code>2.修改`php.ini`文件中的extension_dir的物理路径</code></pre><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">;告知php到该目录下去寻找扩展</span></span><br><span class="line"><span class="attr">extension_dir</span> = <span class="string">"E:/Develop/php/ext"</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/31/PHP扩展/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+    </div>
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/31/PHP-文件操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yana">
+      <meta itemprop="description" content="Never give up！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanaChen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/31/PHP-文件操作/" class="post-title-link" itemprop="url">PHP 文件操作</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-31 15:43:00 / 修改时间：15:43:46" itemprop="dateCreated datePublished" datetime="2020-03-31T15:43:00+08:00">2020-03-31</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>478</span>
             </span>
 
         </div>
@@ -786,339 +951,117 @@
           <table>
 <thead>
 <tr>
-<th align="center"></th>
-<th align="center">GET</th>
-<th align="center">POST</th>
+<th>函数</th>
+<th>描述</th>
+<th>PHP</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="center">后退按钮/刷新</td>
-<td align="center">无害</td>
-<td align="center">数据会被重新提交（浏览器应该改制用户数据会被重新提交）</td>
+<td>basename()</td>
+<td>返回路径中的文件名部分。</td>
+<td>3</td>
 </tr>
 <tr>
-<td align="center">书签</td>
-<td align="center">可收藏为书签</td>
-<td align="center">不可收藏为书签</td>
+<td>copy()</td>
+<td>复制文件。</td>
+<td>3</td>
 </tr>
 <tr>
-<td align="center">缓存</td>
-<td align="center">能被缓存</td>
-<td align="center">不能缓存</td>
+<td>dirname()</td>
+<td>返回路径中的目录名称部分。</td>
+<td>3</td>
 </tr>
 <tr>
-<td align="center">编码类型</td>
-<td align="center">application/x-www-form-urlencoded</td>
-<td align="center">application/x-www-form-urlencoded或multipart/form-data。为二进制数据使用多重编码</td>
+<td>disk_free_space()</td>
+<td>返回目录的可用空间。</td>
+<td>4</td>
 </tr>
 <tr>
-<td align="center">历史</td>
-<td align="center">参数保存在浏览器历史中</td>
-<td align="center">参数不会保存在浏览器历史中</td>
+<td>disk_total_space()</td>
+<td>返回一个目录的磁盘总容量。</td>
+<td>4</td>
 </tr>
 <tr>
-<td align="center">数据长度</td>
-<td align="center">有限制，URL 的最大长度时 2048 个字符</td>
-<td align="center">无限制</td>
+<td>fclose()</td>
+<td>关闭打开的文件。</td>
+<td>3</td>
 </tr>
 <tr>
-<td align="center">数据类型</td>
-<td align="center">只允许 ASCII 字符</td>
-<td align="center">无限制，也允许二进制数据</td>
+<td>file()</td>
+<td>把文件读入一个数组中。</td>
+<td>3</td>
 </tr>
 <tr>
-<td align="center">安全性</td>
-<td align="center">与 POST 相比，GET 安全性较差，因为发送的的数据是 URL 的一部分。发送密码或其他敏感信息时不要使用 GET !</td>
-<td align="center">数据不会显示在 URL 中</td>
+<td>file_exists()</td>
+<td>检查文件或目录是否存在。</td>
+<td>3</td>
 </tr>
 <tr>
-<td align="center">可见性</td>
-<td align="center">数据在 URL 中对所有人都是可见的</td>
-<td align="center">数据不会显示在 URL 中</td>
+<td>file_get_contents()</td>
+<td>将文件读入字符串。</td>
+<td>4</td>
+</tr>
+<tr>
+<td>file_put_contents()</td>
+<td>将字符串写入文件。</td>
+<td>5</td>
+</tr>
+<tr>
+<td>filesize()</td>
+<td>返回文件大小。</td>
+<td>3</td>
+</tr>
+<tr>
+<td>fopen()</td>
+<td>打开一个文件或 URL。</td>
+<td>3</td>
+</tr>
+<tr>
+<td>glob()</td>
+<td>返回一个包含匹配指定模式的文件名/目录的数组。</td>
+<td>4</td>
+</tr>
+<tr>
+<td>is_dir()</td>
+<td>判断指定的文件名是否是一个目录。</td>
+<td>3</td>
+</tr>
+<tr>
+<td>is_file()</td>
+<td>判断指定文件是否为常规的文件。</td>
+<td>3</td>
+</tr>
+<tr>
+<td>mkdir()</td>
+<td>创建目录。</td>
+<td>3</td>
+</tr>
+<tr>
+<td>move_uploaded_file()</td>
+<td>将上传的文件移动到新位置。</td>
+<td>4</td>
+</tr>
+<tr>
+<td>pathinfo()</td>
+<td>返回关于文件路径的信息。</td>
+<td>4</td>
+</tr>
+<tr>
+<td>rename()</td>
+<td>重名名文件或目录。</td>
+<td>3</td>
+</tr>
+<tr>
+<td>rmdir()</td>
+<td>删除空的目录。</td>
+<td>3</td>
+</tr>
+<tr>
+<td>unlink()</td>
+<td>删除文件。</td>
+<td>3</td>
 </tr>
 </tbody></table>
-<h4 id="应用场景中的区别"><a href="#应用场景中的区别" class="headerlink" title="应用场景中的区别"></a>应用场景中的区别</h4>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/12/02/13 GET和POST两种基本请求方法的区别/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <div>
-      
-    </div>
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2019/12/01/12 数据接口/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Yana">
-      <meta itemprop="description" content="Never give up！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YanaChen">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/01/12 数据接口/" class="post-title-link" itemprop="url">未命名</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-12-01 00:23:30" itemprop="dateCreated datePublished" datetime="2019-12-01T00:23:30+08:00">2019-12-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-03 00:57:00" itemprop="dateModified" datetime="2019-12-03T00:57:00+08:00">2019-12-03</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>14</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>返回数据的地址一般称为API</p>
-      
-    </div>
-
-    
-    
-    
-
-    <div>
-      
-    </div>
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2019/11/30/11 AJAX动态加载技术/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Yana">
-      <meta itemprop="description" content="Never give up！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YanaChen">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/30/11 AJAX动态加载技术/" class="post-title-link" itemprop="url">AJAX 动态加载技术</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-30 17:25:47" itemprop="dateCreated datePublished" datetime="2019-11-30T17:25:47+08:00">2019-11-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-11 00:08:21" itemprop="dateModified" datetime="2019-12-11T00:08:21+08:00">2019-12-11</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AJAX/" itemprop="url" rel="index">
-                    <span itemprop="name">AJAX</span>
-                  </a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2k</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Web程序最初的目的是：共享数据（信息）</p><p>以前通过以下几种方式对服务端发起请求，获得服务端的数据：</p><ul>
-<li>地址栏输入地址，回车，刷新</li>
-<li>特定元素的 href 或 src 属性</li>
-<li>表单提交</li>
-</ul><blockquote>
-<p>通过以上几种方案很难获取</p>
-</blockquote><h4 id="AJAX-（-Asynchronous-JavaScript-and-XML-）"><a href="#AJAX-（-Asynchronous-JavaScript-and-XML-）" class="headerlink" title="AJAX （ Asynchronous JavaScript and XML ）"></a>AJAX （ Asynchronous JavaScript and XML ）</h4><p>通过 JavaScript 发送请求、接收响应，不必刷新页面获取最新数据</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/11/30/11 AJAX动态加载技术/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <div>
-      
-    </div>
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2019/11/19/10 ES6-变量的解构赋值/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Yana">
-      <meta itemprop="description" content="Never give up！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YanaChen">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/19/10 ES6-变量的解构赋值/" class="post-title-link" itemprop="url">ES6-变量的解构赋值</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-19 17:50:27" itemprop="dateCreated datePublished" datetime="2019-11-19T17:50:27+08:00">2019-11-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-26 00:49:24" itemprop="dateModified" datetime="2019-11-26T00:49:24+08:00">2019-11-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ES6语法/" itemprop="url" rel="index">
-                    <span itemprop="name">ES6语法</span>
-                  </a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.6k</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="解构-Destructuring"><a href="#解构-Destructuring" class="headerlink" title="解构( Destructuring )"></a>解构( Destructuring )</h3><blockquote>
-<p>从<code>数组和对象</code>中提取值，对变量进行赋值</p>
-</blockquote><p>before : 变量赋值只能直接指定值</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">let</span> b = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">let</span> c = <span class="number">3</span>;</span><br></pre></td></tr></table></figure><p>ES6 : 可从数组中提取值，按照对应的位置，对变量赋值</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [a, b, c] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br></pre></td></tr></table></figure><ul>
-<li>该写法本质上属于 <code>模式匹配</code>：只要等号两边模式相同，左边的变量就会被赋予对应的值。</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/11/19/10 ES6-变量的解构赋值/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
       
     </div>
 
@@ -1187,20 +1130,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-count">56</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">1</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1247,7 +1190,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">90k</span>
+    <span title="站点总字数">88k</span>
 </div>
 
         

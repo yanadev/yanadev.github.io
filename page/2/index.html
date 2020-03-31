@@ -148,17 +148,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">14</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">2</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">10</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">1</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">52</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">56</span></a>
 
   </li>
   </ul>
@@ -187,7 +187,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/13/42-Element-UI组件库使用/">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/31/webpack错误日志/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -201,113 +201,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/03/13/42-Element-UI组件库使用/" class="post-title-link" itemprop="url">未命名</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-13 18:47:03" itemprop="dateCreated datePublished" datetime="2020-03-13T18:47:03+08:00">2020-03-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-17 15:25:29" itemprop="dateModified" datetime="2020-03-17T15:25:29+08:00">2020-03-17</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.1k</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="基于命令行方式手动安装"><a href="#基于命令行方式手动安装" class="headerlink" title="基于命令行方式手动安装"></a>基于命令行方式手动安装</h2><ul>
-<li><p>安装依赖包 npm i element-ui –S </p>
-</li>
-<li><p>导入 Element-UI 相关资源</p>
-<ul>
-<li>完整导入</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在 main.js 入口文件中</span></span><br><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"><span class="keyword">import</span> ElementUI <span class="keyword">from</span> <span class="string">'element-ui'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'element-ui/lib/theme-chalk/index.css'</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App.vue'</span>;</span><br><span class="line"></span><br><span class="line">Vue.use(ElementUI);</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  el: <span class="string">'#app'</span>,</span><br><span class="line">  render: <span class="function"><span class="params">h</span> =&gt;</span> h(App)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>按需导入</li>
-</ul>
-<p>修改 <code>src/plugins</code> 路径下的<code>element.js</code>文件：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="comment">// 导入样式表</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">'element-ui/lib/theme-chalk/index.css'</span></span><br><span class="line"><span class="comment">// 按需导入 element-ui</span></span><br><span class="line"><span class="keyword">import</span> &#123; Button, Form, FormItem, Input &#125; <span class="keyword">from</span> <span class="string">'element-ui'</span></span><br><span class="line"><span class="comment">// 全局注册组件</span></span><br><span class="line">Vue.use(Button)</span><br><span class="line">Vue.use(Form)</span><br><span class="line">Vue.use(FormItem)</span><br><span class="line">Vue.use(Input)</span><br></pre></td></tr></table></figure>
-
-<p>在入口文件 <code>main.js</code> 中引入 <code>element.js</code> ，即可全局使用<code>element-ui</code> 中的按需引入的组件了</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'./plugins/element.js'</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-form label-width=<span class="string">"0px"</span>&gt;</span><br><span class="line">                &lt;!-- 用户名 --&gt;</span><br><span class="line">                &lt;el-form-item&gt;</span><br><span class="line">                    &lt;el-input&gt;<span class="xml"><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span></span><br><span class="line">                &lt;<span class="regexp">/el-form-item&gt;</span></span><br><span class="line"><span class="regexp">                &lt;!-- 密码 --&gt;</span></span><br><span class="line"><span class="regexp">                &lt;el-form-item&gt;</span></span><br><span class="line"><span class="regexp">                    &lt;el-input&gt;&lt;/</span>el-input&gt;</span><br><span class="line">                &lt;<span class="regexp">/el-form-item&gt;</span></span><br><span class="line"><span class="regexp">                &lt;el-form-item&gt;</span></span><br><span class="line"><span class="regexp">                    &lt;el-button type="primary"&gt;登录&lt;/</span>el-button&gt;</span><br><span class="line">                    &lt;el-button type=<span class="string">"info"</span>&gt;重置&lt;<span class="regexp">/el-button&gt;</span></span><br><span class="line"><span class="regexp">                &lt;/</span>el-form-item&gt;</span><br><span class="line">            &lt;<span class="regexp">/el-form&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>效果图：</p>
-<p><img src="//yanadev.github.io/2020/03/13/42-Element-UI组件库使用/image-20200317152526514.png" alt="image-20200317152526514"></p>
-</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/13/42-Element-UI组件库使用/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <div>
-      
-    </div>
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/13/41-Vue脚手架/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Yana">
-      <meta itemprop="description" content="Never give up！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YanaChen">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/13/41-Vue脚手架/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2020/03/31/webpack错误日志/" class="post-title-link" itemprop="url">webpack错误日志</a>
         </h1>
 
         <div class="post-meta">
@@ -318,84 +212,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-03-13 17:07:09 / 修改时间：18:06:25" itemprop="dateCreated datePublished" datetime="2020-03-13T17:07:09+08:00">2020-03-13</time>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>312</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Vue-脚手架基本用法"><a href="#Vue-脚手架基本用法" class="headerlink" title="Vue 脚手架基本用法"></a>Vue 脚手架基本用法</h2><p>快速生成 Vue 项目基础架构</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- 安装 <span class="number">3.</span>x 版本的 Vue 脚手架</span><br><span class="line">npm install -g @vue/cli</span><br><span class="line"><span class="comment">// 或者 cnpm i @vue/cli -g</span></span><br><span class="line">- 检查安装成功与否（脚手架版本号）</span><br><span class="line">vue -V </span><br><span class="line"><span class="comment">// @vue/cli 4.2.3</span></span><br></pre></td></tr></table></figure><h2 id="基于-3-x-版本的脚手架创建-vue-项目"><a href="#基于-3-x-版本的脚手架创建-vue-项目" class="headerlink" title="基于 3.x 版本的脚手架创建 vue 项目"></a>基于 3.x 版本的脚手架创建 vue 项目</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/13/41-Vue脚手架/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <div>
-      
-    </div>
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/13/40-webpack-错误日志/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Yana">
-      <meta itemprop="description" content="Never give up！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YanaChen">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/13/40-webpack-错误日志/" class="post-title-link" itemprop="url">未命名</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-03-13 16:17:04 / 修改时间：17:07:05" itemprop="dateCreated datePublished" datetime="2020-03-13T16:17:04+08:00">2020-03-13</time>
+              <time title="创建时间：2020-03-31 16:19:05 / 修改时间：16:19:11" itemprop="dateCreated datePublished" datetime="2020-03-31T16:19:05+08:00">2020-03-31</time>
             </span>
 
           <br>
@@ -419,7 +236,7 @@
           <h2 id="Module-not-found-Error-Can’t-resolve-‘-XX-‘-in-‘-XXXX-‘"><a href="#Module-not-found-Error-Can’t-resolve-‘-XX-‘-in-‘-XXXX-‘" class="headerlink" title="Module not found: Error: Can’t resolve ‘ XX ‘ in ‘  XXXX  ‘"></a>Module not found: Error: Can’t resolve ‘ XX ‘ in ‘  XXXX  ‘</h2><p>解决方法：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i XX</span><br></pre></td></tr></table></figure><h2 id="Vue-warn-Cannot-find-element-app"><a href="#Vue-warn-Cannot-find-element-app" class="headerlink" title="[Vue warn]: Cannot find element: #app"></a>[Vue warn]: Cannot find element: #app</h2><p>打包好的 js（webpack中的 <code>bundle.js</code>） 文件要最后引入，因为要先有 #app 挂载的 div 元素，Vue 才能获取相应的元素 </p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/03/13/40-webpack-错误日志/#more" rel="contents">
+              <a class="btn" href="/2020/03/31/webpack错误日志/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -447,7 +264,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/12/39-Vue单文件组件/">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/31/Vue单文件组件/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -461,7 +278,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/03/12/39-Vue单文件组件/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2020/03/31/Vue单文件组件/" class="post-title-link" itemprop="url">Vue单文件组件</a>
         </h1>
 
         <div class="post-meta">
@@ -470,16 +287,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-03-12 19:05:09" itemprop="dateCreated datePublished" datetime="2020-03-12T19:05:09+08:00">2020-03-12</time>
+              <time title="创建时间：2020-03-31 16:18:25 / 修改时间：16:18:34" itemprop="dateCreated datePublished" datetime="2020-03-31T16:18:25+08:00">2020-03-31</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-13 16:58:29" itemprop="dateModified" datetime="2020-03-13T16:58:29+08:00">2020-03-13</time>
-              </span>
 
           <br>
             <span class="post-meta-item" title="本文字数">
@@ -506,7 +317,7 @@
 </ul><h5 id="webpack中配置vue组件的加载器"><a href="#webpack中配置vue组件的加载器" class="headerlink" title="webpack中配置vue组件的加载器"></a>webpack中配置vue组件的加载器</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- 运行 npm i vue-loader vue-template-compiler -D 命令 </span><br><span class="line">- 在 webpack.config.js 配置文件中，添加 vue-loader 的配置项如下： </span><br><span class="line"><span class="keyword">const</span> VueLoaderPlugin = <span class="built_in">require</span>(<span class="string">'vue-loader/lib/plugin'</span>) </span><br><span class="line"><span class="built_in">module</span>.exports = &#123; </span><br><span class="line">  <span class="built_in">module</span>: &#123; </span><br><span class="line">    rules: [       <span class="comment">// ... 其它规则       </span></span><br><span class="line">        &#123; <span class="attr">test</span>: <span class="regexp">/\.vue$/</span>, <span class="attr">loader</span>: <span class="string">'vue-loader'</span> &#125; </span><br><span class="line">    ] </span><br><span class="line">  &#125;, </span><br><span class="line">  plugins: [     <span class="comment">// ... 其它插件     </span></span><br><span class="line">      <span class="keyword">new</span> VueLoaderPlugin() <span class="comment">// 请确保引入这个插件！   ] </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/03/12/39-Vue单文件组件/#more" rel="contents">
+              <a class="btn" href="/2020/03/31/Vue单文件组件/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -534,7 +345,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/12/38-前端工程化/">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/31/token原理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -548,7 +359,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/03/12/38-前端工程化/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2020/03/31/token原理/" class="post-title-link" itemprop="url">token原理</a>
         </h1>
 
         <div class="post-meta">
@@ -559,7 +370,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-03-12 01:24:25 / 修改时间：19:05:06" itemprop="dateCreated datePublished" datetime="2020-03-12T01:24:25+08:00">2020-03-12</time>
+              <time title="创建时间：2020-03-31 16:17:26 / 修改时间：16:17:38" itemprop="dateCreated datePublished" datetime="2020-03-31T16:17:26+08:00">2020-03-31</time>
             </span>
 
           <br>
@@ -568,7 +379,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>334</span>
+              <span>307</span>
             </span>
 
         </div>
@@ -580,18 +391,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<ul>
-<li>模块化操作</li>
-<li>webpack 使用</li>
-<li>Vue 单文件组件</li>
-<li>Vue 脚手架</li>
-<li>Element-UI使用</li>
-</ul>
-</blockquote><h5 id="模块化概述"><a href="#模块化概述" class="headerlink" title="模块化概述"></a>模块化概述</h5><h6 id="传统模式开发主要问题：-命名冲突和文件依赖"><a href="#传统模式开发主要问题：-命名冲突和文件依赖" class="headerlink" title="传统模式开发主要问题： 命名冲突和文件依赖"></a>传统模式开发主要问题： 命名冲突和文件依赖</h6><p>将功能封装到模块（文件）中，模块之间相互隔离，但可以通过特定接口公开内部成员，也可依赖别的模块</p><h6 id="好处：方便代码重用，提升开发效率，便于后期维护"><a href="#好处：方便代码重用，提升开发效率，便于后期维护" class="headerlink" title="好处：方便代码重用，提升开发效率，便于后期维护"></a>好处：方便代码重用，提升开发效率，便于后期维护</h6><h5 id="浏览器端模块化规范："><a href="#浏览器端模块化规范：" class="headerlink" title="浏览器端模块化规范："></a>浏览器端模块化规范：</h5>
+          <p><img src="//yanadev.github.io/2020/03/31/token原理/image-20200320012547012.png" alt="image-20200320012547012"></p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">// 为路由对象，添加 beforeEach 导航守卫  </span></span><br><span class="line">router.beforeEach(</span><br><span class="line">    (to, <span class="keyword">from</span>, next) =&gt; &#123;    </span><br><span class="line">        <span class="comment">// 如果用户访问的登录页，直接放行    </span></span><br><span class="line">        <span class="keyword">if</span> (to.path === <span class="string">'/login'</span>) <span class="keyword">return</span> next()    </span><br><span class="line">        <span class="comment">// 从 sessionStorage 中获取到 保存的 token 值    </span></span><br><span class="line">        <span class="keyword">const</span> tokenStr = <span class="built_in">window</span>.sessionStorage.getItem(<span class="string">'token'</span>)    </span><br><span class="line">        <span class="comment">// 没有token，强制跳转到登录页    </span></span><br><span class="line">        <span class="keyword">if</span> (!tokenStr) <span class="keyword">return</span> next(<span class="string">'/login'</span>) </span><br><span class="line">   		next() </span><br><span class="line"> &#125;)</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/03/12/38-前端工程化/#more" rel="contents">
+              <a class="btn" href="/2020/03/31/token原理/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -619,7 +422,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/11/37-Vue router基本使用/">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/31/浏览器-console面板字符串与数字/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -633,7 +436,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/03/11/37-Vue router基本使用/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2020/03/31/浏览器-console面板字符串与数字/" class="post-title-link" itemprop="url">浏览器 console面板字符串与数字</a>
         </h1>
 
         <div class="post-meta">
@@ -642,299 +445,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-03-11 09:49:28" itemprop="dateCreated datePublished" datetime="2020-03-11T09:49:28+08:00">2020-03-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-12 01:24:20" itemprop="dateModified" datetime="2020-03-12T01:24:20+08:00">2020-03-12</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>290</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>基本使用步骤</p>
-<ul>
-<li>引入相关库文件</li>
-<li>添加路由链接</li>
-<li>添加路由填充器</li>
-<li>定义路由组件</li>
-<li>配置路由规则并创建路由实例</li>
-<li>把路由挂载到 Vue 根实例中</li>
-</ul>
-</blockquote><h5 id="引入相关库文件"><a href="#引入相关库文件" class="headerlink" title="引入相关库文件"></a>引入相关库文件</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&lt;script src=<span class="string">"./lib/vue.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;!-- 导入 vue 文件，为全局 <span class="built_in">window</span> 对象挂载 Vue 构造函数 --&gt;</span><br><span class="line"></span><br><span class="line">&lt;script src=<span class="string">"./lib/vue-router.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;!-- 导入 VueRouter 文件，为全局 <span class="built_in">window</span> 对象挂载 VueRouter 构造函数 --&gt;</span><br><span class="line"><span class="comment">// 两者不可颠倒</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/11/37-Vue router基本使用/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <div>
-      
-    </div>
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/10/36-Vue发送请求/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Yana">
-      <meta itemprop="description" content="Never give up！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YanaChen">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/10/36-Vue发送请求/" class="post-title-link" itemprop="url">未命名</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-10 15:04:58" itemprop="dateCreated datePublished" datetime="2020-03-10T15:04:58+08:00">2020-03-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-19 14:48:07" itemprop="dateModified" datetime="2020-03-19T14:48:07+08:00">2020-03-19</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.6k</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">- </span>前后端交互</span><br><span class="line"><span class="bullet">- </span>Promise 相关概念和用法</span><br><span class="line"><span class="bullet">- </span>使用 fetch 进行接口调用</span><br><span class="line"><span class="bullet">- </span>axios 接口调用</span><br><span class="line"><span class="bullet">- </span>async / await 调用接口</span><br><span class="line"><span class="bullet">- </span>基于后台接口实现案例</span><br></pre></td></tr></table></figure><h5 id="异步调用"><a href="#异步调用" class="headerlink" title="异步调用"></a>异步调用</h5><ul>
-<li>异步效果<ul>
-<li>定时任务</li>
-<li>AJAX</li>
-<li>事件函数</li>
-</ul>
-</li>
-<li>多次异步调用的依赖分析<ul>
-<li>多次异步调用的结果顺序不确定</li>
-<li>异步调用结果如果存在依赖需要嵌套（会导致 =&gt; 回调地狱）</li>
-</ul>
-</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/10/36-Vue发送请求/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <div>
-      
-    </div>
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/08/35-Vue组件化开发/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Yana">
-      <meta itemprop="description" content="Never give up！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YanaChen">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/08/35-Vue组件化开发/" class="post-title-link" itemprop="url">未命名</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-08 16:22:01" itemprop="dateCreated datePublished" datetime="2020-03-08T16:22:01+08:00">2020-03-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-10 15:04:52" itemprop="dateModified" datetime="2020-03-10T15:04:52+08:00">2020-03-10</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>7.1k</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<ul>
-<li><p>组件化思想</p>
-</li>
-<li><p>组件注册方式    </p>
-</li>
-<li><p>组件间数据交互</p>
-</li>
-<li><p>组件插槽</p>
-</li>
-<li><p>Vue调试工具使用</p>
-</li>
-<li><p>基于组件的方式实现业务</p>
-</li>
-</ul>
-<p>在 Vue 中 Vue实例其实就一个根组件</p>
-</blockquote><h5 id="1-组件化思想"><a href="#1-组件化思想" class="headerlink" title="1. 组件化思想"></a>1. 组件化思想</h5><p><code>标准</code>  <code>分治</code> <code>重用</code> <code>组合</code></p><h6 id="组件化规范：Web-Component"><a href="#组件化规范：Web-Component" class="headerlink" title="组件化规范：Web Component"></a>组件化规范：Web Component</h6><ul>
-<li>尽可能重用代码</li>
-<li>自定义组件方式不太容易（HTML、css、js）</li>
-<li>多次使用组件可能导致冲突</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/08/35-Vue组件化开发/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <div>
-      
-    </div>
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/07/34-函数apply、call、bind使用与区别/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Yana">
-      <meta itemprop="description" content="Never give up！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YanaChen">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/07/34-函数apply、call、bind使用与区别/" class="post-title-link" itemprop="url">未命名</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-07 20:56:24" itemprop="dateCreated datePublished" datetime="2020-03-07T20:56:24+08:00">2020-03-07</time>
+              <time title="创建时间：2020-03-31 16:16:53 / 修改时间：16:17:04" itemprop="dateCreated datePublished" datetime="2020-03-31T16:16:53+08:00">2020-03-31</time>
             </span>
 
           <br>
@@ -955,7 +468,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <p><img src="//yanadev.github.io/2020/03/31/浏览器-console面板字符串与数字/image-20200303141915864.png" alt="image-20200303141915864"></p>
       
     </div>
 
@@ -978,7 +491,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/07/31-JS原型复习总结/">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/31/Vue基础/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -992,7 +505,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/03/07/31-JS原型复习总结/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2020/03/31/Vue基础/" class="post-title-link" itemprop="url">Vue基础</a>
         </h1>
 
         <div class="post-meta">
@@ -1003,7 +516,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-03-07 20:30:28 / 修改时间：20:30:45" itemprop="dateCreated datePublished" datetime="2020-03-07T20:30:28+08:00">2020-03-07</time>
+              <time title="创建时间：2020-03-31 16:15:56 / 修改时间：16:16:03" itemprop="dateCreated datePublished" datetime="2020-03-31T16:15:56+08:00">2020-03-31</time>
             </span>
 
           <br>
@@ -1012,7 +525,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
+              <span>3.4k</span>
             </span>
 
         </div>
@@ -1024,7 +537,414 @@
     <div class="post-body" itemprop="articleBody">
 
       
+          <h5 id="v-bind-三种用法"><a href="#v-bind-三种用法" class="headerlink" title="v-bind 三种用法"></a>v-bind 三种用法</h5><ol>
+<li>直接v-bind</li>
+<li>简化：<code>:</code></li>
+<li>绑定的时候拼接绑定内容：<code>title=&quot;btnTitle + &#39;，这是追加内容&#39;&quot;</code></li>
+</ol><h5 id="v-on-绑定事件"><a href="#v-on-绑定事件" class="headerlink" title="v-on 绑定事件"></a>v-on 绑定事件</h5><h5 id="表单控件使用"><a href="#表单控件使用" class="headerlink" title="表单控件使用"></a>表单控件使用</h5><h6 id="1-radio"><a href="#1-radio" class="headerlink" title="1. radio"></a>1. radio</h6><p>使用 <code>v-model</code> 绑定参数，当<code>参数=value</code>的时候，该控件被选中</p><h6 id="2-checkbox"><a href="#2-checkbox" class="headerlink" title="2. checkbox"></a>2. checkbox</h6>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/31/Vue基础/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+    </div>
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/31/webpack-path模块/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yana">
+      <meta itemprop="description" content="Never give up！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanaChen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
           
+            <a href="/2020/03/31/webpack-path模块/" class="post-title-link" itemprop="url">webpack path模块</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-31 16:14:59 / 修改时间：16:15:05" itemprop="dateCreated datePublished" datetime="2020-03-31T16:14:59+08:00">2020-03-31</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p> path模块是node.js内置的package，用来处理路径问题</p><ul>
+<li>引入模块</li>
+</ul><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>); <span class="comment">// 引入内置模块 path</span></span><br></pre></td></tr></table></figure><h2 id="获取规范化路径-路径-文件名-扩展名"><a href="#获取规范化路径-路径-文件名-扩展名" class="headerlink" title="获取规范化路径 / 路径 / 文件名 / 扩展名"></a>获取规范化路径 / 路径 / 文件名 / 扩展名</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">path.normalize(filepath) ------------------------------ 获取规范化路径</span><br><span class="line">path.dirname(filepath)  ------------------------------ 获取路径</span><br><span class="line">path.basename(filepath) ------------------------------ 获取文件名</span><br><span class="line">path.extname(filepath)  ------------------------------ 获取扩展名</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/31/webpack-path模块/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+    </div>
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/31/Vue常用特性应用场景/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yana">
+      <meta itemprop="description" content="Never give up！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanaChen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/31/Vue常用特性应用场景/" class="post-title-link" itemprop="url">Vue常用特性应用场景</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-31 16:12:46 / 修改时间：16:13:11" itemprop="dateCreated datePublished" datetime="2020-03-31T16:12:46+08:00">2020-03-31</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.5k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">- </span>过滤器（格式化日期）</span><br><span class="line"><span class="bullet">- </span>自定义指令（获取表单焦点）</span><br><span class="line"><span class="bullet">- </span>计算属性（统计图书数量）</span><br><span class="line"><span class="bullet">- </span>侦听器（验证图书存在性）</span><br><span class="line"><span class="bullet">- </span>生命周期（图书数据处理0</span><br></pre></td></tr></table></figure><h5 id="过滤器-filter"><a href="#过滤器-filter" class="headerlink" title="过滤器 filter"></a>过滤器 filter</h5><p>格式化数据</p><blockquote>
+<pre><code>过滤器定义
+    1. 默认第一个参数是 管道符(filter)前面的数据  在本例中指的是 message
+    2. 全局过滤器 定义的时候 filter 不带s
+    3. 局部过滤器与 data及methods 同级  </code></pre></blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/31/Vue常用特性应用场景/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+    </div>
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/31/webpack学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yana">
+      <meta itemprop="description" content="Never give up！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanaChen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/31/webpack学习/" class="post-title-link" itemprop="url">webpack学习</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-31 16:11:38 / 修改时间：16:11:46" itemprop="dateCreated datePublished" datetime="2020-03-31T16:11:38+08:00">2020-03-31</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.3k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">webpack安装和配置</span><br><span class="line">    </span><br><span class="line">- 运行 npm install webpack webpack-cli –D 命令，安装 webpack 相关的包 </span><br><span class="line">- 在项目根目录中，创建名为 webpack.config.js 的 webpack 配置文件 </span><br><span class="line">- 在 webpack 的配置文件中，初始化如下基本配置： </span><br><span class="line">	<span class="built_in">module</span>.exports = &#123;   </span><br><span class="line">        mode: <span class="string">'development'</span> <span class="comment">// mode 用来指定构建模式 </span></span><br><span class="line">    &#125; </span><br><span class="line">- 在 package.json 配置文件中的 scripts 节点下，新增 dev 脚本如下：</span><br><span class="line">	<span class="string">"scripts"</span>: &#123;</span><br><span class="line">        <span class="string">"dev"</span>: <span class="string">"webpack"</span> <span class="comment">// script 节点下的脚本，可以通过 npm run 执行 </span></span><br><span class="line">    &#125; </span><br><span class="line">- 在终端中运行 npm run dev 命令，启动 webpack 进行项目打包。</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/31/webpack学习/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+    </div>
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/31/mysqli扩展使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yana">
+      <meta itemprop="description" content="Never give up！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanaChen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/31/mysqli扩展使用/" class="post-title-link" itemprop="url">mysqli扩展使用</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-31 16:10:35 / 修改时间：16:10:49" itemprop="dateCreated datePublished" datetime="2020-03-31T16:10:35+08:00">2020-03-31</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>911</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ol>
+<li>连接数据库<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$conn = mysqli_connect (</span><br><span class="line">	$host, $username, $password, $database, $port, $socket</span><br><span class="line">    <span class="comment"># 服务器/IP 用户名 密码 数据库名 端口号 socket通信</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol><p>成功 返回 数据库连接对象，失败返回 false 及warning</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/31/mysqli扩展使用/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+    </div>
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/31/PHP7开启mysqli扩展/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yana">
+      <meta itemprop="description" content="Never give up！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanaChen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/31/PHP7开启mysqli扩展/" class="post-title-link" itemprop="url">PHP7开启mysqli扩展</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-31 16:09:49 / 修改时间：16:10:00" itemprop="dateCreated datePublished" datetime="2020-03-31T16:09:49+08:00">2020-03-31</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>495</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>第一步：因为php7安装目录中没有php.ini文件所以可以复制php.ini-development这个文件改名为php.ini。</p><p>第二步：在php中的配置文件“；”相当于注释，在php.ini中找到extension=php_mysqli.dll这一行把前面的“；”去掉。</p><p>第三步：在Apache24安装目录中找到conf目录下的httpd.conf文件打开并在最后添加：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/31/PHP7开启mysqli扩展/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1093,20 +1013,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-count">56</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">1</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1153,7 +1073,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">90k</span>
+    <span title="站点总字数">88k</span>
 </div>
 
         
