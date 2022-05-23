@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="YanaChen" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="v-bind 三种用法 直接v-bind 简化：: 绑定的时候拼接绑定内容：title=&amp;quot;btnTitle + &amp;#39;，这是追加内容&amp;#39;&amp;quot; v-on 绑定事件表单控件使用1. radio使用 v-model 绑定参数，当参数=value的时候，该控件被选中2. checkbox">
+<meta name="keywords" content="$set 修改响应式数据,Vue指令,基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue基础">
+<meta property="og:url" content="https://yanadev.github.io/2020/03/31/Vue基础/index.html">
+<meta property="og:site_name" content="YanaChen">
+<meta property="og:description" content="v-bind 三种用法 直接v-bind 简化：: 绑定的时候拼接绑定内容：title=&amp;quot;btnTitle + &amp;#39;，这是追加内容&amp;#39;&amp;quot; v-on 绑定事件表单控件使用1. radio使用 v-model 绑定参数，当参数=value的时候，该控件被选中2. checkbox">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Vue基础/image-20200303144057272.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Vue基础/image-20200303144357360.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Vue基础/image-20200303164634858.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Vue基础/image-20200303164543760.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Vue基础/image-20200304234501052.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Vue基础/image-20200304234404590.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Vue基础/image-20200304235617833.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Vue基础/image-20200304235645605.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Vue基础/image-20200304235841490.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Vue基础/image-20200305142625176.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Vue基础/image-20200305142807369.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Vue基础/image-20200305143254323.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Vue基础/image-20200305143142020.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Vue基础/image-20200305144555650.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Vue基础/image-20200305144956925.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Vue基础/image-20200305145041888.png">
+<meta property="og:updated_time" content="2022-05-22T19:40:35.055Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue基础">
+<meta name="twitter:description" content="v-bind 三种用法 直接v-bind 简化：: 绑定的时候拼接绑定内容：title=&amp;quot;btnTitle + &amp;#39;，这是追加内容&amp;#39;&amp;quot; v-on 绑定事件表单控件使用1. radio使用 v-model 绑定参数，当参数=value的时候，该控件被选中2. checkbox">
+<meta name="twitter:image" content="https://yanadev.github.io/2020/03/31/Vue基础/image-20200303144057272.png">
+
+<link rel="canonical" href="https://yanadev.github.io/2020/03/31/Vue基础/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Vue基础 | YanaChen</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YanaChen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">_踩坑_填坑_日常</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">63</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">55</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">62</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/31/Vue基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yana">
+      <meta itemprop="description" content="Never give up！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanaChen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vue基础
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-31 16:15:56" itemprop="dateCreated datePublished" datetime="2020-03-31T16:15:56+08:00">2020-03-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-23 03:40:35" itemprop="dateModified" datetime="2022-05-23T03:40:35+08:00">2022-05-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.4k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="v-bind-三种用法"><a href="#v-bind-三种用法" class="headerlink" title="v-bind 三种用法"></a>v-bind 三种用法</h1><ol>
+<li>直接v-bind</li>
+<li>简化：<code>:</code></li>
+<li>绑定的时候拼接绑定内容：<code>title=&quot;btnTitle + &#39;，这是追加内容&#39;&quot;</code></li>
+</ol><h1 id="v-on-绑定事件"><a href="#v-on-绑定事件" class="headerlink" title="v-on 绑定事件"></a>v-on 绑定事件</h1><h1 id="表单控件使用"><a href="#表单控件使用" class="headerlink" title="表单控件使用"></a>表单控件使用</h1><h2 id="1-radio"><a href="#1-radio" class="headerlink" title="1. radio"></a>1. radio</h2><p>使用 <code>v-model</code> 绑定参数，当<code>参数=value</code>的时候，该控件被选中</p><h2 id="2-checkbox"><a href="#2-checkbox" class="headerlink" title="2. checkbox"></a>2. checkbox</h2><a id="more"></a>
+
+<p>使用 <code>v-model</code> 绑定参数，当 <code>参数=value</code> 的时候，该控件被选中</p>
+<blockquote>
+<p>注意：使用 checkbox 的时候，存储数据应使用 数组</p>
+<p>获取数据：默认获取以下类型数据，如不想获得  <code>__ob__</code> 监视器对象，可以使用 <code>toString()</code> 转成字符串</p>
+</blockquote>
+<p><img src="//yanadev.github.io/2020/03/31/Vue基础/image-20200303144057272.png" alt="image-20200303144057272"></p>
+<p><img src="//yanadev.github.io/2020/03/31/Vue基础/image-20200303144357360.png" alt="image-20200303144357360"></p>
+<h2 id="3-select-option"><a href="#3-select-option" class="headerlink" title="3. select - option"></a>3. select - option</h2><p>使用 <code>v-model</code> 绑定参数给 <code>select</code> 标签，对应的 多个<code>option</code> 标签的 <code>value</code> 应不同，当 <code>参数=value</code>时，相应的 <code>option</code> 被选中</p>
+<blockquote>
+<p>该控件使用有两种情况： 1. 单选，使用数值存储即可</p>
+<pre><code>2. 多选，在select标签上添加参数 `multiple` ，对应的参数存储使用 数组</code></pre></blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span>&gt;</span>职业：<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">v-model</span>=<span class="string">"occupation"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"0"</span>&gt;</span>请选择职业..<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"1"</span>&gt;</span>教师<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"2"</span>&gt;</span>软件工程师<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"3"</span>&gt;</span>动画特效师<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="//yanadev.github.io/2020/03/31/Vue基础/image-20200303164634858.png" alt="image-20200303164634858"></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span>&gt;</span>职业：<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">v-model</span>=<span class="string">"occupation"</span> <span class="attr">multiple</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"0"</span>&gt;</span>请选择职业..<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"1"</span>&gt;</span>教师<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"2"</span>&gt;</span>软件工程师<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"3"</span>&gt;</span>动画特效师<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="//yanadev.github.io/2020/03/31/Vue基础/image-20200303164543760.png" alt="image-20200303164543760"></p>
+<h1 id="表单修饰符"><a href="#表单修饰符" class="headerlink" title="表单修饰符"></a>表单修饰符</h1><blockquote>
+<ul>
+<li><p>.number：转化为数值</p>
+<ul>
+<li>input标签输入直接是字符串，使用 <code>.number</code> 就可以转化成数值，这样和数值进行运算的时候才不会变成字符串的拼接</li>
+</ul>
+</li>
+<li><p>.trim：去掉开始和结尾的空格</p>
+</li>
+<li><p>.lazy：将 input 时间切换为 change 事件（即在失去焦点或按下回车键才更新）</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="number"><a href="#number" class="headerlink" title=".number:"></a><code>.number</code>:</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">'app'</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">v-model</span>=<span class="string">"age"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"handle"</span>&gt;</span>点击<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"js/vue.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="actionscript">        el: <span class="string">'#app'</span>,</span></span><br><span class="line">        data: &#123;</span><br><span class="line"><span class="actionscript">            age: <span class="string">''</span></span></span><br><span class="line">        &#125;,</span><br><span class="line">        methods: &#123;</span><br><span class="line"><span class="actionscript">            handle: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">                <span class="comment">// console.log("age:" + this.age + '---' + this.age.length)</span></span></span><br><span class="line"><span class="actionscript">                <span class="comment">// console.log("month:" + this.month)</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(<span class="keyword">this</span>.age + <span class="number">13</span>);</span></span><br><span class="line"><span class="actionscript">                <span class="comment">// cosole.log(this.month)</span></span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">// 输入 14 =&gt; 1413 (字符串拼接)</span><br></pre></td></tr></table></figure>
+
+<p><img src="//yanadev.github.io/2020/03/31/Vue基础/image-20200304234501052.png" alt="image-20200304234501052"></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">'app'</span>&gt;</span></span><br><span class="line">+    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">v-model.number</span>=<span class="string">"age"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"handle"</span>&gt;</span>点击<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"js/vue.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="actionscript">        el: <span class="string">'#app'</span>,</span></span><br><span class="line">        data: &#123;</span><br><span class="line"><span class="actionscript">            age: <span class="string">''</span></span></span><br><span class="line">        &#125;,</span><br><span class="line">        methods: &#123;</span><br><span class="line"><span class="actionscript">            handle: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">                <span class="comment">// console.log("age:" + this.age + '---' + this.age.length)</span></span></span><br><span class="line"><span class="actionscript">                <span class="comment">// console.log("month:" + this.month)</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(<span class="keyword">this</span>.age + <span class="number">13</span>);</span></span><br><span class="line"><span class="actionscript">                <span class="comment">// cosole.log(this.month)</span></span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">// 输入 14 =&gt; 27 (数值运算)</span><br></pre></td></tr></table></figure>
+
+<p><img src="//yanadev.github.io/2020/03/31/Vue基础/image-20200304234404590.png" alt="image-20200304234404590"></p>
+<h2 id="trim"><a href="#trim" class="headerlink" title=".trim:"></a><code>.trim</code>:</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">'app'</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"age"</span>&gt;</span>年龄<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"age"</span> <span class="attr">v-model.trim</span>=<span class="string">"age"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"month"</span>&gt;</span>月份<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"month"</span> <span class="attr">v-model</span>=<span class="string">"month"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- &lt;p&gt;&#123;&#123;month&#125;&#125;&lt;/p&gt; --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- &lt;input type="text" v-model="month"&gt; --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"handle"</span>&gt;</span>点击<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"js/vue.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="actionscript">        el: <span class="string">'#app'</span>,</span></span><br><span class="line">        data: &#123;</span><br><span class="line"><span class="actionscript">            age: <span class="string">''</span>,</span></span><br><span class="line"><span class="actionscript">            month: <span class="string">''</span></span></span><br><span class="line">        &#125;,</span><br><span class="line">        methods: &#123;</span><br><span class="line"><span class="actionscript">            handle: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(<span class="string">"age:"</span> + <span class="keyword">this</span>.age + <span class="string">'---'</span> + <span class="keyword">this</span>.age.length)</span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(<span class="string">"month:"</span> + <span class="keyword">this</span>.month + <span class="string">'---'</span> + <span class="keyword">this</span>.month.length)</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">// 年龄使用.trim，月份不使用以作对比</span><br></pre></td></tr></table></figure>
+
+<p><img src="//yanadev.github.io/2020/03/31/Vue基础/image-20200304235617833.png" alt="image-20200304235617833"></p>
+<p><img src="//yanadev.github.io/2020/03/31/Vue基础/image-20200304235645605.png" alt="image-20200304235645605"></p>
+<p>使用了 <code>.trim</code> 标识符的 <code>input</code> 在失去焦点的时候就执行该命令，马上删去开始和结尾的空格</p>
+<p><img src="//yanadev.github.io/2020/03/31/Vue基础/image-20200304235841490.png" alt="image-20200304235841490"></p>
+<h1 id="自定义指令"><a href="#自定义指令" class="headerlink" title="自定义指令"></a>自定义指令</h1><p>内置指令不满足需求的时候</p>
+<h2 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h2><p>格式化数据，可多个使用，后一个过滤器是处理 <code>前一个过滤器产生的结果</code></p>
+<h1 id="数组API"><a href="#数组API" class="headerlink" title="数组API"></a>数组API</h1><ul>
+<li><p>变异方法（修改原有数组）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- push()</span><br><span class="line">- pop()</span><br><span class="line">- shift()</span><br><span class="line">- unshift()</span><br><span class="line">- splice()</span><br><span class="line">- sort()</span><br><span class="line">- reverse()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>替换数组（生成新数组）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- filter()</span><br><span class="line">- concat()</span><br><span class="line">- slice()</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="数组响应式变化"><a href="#数组响应式变化" class="headerlink" title="数组响应式变化"></a>数组响应式变化</h1><blockquote>
+<p> 通过索引修改数组不会响应式变化</p>
+<ul>
+<li>vm.list[1] = ‘lemon’</li>
+</ul>
+</blockquote>
+<p><img src="//yanadev.github.io/2020/03/31/Vue基础/image-20200305142625176.png" alt="image-20200305142500790"></p>
+<p><img src="//yanadev.github.io/2020/03/31/Vue基础/image-20200305142807369.png" alt="image-20200305142807369"></p>
+<h2 id="修改响应式数据"><a href="#修改响应式数据" class="headerlink" title="修改响应式数据"></a>修改响应式数据</h2><ul>
+<li>Vue.set( vm.items, indexOfItem, newValue )</li>
+<li>vm.$set( vm.items, indexOfItem, newValue )<ul>
+<li>vm.items =&gt; 数组名称</li>
+<li>indexOfItem =&gt; 数组索引 / 也可以修改对象的属性值</li>
+<li>newValue =&gt; 数组的新值</li>
+</ul>
+</li>
+</ul>
+<p><img src="//yanadev.github.io/2020/03/31/Vue基础/image-20200305143254323.png" alt="image-20200305143254323"></p>
+<p><img src="//yanadev.github.io/2020/03/31/Vue基础/image-20200305143142020.png" alt="image-20200305143142020"></p>
+<h2 id="修改对象属性值"><a href="#修改对象属性值" class="headerlink" title="修改对象属性值"></a>修改对象属性值</h2><p>通过属性值修改数组不会响应式变化</p>
+<h3 id="vm-info-gender-’male’"><a href="#vm-info-gender-’male’" class="headerlink" title="vm.info.gender=’male’"></a>vm.info.gender=’male’</h3><p><img src="//yanadev.github.io/2020/03/31/Vue基础/image-20200305144555650.png" alt="image-20200305144555650"></p>
+<h3 id="vm-set-vm-info-‘gender’-‘male’"><a href="#vm-set-vm-info-‘gender’-‘male’" class="headerlink" title="vm.$set(vm.info, ‘gender’, ‘male’)"></a>vm.$set(vm.info, ‘gender’, ‘male’)</h3><p><img src="//yanadev.github.io/2020/03/31/Vue基础/image-20200305144956925.png" alt="image-20200305144956925"></p>
+<p><img src="//yanadev.github.io/2020/03/31/Vue基础/image-20200305145041888.png" alt="image-20200305145041888"></p>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/set-修改响应式数据/" rel="tag"><i class="fa fa-tag"></i>$set 修改响应式数据</a>
+              <a href="/tags/Vue指令/" rel="tag"><i class="fa fa-tag"></i>Vue指令</a>
+              <a href="/tags/基础/" rel="tag"><i class="fa fa-tag"></i>基础</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/03/31/webpack-path模块/" rel="next" title="webpack path模块">
+                  <i class="fa fa-chevron-left"></i> webpack path模块
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2020/03/31/浏览器-console面板字符串与数字/" rel="prev" title="浏览器 console面板字符串与数字">
+                  浏览器 console面板字符串与数字 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#v-bind-三种用法"><span class="nav-number">1.</span> <span class="nav-text">v-bind 三种用法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#v-on-绑定事件"><span class="nav-number">2.</span> <span class="nav-text">v-on 绑定事件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#表单控件使用"><span class="nav-number">3.</span> <span class="nav-text">表单控件使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-radio"><span class="nav-number">3.1.</span> <span class="nav-text">1. radio</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-checkbox"><span class="nav-number">3.2.</span> <span class="nav-text">2. checkbox</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-select-option"><span class="nav-number">3.3.</span> <span class="nav-text">3. select - option</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#表单修饰符"><span class="nav-number">4.</span> <span class="nav-text">表单修饰符</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#number"><span class="nav-number">4.1.</span> <span class="nav-text">.number:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#trim"><span class="nav-number">4.2.</span> <span class="nav-text">.trim:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义指令"><span class="nav-number">5.</span> <span class="nav-text">自定义指令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#过滤器"><span class="nav-number">5.1.</span> <span class="nav-text">过滤器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数组API"><span class="nav-number">6.</span> <span class="nav-text">数组API</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数组响应式变化"><span class="nav-number">7.</span> <span class="nav-text">数组响应式变化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#修改响应式数据"><span class="nav-number">7.1.</span> <span class="nav-text">修改响应式数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改对象属性值"><span class="nav-number">7.2.</span> <span class="nav-text">修改对象属性值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vm-info-gender-’male’"><span class="nav-number">7.2.1.</span> <span class="nav-text">vm.info.gender=’male’</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vm-set-vm-info-‘gender’-‘male’"><span class="nav-number">7.2.2.</span> <span class="nav-text">vm.$set(vm.info, ‘gender’, ‘male’)</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yana"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Yana</p>
+  <div class="site-description" itemprop="description">Never give up！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">63</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yanadev" title="GitHub → https://github.com/yanadev" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yana</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">90k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

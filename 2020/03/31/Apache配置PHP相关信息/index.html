@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="YanaChen" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="1.静态网站与动态网站12# 动态网站：每次请求的时候服务端动态生成html返回给用户的这种网站	# 静态网站： 纯粹HTML格式的网页通常被称为“静态网页”">
+<meta name="keywords" content="Apache,服务器软件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Apache配置PHP相关信息">
+<meta property="og:url" content="https://yanadev.github.io/2020/03/31/Apache配置PHP相关信息/index.html">
+<meta property="og:site_name" content="YanaChen">
+<meta property="og:description" content="1.静态网站与动态网站12# 动态网站：每次请求的时候服务端动态生成html返回给用户的这种网站	# 静态网站： 纯粹HTML格式的网页通常被称为“静态网页”">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Apache配置PHP相关信息/1572259908755.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Apache配置PHP相关信息/1572259973471.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Apache配置PHP相关信息/1572323707931.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Apache配置PHP相关信息/1572324358141.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Apache配置PHP相关信息/1572324254349.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Apache配置PHP相关信息/1572331558814.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Apache配置PHP相关信息/1572338440871.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Apache配置PHP相关信息/1572339457752.png">
+<meta property="og:updated_time" content="2022-05-22T19:53:22.798Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Apache配置PHP相关信息">
+<meta name="twitter:description" content="1.静态网站与动态网站12# 动态网站：每次请求的时候服务端动态生成html返回给用户的这种网站	# 静态网站： 纯粹HTML格式的网页通常被称为“静态网页”">
+<meta name="twitter:image" content="https://yanadev.github.io/2020/03/31/Apache配置PHP相关信息/1572259908755.png">
+
+<link rel="canonical" href="https://yanadev.github.io/2020/03/31/Apache配置PHP相关信息/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Apache配置PHP相关信息 | YanaChen</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YanaChen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">_踩坑_填坑_日常</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">63</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">55</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">62</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/31/Apache配置PHP相关信息/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yana">
+      <meta itemprop="description" content="Never give up！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanaChen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Apache配置PHP相关信息
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-31 15:29:21" itemprop="dateCreated datePublished" datetime="2020-03-31T15:29:21+08:00">2020-03-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-23 03:53:22" itemprop="dateModified" datetime="2022-05-23T03:53:22+08:00">2022-05-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Apache/" itemprop="url" rel="index">
+                    <span itemprop="name">Apache</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Apache/服务器软件/" itemprop="url" rel="index">
+                    <span itemprop="name">服务器软件</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>729</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="1-静态网站与动态网站"><a href="#1-静态网站与动态网站" class="headerlink" title="1.静态网站与动态网站"></a>1.<code>静态网站与动态网站</code></h3><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 动态网站：每次请求的时候服务端动态生成html返回给用户的这种网站	</span><br><span class="line"># 静态网站： 纯粹HTML格式的网页通常被称为“静态网页”</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<h3 id="2-PHP"><a href="#2-PHP" class="headerlink" title="2.PHP"></a>2.<code>PHP</code></h3><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># PHP安装:</span><br><span class="line"># 直接解压即可</span><br><span class="line"># 修改apache文件下的httpd.conf文件</span><br></pre></td></tr></table></figure>
+
+<p><img src="//yanadev.github.io/2020/03/31/Apache配置PHP相关信息/1572259908755.png" alt="1572259908755"></p>
+<p><img src="//yanadev.github.io/2020/03/31/Apache配置PHP相关信息/1572259973471.png" alt="1572259973471"></p>
+<p><img src="//yanadev.github.io/2020/03/31/Apache配置PHP相关信息/1572323707931.png" alt="1572323707931"></p>
+<h3 id="3-Apache与PHP"><a href="#3-Apache与PHP" class="headerlink" title="3.Apache与PHP"></a>3.Apache与PHP</h3><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># Apache根据文件扩展名找到文件类型</span><br><span class="line"># 寻找是否有模块可以处理这个类型的文件</span><br><span class="line"># 如果不能处理，那么就Apache自己处理（按静态文件的方式处理）</span><br></pre></td></tr></table></figure>
+
+<p><img src="//yanadev.github.io/2020/03/31/Apache配置PHP相关信息/1572324358141.png" alt="1572324358141"></p>
+<h3 id="4-PHP完成的事情"><a href="#4-PHP完成的事情" class="headerlink" title="4.PHP完成的事情"></a>4.PHP完成的事情</h3><p><img src="//yanadev.github.io/2020/03/31/Apache配置PHP相关信息/1572324254349.png" alt="1572324254349"></p>
+<h3 id="5-使用-PHP-的目的"><a href="#5-使用-PHP-的目的" class="headerlink" title="5.使用 PHP 的目的"></a>5.使用 PHP 的目的</h3><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 使静态网页变成动态网页，能称之为动态网页的核心就是让 HTML 上的内容不再被写死</span><br><span class="line"># 而是通过在 HTML 中嵌入一段可以在服务端执行的代码，从而达到动态网页的目标。</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-PHP标记-输出方式"><a href="#6-PHP标记-输出方式" class="headerlink" title="6.PHP标记/输出方式"></a>6.PHP标记/输出方式</h3><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># 标记</span><br></pre></td></tr></table></figure>
+
+<p><code>&lt;?php</code>可以让代码进入”PHP模式“，<code>?&gt;</code>可以让代码退出”PHP模式“</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 省略结束标记</span><br><span class="line"># 如果PHP代码处于整个文件的末尾，建议（必须）删除结束标记，这样不会有额外的空行产生</span><br></pre></td></tr></table></figure>
+
+<p>输出内容方式</p>
+<ul>
+<li><code>echo</code> : 可以输出一个或者多个字符串，但是字符串之间没有空格（无返回值）   </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php echo &apos;Hello World&apos;;?&gt;&lt;br/&gt;</span><br><span class="line">&lt;?php echo date(&apos;Y-m-d&apos;);?&gt;&lt;br/&gt;</span><br><span class="line">&lt;?php echo &quot;hello&quot;,&quot;world&quot;;?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="//yanadev.github.io/2020/03/31/Apache配置PHP相关信息/1572331558814.png" alt="1572331558814"></p>
+<ul>
+<li><code>print</code> : 只允许输出一个字符串，返回值总为1</li>
+</ul>
+<p><img src="//yanadev.github.io/2020/03/31/Apache配置PHP相关信息/1572338440871.png" alt="1572338440871"></p>
+<ul>
+<li><p><code>var_dump</code> : 可以将数据以及数据类型打印为特定格式，用于调试</p>
+<p><img src="//yanadev.github.io/2020/03/31/Apache配置PHP相关信息/1572339457752.png" alt="1572339457752"></p>
+</li>
+</ul>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># 一般使用`var_dump()`函数调试程序，`<span class="built_in">echo</span>`输出bool类型的false的时候没有返回值</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Apache/" rel="tag"><i class="fa fa-tag"></i>Apache</a>
+              <a href="/tags/服务器软件/" rel="tag"><i class="fa fa-tag"></i>服务器软件</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/03/31/CSS使用注意/" rel="next" title="CSS 使用注意">
+                  <i class="fa fa-chevron-left"></i> CSS 使用注意
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2020/03/31/PHP-与-HTML-混编/" rel="prev" title="PHP 与 HTML 混编">
+                  PHP 与 HTML 混编 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-静态网站与动态网站"><span class="nav-number">1.</span> <span class="nav-text">1.静态网站与动态网站</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-PHP"><span class="nav-number">2.</span> <span class="nav-text">2.PHP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Apache与PHP"><span class="nav-number">3.</span> <span class="nav-text">3.Apache与PHP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-PHP完成的事情"><span class="nav-number">4.</span> <span class="nav-text">4.PHP完成的事情</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-使用-PHP-的目的"><span class="nav-number">5.</span> <span class="nav-text">5.使用 PHP 的目的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-PHP标记-输出方式"><span class="nav-number">6.</span> <span class="nav-text">6.PHP标记/输出方式</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yana"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Yana</p>
+  <div class="site-description" itemprop="description">Never give up！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">63</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yanadev" title="GitHub → https://github.com/yanadev" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yana</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">90k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="YanaChen" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="背景所有背景属性都不能继承背景色1p &amp;#123;background-color: gray;&amp;#125;背景图像1body &amp;#123;background-image: url(/i/eg_bg_04.gif);&amp;#125;背景重复1234body &amp;#123;   background-image: url(/i/eg_bg_03.gif);  background-repeat: rep">
+<meta name="keywords" content="CSS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS 样式总结">
+<meta property="og:url" content="https://yanadev.github.io/2020/03/15/CSS样式总结/index.html">
+<meta property="og:site_name" content="YanaChen">
+<meta property="og:description" content="背景所有背景属性都不能继承背景色1p &amp;#123;background-color: gray;&amp;#125;背景图像1body &amp;#123;background-image: url(/i/eg_bg_04.gif);&amp;#125;背景重复1234body &amp;#123;   background-image: url(/i/eg_bg_03.gif);  background-repeat: rep">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2022-05-22T19:52:51.644Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSS 样式总结">
+<meta name="twitter:description" content="背景所有背景属性都不能继承背景色1p &amp;#123;background-color: gray;&amp;#125;背景图像1body &amp;#123;background-image: url(/i/eg_bg_04.gif);&amp;#125;背景重复1234body &amp;#123;   background-image: url(/i/eg_bg_03.gif);  background-repeat: rep">
+
+<link rel="canonical" href="https://yanadev.github.io/2020/03/15/CSS样式总结/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>CSS 样式总结 | YanaChen</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YanaChen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">_踩坑_填坑_日常</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">63</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">55</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">62</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/15/CSS样式总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yana">
+      <meta itemprop="description" content="Never give up！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanaChen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CSS 样式总结
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-15 15:29:21" itemprop="dateCreated datePublished" datetime="2020-03-15T15:29:21+08:00">2020-03-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-23 03:52:51" itemprop="dateModified" datetime="2022-05-23T03:52:51+08:00">2022-05-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CSS/" itemprop="url" rel="index">
+                    <span itemprop="name">CSS</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.7k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id><a href="#" class="headerlink" title></a></h1><h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>所有背景属性都不能继承</p><h1 id="背景色"><a href="#背景色" class="headerlink" title="背景色"></a>背景色</h1><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span> &#123;<span class="attribute">background-color</span>: gray;&#125;</span><br></pre></td></tr></table></figure><h1 id="背景图像"><a href="#背景图像" class="headerlink" title="背景图像"></a>背景图像</h1><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;<span class="attribute">background-image</span>: <span class="built_in">url</span>(/i/eg_bg_04.gif);&#125;</span><br></pre></td></tr></table></figure><h1 id="背景重复"><a href="#背景重复" class="headerlink" title="背景重复"></a>背景重复</h1><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123; </span><br><span class="line">  <span class="attribute">background-image</span>: <span class="built_in">url</span>(/i/eg_bg_03.gif);</span><br><span class="line">  <span class="attribute">background-repeat</span>: repeat-y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><a id="more"></a>
+
+
+
+
+
+
+<table>
+<thead>
+<tr>
+<th align="left">值</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">repeat</td>
+<td align="left">默认。背景图像将在垂直方向和水平方向重复。</td>
+</tr>
+<tr>
+<td align="left">repeat-x</td>
+<td align="left">背景图像将在水平方向重复。</td>
+</tr>
+<tr>
+<td align="left">repeat-y</td>
+<td align="left">背景图像将在垂直方向重复。</td>
+</tr>
+<tr>
+<td align="left">no-repeat</td>
+<td align="left">背景图像将仅显示一次。</td>
+</tr>
+<tr>
+<td align="left">inherit</td>
+<td align="left">规定应该从父元素继承 background-repeat 属性的设置。</td>
+</tr>
+</tbody></table>
+<h1 id="背景定位"><a href="#背景定位" class="headerlink" title="背景定位"></a>背景定位</h1><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span> &#123;</span><br><span class="line">    <span class="attribute">background-position</span>:top;</span><br><span class="line">    <span class="attribute">background-position</span>:<span class="number">50%</span> <span class="number">50%</span>;</span><br><span class="line">    <span class="attribute">background-position</span>:<span class="number">50px</span> <span class="number">100px</span>;</span><br><span class="line">&#125;</span><br><span class="line">// 左上为原点</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">单一关键字</th>
+<th align="left">等价的关键字</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">center</td>
+<td align="left">center center</td>
+</tr>
+<tr>
+<td align="left">top</td>
+<td align="left">top center 或 center top</td>
+</tr>
+<tr>
+<td align="left">bottom</td>
+<td align="left">bottom center 或 center bottom</td>
+</tr>
+<tr>
+<td align="left">right</td>
+<td align="left">right center 或 center right</td>
+</tr>
+<tr>
+<td align="left">left</td>
+<td align="left">left center 或 center left</td>
+</tr>
+</tbody></table>
+<h1 id="背景关联"><a href="#背景关联" class="headerlink" title="背景关联"></a>背景关联</h1><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">background-attachment</span><span class="selector-pseudo">:fixed</span></span><br><span class="line">// 固定背景图片</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">值</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">scroll</td>
+<td align="left">默认值。背景图像会随着页面其余部分的滚动而移动。</td>
+</tr>
+<tr>
+<td align="left">fixed</td>
+<td align="left">当页面的其余部分滚动时，背景图像不会移动。</td>
+</tr>
+<tr>
+<td align="left">inherit</td>
+<td align="left">规定应该从父元素继承 background-attachment 属性的设置。</td>
+</tr>
+</tbody></table>
+<h1 id="文本"><a href="#文本" class="headerlink" title="文本"></a>文本</h1><h2 id="简写："><a href="#简写：" class="headerlink" title="简写："></a>简写：</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">-</span> <span class="selector-tag">font-style</span></span><br><span class="line"><span class="selector-tag">-</span> <span class="selector-tag">font-variant</span></span><br><span class="line"><span class="selector-tag">-</span> <span class="selector-tag">font-weight</span></span><br><span class="line">- font-size/line-height</span><br><span class="line"><span class="selector-tag">-</span> <span class="selector-tag">font-family</span></span><br><span class="line"></span><br><span class="line"><span class="selector-tag">p</span><span class="selector-class">.ex2</span> &#123; <span class="attribute">font</span>:italic bold <span class="number">12px</span>/<span class="number">20px</span> arial,sans-serif; &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="缩进文本-text-indent-属性可以继承"><a href="#缩进文本-text-indent-属性可以继承" class="headerlink" title="缩进文本  text-indent 属性可以继承"></a>缩进文本  text-indent 属性可以继承</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span> &#123;<span class="attribute">text-indent</span>: <span class="number">5em</span>;&#125;</span><br><span class="line">p &#123;text-indent: 20%;&#125; // 缩进值是父元素的 20%，即 100 个像素</span><br></pre></td></tr></table></figure>
+
+<h2 id="文本对齐-text-align"><a href="#文本对齐-text-align" class="headerlink" title="文本对齐 text-align"></a>文本对齐 text-align</h2><table>
+<thead>
+<tr>
+<th align="left">值</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">left</td>
+<td align="left">把文本排列到左边。默认值：由浏览器决定。</td>
+</tr>
+<tr>
+<td align="left">right</td>
+<td align="left">把文本排列到右边。</td>
+</tr>
+<tr>
+<td align="left">center</td>
+<td align="left">把文本排列到中间。</td>
+</tr>
+<tr>
+<td align="left">justify</td>
+<td align="left">实现两端对齐文本效果。</td>
+</tr>
+<tr>
+<td align="left">inherit</td>
+<td align="left">规定应该从父元素继承 text-align 属性的值。</td>
+</tr>
+</tbody></table>
+<h2 id="字间隔-word-spacing"><a href="#字间隔-word-spacing" class="headerlink" title="字间隔 word-spacing"></a>字间隔 word-spacing</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span> &#123; <span class="attribute">word-spacing</span>:<span class="number">25px</span>; &#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">值</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">normal</td>
+<td align="left">默认。定义单词间的标准空间。</td>
+</tr>
+<tr>
+<td align="left"><em>length</em></td>
+<td align="left">定义单词间的固定空间。</td>
+</tr>
+<tr>
+<td align="left">inherit</td>
+<td align="left">规定应该从父元素继承 word-spacing 属性的值。</td>
+</tr>
+</tbody></table>
+<h2 id="子母间隔-letter-spacing"><a href="#子母间隔-letter-spacing" class="headerlink" title="子母间隔  letter-spacing"></a>子母间隔  letter-spacing</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">h1</span> &#123;<span class="attribute">letter-spacing</span>: -<span class="number">0.5em</span>&#125;</span><br><span class="line"><span class="selector-tag">h4</span> &#123;<span class="attribute">letter-spacing</span>: <span class="number">20px</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">值</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">normal</td>
+<td align="left">默认。规定字符间没有额外的空间。</td>
+</tr>
+<tr>
+<td align="left"><em>length</em></td>
+<td align="left">定义字符间的固定空间（允许使用负值）。</td>
+</tr>
+<tr>
+<td align="left">inherit</td>
+<td align="left">规定应该从父元素继承 letter-spacing 属性的值。</td>
+</tr>
+</tbody></table>
+<h2 id="文本装饰-text-decoration-值覆盖"><a href="#文本装饰-text-decoration-值覆盖" class="headerlink" title="文本装饰 text-decoration 值覆盖"></a>文本装饰 text-decoration 值覆盖</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">h2</span> &#123;<span class="attribute">text-decoration</span>: underline overline;&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">值</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">none</td>
+<td align="left">默认。定义标准的文本。</td>
+</tr>
+<tr>
+<td align="left">underline</td>
+<td align="left">定义文本下的一条线。</td>
+</tr>
+<tr>
+<td align="left">overline</td>
+<td align="left">定义文本上的一条线。</td>
+</tr>
+<tr>
+<td align="left">line-through</td>
+<td align="left">定义穿过文本下的一条线。</td>
+</tr>
+<tr>
+<td align="left">blink</td>
+<td align="left">定义闪烁的文本。</td>
+</tr>
+<tr>
+<td align="left">inherit</td>
+<td align="left">规定应该从父元素继承 text-decoration 属性的值。</td>
+</tr>
+</tbody></table>
+<h2 id="处理空白符-white-space"><a href="#处理空白符-white-space" class="headerlink" title="处理空白符 white-space"></a>处理空白符 white-space</h2><table>
+<thead>
+<tr>
+<th align="left">值</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">normal</td>
+<td align="left">默认。空白会被浏览器忽略。</td>
+</tr>
+<tr>
+<td align="left">pre</td>
+<td align="left">空白会被浏览器保留。其行为方式类似 HTML 中的 <pre> 标签。</pre></td>
+</tr>
+<tr>
+<td align="left">nowrap</td>
+<td align="left">文本不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。</td>
+</tr>
+<tr>
+<td align="left">pre-wrap</td>
+<td align="left">保留空白符序列，但是正常地进行换行。</td>
+</tr>
+<tr>
+<td align="left">pre-line</td>
+<td align="left">合并空白符序列，但是保留换行符。</td>
+</tr>
+<tr>
+<td align="left">inherit</td>
+<td align="left">规定应该从父元素继承 white-space 属性的值。</td>
+</tr>
+</tbody></table>
+<h1 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h1><h2 id="font-family-指定字体"><a href="#font-family-指定字体" class="headerlink" title="font-family 指定字体"></a>font-family 指定字体</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span> &#123;<span class="attribute">font-family</span>: Times, TimesNR, <span class="string">'New Century Schoolbook'</span>,</span><br><span class="line">     Georgia, <span class="string">'New York'</span>, serif;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="font-style-字体风格"><a href="#font-style-字体风格" class="headerlink" title="font-style 字体风格"></a>font-style 字体风格</h2><ul>
+<li>normal - 文本正常显示</li>
+<li>italic - 文本斜体显示</li>
+<li>oblique - 文本倾斜显示</li>
+</ul>
+<h2 id="字体变形-font-variant-设定小型大写字母"><a href="#字体变形-font-variant-设定小型大写字母" class="headerlink" title="字体变形 font-variant  设定小型大写字母"></a>字体变形 font-variant  设定小型大写字母</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span> &#123;<span class="attribute">font-variant</span>:small-caps;&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>normal</th>
+<th>默认值。浏览器会显示一个标准的字体。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>small-caps</td>
+<td>浏览器会显示小型大写字母的字体。</td>
+</tr>
+<tr>
+<td>inherit</td>
+<td>规定应该从父元素继承 font-variant 属性的值。</td>
+</tr>
+</tbody></table>
+<h2 id="字体大小-font-size"><a href="#字体大小-font-size" class="headerlink" title="字体大小 font-size"></a>字体大小 font-size</h2><p>推荐使用em尺寸单位    em 的值会相对于父元素的字体大小改变 </p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span> &#123;<span class="attribute">font-size</span>:<span class="number">14px</span>;&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">h1</span> &#123;<span class="attribute">font-size</span>:<span class="number">3.75em</span>;&#125; <span class="comment">/* 60px/16=3.75em */</span></span><br><span class="line"><span class="selector-tag">h2</span> &#123;<span class="attribute">font-size</span>:<span class="number">2.5em</span>;&#125;  <span class="comment">/* 40px/16=2.5em */</span></span><br><span class="line"><span class="selector-tag">p</span> &#123;<span class="attribute">font-size</span>:<span class="number">0.875em</span>;&#125; <span class="comment">/* 14px/16=0.875em */</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">值</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">xx-small  x-small  small  medium  large  x-large  xx-large</td>
+<td align="left">把字体的尺寸设置为不同的尺寸，从 xx-small 到 xx-large。默认值：medium。</td>
+</tr>
+<tr>
+<td align="left">smaller</td>
+<td align="left">把 font-size 设置为比父元素更小的尺寸。</td>
+</tr>
+<tr>
+<td align="left">larger</td>
+<td align="left">把 font-size 设置为比父元素更大的尺寸。</td>
+</tr>
+<tr>
+<td align="left"><em>length</em></td>
+<td align="left">把 font-size 设置为一个固定的值。</td>
+</tr>
+<tr>
+<td align="left"><em>%</em></td>
+<td align="left">把 font-size 设置为基于父元素的一个百分比值。</td>
+</tr>
+<tr>
+<td align="left">inherit</td>
+<td align="left">规定应该从父元素继承字体尺寸。</td>
+</tr>
+</tbody></table>
+<h2 id="字体粗细-font-weight"><a href="#字体粗细-font-weight" class="headerlink" title="字体粗细 font-weight"></a>字体粗细 font-weight</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">normal(400) / bold(700) / bolder / lighter</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">p</span><span class="selector-class">.normal</span> &#123;<span class="attribute">font-weight</span>:normal;&#125;</span><br><span class="line"><span class="selector-tag">p</span><span class="selector-class">.thick</span> &#123;<span class="attribute">font-weight</span>:bold;&#125;</span><br><span class="line"><span class="selector-tag">p</span><span class="selector-class">.thicker</span> &#123;<span class="attribute">font-weight</span>:<span class="number">900</span>;&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h1><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:link</span> &#123;<span class="attribute">color</span>:<span class="number">#FF0000</span>;&#125;		<span class="comment">/* 未被访问的链接 */</span></span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:visited</span> &#123;<span class="attribute">color</span>:<span class="number">#00FF00</span>;&#125;	<span class="comment">/* 已被访问的链接 */</span></span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;<span class="attribute">color</span>:<span class="number">#FF00FF</span>;&#125;	<span class="comment">/* 鼠标指针移动到链接上 */</span></span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:active</span> &#123;<span class="attribute">color</span>:<span class="number">#0000FF</span>;&#125;	<span class="comment">/* 正在被点击的链接 */</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>a:link - 普通的、未被访问的链接</li>
+<li>a:visited - 用户已访问的链接</li>
+<li>a:hover - 鼠标指针位于链接的上方</li>
+<li>a:active - 链接被点击的时刻</li>
+</ul>
+<h1 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h1><h2 id="简写"><a href="#简写" class="headerlink" title="简写"></a>简写</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">list-style-type</span></span><br><span class="line"><span class="selector-tag">list-style-position</span></span><br><span class="line"><span class="selector-tag">list-style-image</span></span><br><span class="line"></span><br><span class="line"><span class="selector-tag">ul</span> &#123; <span class="attribute">list-style</span>:square inside <span class="built_in">url</span>(<span class="string">'/i/arrow.gif'</span>); &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="列表类型-list-style-type"><a href="#列表类型-list-style-type" class="headerlink" title="列表类型 list-style-type"></a>列表类型 list-style-type</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">ul</span> &#123;<span class="attribute">list-style-type </span>: square&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="列表项图像-list-style-image"><a href="#列表项图像-list-style-image" class="headerlink" title="列表项图像 list-style-image"></a>列表项图像 list-style-image</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">ul</span> <span class="selector-tag">li</span> &#123;<span class="attribute">list-style-image </span>: <span class="built_in">url</span>(xxx.gif)&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="列表标志位置-list-style-position"><a href="#列表标志位置-list-style-position" class="headerlink" title="列表标志位置 list-style-position"></a>列表标志位置 list-style-position</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">inside</span>	列表项目标记放置在文本以内，且环绕文本根据标记对齐。</span><br><span class="line"><span class="selector-tag">outside</span>	默认值。保持标记位于文本的左侧。列表项目标记放置在文本以外，且环绕文本不根据标记对齐。</span><br><span class="line"><span class="selector-tag">inherit</span>	规定应该从父元素继承 <span class="selector-tag">list-style-position</span> 属性的值。</span><br></pre></td></tr></table></figure>
+
+<h1 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h1><h2 id="表格边框"><a href="#表格边框" class="headerlink" title="表格边框"></a>表格边框</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">border</span>: 1<span class="selector-tag">px</span> <span class="selector-tag">solid</span> <span class="selector-tag">blue</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="折叠边框-border-collapse"><a href="#折叠边框-border-collapse" class="headerlink" title="折叠边框  border-collapse"></a>折叠边框  border-collapse</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">table</span> &#123;<span class="attribute">border-collapse</span>:collapse; &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="表格宽高"><a href="#表格宽高" class="headerlink" title="表格宽高"></a>表格宽高</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">width</span>: 100<span class="selector-tag">px</span>;</span><br><span class="line"><span class="selector-tag">width</span>: 100%;</span><br><span class="line"><span class="selector-tag">height</span>: 100<span class="selector-tag">px</span>;</span><br><span class="line"><span class="selector-tag">height</span>: 100%;</span><br></pre></td></tr></table></figure>
+
+<h1 id="box-shadow-盒子阴影"><a href="#box-shadow-盒子阴影" class="headerlink" title="box-shadow 盒子阴影"></a>box-shadow 盒子阴影</h1><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">box-shadow: </span>h-<span class="keyword">shadow </span>v-<span class="keyword">shadow </span><span class="keyword">blur </span>spread color <span class="keyword">inset;</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">值</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><em>h-shadow</em></td>
+<td align="left">必需。水平阴影的位置。允许负值。</td>
+</tr>
+<tr>
+<td align="left"><em>v-shadow</em></td>
+<td align="left">必需。垂直阴影的位置。允许负值。</td>
+</tr>
+<tr>
+<td align="left"><em>blur</em></td>
+<td align="left">可选。模糊距离。</td>
+</tr>
+<tr>
+<td align="left"><em>spread</em></td>
+<td align="left">可选。阴影的尺寸。</td>
+</tr>
+<tr>
+<td align="left"><em>color</em></td>
+<td align="left">可选。阴影的颜色。请参阅 CSS 颜色值。</td>
+</tr>
+<tr>
+<td align="left">inset</td>
+<td align="left">可选。将外部阴影 (outset) 改为内部阴影。</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CSS/" rel="tag"><i class="fa fa-tag"></i>CSS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/11/19/v-bind指令的学习/" rel="next" title="v-bind、v-on使用">
+                  <i class="fa fa-chevron-left"></i> v-bind、v-on使用
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2020/03/31/配置与安装服务器软件（Apache）/" rel="prev" title="配置与安装服务器软件（Apache）">
+                  配置与安装服务器软件（Apache） <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#背景"><span class="nav-number">2.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#背景色"><span class="nav-number">3.</span> <span class="nav-text">背景色</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#背景图像"><span class="nav-number">4.</span> <span class="nav-text">背景图像</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#背景重复"><span class="nav-number">5.</span> <span class="nav-text">背景重复</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#背景定位"><span class="nav-number">6.</span> <span class="nav-text">背景定位</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#背景关联"><span class="nav-number">7.</span> <span class="nav-text">背景关联</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文本"><span class="nav-number">8.</span> <span class="nav-text">文本</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简写："><span class="nav-number">8.1.</span> <span class="nav-text">简写：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缩进文本-text-indent-属性可以继承"><span class="nav-number">8.2.</span> <span class="nav-text">缩进文本  text-indent 属性可以继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文本对齐-text-align"><span class="nav-number">8.3.</span> <span class="nav-text">文本对齐 text-align</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字间隔-word-spacing"><span class="nav-number">8.4.</span> <span class="nav-text">字间隔 word-spacing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子母间隔-letter-spacing"><span class="nav-number">8.5.</span> <span class="nav-text">子母间隔  letter-spacing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文本装饰-text-decoration-值覆盖"><span class="nav-number">8.6.</span> <span class="nav-text">文本装饰 text-decoration 值覆盖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#处理空白符-white-space"><span class="nav-number">8.7.</span> <span class="nav-text">处理空白符 white-space</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字体"><span class="nav-number">9.</span> <span class="nav-text">字体</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#font-family-指定字体"><span class="nav-number">9.1.</span> <span class="nav-text">font-family 指定字体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#font-style-字体风格"><span class="nav-number">9.2.</span> <span class="nav-text">font-style 字体风格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字体变形-font-variant-设定小型大写字母"><span class="nav-number">9.3.</span> <span class="nav-text">字体变形 font-variant  设定小型大写字母</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字体大小-font-size"><span class="nav-number">9.4.</span> <span class="nav-text">字体大小 font-size</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字体粗细-font-weight"><span class="nav-number">9.5.</span> <span class="nav-text">字体粗细 font-weight</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#链接"><span class="nav-number">10.</span> <span class="nav-text">链接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#列表"><span class="nav-number">11.</span> <span class="nav-text">列表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简写"><span class="nav-number">11.1.</span> <span class="nav-text">简写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列表类型-list-style-type"><span class="nav-number">11.2.</span> <span class="nav-text">列表类型 list-style-type</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列表项图像-list-style-image"><span class="nav-number">11.3.</span> <span class="nav-text">列表项图像 list-style-image</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列表标志位置-list-style-position"><span class="nav-number">11.4.</span> <span class="nav-text">列表标志位置 list-style-position</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#表格"><span class="nav-number">12.</span> <span class="nav-text">表格</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#表格边框"><span class="nav-number">12.1.</span> <span class="nav-text">表格边框</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#折叠边框-border-collapse"><span class="nav-number">12.2.</span> <span class="nav-text">折叠边框  border-collapse</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表格宽高"><span class="nav-number">12.3.</span> <span class="nav-text">表格宽高</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#box-shadow-盒子阴影"><span class="nav-number">13.</span> <span class="nav-text">box-shadow 盒子阴影</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yana"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Yana</p>
+  <div class="site-description" itemprop="description">Never give up！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">63</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yanadev" title="GitHub → https://github.com/yanadev" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yana</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">90k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

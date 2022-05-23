@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="YanaChen" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="path模块是node.js内置的package，用来处理路径问题引入模块1const path = require(&quot;path&quot;); // 引入内置模块 path获取规范化路径 / 路径 / 文件名 / 扩展名1234path.normalize(filepath) ------------------------------ 获取规范化路径path.dirname(filepath)  --">
+<meta name="keywords" content="path,webpack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack path模块">
+<meta property="og:url" content="https://yanadev.github.io/2020/03/31/webpack-path模块/index.html">
+<meta property="og:site_name" content="YanaChen">
+<meta property="og:description" content="path模块是node.js内置的package，用来处理路径问题引入模块1const path = require(&quot;path&quot;); // 引入内置模块 path获取规范化路径 / 路径 / 文件名 / 扩展名1234path.normalize(filepath) ------------------------------ 获取规范化路径path.dirname(filepath)  --">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/webpack-path模块/image-20200228024446226.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/webpack-path模块/image-20200228031327206.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/webpack-path模块/image-20200228031613787.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/webpack-path模块/image-20200228031831335.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/webpack-path模块/image-20200228032521758.png">
+<meta property="og:updated_time" content="2022-05-22T19:39:46.465Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="webpack path模块">
+<meta name="twitter:description" content="path模块是node.js内置的package，用来处理路径问题引入模块1const path = require(&quot;path&quot;); // 引入内置模块 path获取规范化路径 / 路径 / 文件名 / 扩展名1234path.normalize(filepath) ------------------------------ 获取规范化路径path.dirname(filepath)  --">
+<meta name="twitter:image" content="https://yanadev.github.io/2020/03/31/webpack-path模块/image-20200228024446226.png">
+
+<link rel="canonical" href="https://yanadev.github.io/2020/03/31/webpack-path模块/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>webpack path模块 | YanaChen</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YanaChen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">_踩坑_填坑_日常</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">63</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">55</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">62</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/31/webpack-path模块/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yana">
+      <meta itemprop="description" content="Never give up！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanaChen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          webpack path模块
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-31 16:14:59" itemprop="dateCreated datePublished" datetime="2020-03-31T16:14:59+08:00">2020-03-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-23 03:39:46" itemprop="dateModified" datetime="2022-05-23T03:39:46+08:00">2022-05-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/webpack/" itemprop="url" rel="index">
+                    <span itemprop="name">webpack</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/webpack/path/" itemprop="url" rel="index">
+                    <span itemprop="name">path</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p> path模块是node.js内置的package，用来处理路径问题</p><h1 id="引入模块"><a href="#引入模块" class="headerlink" title="引入模块"></a>引入模块</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>); <span class="comment">// 引入内置模块 path</span></span><br></pre></td></tr></table></figure><h1 id="获取规范化路径-路径-文件名-扩展名"><a href="#获取规范化路径-路径-文件名-扩展名" class="headerlink" title="获取规范化路径 / 路径 / 文件名 / 扩展名"></a>获取规范化路径 / 路径 / 文件名 / 扩展名</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">path.normalize(filepath) ------------------------------ 获取规范化路径</span><br><span class="line">path.dirname(filepath)  ------------------------------ 获取路径</span><br><span class="line">path.basename(filepath) ------------------------------ 获取文件名</span><br><span class="line">path.extname(filepath)  ------------------------------ 获取扩展名</span><br></pre></td></tr></table></figure><a id="more"></a>
+
+
+
+
+<h2 id="获取规范化路径-path-normalize"><a href="#获取规范化路径-path-normalize" class="headerlink" title="获取规范化路径 path.normalize()"></a>获取规范化路径 path.normalize()</h2><ul>
+<li>规范化给定的路径，解析 ‘..’ 和 ‘.’ 片段</li>
+<li>多个连续路径分隔符会被单个路径分隔符替代，末尾多个分隔符会被保留</li>
+<li>如路径是 长度为零 的字符串，返回 ‘.’，表当前工作目录</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">path.normalize(<span class="string">'C:\\temp\\\\foo\\bar\\..\\'</span>);</span><br><span class="line"><span class="comment">// 返回: 'C:\\temp\\foo\\'</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="获取所在路径"><a href="#获取所在路径" class="headerlink" title="获取所在路径"></a>获取所在路径</h2><p><code>__dirname</code> 是<code>node.js</code> 中的一个全局变量，用来获取<code>当前模块文件</code>所在目录的完整绝对路径</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">var</span> filename = <span class="string">'/tmp/demp/js/test.js'</span>;</span><br><span class="line">cosnoel.log(path.dirname(filepath));</span><br><span class="line"><span class="comment">// 输出：/tmp/demo/js</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="//yanadev.github.io/2020/03/31/webpack-path模块/image-20200228024446226.png" alt="image-20200228024446226"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myPath = path.dirname(__dirname + <span class="string">'/test/util/helloWorld.js'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(myPath);</span><br><span class="line"></span><br><span class="line"><span class="comment">//Users/cayley/Documents/webpack-demo/test/util</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="获取文件名"><a href="#获取文件名" class="headerlink" title="获取文件名"></a>获取文件名</h2><p>严格来说，path.basename(filepath) 只是输出路径的最后一部分，并不会判断文件名</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(path.basename(<span class="string">'tmp/demo/js/test.js'</span>)); <span class="comment">// test.js</span></span><br><span class="line"><span class="built_in">console</span>.log(path.basename(<span class="string">'tmp/demo/js/test/'</span>)); <span class="comment">// test</span></span><br><span class="line"><span class="built_in">console</span>.log(path.basename(<span class="string">'tmp/demo/js/test'</span>)); <span class="comment">// test</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="//yanadev.github.io/2020/03/31/webpack-path模块/image-20200228031327206.png" alt="image-20200228031327206"></p>
+<ul>
+<li>如果不想包括文件扩展名，可使用第二个参数</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(path.basename(<span class="string">'tmp/demo/js/test.js'</span>, <span class="string">'.js'</span>)); <span class="comment">// test</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="//yanadev.github.io/2020/03/31/webpack-path模块/image-20200228031613787.png" alt="image-20200228031613787"></p>
+<h2 id="获取文件扩展名"><a href="#获取文件扩展名" class="headerlink" title="获取文件扩展名"></a>获取文件扩展名</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">var</span> filepath = <span class="string">'/tmp/demo/js/test.js'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(path.extname(filepath)); <span class="comment">// .js</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="//yanadev.github.io/2020/03/31/webpack-path模块/image-20200228031831335.png" alt="image-20200228031831335"></p>
+<p>更详细的规则是如下：（假设 path.basename(filepath) === B ）</p>
+<ul>
+<li>从B的最后一个<code>.</code>开始截取，直到最后一个字符。</li>
+<li>如果B中不存在<code>.</code>，或者B的第一个字符就是<code>.</code>，那么返回空字符串。</li>
+</ul>
+<p>官方文档</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">path.extname(<span class="string">'index.html'</span>)</span><br><span class="line"><span class="comment">// returns '.html'</span></span><br><span class="line"></span><br><span class="line">path.extname(<span class="string">'index.coffee.md'</span>)</span><br><span class="line"><span class="comment">// returns '.md'</span></span><br><span class="line"></span><br><span class="line">path.extname(<span class="string">'index.'</span>)</span><br><span class="line"><span class="comment">// returns '.'</span></span><br><span class="line"></span><br><span class="line">path.extname(<span class="string">'index'</span>)</span><br><span class="line"><span class="comment">// returns ''</span></span><br><span class="line"></span><br><span class="line">path.extname(<span class="string">'.index'</span>)</span><br><span class="line"><span class="comment">// returns ''</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="路径组合"><a href="#路径组合" class="headerlink" title="路径组合"></a>路径组合</h1><ul>
+<li><p>path.join([…paths])</p>
+</li>
+<li><p>path.resolve([…paths])</p>
+</li>
+</ul>
+<h1 id="path-join-…paths-–-用分隔符连接"><a href="#path-join-…paths-–-用分隔符连接" class="headerlink" title="path.join([…paths]) – 用分隔符连接"></a>path.join([…paths]) – 用分隔符连接</h1><p>使用特定的分隔符把连接 path 片段，并<strong>规范化生成的路径</strong>。 长度为零的 path 片段会被忽略。 如果连接后的路径字符串是一个长度为零的字符串，则返回 ‘.’，表示当前工作目录。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">path</span>.<span class="keyword">join</span>(<span class="string">'/foo'</span>, <span class="string">'bar'</span>, <span class="string">'baz/asdf'</span>, <span class="string">'quux'</span>, <span class="string">'..'</span>);</span><br><span class="line">// 输出 <span class="string">'/foo/bar/baz/asdf'</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="//yanadev.github.io/2020/03/31/webpack-path模块/image-20200228032521758.png" alt="image-20200228032521758"></p>
+<p>path定义的伪代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports.join = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> paths = <span class="built_in">Array</span>.prototye.slice.call(<span class="built_in">arguments</span>, <span class="number">0</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.normalize( paths.join(<span class="string">'/'</span>) );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">path.join(<span class="string">'/foo'</span>, <span class="string">'bar'</span>, <span class="string">'baz/asdf'</span>, <span class="string">'quux'</span>, <span class="string">'.'</span>); </span><br><span class="line"><span class="comment">//  返回 /foo/bar/baz/asdf/quux</span></span><br><span class="line"></span><br><span class="line">path.join(<span class="string">'/foo'</span>, <span class="string">'bar'</span>, <span class="string">'baz/asdf'</span>, <span class="string">'quux'</span>, <span class="string">'.'</span>, <span class="string">'pink'</span>);</span><br><span class="line">path.join(<span class="string">'/foo'</span>, <span class="string">'bar'</span>, <span class="string">'baz/asdf'</span>, <span class="string">'quux'</span>, <span class="string">'/'</span>, <span class="string">'pink'</span>);</span><br><span class="line"><span class="comment">// 返回 /foo/bar/baz/asdf/quux/pink           ----------------------- "."和"/"没什么区别</span></span><br><span class="line">path.join(<span class="string">'/foo'</span>, <span class="string">'./bar'</span>, <span class="string">'baz/asdf'</span>, <span class="string">'.'</span>, <span class="string">'quux'</span>);        </span><br><span class="line"><span class="comment">//  返回 /foo/bar/baz/asdf/quux</span></span><br><span class="line"></span><br><span class="line">path.join(<span class="string">'/foo'</span>, <span class="string">'./bar'</span>, <span class="string">'./baz/asdf'</span>, <span class="string">'quux'</span>, <span class="string">'..'</span>);     </span><br><span class="line"><span class="comment">//  返回 /foo/bar/baz/asdf</span></span><br><span class="line"></span><br><span class="line">path.join(<span class="string">'/foo'</span>, <span class="string">'bar'</span>, <span class="string">'baz/asdf'</span>, <span class="string">'.'</span>, <span class="string">'.'</span>);             </span><br><span class="line"><span class="comment">//  返回 /foo/bar/baz/asdf</span></span><br><span class="line"></span><br><span class="line">path.join(<span class="string">'/foo'</span>, <span class="string">'bar'</span>, <span class="string">'baz/asdf'</span>, <span class="string">'quux'</span>);               </span><br><span class="line"><span class="comment">//  返回 /foo/bar/baz/asdf/quux</span></span><br><span class="line"></span><br><span class="line">path.join(<span class="string">'/foo'</span>, <span class="string">'bar'</span>, <span class="string">'baz/asdf'</span>, <span class="string">'..'</span>, <span class="string">'..'</span>);           </span><br><span class="line"><span class="comment">//  返回 /foo/bar</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="path-resolve-…paths-–-智能解析绝对路径"><a href="#path-resolve-…paths-–-智能解析绝对路径" class="headerlink" title="path.resolve([…paths]) – 智能解析绝对路径"></a>path.resolve([…paths]) – 智能解析绝对路径</h2><p>把一个路径或路径片段的序列解析为一个绝对路径（层级关系从左到右）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 当前工作目录与当前文件路径(F:/1/2/task6/test/dist)有区别</span></span><br><span class="line"></span><br><span class="line">path.resolve();                               <span class="comment">//  F:/1/2/task6/test 当前工作目录的绝对路径</span></span><br><span class="line"></span><br><span class="line">path.resolve(<span class="string">'./a'</span>);                          <span class="comment">//  F:/1/2/task6/test/a </span></span><br><span class="line"></span><br><span class="line">path.resolve(<span class="string">'../a'</span>);                         <span class="comment">//  F:/1/2/task6/a</span></span><br><span class="line"></span><br><span class="line">path.resolve(<span class="string">'.'</span>);                            <span class="comment">//  F:/1/2/task6/test </span></span><br><span class="line"></span><br><span class="line">path.resolve(<span class="string">'..'</span>);                           <span class="comment">//  F:/1/2/task6</span></span><br><span class="line"></span><br><span class="line">path.resolve(<span class="string">'/'</span>));                           <span class="comment">//  F:/</span></span><br><span class="line"></span><br><span class="line">path.resolve(<span class="string">'./a'</span>,<span class="string">'../c/d'</span>);                 <span class="comment">//  F:/1/2/task6/test/c/d</span></span><br><span class="line"></span><br><span class="line">path.resolve(<span class="string">'./a'</span>,<span class="string">'./c/d'</span>);                  <span class="comment">//  F:/1/2/task6/test/a/c/d</span></span><br><span class="line"></span><br><span class="line">path.resolve(<span class="string">'/a'</span>,<span class="string">'../c/d'</span>);                  <span class="comment">//  F:c/d</span></span><br><span class="line"></span><br><span class="line">path.resolve(<span class="string">'/a'</span>,<span class="string">'./c/d'</span>);                   <span class="comment">//  F:/a/c/d</span></span><br><span class="line"></span><br><span class="line">path.resolve(<span class="string">'./a'</span>,<span class="string">'/b'</span>,<span class="string">'./c/d'</span>);             <span class="comment">//  F:/b/c/d</span></span><br><span class="line"></span><br><span class="line">path.resolve(<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c/d'</span>);                  <span class="comment">//  F:/1/2/task6/test/a/b/c/d</span></span><br><span class="line"></span><br><span class="line">path.resolve(<span class="string">'./a'</span>,<span class="string">'./b'</span>,<span class="string">'c/d'</span>);              <span class="comment">//  F:/1/2/task6/test/a/b/c/d</span></span><br><span class="line"></span><br><span class="line">path.resolve(<span class="string">'./a'</span>,<span class="string">'/b'</span>,<span class="string">'c/d'</span>);               <span class="comment">//  F:/b/c/d</span></span><br><span class="line"></span><br><span class="line">path.resolve(<span class="string">'./a/b'</span>,<span class="string">'..'</span>,<span class="string">'c/d'</span>);             <span class="comment">//  F:/1/2/task6/test/a/c/d</span></span><br><span class="line"></span><br><span class="line">path.resolve(<span class="string">'./a'</span>,<span class="string">'..'</span>,<span class="string">'c/d'</span>);               <span class="comment">//  F:/1/2/task6/test/c/d</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ol>
+<li><p>以/开始的路径片段作为根目录，在此之前的路径将会被丢弃</p>
+</li>
+<li><p>‘ . ‘ 返回当前工作目录的绝对路径</p>
+</li>
+<li><p>‘ .. ‘ 返回当前工作目录上一级的绝对路径</p>
+</li>
+</ol>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- 路径序列从右到左处理</span><br><span class="line">- 如处理完所有 path 片段还未生成一个绝对路径，则当前工作目录会被用上</span><br><span class="line">- 生成的路径是规范化后的，且末尾的斜杠会被删除，除非路径被解析为根目录</span><br><span class="line">- 长度为零的 path 片段会被忽略</span><br><span class="line">- 没有传入 path 片段，则 path.resolve() 会返回当前工作目录的绝对路径</span><br><span class="line">- 以/开始的路径片段作为根目录，在此之前的路径将会被丢弃</span><br></pre></td></tr></table></figure>
+
+<h2 id="获取相对路径-path-relative-from-to"><a href="#获取相对路径-path-relative-from-to" class="headerlink" title="获取相对路径 path.relative(from, to)"></a>获取相对路径 path.relative(from, to)</h2><p><code>边界</code>：<code>from</code>、<code>to</code>指向同个路径，返回空字符串；若<code>from</code>或<code>to</code>任一者为空，返回当前工作路径</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = path.relative(<span class="string">'/data/orandea/test/aaa'</span>, <span class="string">'/data/orandea/impl/bbb'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(p1);  <span class="comment">// 输出 "../../impl/bbb"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p2 = path.relative(<span class="string">'/data/demo'</span>, <span class="string">'/data/demo'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(p2);  <span class="comment">// 输出 ""</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p3 = path.relative(<span class="string">'/data/demo'</span>, <span class="string">''</span>);</span><br><span class="line"><span class="comment">// =&gt; 当前工作路径 'E:\Develop\nodejs'</span></span><br><span class="line"><span class="built_in">console</span>.log(p3); <span class="comment">// 输出 "..\..\Develop\nodejs"</span></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/path/" rel="tag"><i class="fa fa-tag"></i>path</a>
+              <a href="/tags/webpack/" rel="tag"><i class="fa fa-tag"></i>webpack</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/03/31/Vue常用特性应用场景/" rel="next" title="Vue常用特性应用场景">
+                  <i class="fa fa-chevron-left"></i> Vue常用特性应用场景
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2020/03/31/Vue基础/" rel="prev" title="Vue基础">
+                  Vue基础 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#引入模块"><span class="nav-number">1.</span> <span class="nav-text">引入模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取规范化路径-路径-文件名-扩展名"><span class="nav-number">2.</span> <span class="nav-text">获取规范化路径 / 路径 / 文件名 / 扩展名</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#获取规范化路径-path-normalize"><span class="nav-number">2.1.</span> <span class="nav-text">获取规范化路径 path.normalize()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取所在路径"><span class="nav-number">2.2.</span> <span class="nav-text">获取所在路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取文件名"><span class="nav-number">2.3.</span> <span class="nav-text">获取文件名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取文件扩展名"><span class="nav-number">2.4.</span> <span class="nav-text">获取文件扩展名</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#路径组合"><span class="nav-number">3.</span> <span class="nav-text">路径组合</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#path-join-…paths-–-用分隔符连接"><span class="nav-number">4.</span> <span class="nav-text">path.join([…paths]) – 用分隔符连接</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#path-resolve-…paths-–-智能解析绝对路径"><span class="nav-number">4.1.</span> <span class="nav-text">path.resolve([…paths]) – 智能解析绝对路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取相对路径-path-relative-from-to"><span class="nav-number">4.2.</span> <span class="nav-text">获取相对路径 path.relative(from, to)</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yana"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Yana</p>
+  <div class="site-description" itemprop="description">Never give up！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">63</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yanadev" title="GitHub → https://github.com/yanadev" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yana</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">90k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

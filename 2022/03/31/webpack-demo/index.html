@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="YanaChen" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="为什么要使用webpack？ 模块化，把复杂文件细分成小文件 将ES6、ES7等文件格式转换成浏览器可以解析的格式，less、sess文件预处理 webpack是什么？webpack：打包模块化Javascript的工具核心：一切文件皆模块转换文件 - 注入钩子 - 输出模块组成的文件（Loader转换文件 - Plugin注入钩子 - 输出）">
+<meta name="keywords" content="webpack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack-demo">
+<meta property="og:url" content="https://yanadev.github.io/2022/03/31/webpack-demo/index.html">
+<meta property="og:site_name" content="YanaChen">
+<meta property="og:description" content="为什么要使用webpack？ 模块化，把复杂文件细分成小文件 将ES6、ES7等文件格式转换成浏览器可以解析的格式，less、sess文件预处理 webpack是什么？webpack：打包模块化Javascript的工具核心：一切文件皆模块转换文件 - 注入钩子 - 输出模块组成的文件（Loader转换文件 - Plugin注入钩子 - 输出）">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://yanadev.github.io/2022/03/31/webpack-demo/image-20200617123113284.png">
+<meta property="og:image" content="https://yanadev.github.io/2022/03/31/webpack-demo/image-20200617124017005.png">
+<meta property="og:image" content="https://yanadev.github.io/2022/03/31/webpack-demo/image-20200617131533962.png">
+<meta property="og:image" content="https://yanadev.github.io/2022/03/31/webpack-demo/image-20200617132116086.png">
+<meta property="og:image" content="https://yanadev.github.io/2022/03/31/webpack-demo/image-20200617133411154.png">
+<meta property="og:image" content="https://yanadev.github.io/2022/03/31/webpack-demo/image-20200617140022383.png">
+<meta property="og:image" content="https://yanadev.github.io/2022/03/31/webpack-demo/image-20200617170658303.png">
+<meta property="og:image" content="https://yanadev.github.io/2022/03/31/webpack-demo/image-20200617164335025.png">
+<meta property="og:image" content="https://yanadev.github.io/2022/03/31/webpack-demo/image-20200618105220645.png">
+<meta property="og:updated_time" content="2022-05-22T19:40:13.438Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="webpack-demo">
+<meta name="twitter:description" content="为什么要使用webpack？ 模块化，把复杂文件细分成小文件 将ES6、ES7等文件格式转换成浏览器可以解析的格式，less、sess文件预处理 webpack是什么？webpack：打包模块化Javascript的工具核心：一切文件皆模块转换文件 - 注入钩子 - 输出模块组成的文件（Loader转换文件 - Plugin注入钩子 - 输出）">
+<meta name="twitter:image" content="https://yanadev.github.io/2022/03/31/webpack-demo/image-20200617123113284.png">
+
+<link rel="canonical" href="https://yanadev.github.io/2022/03/31/webpack-demo/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>webpack-demo | YanaChen</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YanaChen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">_踩坑_填坑_日常</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">63</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">55</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">62</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2022/03/31/webpack-demo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yana">
+      <meta itemprop="description" content="Never give up！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanaChen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          webpack-demo
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-31 16:14:59" itemprop="dateCreated datePublished" datetime="2022-03-31T16:14:59+08:00">2022-03-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-23 03:40:13" itemprop="dateModified" datetime="2022-05-23T03:40:13+08:00">2022-05-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/webpack/" itemprop="url" rel="index">
+                    <span itemprop="name">webpack</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>722</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="为什么要使用webpack？"><a href="#为什么要使用webpack？" class="headerlink" title="为什么要使用webpack？"></a>为什么要使用webpack？</h1><ol>
+<li>模块化，把复杂文件细分成小文件</li>
+<li>将ES6、ES7等文件格式转换成浏览器可以解析的格式，less、sess文件预处理</li>
+</ol><h1 id="webpack是什么？"><a href="#webpack是什么？" class="headerlink" title="webpack是什么？"></a>webpack是什么？</h1><p><code>webpack</code>：打包模块化<code>Javascript</code>的工具</p><p><code>核心</code>：一切文件皆模块</p><p><code>转换文件</code> - <code>注入钩子</code> - <code>输出模块组成的文件</code>（<code>Loader转换文件</code> - <code>Plugin注入钩子</code> - <code>输出</code>）</p><a id="more"></a>
+
+
+
+<h1 id="使用-webpack-构建基本项目"><a href="#使用-webpack-构建基本项目" class="headerlink" title="使用 webpack 构建基本项目"></a>使用 webpack 构建基本项目</h1><h2 id="初始化项目：会生成-package-json-和-package-lock-json两个文件"><a href="#初始化项目：会生成-package-json-和-package-lock-json两个文件" class="headerlink" title="初始化项目：会生成 package.json 和 package-lock.json两个文件"></a>初始化项目：会生成 <code>package.json</code> 和 <code>package-lock.json</code>两个文件</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init <span class="comment">// 初始化项目，按需求输入项目的基本信息</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="//yanadev.github.io/2022/03/31/webpack-demo/image-20200617123113284.png" alt="image-20200617123113284"></p>
+<h2 id="安装webpack"><a href="#安装webpack" class="headerlink" title="安装webpack"></a>安装<code>webpack</code></h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm i webpack webpack-cli -D <span class="comment">// -D开发依赖，同时安装webpack和webpack-cli</span></span><br><span class="line"><span class="comment">/* cli（Command-Line Interface命令行接口）*/</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="//yanadev.github.io/2022/03/31/webpack-demo/image-20200617124017005.png" alt="image-20200617124017005"></p>
+<h2 id="尝试打包"><a href="#尝试打包" class="headerlink" title="尝试打包"></a>尝试打包</h2><p><img src="//yanadev.github.io/2022/03/31/webpack-demo/image-20200617131533962.png" alt="image-20200617131533962"></p>
+<p><img src="//yanadev.github.io/2022/03/31/webpack-demo/image-20200617132116086.png" alt="image-20200617132116086"></p>
+<h1 id="使用module-：匹配第三方模块（处理次序：由下到上，由右到左）"><a href="#使用module-：匹配第三方模块（处理次序：由下到上，由右到左）" class="headerlink" title="使用module ：匹配第三方模块（处理次序：由下到上，由右到左）"></a>使用<code>module</code> ：匹配第三方模块（处理次序：由下到上，由右到左）</h1><p><img src="//yanadev.github.io/2022/03/31/webpack-demo/image-20200617133411154.png" alt="image-20200617133411154"></p>
+<p><img src="//yanadev.github.io/2022/03/31/webpack-demo/image-20200617140022383.png" alt="image-20200617140022383"></p>
+<h1 id="使用-html-webpack-plugin-打包html文件"><a href="#使用-html-webpack-plugin-打包html文件" class="headerlink" title="使用 html-webpack-plugin 打包html文件"></a>使用 <code>html-webpack-plugin</code> 打包html文件</h1><p>默认创建一个空的<code>HTML</code>，自动引入打包输出的所有资源（JS/CSS）</p>
+<p><img src="//yanadev.github.io/2022/03/31/webpack-demo/image-20200617170658303.png" alt="image-20200617170658303"></p>
+<h2 id="处理图片文件"><a href="#处理图片文件" class="headerlink" title="处理图片文件"></a>处理图片文件</h2><p><img src="//yanadev.github.io/2022/03/31/webpack-demo/image-20200617164335025.png" alt="image-20200617164335025"></p>
+<h2 id="处理其他文件"><a href="#处理其他文件" class="headerlink" title="处理其他文件"></a>处理其他文件</h2><p><img src="//yanadev.github.io/2022/03/31/webpack-demo/image-20200618105220645.png" alt="image-20200618105220645"></p>
+<h1 id="使用DevServer实现自动编译"><a href="#使用DevServer实现自动编译" class="headerlink" title="使用DevServer实现自动编译"></a>使用<code>DevServer</code>实现自动编译</h1><ul>
+<li>安装</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i webpack-dev-server -D <span class="comment">// 下载 webpack-dev-server 的包</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>webpack.config.js文件：</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    ...</span><br><span class="line">    devServer: &#123;</span><br><span class="line">    contentBase: resolve(__dirname, <span class="string">'dist'</span>),</span><br><span class="line">    port: <span class="number">3000</span>,</span><br><span class="line">    open: <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>命令行</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">webpack <span class="comment">// 打包</span></span><br><span class="line">npx webpack-dev-server <span class="comment">// 仅在内存中编译打包，不会有任何输出</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/webpack/" rel="tag"><i class="fa fa-tag"></i>webpack</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2022/03/31/NodeJS/" rel="next" title="NodeJS">
+                  <i class="fa fa-chevron-left"></i> NodeJS
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要使用webpack？"><span class="nav-number">1.</span> <span class="nav-text">为什么要使用webpack？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#webpack是什么？"><span class="nav-number">2.</span> <span class="nav-text">webpack是什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用-webpack-构建基本项目"><span class="nav-number">3.</span> <span class="nav-text">使用 webpack 构建基本项目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化项目：会生成-package-json-和-package-lock-json两个文件"><span class="nav-number">3.1.</span> <span class="nav-text">初始化项目：会生成 package.json 和 package-lock.json两个文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装webpack"><span class="nav-number">3.2.</span> <span class="nav-text">安装webpack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#尝试打包"><span class="nav-number">3.3.</span> <span class="nav-text">尝试打包</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用module-：匹配第三方模块（处理次序：由下到上，由右到左）"><span class="nav-number">4.</span> <span class="nav-text">使用module ：匹配第三方模块（处理次序：由下到上，由右到左）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用-html-webpack-plugin-打包html文件"><span class="nav-number">5.</span> <span class="nav-text">使用 html-webpack-plugin 打包html文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#处理图片文件"><span class="nav-number">5.1.</span> <span class="nav-text">处理图片文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#处理其他文件"><span class="nav-number">5.2.</span> <span class="nav-text">处理其他文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用DevServer实现自动编译"><span class="nav-number">6.</span> <span class="nav-text">使用DevServer实现自动编译</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yana"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Yana</p>
+  <div class="site-description" itemprop="description">Never give up！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">63</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yanadev" title="GitHub → https://github.com/yanadev" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yana</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">90k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

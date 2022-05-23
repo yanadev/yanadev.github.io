@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="YanaChen" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="使用步骤 选择一个模板引擎  下载模板引擎 JS 文件  https://unpkg.com/art-template@4.13.2/lib/template-web.js   引入到页面中">
+<meta name="keywords" content="模板引擎">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用模板引擎">
+<meta property="og:url" content="https://yanadev.github.io/2020/03/31/使用模板引擎/index.html">
+<meta property="og:site_name" content="YanaChen">
+<meta property="og:description" content="使用步骤 选择一个模板引擎  下载模板引擎 JS 文件  https://unpkg.com/art-template@4.13.2/lib/template-web.js   引入到页面中">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2022-05-22T19:56:55.115Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用模板引擎">
+<meta name="twitter:description" content="使用步骤 选择一个模板引擎  下载模板引擎 JS 文件  https://unpkg.com/art-template@4.13.2/lib/template-web.js   引入到页面中">
+
+<link rel="canonical" href="https://yanadev.github.io/2020/03/31/使用模板引擎/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>使用模板引擎 | YanaChen</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YanaChen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">_踩坑_填坑_日常</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">63</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">55</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">62</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/31/使用模板引擎/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yana">
+      <meta itemprop="description" content="Never give up！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanaChen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用模板引擎
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-31 16:04:58" itemprop="dateCreated datePublished" datetime="2020-03-31T16:04:58+08:00">2020-03-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-23 03:56:55" itemprop="dateModified" datetime="2022-05-23T03:56:55+08:00">2022-05-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/模板引擎/" itemprop="url" rel="index">
+                    <span itemprop="name">模板引擎</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.1k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a>使用步骤</h4><ol>
+<li><p>选择一个模板引擎</p>
+</li>
+<li><p>下载模板引擎 JS 文件  <a href="https://unpkg.com/art-template@4.13.2/lib/template-web.js" target="_blank" rel="noopener">https://unpkg.com/art-template@4.13.2/lib/template-web.js</a> </p>
+</li>
+<li><p>引入到页面中</p>
+ <a id="more"></a>
+</li>
+<li><p>准备一个模板</p>
+</li>
+<li><p>准备一个数据</p>
+</li>
+<li><p>通过模板引擎的 JS 提供的一个函数将 模板 和 数据 整合，得到渲染结果 HTML </p>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&lt;table id=<span class="string">"demo"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span></span><br><span class="line">   <span class="comment">/*================ 引入到页面 =================*/</span></span><br><span class="line">&lt;script src=<span class="string">"template-web.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">   <span class="comment">/*================ 引入到页面 =================*/</span></span><br><span class="line"></span><br><span class="line">   <span class="comment">/*================ 准备一个模板 =================*/</span></span><br><span class="line">&lt;script id=<span class="string">"tmpl"</span> type=<span class="string">"text/x-art-template"</span>&gt;</span><br><span class="line">    &#123;&#123;each comments&#125;&#125;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">            &lt;td&gt;&#123;&#123;$value.title&#125;&#125;&lt;<span class="regexp">/td&gt;</span></span><br><span class="line"><span class="regexp">            &lt;td&gt;&#123;&#123;$value.year&#125;&#125;&lt;/</span>td&gt;</span><br><span class="line">            &lt;td&gt;&#123;&#123;$value.month&#125;&#125;&lt;<span class="regexp">/td&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>tr&gt;</span><br><span class="line">    &#123;&#123;/each&#125;&#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp">   /</span>*================ 准备一个模板 =================*<span class="regexp">/</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;script&gt;</span></span><br><span class="line"><span class="regexp">    var xhr = new XMLHttpRequest()</span></span><br><span class="line"><span class="regexp">    xhr.open('GET','./</span>data.php<span class="string">')</span></span><br><span class="line"><span class="string">    xhr.send()</span></span><br><span class="line"><span class="string">    xhr.addEventListener('</span>readystatechange<span class="string">', function () &#123;</span></span><br><span class="line"><span class="string">        if (this.readyState !== 4) return</span></span><br><span class="line"><span class="string">        var res = JSON.parse(this.responseText)</span></span><br><span class="line"><span class="string">        // 模板所需要的数据</span></span><br><span class="line"><span class="string">        var context = &#123; comments: res.result &#125;</span></span><br><span class="line"><span class="string">        var html = template('</span>tmpl<span class="string">', context)</span></span><br><span class="line"><span class="string">           // template(id, object)</span></span><br><span class="line"><span class="string">        // 借助模板引擎提供的 API 渲染数据</span></span><br><span class="line"><span class="string">        // console.log(html)</span></span><br><span class="line"><span class="string">        document.getElementById('</span>demo<span class="string">').innerHTML = html</span></span><br><span class="line"><span class="string">    &#125;)</span></span><br><span class="line"><span class="string">&lt;/script&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>数据: <code>data.php</code></p>
+   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php  </span><br><span class="line">header(<span class="string">'Content-Type: application/json'</span>);</span><br><span class="line"></span><br><span class="line">?&gt;</span><br><span class="line">&#123;<span class="string">"total"</span>:<span class="number">27</span>,<span class="string">"result"</span>:[&#123;<span class="string">"year"</span>:<span class="number">2002</span>,<span class="string">"month"</span>:<span class="number">1</span>,<span class="string">"day"</span>:<span class="number">1</span>,<span class="string">"title"</span>:<span class="string">"欧元正式进入流通"</span>,<span class="string">"type"</span>:<span class="number">1</span>&#125;,&#123;<span class="string">"year"</span>:<span class="number">1999</span>,<span class="string">"month"</span>:<span class="number">1</span>,<span class="string">"day"</span>:<span class="number">1</span>,<span class="string">"title"</span>:<span class="string">"欧元诞生"</span>,<span class="string">"type"</span>:<span class="number">1</span>&#125;,&#123;<span class="string">"year"</span>:<span class="number">1998</span>,<span class="string">"month"</span>:<span class="number">1</span>,<span class="string">"day"</span>:<span class="number">1</span>,<span class="string">"title"</span>:<span class="string">"我国与南非建立外交关系"</span>,<span class="string">"type"</span>:<span class="number">1</span>&#125;,&#123;<span class="string">"year"</span>:<span class="number">1995</span>,<span class="string">"month"</span>:<span class="number">1</span>,<span class="string">"day"</span>:<span class="number">1</span>,<span class="string">"title"</span>:<span class="string">"世界贸易组织成立"</span>,<span class="string">"type"</span>:<span class="number">1</span>&#125;,&#123;<span class="string">"year"</span>:<span class="number">1994</span>,<span class="string">"month"</span>:<span class="number">1</span>,<span class="string">"day"</span>:<span class="number">1</span>,<span class="string">"title"</span>:<span class="string">"欧洲经济区成立"</span>,<span class="string">"type"</span>:<span class="number">1</span>&#125;,&#123;<span class="string">"year"</span>:<span class="number">1988</span>,<span class="string">"month"</span>:<span class="number">1</span>,<span class="string">"day"</span>:<span class="number">1</span>,<span class="string">"title"</span>:<span class="string">"天安门城楼正式对外开放"</span>,<span class="string">"type"</span>:<span class="number">1</span>&#125;,&#123;<span class="string">"year"</span>:<span class="number">1985</span>,<span class="string">"month"</span>:<span class="number">1</span>,<span class="string">"day"</span>:<span class="number">1</span>,<span class="string">"title"</span>:<span class="string">"活跃农村经济，中共中央、国务院出台新政策"</span>,<span class="string">"type"</span>:<span class="number">1</span>&#125;,&#123;<span class="string">"year"</span>:<span class="number">1984</span>,<span class="string">"month"</span>:<span class="number">1</span>,<span class="string">"day"</span>:<span class="number">1</span>,<span class="string">"title"</span>:<span class="string">"中国工商银行成立"</span>,<span class="string">"type"</span>:<span class="number">1</span>&#125;,&#123;<span class="string">"year"</span>:<span class="number">1984</span>,<span class="string">"month"</span>:<span class="number">1</span>,<span class="string">"day"</span>:<span class="number">1</span>,<span class="string">"title"</span>:<span class="string">"中国正式成为国际原子能机构成员国"</span>,<span class="string">"type"</span>:<span class="number">1</span>&#125;,&#123;<span class="string">"year"</span>:<span class="number">1984</span>,<span class="string">"month"</span>:<span class="number">1</span>,<span class="string">"day"</span>:<span class="number">1</span>,<span class="string">"title"</span>:<span class="string">"关于1984农村工作的通知"</span>,<span class="string">"type"</span>:<span class="number">1</span>&#125;,&#123;<span class="string">"year"</span>:<span class="number">1982</span>,<span class="string">"month"</span>:<span class="number">1</span>,<span class="string">"day"</span>:<span class="number">1</span>,<span class="string">"title"</span>:<span class="string">"全国农村工作会议纪要"</span>,<span class="string">"type"</span>:<span class="number">1</span>&#125;,&#123;<span class="string">"year"</span>:<span class="number">1981</span>,<span class="string">"month"</span>:<span class="number">1</span>,<span class="string">"day"</span>:<span class="number">1</span>,<span class="string">"title"</span>:<span class="string">"《中华人民共和国婚姻法》（修正草案）公布施行"</span>,<span class="string">"type"</span>:<span class="number">1</span>&#125;,&#123;<span class="string">"year"</span>:<span class="number">1979</span>,<span class="string">"month"</span>:<span class="number">1</span>,<span class="string">"day"</span>:<span class="number">1</span>,<span class="string">"title"</span>:<span class="string">"中国与美国建立外交关系"</span>,<span class="string">"type"</span>:<span class="number">1</span>&#125;,&#123;<span class="string">"year"</span>:<span class="number">1979</span>,<span class="string">"month"</span>:<span class="number">1</span>,<span class="string">"day"</span>:<span class="number">1</span>,<span class="string">"title"</span>:<span class="string">"《中华人民共和国全国人大常委会告台湾同胞书》发表"</span>,<span class="string">"type"</span>:<span class="number">1</span>&#125;,&#123;<span class="string">"year"</span>:<span class="number">1960</span>,<span class="string">"month"</span>:<span class="number">1</span>,<span class="string">"day"</span>:<span class="number">1</span>,<span class="string">"title"</span>:<span class="string">"刘家峡水利枢纽胜利截流"</span>,<span class="string">"type"</span>:<span class="number">1</span>&#125;,&#123;<span class="string">"year"</span>:<span class="number">1959</span>,<span class="string">"month"</span>:<span class="number">1</span>,<span class="string">"day"</span>:<span class="number">1</span>,<span class="string">"title"</span>:<span class="string">"古巴革命胜利"</span>,<span class="string">"type"</span>:<span class="number">1</span>&#125;,&#123;<span class="string">"year"</span>:<span class="number">1956</span>,<span class="string">"month"</span>:<span class="number">1</span>,<span class="string">"day"</span>:<span class="number">1</span>,<span class="string">"title"</span>:<span class="string">"《解放军报》创刊"</span>,<span class="string">"type"</span>:<span class="number">1</span>&#125;,&#123;<span class="string">"year"</span>:<span class="number">1948</span>,<span class="string">"month"</span>:<span class="number">1</span>,<span class="string">"day"</span>:<span class="number">1</span>,<span class="string">"title"</span>:<span class="string">"中国国民党革命委员会在香港成立"</span>,<span class="string">"type"</span>:<span class="number">1</span>&#125;,&#123;<span class="string">"year"</span>:<span class="number">1942</span>,<span class="string">"month"</span>:<span class="number">1</span>,<span class="string">"day"</span>:<span class="number">1</span>,<span class="string">"title"</span>:<span class="string">"中苏美英等国签署《联合国家共同宣言》"</span>,<span class="string">"type"</span>:<span class="number">1</span>&#125;,&#123;<span class="string">"year"</span>:<span class="number">1939</span>,<span class="string">"month"</span>:<span class="number">1</span>,<span class="string">"day"</span>:<span class="number">1</span>,<span class="string">"title"</span>:<span class="string">"国民党中常会决定开除汪精卫党籍"</span>,<span class="string">"type"</span>:<span class="number">1</span>&#125;],<span class="string">"error_code"</span>:<span class="number">0</span>,<span class="string">"reason"</span>:<span class="string">"Succes"</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="重点"><a href="#重点" class="headerlink" title="重点"></a>重点</h4><blockquote>
+<p>script 标签的特点</p>
+</blockquote>
+<ol>
+<li>innerHTML 永远不会显示在界面上</li>
+<li>如果 type 不等于 text/javascript 的话，内部的内容不会作为 JavaScript 被解析</li>
+</ol>
+<blockquote>
+<p>不在 JS 变量中写模板的原因</p>
+</blockquote>
+<pre><code>如果将模板写到 JS 中，维护不方便，不能换行，没有着色</code></pre><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> tmpl = <span class="string">'&#123;&#123;each target&#125;&#125;&#123;&#123;$index&#125;&#125;&#123;&#123;$value&#125;&#125;&#123;&#123;/each&#125;&#125;'</span></span><br><span class="line"><span class="comment">// 语义不清淅</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用 script 标签的写模板的原因</p>
+</blockquote>
+<pre><code>script 不会将内容渲染到页面上</code></pre>
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/模板引擎/" rel="tag"><i class="fa fa-tag"></i>模板引擎</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/03/31/GET与POST区别/" rel="next" title="GET与POST区别">
+                  <i class="fa fa-chevron-left"></i> GET与POST区别
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2020/03/31/MySQL安装/" rel="prev" title="MySQL安装">
+                  MySQL安装 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用步骤"><span class="nav-number">1.</span> <span class="nav-text">使用步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重点"><span class="nav-number">2.</span> <span class="nav-text">重点</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yana"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Yana</p>
+  <div class="site-description" itemprop="description">Never give up！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">63</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yanadev" title="GitHub → https://github.com/yanadev" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yana</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">90k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

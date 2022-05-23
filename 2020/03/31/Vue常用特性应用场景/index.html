@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="YanaChen" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="12345- 过滤器（格式化日期）- 自定义指令（获取表单焦点）- 计算属性（统计图书数量）- 侦听器（验证图书存在性）- 生命周期（图书数据处理0过滤器 filter格式化数据 过滤器定义     1. 默认第一个参数是 管道符(filter)前面的数据  在本例中指的是 message     2. 全局过滤器 定义的时候 filter 不带s     3. 局部过滤器与 data及metho">
+<meta name="keywords" content="vue,常用特性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue常用特性应用场景">
+<meta property="og:url" content="https://yanadev.github.io/2020/03/31/Vue常用特性应用场景/index.html">
+<meta property="og:site_name" content="YanaChen">
+<meta property="og:description" content="12345- 过滤器（格式化日期）- 自定义指令（获取表单焦点）- 计算属性（统计图书数量）- 侦听器（验证图书存在性）- 生命周期（图书数据处理0过滤器 filter格式化数据 过滤器定义     1. 默认第一个参数是 管道符(filter)前面的数据  在本例中指的是 message     2. 全局过滤器 定义的时候 filter 不带s     3. 局部过滤器与 data及metho">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2022-05-22T19:41:43.829Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue常用特性应用场景">
+<meta name="twitter:description" content="12345- 过滤器（格式化日期）- 自定义指令（获取表单焦点）- 计算属性（统计图书数量）- 侦听器（验证图书存在性）- 生命周期（图书数据处理0过滤器 filter格式化数据 过滤器定义     1. 默认第一个参数是 管道符(filter)前面的数据  在本例中指的是 message     2. 全局过滤器 定义的时候 filter 不带s     3. 局部过滤器与 data及metho">
+
+<link rel="canonical" href="https://yanadev.github.io/2020/03/31/Vue常用特性应用场景/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Vue常用特性应用场景 | YanaChen</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YanaChen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">_踩坑_填坑_日常</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">63</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">55</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">62</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/31/Vue常用特性应用场景/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yana">
+      <meta itemprop="description" content="Never give up！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanaChen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vue常用特性应用场景
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-31 16:12:46" itemprop="dateCreated datePublished" datetime="2020-03-31T16:12:46+08:00">2020-03-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-23 03:41:43" itemprop="dateModified" datetime="2022-05-23T03:41:43+08:00">2022-05-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/vue/" itemprop="url" rel="index">
+                    <span itemprop="name">vue</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.5k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">- </span>过滤器（格式化日期）</span><br><span class="line"><span class="bullet">- </span>自定义指令（获取表单焦点）</span><br><span class="line"><span class="bullet">- </span>计算属性（统计图书数量）</span><br><span class="line"><span class="bullet">- </span>侦听器（验证图书存在性）</span><br><span class="line"><span class="bullet">- </span>生命周期（图书数据处理0</span><br></pre></td></tr></table></figure><h5 id="过滤器-filter"><a href="#过滤器-filter" class="headerlink" title="过滤器 filter"></a>过滤器 filter</h5><p>格式化数据</p><blockquote>
+<pre><code>过滤器定义
+    1. 默认第一个参数是 管道符(filter)前面的数据  在本例中指的是 message
+    2. 全局过滤器 定义的时候 filter 不带s
+    3. 局部过滤器与 data及methods 同级  </code></pre></blockquote><a id="more"></a>
+
+
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 过滤器只能用在： 双花括号插值 + v-bind 表达式 --&gt;</span><br><span class="line">&lt;!-- 过滤不改变真正的 data，而是改变渲染的结果 --&gt;</span><br><span class="line">&lt;div id=<span class="string">"box"</span> &gt;</span><br><span class="line">    &lt;!-- &#123;&#123;message | filterA(<span class="string">'10'</span>, <span class="string">'12'</span>)&#125;&#125; --&gt;</span><br><span class="line">    &#123;&#123;message | filterB(<span class="number">10</span>,<span class="number">20</span>)&#125;&#125;</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;script type="text/</span>javascript<span class="string">" src="</span>js/vue.js<span class="string">"&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string">&lt;script type="</span>text/javascript<span class="string">"&gt;</span></span><br><span class="line"><span class="string">    // 全局过滤器</span></span><br><span class="line"><span class="string">    // Vue.filter('filterA', function(n, a, b) &#123;</span></span><br><span class="line"><span class="string">    // 	if(n&lt;10)&#123;</span></span><br><span class="line"><span class="string">    // 		return n+a</span></span><br><span class="line"><span class="string">    // 	&#125;else&#123;</span></span><br><span class="line"><span class="string">    // 		return n+b</span></span><br><span class="line"><span class="string">    // 	&#125;</span></span><br><span class="line"><span class="string">    // &#125;)</span></span><br><span class="line"><span class="string">    new Vue(&#123;</span></span><br><span class="line"><span class="string">        el: '#box',</span></span><br><span class="line"><span class="string">        data: &#123;</span></span><br><span class="line"><span class="string">            message: 'haha'</span></span><br><span class="line"><span class="string">        &#125;,</span></span><br><span class="line"><span class="string">        filters: &#123;</span></span><br><span class="line"><span class="string">            filterB: function(n, a, b) &#123;</span></span><br><span class="line"><span class="string">                if(n &lt; 10)&#123;</span></span><br><span class="line"><span class="string">                    return n+a</span></span><br><span class="line"><span class="string">                &#125;else&#123;</span></span><br><span class="line"><span class="string">                    return n+b</span></span><br><span class="line"><span class="string">                &#125;</span></span><br><span class="line"><span class="string">            &#125;</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;)</span></span><br><span class="line"><span class="string">&lt;/script&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="自定义指令"><a href="#自定义指令" class="headerlink" title="自定义指令"></a>自定义指令</h5><p>当内置指令不满足需求的时候</p>
+<blockquote>
+<p>自定义指令</p>
+<ol>
+<li>Vue.directive (‘directiveName’, {<pre><code>inserted: function() {
+// ....
+}</code></pre> })</li>
+<li>定义的时候不需要加上 ‘v-‘</li>
+<li>使用的时候要加上 ‘v-‘</li>
+<li>使用驼峰命名法 ‘directiveName’</li>
+<li>自定义指令带参数（钩子函数）： <pre><code>a. bind: 只调用一次，指令第一次绑定到元素时调用（一次性的初始化）
+b. inserted: 被帮顶元素插入父节点时候调用（仅保证父节点存在，但不一定被插入文档中）
+c. update: 所有组组件的 VNode 更新是调用，但可能发生在其子 VNode 更新之前，指令的值可能发，也可能没有
+d. componentUpdated：指令所在组件的 VNode 及其子 VNode 全部更新后调用
+     e. unbind: 只调用一次，指令与元素解绑时调用</code></pre></li>
+<li>局部自定义指令: 与 data及methods 同级，’directives’<br>意义： 当内置指令不能满足需求的时候</li>
+</ol>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 当内置指令不能满足需求的时候 --&gt;</span><br><span class="line">	&lt;div id=<span class="string">"app"</span>&gt;</span><br><span class="line">		&lt;input type=<span class="string">"text"</span> v-color=<span class="string">"msg"</span>&gt;</span><br><span class="line">	&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">	&lt;script type="text/</span>javascript<span class="string">" src="</span>js/vue.js<span class="string">"&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string">	&lt;script type="</span>text/javascript<span class="string">"&gt;</span></span><br><span class="line"><span class="string">		// 全局自定义指令 v-handle</span></span><br><span class="line"><span class="string">		Vue.directive('handle', &#123;</span></span><br><span class="line"><span class="string">			inserted: function(el) &#123;</span></span><br><span class="line"><span class="string">				el.focus()</span></span><br><span class="line"><span class="string">			&#125;</span></span><br><span class="line"><span class="string">		&#125;)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">		// 局部自定义指令</span></span><br><span class="line"><span class="string">		new Vue(&#123;</span></span><br><span class="line"><span class="string">			el: '#app',</span></span><br><span class="line"><span class="string">			data: &#123;</span></span><br><span class="line"><span class="string">				msg: &#123;</span></span><br><span class="line"><span class="string">					color: 'red'</span></span><br><span class="line"><span class="string">				&#125;</span></span><br><span class="line"><span class="string">			&#125;,</span></span><br><span class="line"><span class="string">			// 局部自定义指令</span></span><br><span class="line"><span class="string">			directives: &#123;</span></span><br><span class="line"><span class="string">				color: &#123;</span></span><br><span class="line"><span class="string">					bind: function(el, binding) &#123;</span></span><br><span class="line"><span class="string">						el.style.backgroundColor = binding.value.color</span></span><br><span class="line"><span class="string">						// 默认第一个参数是指令绑定的对象，binding 形参则是传入的值</span></span><br><span class="line"><span class="string">					&#125;</span></span><br><span class="line"><span class="string">				&#125;</span></span><br><span class="line"><span class="string">			&#125;</span></span><br><span class="line"><span class="string">		&#125;)</span></span><br><span class="line"><span class="string">	&lt;/script&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="计算属性"><a href="#计算属性" class="headerlink" title="计算属性"></a>计算属性</h5><p>复杂逻辑计算</p>
+<blockquote>
+<pre><code>* 计算属性 computed
+    * 1. 与方法的区别： 计算属性依赖缓存，而方法不缓存
+    * 2. 多次调用方法，每次都会重新调用计算
+    * 3. 多次调用计算属性，只要里面的值不变，再次调用，它会把第一次计算的结果直接返回
+    * 4. 上述例子中 仅打印一次 &apos;computed&apos;</code></pre></blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">"app"</span>&gt;</span><br><span class="line">    &lt;div&gt;&#123;&#123;msgA&#125;&#125;&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    &lt;div&gt;&#123;&#123;msgA&#125;&#125;&lt;/</span>div&gt;</span><br><span class="line">    &lt;div&gt;&#123;&#123;msgB()&#125;&#125;&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    &lt;div&gt;&#123;&#123;msgB()&#125;&#125;&lt;/</span>div&gt;</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;script type="text/</span>javascript<span class="string">" src="</span>js/vue.js<span class="string">"&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string">&lt;script type="</span>text/javascript<span class="string">"&gt;</span></span><br><span class="line"><span class="string">    var vm = new Vue(&#123;</span></span><br><span class="line"><span class="string">        el: '#app',</span></span><br><span class="line"><span class="string">        data: &#123;</span></span><br><span class="line"><span class="string">            msg: 'nnihao',</span></span><br><span class="line"><span class="string">            num: 40</span></span><br><span class="line"><span class="string">        &#125;,</span></span><br><span class="line"><span class="string">        methods: &#123;</span></span><br><span class="line"><span class="string">            msgB: function() &#123;</span></span><br><span class="line"><span class="string">                console.log('methods')</span></span><br><span class="line"><span class="string">                return this.msg.split('').reverse().join('')</span></span><br><span class="line"><span class="string">                // 将字符串分隔成 数组 之后 反转 再连接数组中所有的值 =&gt; 字符串</span></span><br><span class="line"><span class="string">            &#125;</span></span><br><span class="line"><span class="string">        &#125;,</span></span><br><span class="line"><span class="string">        computed: &#123;</span></span><br><span class="line"><span class="string">            msgA: function() &#123;</span></span><br><span class="line"><span class="string">                console.log('computed')</span></span><br><span class="line"><span class="string">                return this.msg</span></span><br><span class="line"><span class="string">            &#125;</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;)</span></span><br><span class="line"><span class="string">&lt;/script&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="侦听器"><a href="#侦听器" class="headerlink" title="侦听器"></a>侦听器</h5><p> 当需要在数据变化时执行异步或开销较大的操作时，这个方式是最有用的 </p>
+<blockquote>
+<pre><code>* 侦听器：
+     * 1. 使用watch来响应数据的变化 一般用于异步或者开销较大的操作 
+     * 2. watch 中的属性 一定是data 中 已经存在的数据
+     * 3. 当需要监听一个对象的改变时，普通的watch方法无法监听到对象内部属性的改变，只有data中的数据才能够 监听到变化，此时就需要deep属性对对象进行深度监听</code></pre></blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">"app"</span>&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;span&gt;名：&lt;<span class="regexp">/span&gt;</span></span><br><span class="line"><span class="regexp">        &lt;span&gt;</span></span><br><span class="line"><span class="regexp">            &lt;input type="text" v-model="firstName"&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>span&gt;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    &lt;div&gt;</span></span><br><span class="line"><span class="regexp">        &lt;span&gt;姓：&lt;/</span>span&gt;</span><br><span class="line">        &lt;span&gt;</span><br><span class="line">            &lt;input type=<span class="string">"text"</span> v-model=<span class="string">"lastName"</span>&gt;</span><br><span class="line">        &lt;<span class="regexp">/span&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>div&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;div&gt;&#123;&#123;fullName&#125;&#125;&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>div&gt;</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;script src="js/</span>vue.js<span class="string">"&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string">&lt;script&gt;</span></span><br><span class="line"><span class="string">    var vm = new Vue(&#123;</span></span><br><span class="line"><span class="string">        el: '#app',</span></span><br><span class="line"><span class="string">        data: &#123;</span></span><br><span class="line"><span class="string">            firstName: '',</span></span><br><span class="line"><span class="string">            lastName: ''</span></span><br><span class="line"><span class="string">        &#125;,</span></span><br><span class="line"><span class="string">        watch: &#123;</span></span><br><span class="line"><span class="string">            firstName: function(val) &#123;</span></span><br><span class="line"><span class="string">                this.fullName = val + ' ' + this.lastName</span></span><br><span class="line"><span class="string">            &#125;,</span></span><br><span class="line"><span class="string">            lastName: function(val) &#123;</span></span><br><span class="line"><span class="string">                this.fullName = this.firstName + ' ' + val </span></span><br><span class="line"><span class="string">            &#125;</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;)</span></span><br><span class="line"><span class="string">&lt;/script&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h5><p>事物从出生到死亡的过程 Vue实例从创建 到销毁的过程 ，这些过程中会伴随着一些函数的自调用。</p>
+<p>我们称这些函数为钩子函数 常用的 <code>钩子函数</code> </p>
+<table>
+<thead>
+<tr>
+<th align="center">before</th>
+<th align="left">在实例初始化之后，数据观测和事件配置之前被调用，此时 data 和 methods 以及页面的 DOM 结构都没有初始化，什么都做不了</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">created</td>
+<td align="left">在实例创建完成后被立即调用 此时 data 和 methods 已经可以使用，但是页面还没有渲染出来</td>
+</tr>
+<tr>
+<td align="center">beforeMount</td>
+<td align="left">在挂载开始之前被调用，此时页面上还看不到真实数据，只是一个模板页面</td>
+</tr>
+<tr>
+<td align="center">mounted</td>
+<td align="left">el 新创建的 wm.$el 替代，并挂载到实例上去之后，调用该钩子。数据已经真实选嚷道页面上，在这个钩子函数里面我们可以使用一些第三方的插件</td>
+</tr>
+<tr>
+<td align="center">beforeUpdate</td>
+<td align="left">数据更新时调用，发生在虚拟 DOM 打补丁之前。页面上数据还是旧的</td>
+</tr>
+<tr>
+<td align="center">updated</td>
+<td align="left">由于数据更改导致的虚拟 DOM 重新渲染和打补丁，在这之后会调用该钩子。页面上数据已经替换成最新的</td>
+</tr>
+<tr>
+<td align="center">beforeDestroy</td>
+<td align="left">实例销毁之前调用</td>
+</tr>
+<tr>
+<td align="center">destroyed</td>
+<td align="left">实力销毁后调用</td>
+</tr>
+</tbody></table>
+<h5 id="数组变异方法"><a href="#数组变异方法" class="headerlink" title="数组变异方法"></a>数组变异方法</h5><p>在 Vue 中，直接修改对象属性值无法触发响应式：<code>数据改变，页面内容不变</code></p>
+<p>变异数组方法即保持数组方法原有功能不变的前提下对其进行功能拓展</p>
+<table>
+<thead>
+<tr>
+<th>push()</th>
+<th>往数组后面添加一个元素，成功返回当前数组的长度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>pop()</td>
+<td>删除数组的后一个元素，成功返回删除元素的值</td>
+</tr>
+<tr>
+<td>shift()</td>
+<td>删除数组的第一个元素，成功返回删除元素的值</td>
+</tr>
+<tr>
+<td>unshift()</td>
+<td>往数组前面添加一个元素，成功返回当前数组的长度</td>
+</tr>
+<tr>
+<td>splice()</td>
+<td>有三个参数，第一个是想要删除的元素的下标（必选），第二个是想要删除的个数（必选）， 第三个是删除 后想要在原位置替换的值</td>
+</tr>
+<tr>
+<td>sort()</td>
+<td>使数组按照字符编码默认从小到大排序,成功返回排序后的数组</td>
+</tr>
+<tr>
+<td>reverse</td>
+<td>将数组倒序，成功返回倒序后的数组</td>
+</tr>
+</tbody></table>
+<h5 id="替换数组"><a href="#替换数组" class="headerlink" title="替换数组"></a>替换数组</h5><p>不改变原数组，返回新数组</p>
+<table>
+<thead>
+<tr>
+<th align="center">filte</th>
+<th>创建一个新数据，新数组中的元是经过检查指定数组中符合条件的所有元素</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">concat</td>
+<td>连接两个或多个数组</td>
+</tr>
+<tr>
+<td align="center">slice</td>
+<td>从已有数组中返回选定元素</td>
+</tr>
+</tbody></table>
+<h5 id="动态数组响应式数据"><a href="#动态数组响应式数据" class="headerlink" title="动态数组响应式数据"></a>动态数组响应式数据</h5><ul>
+<li><p>Vue.set(a,b,c) 让 触发视图重新更新一遍，数据动态起来 </p>
+</li>
+<li><p>a是要更改的数据 、 b是数据的第几项、 c是更改后的数据</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/vue/" rel="tag"><i class="fa fa-tag"></i>vue</a>
+              <a href="/tags/常用特性/" rel="tag"><i class="fa fa-tag"></i>常用特性</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/03/31/webpack学习/" rel="next" title="webpack学习">
+                  <i class="fa fa-chevron-left"></i> webpack学习
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2020/03/31/webpack-path模块/" rel="prev" title="webpack path模块">
+                  webpack path模块 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#过滤器-filter"><span class="nav-number">1.</span> <span class="nav-text">过滤器 filter</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#自定义指令"><span class="nav-number">2.</span> <span class="nav-text">自定义指令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#计算属性"><span class="nav-number">3.</span> <span class="nav-text">计算属性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#侦听器"><span class="nav-number">4.</span> <span class="nav-text">侦听器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#生命周期"><span class="nav-number">5.</span> <span class="nav-text">生命周期</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#数组变异方法"><span class="nav-number">6.</span> <span class="nav-text">数组变异方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#替换数组"><span class="nav-number">7.</span> <span class="nav-text">替换数组</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#动态数组响应式数据"><span class="nav-number">8.</span> <span class="nav-text">动态数组响应式数据</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yana"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Yana</p>
+  <div class="site-description" itemprop="description">Never give up！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">63</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yanadev" title="GitHub → https://github.com/yanadev" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yana</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">90k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

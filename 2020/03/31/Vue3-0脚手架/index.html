@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="YanaChen" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Vue 脚手架基本用法快速生成 Vue 项目基础架构123456- 安装 3.x 版本的 Vue 脚手架npm install -g @vue/cli// 或者 cnpm i @vue/cli -g- 检查安装成功与否（脚手架版本号）vue -V // @vue/cli 4.2.3基于 3.x 版本的脚手架创建 vue 项目">
+<meta name="keywords" content="Vue,脚手架">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue3.0脚手架">
+<meta property="og:url" content="https://yanadev.github.io/2020/03/31/Vue3-0脚手架/index.html">
+<meta property="og:site_name" content="YanaChen">
+<meta property="og:description" content="Vue 脚手架基本用法快速生成 Vue 项目基础架构123456- 安装 3.x 版本的 Vue 脚手架npm install -g @vue/cli// 或者 cnpm i @vue/cli -g- 检查安装成功与否（脚手架版本号）vue -V // @vue/cli 4.2.3基于 3.x 版本的脚手架创建 vue 项目">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Vue3-0脚手架/image-20200313172500044.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Vue3-0脚手架/image-20200313172710912.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Vue3-0脚手架/image-20200313172754560.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Vue3-0脚手架/image-20200313173051395.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Vue3-0脚手架/image-20200313173228996.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Vue3-0脚手架/image-20200313173331684.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Vue3-0脚手架/image-20200313173852182.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Vue3-0脚手架/image-20200313174425820.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Vue3-0脚手架/image-20200313175953548.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Vue3-0脚手架/image-20200313180147133.png">
+<meta property="og:image" content="https://yanadev.github.io/2020/03/31/Vue3-0脚手架/image-20200313180422786.png">
+<meta property="og:updated_time" content="2022-05-22T19:42:00.644Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue3.0脚手架">
+<meta name="twitter:description" content="Vue 脚手架基本用法快速生成 Vue 项目基础架构123456- 安装 3.x 版本的 Vue 脚手架npm install -g @vue/cli// 或者 cnpm i @vue/cli -g- 检查安装成功与否（脚手架版本号）vue -V // @vue/cli 4.2.3基于 3.x 版本的脚手架创建 vue 项目">
+<meta name="twitter:image" content="https://yanadev.github.io/2020/03/31/Vue3-0脚手架/image-20200313172500044.png">
+
+<link rel="canonical" href="https://yanadev.github.io/2020/03/31/Vue3-0脚手架/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Vue3.0脚手架 | YanaChen</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YanaChen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">_踩坑_填坑_日常</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">63</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">55</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">62</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2020/03/31/Vue3-0脚手架/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yana">
+      <meta itemprop="description" content="Never give up！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanaChen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vue3.0脚手架
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-31 16:19:45" itemprop="dateCreated datePublished" datetime="2020-03-31T16:19:45+08:00">2020-03-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-23 03:42:00" itemprop="dateModified" datetime="2022-05-23T03:42:00+08:00">2022-05-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>312</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Vue-脚手架基本用法"><a href="#Vue-脚手架基本用法" class="headerlink" title="Vue 脚手架基本用法"></a>Vue 脚手架基本用法</h2><p>快速生成 Vue 项目基础架构</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- 安装 <span class="number">3.</span>x 版本的 Vue 脚手架</span><br><span class="line">npm install -g @vue/cli</span><br><span class="line"><span class="comment">// 或者 cnpm i @vue/cli -g</span></span><br><span class="line">- 检查安装成功与否（脚手架版本号）</span><br><span class="line">vue -V </span><br><span class="line"><span class="comment">// @vue/cli 4.2.3</span></span><br></pre></td></tr></table></figure><h2 id="基于-3-x-版本的脚手架创建-vue-项目"><a href="#基于-3-x-版本的脚手架创建-vue-项目" class="headerlink" title="基于 3.x 版本的脚手架创建 vue 项目"></a>基于 3.x 版本的脚手架创建 vue 项目</h2><a id="more"></a>
+
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 法一：交互式命令行</span></span><br><span class="line">vue create my-project</span><br><span class="line"><span class="comment">// 法二：图形化界面</span></span><br><span class="line">vue ui</span><br><span class="line"><span class="comment">// 基于 2.x 的旧版本创建</span></span><br><span class="line">npm install -g @vue/cli-init</span><br><span class="line">vue init webpack my-project</span><br></pre></td></tr></table></figure>
+
+<h2 id="图形化界面"><a href="#图形化界面" class="headerlink" title="图形化界面"></a>图形化界面</h2><p><img src="//yanadev.github.io/2020/03/31/Vue3-0脚手架/image-20200313172500044.png" alt="image-20200313172500044"></p>
+<p><img src="//yanadev.github.io/2020/03/31/Vue3-0脚手架/image-20200313172710912.png" alt="image-20200313172710912"></p>
+<p><img src="//yanadev.github.io/2020/03/31/Vue3-0脚手架/image-20200313172754560.png" alt="image-20200313172754560"></p>
+<p><img src="//yanadev.github.io/2020/03/31/Vue3-0脚手架/image-20200313173051395.png" alt="image-20200313173051395"></p>
+<p><img src="//yanadev.github.io/2020/03/31/Vue3-0脚手架/image-20200313173228996.png" alt="image-20200313173228996"></p>
+<p><img src="//yanadev.github.io/2020/03/31/Vue3-0脚手架/image-20200313173331684.png" alt="image-20200313173331684"></p>
+<p><img src="//yanadev.github.io/2020/03/31/Vue3-0脚手架/image-20200313173852182.png" alt="image-20200313173852182"></p>
+<h2 id="Vue-脚手架生成地项目结构分析"><a href="#Vue-脚手架生成地项目结构分析" class="headerlink" title="Vue 脚手架生成地项目结构分析"></a>Vue 脚手架生成地项目结构分析</h2><p><img src="//yanadev.github.io/2020/03/31/Vue3-0脚手架/image-20200313174425820.png" alt="image-20200313174425820"></p>
+<h2 id="通过-package-json-配置项目（不推荐）"><a href="#通过-package-json-配置项目（不推荐）" class="headerlink" title="通过 package.json 配置项目（不推荐）"></a>通过 package.json 配置项目（不推荐）</h2><p><img src="//yanadev.github.io/2020/03/31/Vue3-0脚手架/image-20200313175953548.png" alt="image-20200313175953548"></p>
+<p><img src="//yanadev.github.io/2020/03/31/Vue3-0脚手架/image-20200313180147133.png" alt="image-20200313180147133"></p>
+<h2 id="通过单独的配置文件配置项目-（推荐）"><a href="#通过单独的配置文件配置项目-（推荐）" class="headerlink" title="通过单独的配置文件配置项目 （推荐）"></a>通过单独的配置文件配置项目 （推荐）</h2><p><img src="//yanadev.github.io/2020/03/31/Vue3-0脚手架/image-20200313180422786.png" alt="image-20200313180422786"></p>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Vue/" rel="tag"><i class="fa fa-tag"></i>Vue</a>
+              <a href="/tags/脚手架/" rel="tag"><i class="fa fa-tag"></i>脚手架</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/03/31/webpack错误日志/" rel="next" title="webpack错误日志">
+                  <i class="fa fa-chevron-left"></i> webpack错误日志
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2020/03/31/elementUI组件库使用/" rel="prev" title="elementUI组件库使用">
+                  elementUI组件库使用 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-脚手架基本用法"><span class="nav-number">1.</span> <span class="nav-text">Vue 脚手架基本用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于-3-x-版本的脚手架创建-vue-项目"><span class="nav-number">2.</span> <span class="nav-text">基于 3.x 版本的脚手架创建 vue 项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图形化界面"><span class="nav-number">3.</span> <span class="nav-text">图形化界面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-脚手架生成地项目结构分析"><span class="nav-number">4.</span> <span class="nav-text">Vue 脚手架生成地项目结构分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过-package-json-配置项目（不推荐）"><span class="nav-number">5.</span> <span class="nav-text">通过 package.json 配置项目（不推荐）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过单独的配置文件配置项目-（推荐）"><span class="nav-number">6.</span> <span class="nav-text">通过单独的配置文件配置项目 （推荐）</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yana"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Yana</p>
+  <div class="site-description" itemprop="description">Never give up！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">63</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yanadev" title="GitHub → https://github.com/yanadev" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yana</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">90k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
