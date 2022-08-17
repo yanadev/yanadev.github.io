@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="YanaChen" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="组件的声明方式（两种） 类组件 函数组件 类组件两种定义形式 React.Componrnt&amp;lt;P, S = {}&amp;gt; React.PureComponent&amp;lt;P, S={} SS={}&amp;gt;  二者的区别在于 pureComponent 中的 shouldComponentUpdate 是由React自身处理的，不需要我们管理，所以 pureComponent 在一定程度上提升性">
+<meta name="keywords" content="前端,Student,Coder,Hexo,JavaScript,CSS,HTML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="YanaChen">
+<meta property="og:url" content="https://yanadev.github.io/2022/07/07/React 中使用 TS/index.html">
+<meta property="og:site_name" content="YanaChen">
+<meta property="og:description" content="组件的声明方式（两种） 类组件 函数组件 类组件两种定义形式 React.Componrnt&amp;lt;P, S = {}&amp;gt; React.PureComponent&amp;lt;P, S={} SS={}&amp;gt;  二者的区别在于 pureComponent 中的 shouldComponentUpdate 是由React自身处理的，不需要我们管理，所以 pureComponent 在一定程度上提升性">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2022-07-07T13:50:30.391Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="YanaChen">
+<meta name="twitter:description" content="组件的声明方式（两种） 类组件 函数组件 类组件两种定义形式 React.Componrnt&amp;lt;P, S = {}&amp;gt; React.PureComponent&amp;lt;P, S={} SS={}&amp;gt;  二者的区别在于 pureComponent 中的 shouldComponentUpdate 是由React自身处理的，不需要我们管理，所以 pureComponent 在一定程度上提升性">
+
+<link rel="canonical" href="https://yanadev.github.io/2022/07/07/React 中使用 TS/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title> | YanaChen</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YanaChen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">_踩坑_填坑_日常</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">94</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">90</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">88</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2022/07/07/React 中使用 TS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yana">
+      <meta itemprop="description" content="Never give up！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanaChen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-07-07 02:34:48 / 修改时间：21:50:30" itemprop="dateCreated datePublished" datetime="2022-07-07T02:34:48+08:00">2022-07-07</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.5k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="组件的声明方式（两种）"><a href="#组件的声明方式（两种）" class="headerlink" title="组件的声明方式（两种）"></a>组件的声明方式（两种）</h1><ul>
+<li>类组件</li>
+<li>函数组件</li>
+</ul><h1 id="类组件"><a href="#类组件" class="headerlink" title="类组件"></a>类组件</h1><h2 id="两种定义形式"><a href="#两种定义形式" class="headerlink" title="两种定义形式"></a>两种定义形式</h2><ul>
+<li>React.Componrnt&lt;P, S = {}&gt;</li>
+<li>React.PureComponent&lt;P, S={} SS={}&gt;</li>
+</ul><blockquote>
+<p>二者的区别在于 <code>pureComponent</code> 中的 <code>shouldComponentUpdate</code> 是由React自身处理的，不需要我们管理，所以 <code>pureComponent</code> 在一定程度上提升性能</p>
+</blockquote><a id="more"></a>
+
+
+<p><strong>二者均为泛型接口，接受两个参数：</strong></p>
+<ul>
+<li>参数一：props 类型的定义（可选）</li>
+<li>参数二：state 类型的定义（可选）</li>
+</ul>
+<h2 id="React-Componet-lt-P-S-gt"><a href="#React-Componet-lt-P-S-gt" class="headerlink" title="React.Componet&lt;P, S = {}&gt;"></a>React.Componet&lt;P, S = {}&gt;</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">import React from &apos;react&apos;</span><br><span class="line"></span><br><span class="line">interface IProps &#123;</span><br><span class="line">  name: string</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface IState &#123;</span><br><span class="line">  count: number</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class News extends React.Component&lt;IProps, IState&gt; &#123;</span><br><span class="line">  state = &#123;</span><br><span class="line">    count: 0</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;&gt;</span><br><span class="line">        &#123;this.state.count&#125;</span><br><span class="line">        &#123;this.props.name&#125;</span><br><span class="line">      &lt;/&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default News</span><br></pre></td></tr></table></figure>
+
+<h2 id="React-PureComponent-lt-P-S-SS-gt"><a href="#React-PureComponent-lt-P-S-SS-gt" class="headerlink" title="React.PureComponent&lt;P, S={} SS = {}&gt;"></a>React.PureComponent&lt;P, S={} SS = {}&gt;</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">import React from &apos;react&apos;</span><br><span class="line"></span><br><span class="line">interface IProps &#123;</span><br><span class="line">  name: string</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface IState &#123;</span><br><span class="line">  count: number</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class News extends React.PureComponrnt&lt;IProps, IState&gt; &#123;</span><br><span class="line">  state = &#123;</span><br><span class="line">    count: 0</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;&gt;</span><br><span class="line">        &#123;this.state.count&#125;</span><br><span class="line">        &#123;this.props.name&#125;</span><br><span class="line">      &lt;/&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default News</span><br></pre></td></tr></table></figure>
+
+<h2 id="定义时未知组件类型，调用时才明确（使用泛型）"><a href="#定义时未知组件类型，调用时才明确（使用泛型）" class="headerlink" title="定义时未知组件类型，调用时才明确（使用泛型）"></a>定义时未知组件类型，调用时才明确（使用泛型）</h2><ul>
+<li>定义组件<ul>
+<li><strong>注意： 组件和被继承的 React.Component 均需要定义泛型 <code>&lt;P&gt;</code></strong></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import React from &quot;react&quot;;</span><br><span class="line">class CityList&lt;P&gt; extends React.Component&lt;P&gt; &#123;</span><br><span class="line">  internalProp: P;</span><br><span class="line">  constructor(props: P) &#123;</span><br><span class="line">    super(props)</span><br><span class="line">    this.internalProp = props</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    return &lt;&gt;</span><br><span class="line">      This is CityList page&lt;/&gt;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">export default CityList</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用组件（给组件传递泛型，后传入对应的数据类型）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import &apos;./App.css&apos;;</span><br><span class="line">import CityList from &apos;./pages/CityList&apos;;</span><br><span class="line"></span><br><span class="line">function App() &#123;</span><br><span class="line">  /* 定义类型 */</span><br><span class="line">  type IProps = &#123; name: string, age: number &#125;</span><br><span class="line">  return (</span><br><span class="line">    &lt;div className=&quot;App&quot;&gt;</span><br><span class="line">      &#123;/* 传递泛型 */&#125;</span><br><span class="line">      &lt;CityList&lt;IProps&gt; name=&quot;React&quot; age=&#123;18&#125; /&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default App;</span><br></pre></td></tr></table></figure>
+
+<h1 id="函数组件"><a href="#函数组件" class="headerlink" title="函数组件"></a>函数组件</h1><h2 id="箭头函数写法"><a href="#箭头函数写法" class="headerlink" title="箭头函数写法"></a>箭头函数写法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import &#123; ReactElement &#125; from &quot;react&quot;</span><br><span class="line"></span><br><span class="line">interface IProps &#123;</span><br><span class="line">  name: string</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const UserList = (props: IProps): ReactElement =&gt; &#123;</span><br><span class="line">  const &#123; name &#125; = props</span><br><span class="line">  return &lt;&gt;</span><br><span class="line">    &lt;br /&gt;</span><br><span class="line">    This is UserList page</span><br><span class="line">    &lt;br /&gt;</span><br><span class="line">    &lt;h1&gt;&#123;name&#125;&lt;/h1&gt;</span><br><span class="line">  &lt;/&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default UserList</span><br></pre></td></tr></table></figure>
+
+<h2 id="React-FC-箭头函数-props默认带有-children-属性"><a href="#React-FC-箭头函数-props默认带有-children-属性" class="headerlink" title="React.FC + 箭头函数(props默认带有 children 属性)"></a>React.FC + 箭头函数(props默认带有 children 属性)</h2><p>此外也可使用 <code>React.FunctionComponent &lt; P = {} &gt;</code> （<code>简写： React.FC&lt; P = {} &gt;</code>）来定义</p>
+<ul>
+<li><p><code>React.FC&lt;P={}&gt;</code> 是一个泛型接口，可以接收一个参数，参数表示 props</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type React.FC&lt;P = &#123;&#125;&gt; = REact.FunctionComponent&lt;P&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>最终形式如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">interface IProps &#123;</span><br><span class="line">    name: string</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> App : React.FC&lt;IProps&gt; = <span class="function"><span class="params">props</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123;name&#125; = props</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">    	&lt;&gt;</span><br><span class="line">    		&lt;h1&gt;hello world&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">        	&lt;h2&gt;&#123;name&#125;&lt;/</span>h2&gt;</span><br><span class="line">        &lt;<span class="regexp">/&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">export default App</span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h1 id="ERROR"><a href="#ERROR" class="headerlink" title="ERROR"></a>ERROR</h1><h2 id="组件若是-tsx-返回值不能是-ReactNode-而是-ReactElement"><a href="#组件若是-tsx-返回值不能是-ReactNode-而是-ReactElement" class="headerlink" title="组件若是 *.tsx,返回值不能是 ReactNode,而是 ReactElement"></a>组件若是 <code>*.tsx</code>,返回值不能是 ReactNode,而是 ReactElement</h2><blockquote>
+<p>TS2786: ‘UserList’ cannot be used as a JSX component.<br>  Its return type ‘ReactNode’ is not a valid JSX element.<br>    Type ‘undefined’ is not assignable to type ‘Element | null’.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/* define */</span><br><span class="line">import &#123; ReactElement, ReactNode &#125; from &quot;react&quot;</span><br><span class="line"></span><br><span class="line">interface IProps &#123;</span><br><span class="line">  name: string</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- const UserList = (props: IProps): ReactNode =&gt; &#123;</span><br><span class="line">+ const UserList = (props: IProps): ReactElement =&gt; &#123;</span><br><span class="line">  const &#123; name &#125; = props</span><br><span class="line">  return &lt;&gt;</span><br><span class="line">    &lt;br /&gt;</span><br><span class="line">    This is UserList page</span><br><span class="line">    &lt;br /&gt;</span><br><span class="line">    &lt;h1&gt;&#123;name&#125;&lt;/h1&gt;</span><br><span class="line">  &lt;/&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default UserList</span><br></pre></td></tr></table></figure>
+
+<h1 id="interface-与-type"><a href="#interface-与-type" class="headerlink" title="interface 与 type"></a>interface 与 type</h1><p>二者均可以<strong>定义类型</strong>，建议：</p>
+<ul>
+<li>定义公共 API （编辑库）时使用 interface，方便使用者扩展接口</li>
+<li>定义组件属性（Props）和状态（state）时，使用 type，<strong>type的约束性更强</strong></li>
+</ul>
+<p><strong>区别：<u>type 类型不能二次编辑，而 interface 可以随时编辑</u></strong> </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">interface Animal &#123;</span><br><span class="line">  name: string</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 可以继续在原属性基础上，添加新属性：color</span></span><br><span class="line">interface Animal &#123;</span><br><span class="line">  color: string</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type Animal = &#123;</span><br><span class="line">  name: string</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// type类型不支持属性扩展</span></span><br><span class="line"><span class="comment">// Error: Duplicate identifier 'Animal'</span></span><br><span class="line">type Animal = &#123;</span><br><span class="line">  color: string</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="路由懒加载"><a href="#路由懒加载" class="headerlink" title="路由懒加载"></a>路由懒加载</h1>
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2022/07/07/Redux 之 hook/" rel="next" title="">
+                  <i class="fa fa-chevron-left"></i> 
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2022/07/08/webpack 之 SSR（服务端渲染）/" rel="prev" title="webpack之SSR">
+                  webpack之SSR <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#组件的声明方式（两种）"><span class="nav-number">1.</span> <span class="nav-text">组件的声明方式（两种）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类组件"><span class="nav-number">2.</span> <span class="nav-text">类组件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#两种定义形式"><span class="nav-number">2.1.</span> <span class="nav-text">两种定义形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-Componet-lt-P-S-gt"><span class="nav-number">2.2.</span> <span class="nav-text">React.Componet&lt;P, S = {}&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-PureComponent-lt-P-S-SS-gt"><span class="nav-number">2.3.</span> <span class="nav-text">React.PureComponent&lt;P, S={} SS = {}&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义时未知组件类型，调用时才明确（使用泛型）"><span class="nav-number">2.4.</span> <span class="nav-text">定义时未知组件类型，调用时才明确（使用泛型）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#函数组件"><span class="nav-number">3.</span> <span class="nav-text">函数组件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#箭头函数写法"><span class="nav-number">3.1.</span> <span class="nav-text">箭头函数写法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-FC-箭头函数-props默认带有-children-属性"><span class="nav-number">3.2.</span> <span class="nav-text">React.FC + 箭头函数(props默认带有 children 属性)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ERROR"><span class="nav-number">4.</span> <span class="nav-text">ERROR</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#组件若是-tsx-返回值不能是-ReactNode-而是-ReactElement"><span class="nav-number">4.1.</span> <span class="nav-text">组件若是 *.tsx,返回值不能是 ReactNode,而是 ReactElement</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#interface-与-type"><span class="nav-number">5.</span> <span class="nav-text">interface 与 type</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#路由懒加载"><span class="nav-number">6.</span> <span class="nav-text">路由懒加载</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yana"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Yana</p>
+  <div class="site-description" itemprop="description">Never give up！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">88</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">90</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yanadev" title="GitHub → https://github.com/yanadev" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yana</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">255k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

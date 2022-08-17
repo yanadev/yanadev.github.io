@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="YanaChen" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="安装12# 从 5 开始就放弃了原有的 react-router 库，统一命名为 react-router-domnpm install react-router-dom使用全局路由模式 HashRouter URL 使用hash(#) 来创建路由 www.example.com/#/   BrowserRouter 采用真实的 URL 资源">
+<meta name="keywords" content="react-router-dom,路由,v6,react">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React 之 react-router-dom">
+<meta property="og:url" content="https://yanadev.github.io/2022/05/28/React 之 react-router-dom/index.html">
+<meta property="og:site_name" content="YanaChen">
+<meta property="og:description" content="安装12# 从 5 开始就放弃了原有的 react-router 库，统一命名为 react-router-domnpm install react-router-dom使用全局路由模式 HashRouter URL 使用hash(#) 来创建路由 www.example.com/#/   BrowserRouter 采用真实的 URL 资源">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2022-08-15T11:21:37.859Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React 之 react-router-dom">
+<meta name="twitter:description" content="安装12# 从 5 开始就放弃了原有的 react-router 库，统一命名为 react-router-domnpm install react-router-dom使用全局路由模式 HashRouter URL 使用hash(#) 来创建路由 www.example.com/#/   BrowserRouter 采用真实的 URL 资源">
+
+<link rel="canonical" href="https://yanadev.github.io/2022/05/28/React 之 react-router-dom/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>React 之 react-router-dom | YanaChen</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YanaChen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">_踩坑_填坑_日常</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">94</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">90</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">88</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2022/05/28/React 之 react-router-dom/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yana">
+      <meta itemprop="description" content="Never give up！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanaChen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          React 之 react-router-dom
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-28 17:01:37" itemprop="dateCreated datePublished" datetime="2022-05-28T17:01:37+08:00">2022-05-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-15 19:21:37" itemprop="dateModified" datetime="2022-08-15T19:21:37+08:00">2022-08-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/路由/" itemprop="url" rel="index">
+                    <span itemprop="name">路由</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/路由/react-router-dom/" itemprop="url" rel="index">
+                    <span itemprop="name">react-router-dom</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/路由/react-router-dom/v6/" itemprop="url" rel="index">
+                    <span itemprop="name">v6</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/路由/react-router-dom/v6/react/" itemprop="url" rel="index">
+                    <span itemprop="name">react</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.3k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 从 5 开始就放弃了原有的 react-router 库，统一命名为 react-router-dom</span><br><span class="line">npm install react-router-dom</span><br></pre></td></tr></table></figure><h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><h2 id="全局路由模式"><a href="#全局路由模式" class="headerlink" title="全局路由模式"></a>全局路由模式</h2><ul>
+<li><strong><code>HashRouter</code></strong> URL 使用<code>hash(#)</code> 来创建路由<ul>
+<li><a href="http://www.example.com/#/" target="_blank" rel="noopener">www.example.com/#/</a></li>
+</ul>
+</li>
+<li><strong><code>BrowserRouter</code></strong> 采用真实的 URL 资源</li>
+</ul><a id="more"></a>
+
+
+<p>入口文件 index.js 中引入路由</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom/client'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'./index.css'</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App'</span>;</span><br><span class="line">+<span class="keyword">import</span> &#123; BrowserRouter &#125; <span class="keyword">from</span> <span class="string">'react-router-dom'</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> root = ReactDOM.createRoot(<span class="built_in">document</span>.getElementById(<span class="string">'root'</span>));</span><br><span class="line">root.render(</span><br><span class="line">  &lt;React.StrictMode&gt;</span><br><span class="line">+    <span class="xml"><span class="tag">&lt;<span class="name">BrowserRouter</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">App</span> /&gt;</span></span></span><br><span class="line"><span class="xml">+    <span class="tag">&lt;/<span class="name">BrowserRouter</span>&gt;</span></span></span><br><span class="line">  &lt;<span class="regexp">/React.StrictMode&gt;</span></span><br><span class="line"><span class="regexp">);</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="常用路由组件和hooks"><a href="#常用路由组件和hooks" class="headerlink" title="常用路由组件和hooks"></a>常用路由组件和hooks</h1><table>
+<thead>
+<tr>
+<th>组件名</th>
+<th>作用</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><routers></routers></td>
+<td>一组路由</td>
+<td>代替原来 Switch，所有子路由都用基础的 Router children 来表示</td>
+</tr>
+<tr>
+<td><router></router></td>
+<td>基础路由</td>
+<td>Router 可嵌套，解决了原有 v5 中严格模式</td>
+</tr>
+<tr>
+<td><link></td>
+<td>导航组件</td>
+<td>在实际页面中跳转使用</td>
+</tr>
+<tr>
+<td><outlet></outlet></td>
+<td>自适应渲染组件</td>
+<td>根据实际路由 <code>url</code> 去自动选择组件</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>hooks名</th>
+<th>作用</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>useParams</td>
+<td>返回当前参数</td>
+<td>根据路径读取参数</td>
+</tr>
+<tr>
+<td>useNavigate</td>
+<td>返回当前路由</td>
+<td>代替原有 v5 中的 useHistory</td>
+</tr>
+<tr>
+<td>useOutlet</td>
+<td>返回根据路由生成的 element</td>
+<td></td>
+</tr>
+<tr>
+<td>useLocation</td>
+<td>返回当前 location 对象</td>
+<td></td>
+</tr>
+<tr>
+<td>useRoutes</td>
+<td>同 Routers 组件一样，只不过是在 js 中使用</td>
+<td></td>
+</tr>
+<tr>
+<td>useSearchParams</td>
+<td>用来匹配 URL 中 <code>？</code> 后面的搜索参数</td>
+<td></td>
+</tr>
+</tbody></table>
+<h1 id="组件直接使用"><a href="#组件直接使用" class="headerlink" title="组件直接使用"></a>组件直接使用</h1><ul>
+<li>Route 必须包裹在 Routes 里面使用（配置路由）</li>
+<li>Link 相当于 a 标签，跳转对应页面</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;Routes&gt;</span><br><span class="line">    &lt;Route path=<span class="string">"/"</span> element=&#123;&lt;Home /&gt;&#125; /&gt;</span><br><span class="line">    &lt;Route path=<span class="string">"/about"</span> element=&#123;&lt;About /&gt;&#125; /&gt;</span><br><span class="line">&lt;<span class="regexp">/Routes&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;Link to="/</span><span class="string">"&gt;home&lt;/Link&gt;</span></span><br><span class="line"><span class="string">&lt;Link to="</span>/about<span class="string">"&gt;about&lt;/Link&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="嵌套路由"><a href="#嵌套路由" class="headerlink" title="嵌套路由"></a>嵌套路由</h1><ul>
+<li>Route 组件中包裹着多个 Route</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;Routes&gt;</span><br><span class="line">  &lt;Route path=<span class="string">"user"</span> element=&#123;&lt;Users /&gt;&#125;&gt;</span><br><span class="line">    &lt;Route path=<span class="string">":id"</span> element=&#123;&lt;UserDetail /&gt;&#125; /&gt;</span><br><span class="line">    &lt;Route path=<span class="string">"create"</span> element=&#123;&lt;NewUser /&gt;&#125; /&gt;</span><br><span class="line">  &lt;<span class="regexp">/Route&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>Routes&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>index 指定默认路由（多个子路由情况下）</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;Routes&gt;</span><br><span class="line">  &lt;Route path=<span class="string">"/"</span> element=&#123;&lt;Layout /&gt;&#125;&gt;</span><br><span class="line">    &lt;Route index element=&#123;&lt;About /&gt;&#125; /&gt;</span><br><span class="line">    &lt;Route path=<span class="string">"user"</span> element=&#123;&lt;User /&gt;&#125; /&gt;</span><br><span class="line">    &lt;Route path=<span class="string">"about"</span> element=&#123;&lt;About /&gt;&#125; /&gt;</span><br><span class="line">  &lt;<span class="regexp">/Route&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>Routes&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>outlet 预留坑位渲染嵌套路由</li>
+</ul>
+<h1 id="路由通配符"><a href="#路由通配符" class="headerlink" title="路由通配符"></a>路由通配符</h1><ul>
+<li>* 只能在 / 后面使用，不可在实际路径中间</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/home</span><br><span class="line">/home/admin</span><br><span class="line">/users/:id</span><br><span class="line">/users/:id/messages</span><br><span class="line">/files<span class="comment">/*</span></span><br><span class="line"><span class="comment">/files/:id/*</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>NotFound</code> 类路由，可以用 * 替代</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;Routes&gt;</span><br><span class="line">  &lt;Route path=<span class="string">"/"</span> element=&#123;&lt;Home /&gt;&#125; /&gt;</span><br><span class="line">  &lt;Route path=<span class="string">"dashboard"</span> element=&#123;&lt;Dashboard /&gt;&#125; /&gt;</span><br><span class="line">  &lt;Route path=<span class="string">"*"</span> element=&#123;&lt;NotFound /&gt;&#125; /&gt;</span><br><span class="line">&lt;<span class="regexp">/Routes&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="获取参数-useParams-和-useSearchParams"><a href="#获取参数-useParams-和-useSearchParams" class="headerlink" title="获取参数 useParams 和 useSearchParams"></a>获取参数 <code>useParams</code> 和 <code>useSearchParams</code></h1><ul>
+<li><code>useParams()</code> 直接返回 param 对象</li>
+<li><code>useSearchParams()</code> 返回一个 <code>包含 searchParams 对象、setSearchParams 方法</code> 的对象<ul>
+<li>可使用 <code>searchParams.get(key)</code> 获得参数</li>
+<li><code>setSearchParams({key: value})</code> 来改变路由</li>
+</ul>
+</li>
+</ul>
+<h1 id="useNavigate"><a href="#useNavigate" class="headerlink" title="useNavigate"></a><code>useNavigate</code></h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//js写法</span></span><br><span class="line"><span class="keyword">let</span> navigate = useNavigate();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleClick</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    navigate(<span class="string">"/home"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//组件写法</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">Navigate</span> <span class="attr">to</span>=<span class="string">"/home"</span> <span class="attr">replace</span> <span class="attr">state</span>=<span class="string">&#123;state&#125;</span> /&gt;</span>;</span></span><br><span class="line"><span class="xml">&#125;</span></span><br><span class="line"><span class="xml">//替代原有的go goBack和goForward</span></span><br><span class="line">&lt;button onClick=&#123;() =&gt; navigate(-2)&#125;&gt;</span><br><span class="line">    Go 2 pages back</span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line">&lt;button onClick=&#123;() =&gt; navigate(-1)&#125;&gt;</span><br><span class="line">    Go back</span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line">&lt;button onClick=&#123;() =&gt; navigate(1)&#125;&gt;</span><br><span class="line">	Go forward</span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line">&lt;button onClick=&#123;() =&gt; navigate(2)&#125;&gt;</span><br><span class="line">	Go 2 pages forward</span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<h1 id="集中路由渲染"><a href="#集中路由渲染" class="headerlink" title="集中路由渲染"></a>集中路由渲染</h1><blockquote>
+<p>需知：如要在父路由中显示嵌套路由中的子路由，需要引入 <code>react-router-dom</code> 库中的 <code>Outlet</code> 组件</p>
+</blockquote>
+<ul>
+<li>入口文件 index.js 中引入 <code>BrowserRouter</code> ，启用全局路由 </li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom/client'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'./index.css'</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; BrowserRouter &#125; <span class="keyword">from</span> <span class="string">'react-router-dom'</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> root = ReactDOM.createRoot(<span class="built_in">document</span>.getElementById(<span class="string">'root'</span>));</span><br><span class="line">root.render(</span><br><span class="line">  &lt;React.StrictMode&gt;</span><br><span class="line">    &lt;BrowserRouter&gt;</span><br><span class="line">      &lt;App /&gt;</span><br><span class="line">    &lt;<span class="regexp">/BrowserRouter&gt;</span></span><br><span class="line"><span class="regexp">  &lt;/</span>React.StrictMode&gt;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>新建 <code>src/router/index.js</code>，配置项目路由</li>
+<li>引入 react 中的 lazy 方法，实现嵌套路由中的子组件的懒加载，减少首屏需要加载的数据量，避免首屏加载缓慢 </li>
+<li>配合使用 Suspense 组件包裹在 lazy 方法返回值的 node，使用 fallback 属性，实现懒加载完毕后的消息提醒</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; lazy, Suspense &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">const</span> CityList = lazy(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">"../pages/CityList"</span>));</span><br><span class="line"><span class="keyword">const</span> AppLayout = lazy(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'../pages/AppLayout'</span>));</span><br><span class="line"><span class="keyword">const</span> Index = lazy(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">"../pages/Index"</span>));</span><br><span class="line"><span class="keyword">const</span> News = lazy(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'../pages/News'</span>));</span><br><span class="line"><span class="keyword">const</span> lazyLoad = <span class="function">(<span class="params">children</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">Suspense</span> <span class="attr">fallback</span>=<span class="string">&#123;</span>&lt;&gt;</span>Loading<span class="tag">&lt;/&gt;</span>&#125;&gt;</span></span><br><span class="line"><span class="xml">    &#123;children&#125;</span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">Suspense</span>&gt;</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/'</span>,</span><br><span class="line">    element: <span class="xml"><span class="tag">&lt;<span class="name">AppLayout</span> /&gt;</span>,</span></span><br><span class="line"><span class="xml">    children: [</span></span><br><span class="line"><span class="xml">      &#123;</span></span><br><span class="line"><span class="xml">        path: '/index',</span></span><br><span class="line"><span class="xml">        element: lazyLoad(<span class="tag">&lt;<span class="name">Index</span> /&gt;</span>)</span></span><br><span class="line"><span class="xml">      &#125;,</span></span><br><span class="line"><span class="xml">      &#123;</span></span><br><span class="line"><span class="xml">        path: '/news',</span></span><br><span class="line"><span class="xml">        element: lazyLoad(<span class="tag">&lt;<span class="name">News</span> /&gt;</span>)</span></span><br><span class="line"><span class="xml">      &#125;</span></span><br><span class="line"><span class="xml">    ]</span></span><br><span class="line"><span class="xml">  &#125;,</span></span><br><span class="line"><span class="xml">  &#123;</span></span><br><span class="line"><span class="xml">    path: '/cityList',</span></span><br><span class="line"><span class="xml">    element: <span class="tag">&lt;<span class="name">CityList</span> /&gt;</span></span></span><br><span class="line"><span class="xml">  &#125;,</span></span><br><span class="line"><span class="xml">];</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">export &#123; routes &#125;;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>根组件 App.js 中引入 <code>编写好的 routes</code> </li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// App.js</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">'./App.css'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; useRoutes &#125; <span class="keyword">from</span> <span class="string">'react-router-dom'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; routes &#125; <span class="keyword">from</span> <span class="string">'./router/index'</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> useRoutes(routes);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App;</span><br></pre></td></tr></table></figure>
+
+<h2 id="懒加载（异步加载）"><a href="#懒加载（异步加载）" class="headerlink" title="懒加载（异步加载）"></a>懒加载（异步加载）</h2><ul>
+<li>优化应用的启动速度，首屏加载的速度有明显提升（首屏不需要的组件，直到使用的那一刻才会加载）</li>
+<li>导致了闪屏（加载对应页面需要等待一段时间，网络质量越差，该现象越明显）</li>
+</ul>
+<p>使用了react库中的 lazy 配合 Suspense（本质是 promise）</p>
+<p>根组件 App.js 中使用 Suspense 组件包裹</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; lazy, Suspense &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> AppLayout = lazy(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'../pages/AppLayout'</span>));</span><br><span class="line"><span class="keyword">const</span> Home = lazy(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'../pages/Home'</span>));</span><br><span class="line"><span class="keyword">const</span> CityList = lazy(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'../pages/CityList'</span>));</span><br><span class="line"><span class="keyword">const</span> News = lazy(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'../pages/News'</span>));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/'</span>,</span><br><span class="line">    element: <span class="xml"><span class="tag">&lt;<span class="name">AppLayout</span> /&gt;</span>,</span></span><br><span class="line"><span class="xml">    children: [</span></span><br><span class="line"><span class="xml">      &#123;</span></span><br><span class="line"><span class="xml">        index: true,</span></span><br><span class="line"><span class="xml">        element: <span class="tag">&lt;<span class="name">Home</span> /&gt;</span></span></span><br><span class="line"><span class="xml">      &#125;,</span></span><br><span class="line"><span class="xml">      &#123;</span></span><br><span class="line"><span class="xml">        path: 'news',</span></span><br><span class="line"><span class="xml">        element: <span class="tag">&lt;<span class="name">News</span> /&gt;</span></span></span><br><span class="line"><span class="xml">      &#125;</span></span><br><span class="line"><span class="xml">    ]</span></span><br><span class="line"><span class="xml">  &#125;,</span></span><br><span class="line"><span class="xml">  &#123;</span></span><br><span class="line"><span class="xml">    path: '/citylist',</span></span><br><span class="line"><span class="xml">    element: <span class="tag">&lt;<span class="name">CityList</span> /&gt;</span></span></span><br><span class="line"><span class="xml">  &#125;</span></span><br><span class="line"><span class="xml">];</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">export &#123; routes &#125;;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">'./App.css'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// UI组件库: antd-mobile</span></span><br><span class="line"><span class="keyword">import</span> &#123; Button &#125; <span class="keyword">from</span> <span class="string">'antd-mobile'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; routes &#125; <span class="keyword">from</span> <span class="string">'./router/index'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; useRoutes &#125; <span class="keyword">from</span> <span class="string">'react-router-dom'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Suspense &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> element = useRoutes(routes);</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;Suspense fallback=&#123;&lt;&gt;loading&lt;<span class="regexp">/&gt;&#125;&gt;</span></span><br><span class="line"><span class="regexp">      &#123;element&#125;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>Suspense&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App;</span><br></pre></td></tr></table></figure>
+
+<h2 id="避免闪屏"><a href="#避免闪屏" class="headerlink" title="避免闪屏"></a>避免闪屏</h2><ul>
+<li>父路由使用直接加载的方式载入</li>
+<li>子路由使用懒加载的方式来载入</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* src/router/index.js */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; lazy, Suspense &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> AppLayout <span class="keyword">from</span> <span class="string">'../pages/AppLayout'</span>;</span><br><span class="line"><span class="keyword">const</span> Home = lazy(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'../pages/Home'</span>));</span><br><span class="line"><span class="keyword">const</span> CityList = lazy(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'../pages/CityList'</span>));</span><br><span class="line"><span class="keyword">const</span> News = lazy(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'../pages/News'</span>));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> lazyLoad = <span class="function">(<span class="params">children</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">Suspense</span> <span class="attr">fallback</span>=<span class="string">&#123;</span>&lt;&gt;</span>Loading...<span class="tag">&lt;/&gt;</span>&#125;&gt;</span></span><br><span class="line"><span class="xml">    &#123;children&#125;</span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">Suspense</span>&gt;</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/'</span>,</span><br><span class="line">    element: <span class="xml"><span class="tag">&lt;<span class="name">AppLayout</span> /&gt;</span>,</span></span><br><span class="line"><span class="xml">    children: [</span></span><br><span class="line"><span class="xml">      &#123;</span></span><br><span class="line"><span class="xml">        index: true,</span></span><br><span class="line"><span class="xml">        element: lazyLoad(<span class="tag">&lt;<span class="name">Home</span> /&gt;</span>)</span></span><br><span class="line"><span class="xml">      &#125;,</span></span><br><span class="line"><span class="xml">      &#123;</span></span><br><span class="line"><span class="xml">        path: 'news',</span></span><br><span class="line"><span class="xml">        element: lazyLoad(<span class="tag">&lt;<span class="name">News</span> /&gt;</span>)</span></span><br><span class="line"><span class="xml">      &#125;,</span></span><br><span class="line"><span class="xml">      &#123;</span></span><br><span class="line"><span class="xml">        path: 'citylist',</span></span><br><span class="line"><span class="xml">        element: lazyLoad(<span class="tag">&lt;<span class="name">CityList</span> /&gt;</span>)</span></span><br><span class="line"><span class="xml">      &#125;,</span></span><br><span class="line"><span class="xml">    ]</span></span><br><span class="line"><span class="xml">  &#125;,</span></span><br><span class="line"><span class="xml">];</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">export &#123; routes &#125;;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* /src/App.js */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">'./App.css'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// UI组件库: antd-mobile</span></span><br><span class="line"><span class="keyword">import</span> &#123; Button &#125; <span class="keyword">from</span> <span class="string">'antd-mobile'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; routes &#125; <span class="keyword">from</span> <span class="string">'./router/index'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; useRoutes &#125; <span class="keyword">from</span> <span class="string">'react-router-dom'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> element = useRoutes(routes);</span><br><span class="line">  <span class="keyword">return</span> element;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App;</span><br></pre></td></tr></table></figure>
+
+<h2 id="路由监听（守卫）"><a href="#路由监听（守卫）" class="headerlink" title="路由监听（守卫）"></a>路由监听（守卫）</h2><ul>
+<li><p><code>useEffect</code> 该 Hook 类似生命周期函数 <code>componentWillUnmount</code>、<code>componentDidMount</code> 和 <code>componentDidUpdate</code>（可看做是三者的结合）</p>
+<ul>
+<li>useEffect 支持你在<code>函数组件</code>（该概念区别于<code>类组件</code>）中执行副作用操作<ul>
+<li>数据获取</li>
+<li>设置订阅</li>
+<li>手动更改 React 组件中的 DOM</li>
+</ul>
+</li>
+<li>参数一：处理逻辑</li>
+<li>参数二：依赖的数据源<code>[&#39;data&#39;]</code></li>
+<li>该 Hook 解决了 <code>类组件中经常将不相关的逻辑放在同一个生命周期函数中，将相关的逻辑分离在多个不同的生命周期函数中</code> 的这个问题</li>
+<li>通过使用多个 <code>useEffect</code> 来分离这些需要在各个生命周期函数中处理的逻辑</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">'./App.css'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// UI组件库: antd-mobile</span></span><br><span class="line"><span class="keyword">import</span> &#123; Button &#125; <span class="keyword">from</span> <span class="string">'antd-mobile'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; routes &#125; <span class="keyword">from</span> <span class="string">'./router/index'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; useRoutes, useLocation &#125; <span class="keyword">from</span> <span class="string">'react-router-dom'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Suspense, useEffect &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> location = useLocation();</span><br><span class="line">  useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(location.pathname, <span class="string">'enter: 路由前置守卫'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(location.pathname, <span class="string">'leave: 路由后置守卫'</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;, [location.pathname]);</span><br><span class="line">  <span class="keyword">let</span> element = useRoutes(routes);</span><br><span class="line">  <span class="keyword">return</span> element;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>useState 该 Hook ，通过数组解构可在 <code>函数组件</code> 中实现类似 <code>setState()</code> 的效果</p>
+<ul>
+<li><code>const [count, setCount] = useState(&#39;banana&#39;)</code></li>
+<li>通过 <code>setCount(new value)</code> 来实现状态更新</li>
+</ul>
+</li>
+<li><p>将 <code>路由监听操作</code> 封装成一个函数传递给 App.js 根组件</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* /src/router/index.js  */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; lazy, Suspense &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; matchRoutes &#125; <span class="keyword">from</span> <span class="string">'react-router-dom'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> AppLayout <span class="keyword">from</span> <span class="string">'../pages/AppLayout'</span>;</span><br><span class="line"><span class="keyword">import</span> NotFound <span class="keyword">from</span> <span class="string">'../pages/NotFound'</span>;</span><br><span class="line"><span class="keyword">const</span> Home = lazy(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'../pages/Home'</span>));</span><br><span class="line"><span class="keyword">const</span> CityList = lazy(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'../pages/CityList'</span>));</span><br><span class="line"><span class="keyword">const</span> News = lazy(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'../pages/News'</span>));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> lazyLoad = <span class="function">(<span class="params">children</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">Suspense</span> <span class="attr">fallback</span>=<span class="string">&#123;</span>&lt;&gt;</span>Loading...<span class="tag">&lt;/&gt;</span>&#125;&gt;</span></span><br><span class="line"><span class="xml">    &#123;children&#125;</span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">Suspense</span>&gt;</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/'</span>,</span><br><span class="line">    element: <span class="xml"><span class="tag">&lt;<span class="name">AppLayout</span> /&gt;</span>,</span></span><br><span class="line"><span class="xml">    children: [</span></span><br><span class="line"><span class="xml">      &#123;</span></span><br><span class="line"><span class="xml">        index: true,</span></span><br><span class="line"><span class="xml">        element: lazyLoad(<span class="tag">&lt;<span class="name">Home</span> /&gt;</span>)</span></span><br><span class="line"><span class="xml">      &#125;,</span></span><br><span class="line"><span class="xml">      &#123;</span></span><br><span class="line"><span class="xml">        path: 'news',</span></span><br><span class="line"><span class="xml">        element: lazyLoad(<span class="tag">&lt;<span class="name">News</span> /&gt;</span>)</span></span><br><span class="line"><span class="xml">      &#125;,</span></span><br><span class="line"><span class="xml">      &#123;</span></span><br><span class="line"><span class="xml">        path: 'citylist',</span></span><br><span class="line"><span class="xml">        element: lazyLoad(<span class="tag">&lt;<span class="name">CityList</span> /&gt;</span>)</span></span><br><span class="line"><span class="xml">      &#125;,</span></span><br><span class="line"><span class="xml">    ]</span></span><br><span class="line"><span class="xml">  &#125;,</span></span><br><span class="line"><span class="xml">  &#123;</span></span><br><span class="line"><span class="xml">    path: '/404',</span></span><br><span class="line"><span class="xml">    element: <span class="tag">&lt;<span class="name">NotFound</span> /&gt;</span></span></span><br><span class="line"><span class="xml">  &#125;</span></span><br><span class="line"><span class="xml">];</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">const routerListener = (path, navigator) =&gt; &#123;</span></span><br><span class="line"><span class="xml">  return () =&gt; &#123;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">    const isMatch = matchRoutes(routes, path);</span></span><br><span class="line"><span class="xml">    if (!isMatch) &#123;</span></span><br><span class="line"><span class="xml">      navigator('/404');</span></span><br><span class="line"><span class="xml">    &#125;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">    console.log(path, 'enter: routerEnterEvent');</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">    return () =&gt; &#123;</span></span><br><span class="line"><span class="xml">      console.log(path, 'leave: routerLeaveEvent');</span></span><br><span class="line"><span class="xml">    &#125;;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">  &#125;;</span></span><br><span class="line"><span class="xml">&#125;;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">export &#123; routes, routerListener &#125;;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* App.js */</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">'./App.css'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// UI组件库: antd-mobile</span></span><br><span class="line"><span class="keyword">import</span> &#123; Button &#125; <span class="keyword">from</span> <span class="string">'antd-mobile'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; routes, routerListener &#125; <span class="keyword">from</span> <span class="string">'./router/index'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; useRoutes, useLocation, useNavigate &#125; <span class="keyword">from</span> <span class="string">'react-router-dom'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; useEffect, useState &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> location = useLocation();</span><br><span class="line">  <span class="keyword">const</span> navigator = useNavigate();</span><br><span class="line">  <span class="keyword">let</span> [pathname, setPathname] = useState(location.pathname);</span><br><span class="line"></span><br><span class="line">  useEffect(</span><br><span class="line">    routerListener(pathname, navigator),</span><br><span class="line">    [pathname]</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> element = useRoutes(routes);</span><br><span class="line">  <span class="keyword">return</span> element;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/react-router-dom/" rel="tag"><i class="fa fa-tag"></i>react-router-dom</a>
+              <a href="/tags/路由/" rel="tag"><i class="fa fa-tag"></i>路由</a>
+              <a href="/tags/v6/" rel="tag"><i class="fa fa-tag"></i>v6</a>
+              <a href="/tags/react/" rel="tag"><i class="fa fa-tag"></i>react</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2022/05/28/CSS 之 box-sizing 盒模型/" rel="next" title="CSS 之 box-sizing 盒模型">
+                  <i class="fa fa-chevron-left"></i> CSS 之 box-sizing 盒模型
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2022/05/29/React 之 useEffect/" rel="prev" title="React 之 useEffect">
+                  React 之 useEffect <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用"><span class="nav-number">2.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#全局路由模式"><span class="nav-number">2.1.</span> <span class="nav-text">全局路由模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用路由组件和hooks"><span class="nav-number">3.</span> <span class="nav-text">常用路由组件和hooks</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#组件直接使用"><span class="nav-number">4.</span> <span class="nav-text">组件直接使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#嵌套路由"><span class="nav-number">5.</span> <span class="nav-text">嵌套路由</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#路由通配符"><span class="nav-number">6.</span> <span class="nav-text">路由通配符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取参数-useParams-和-useSearchParams"><span class="nav-number">7.</span> <span class="nav-text">获取参数 useParams 和 useSearchParams</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#useNavigate"><span class="nav-number">8.</span> <span class="nav-text">useNavigate</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#集中路由渲染"><span class="nav-number">9.</span> <span class="nav-text">集中路由渲染</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#懒加载（异步加载）"><span class="nav-number">9.1.</span> <span class="nav-text">懒加载（异步加载）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#避免闪屏"><span class="nav-number">9.2.</span> <span class="nav-text">避免闪屏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#路由监听（守卫）"><span class="nav-number">9.3.</span> <span class="nav-text">路由监听（守卫）</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yana"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Yana</p>
+  <div class="site-description" itemprop="description">Never give up！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">88</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">90</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yanadev" title="GitHub → https://github.com/yanadev" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yana</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">255k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

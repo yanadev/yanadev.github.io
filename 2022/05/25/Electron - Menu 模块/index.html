@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="YanaChen" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Menu 主进程模块 创建原生菜单：可作为 应用菜单 和 context 菜单  每个菜单下面都有 一个或几个菜单项 menu items，且每个菜单项都可以有自己的子菜单  通过 remote 模块动态创建菜单类 Menu（静态方法）创建菜单 new Menu()Menu.setApplicationMenu(menu) 设置菜单">
+<meta name="keywords" content="Electron,Menu 模块">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Electron - Menu 模块">
+<meta property="og:url" content="https://yanadev.github.io/2022/05/25/Electron - Menu 模块/index.html">
+<meta property="og:site_name" content="YanaChen">
+<meta property="og:description" content="Menu 主进程模块 创建原生菜单：可作为 应用菜单 和 context 菜单  每个菜单下面都有 一个或几个菜单项 menu items，且每个菜单项都可以有自己的子菜单  通过 remote 模块动态创建菜单类 Menu（静态方法）创建菜单 new Menu()Menu.setApplicationMenu(menu) 设置菜单">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2022-05-24T18:40:40.419Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Electron - Menu 模块">
+<meta name="twitter:description" content="Menu 主进程模块 创建原生菜单：可作为 应用菜单 和 context 菜单  每个菜单下面都有 一个或几个菜单项 menu items，且每个菜单项都可以有自己的子菜单  通过 remote 模块动态创建菜单类 Menu（静态方法）创建菜单 new Menu()Menu.setApplicationMenu(menu) 设置菜单">
+
+<link rel="canonical" href="https://yanadev.github.io/2022/05/25/Electron - Menu 模块/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Electron - Menu 模块 | YanaChen</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YanaChen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">_踩坑_填坑_日常</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">94</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">90</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">88</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2022/05/25/Electron - Menu 模块/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yana">
+      <meta itemprop="description" content="Never give up！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanaChen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Electron - Menu 模块
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-05-25 02:22:34 / 修改时间：02:40:40" itemprop="dateCreated datePublished" datetime="2022-05-25T02:22:34+08:00">2022-05-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Electron/" itemprop="url" rel="index">
+                    <span itemprop="name">Electron</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Electron/Menu-模块/" itemprop="url" rel="index">
+                    <span itemprop="name">Menu 模块</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>703</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Menu-主进程模块"><a href="#Menu-主进程模块" class="headerlink" title="Menu 主进程模块"></a>Menu 主进程模块</h1><ul>
+<li><p>创建原生菜单：可作为 <strong>应用菜单</strong> 和 <strong>context 菜单</strong></p>
+</li>
+<li><p>每个菜单下面都有 <strong>一个或几个菜单项 menu items</strong>，且每个菜单项都可以有自己的子菜单</p>
+</li>
+</ul><h1 id="通过-remote-模块动态创建菜单"><a href="#通过-remote-模块动态创建菜单" class="headerlink" title="通过 remote 模块动态创建菜单"></a>通过 remote 模块动态创建菜单</h1><h1 id="类-Menu（静态方法）"><a href="#类-Menu（静态方法）" class="headerlink" title="类 Menu（静态方法）"></a>类 Menu（静态方法）</h1><h2 id="创建菜单-new-Menu"><a href="#创建菜单-new-Menu" class="headerlink" title="创建菜单 new Menu()"></a>创建菜单 new Menu()</h2><h2 id="Menu-setApplicationMenu-menu-设置菜单"><a href="#Menu-setApplicationMenu-menu-设置菜单" class="headerlink" title="Menu.setApplicationMenu(menu) 设置菜单"></a>Menu.setApplicationMenu(menu) 设置菜单</h2><a id="more"></a>
+<ul>
+<li>在 OS X 上设置应用菜单 menu</li>
+<li>在 windows、 linux ，是为每一个窗口都在其顶部设置菜单 menu</li>
+</ul>
+<h2 id="Menu-setActionToFirstResponder-action-OS-X-发送-action-给应用的第一个响应器，用来模仿-Cocoa-菜单的默认行为，通常只需要用到-MenuItem-的属性-role"><a href="#Menu-setActionToFirstResponder-action-OS-X-发送-action-给应用的第一个响应器，用来模仿-Cocoa-菜单的默认行为，通常只需要用到-MenuItem-的属性-role" class="headerlink" title="Menu.setActionToFirstResponder(action) OS X  发送 action 给应用的第一个响应器，用来模仿 Cocoa 菜单的默认行为，通常只需要用到 MenuItem 的属性 role"></a>Menu.setActionToFirstResponder(action) OS X  发送 action 给应用的第一个响应器，用来模仿 Cocoa 菜单的默认行为，通常只需要用到 MenuItem 的属性 role</h2><h2 id="Menu-buildFromTemplate-template-创建菜单"><a href="#Menu-buildFromTemplate-template-创建菜单" class="headerlink" title="Menu.buildFromTemplate(template) 创建菜单"></a>Menu.buildFromTemplate(template) 创建菜单</h2><h1 id="实例方法"><a href="#实例方法" class="headerlink" title="实例方法"></a>实例方法</h1><h2 id="menu-popup-browserWindow-x-y-positioningItem-弹出菜单并指定菜单位置和索引"><a href="#menu-popup-browserWindow-x-y-positioningItem-弹出菜单并指定菜单位置和索引" class="headerlink" title="menu.popup([browserWindow, x, y, positioningItem]) 弹出菜单并指定菜单位置和索引"></a>menu.popup([browserWindow, x, y, positioningItem]) 弹出菜单并指定菜单位置和索引</h2><ul>
+<li><strong>browserWindow</strong> 可选 <strong>默认 null</strong></li>
+<li><strong>x</strong> Number 可选 <strong>默认-1</strong></li>
+<li><strong>y</strong> Number （<strong>若x设置了，必填</strong>） <strong>默认-1</strong></li>
+<li><strong>positioningItem</strong> Number 可选 在指定鼠标位置下面的菜单项的索引，<strong>默认-1</strong></li>
+</ul>
+<p>在 BrowserWindow 中弹出 context menu ，可选择提供指定的 x,y 来设置菜单位置，否则默认放在当前鼠标位置</p>
+<h2 id="menu-append-menuItem-添加菜单项"><a href="#menu-append-menuItem-添加菜单项" class="headerlink" title="menu.append(menuItem) 添加菜单项"></a>menu.append(menuItem) 添加菜单项</h2><h2 id="menu-insert-pos-menuItem-在指定位置添加菜单项"><a href="#menu-insert-pos-menuItem-在指定位置添加菜单项" class="headerlink" title="menu.insert(pos, menuItem) 在指定位置添加菜单项"></a>menu.insert(pos, menuItem) 在指定位置添加菜单项</h2><h2 id="menu-items-获取菜单项数组"><a href="#menu-items-获取菜单项数组" class="headerlink" title="menu.items() 获取菜单项数组"></a>menu.items() 获取菜单项数组</h2><h1 id="菜单项位置"><a href="#菜单项位置" class="headerlink" title="菜单项位置"></a>菜单项位置</h1><ul>
+<li>before 菜单项 id 之前插入，若不存在，插入末尾</li>
+<li>after i菜单项 id 之后插入，若不存在，插入末尾</li>
+<li>endof 集合末尾插入</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Electron/" rel="tag"><i class="fa fa-tag"></i>Electron</a>
+              <a href="/tags/Menu-模块/" rel="tag"><i class="fa fa-tag"></i>Menu 模块</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2022/05/24/Electron - app 模块/" rel="next" title="Electron - app模块">
+                  <i class="fa fa-chevron-left"></i> Electron - app模块
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2022/05/25/Electron - MenuItem 模块/" rel="prev" title="Electron - MenuItem 模块">
+                  Electron - MenuItem 模块 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Menu-主进程模块"><span class="nav-number">1.</span> <span class="nav-text">Menu 主进程模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通过-remote-模块动态创建菜单"><span class="nav-number">2.</span> <span class="nav-text">通过 remote 模块动态创建菜单</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类-Menu（静态方法）"><span class="nav-number">3.</span> <span class="nav-text">类 Menu（静态方法）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建菜单-new-Menu"><span class="nav-number">3.1.</span> <span class="nav-text">创建菜单 new Menu()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Menu-setApplicationMenu-menu-设置菜单"><span class="nav-number">3.2.</span> <span class="nav-text">Menu.setApplicationMenu(menu) 设置菜单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Menu-setActionToFirstResponder-action-OS-X-发送-action-给应用的第一个响应器，用来模仿-Cocoa-菜单的默认行为，通常只需要用到-MenuItem-的属性-role"><span class="nav-number">3.3.</span> <span class="nav-text">Menu.setActionToFirstResponder(action) OS X  发送 action 给应用的第一个响应器，用来模仿 Cocoa 菜单的默认行为，通常只需要用到 MenuItem 的属性 role</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Menu-buildFromTemplate-template-创建菜单"><span class="nav-number">3.4.</span> <span class="nav-text">Menu.buildFromTemplate(template) 创建菜单</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实例方法"><span class="nav-number">4.</span> <span class="nav-text">实例方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#menu-popup-browserWindow-x-y-positioningItem-弹出菜单并指定菜单位置和索引"><span class="nav-number">4.1.</span> <span class="nav-text">menu.popup([browserWindow, x, y, positioningItem]) 弹出菜单并指定菜单位置和索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#menu-append-menuItem-添加菜单项"><span class="nav-number">4.2.</span> <span class="nav-text">menu.append(menuItem) 添加菜单项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#menu-insert-pos-menuItem-在指定位置添加菜单项"><span class="nav-number">4.3.</span> <span class="nav-text">menu.insert(pos, menuItem) 在指定位置添加菜单项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#menu-items-获取菜单项数组"><span class="nav-number">4.4.</span> <span class="nav-text">menu.items() 获取菜单项数组</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#菜单项位置"><span class="nav-number">5.</span> <span class="nav-text">菜单项位置</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yana"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Yana</p>
+  <div class="site-description" itemprop="description">Never give up！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">88</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">90</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yanadev" title="GitHub → https://github.com/yanadev" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yana</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">255k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

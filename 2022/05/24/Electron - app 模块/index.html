@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="YanaChen" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="app事件列表 will-finish-launching 应用完成基础启动时触发  不同操作系统有差别，window 和 linux 下该事件与 ready 相同 OS X 中，相当于 NSApplication中的 applicationWiilFinishLaunching 提示 应该经常在这里为 open-file 和 open-url 设置监听器，并启动奔溃报告和自动更新   ready">
+<meta name="keywords" content="Electron,app模块">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Electron - app模块">
+<meta property="og:url" content="https://yanadev.github.io/2022/05/24/Electron - app 模块/index.html">
+<meta property="og:site_name" content="YanaChen">
+<meta property="og:description" content="app事件列表 will-finish-launching 应用完成基础启动时触发  不同操作系统有差别，window 和 linux 下该事件与 ready 相同 OS X 中，相当于 NSApplication中的 applicationWiilFinishLaunching 提示 应该经常在这里为 open-file 和 open-url 设置监听器，并启动奔溃报告和自动更新   ready">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2022-05-24T14:42:46.713Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Electron - app模块">
+<meta name="twitter:description" content="app事件列表 will-finish-launching 应用完成基础启动时触发  不同操作系统有差别，window 和 linux 下该事件与 ready 相同 OS X 中，相当于 NSApplication中的 applicationWiilFinishLaunching 提示 应该经常在这里为 open-file 和 open-url 设置监听器，并启动奔溃报告和自动更新   ready">
+
+<link rel="canonical" href="https://yanadev.github.io/2022/05/24/Electron - app 模块/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Electron - app模块 | YanaChen</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YanaChen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">_踩坑_填坑_日常</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">94</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">90</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">88</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2022/05/24/Electron - app 模块/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yana">
+      <meta itemprop="description" content="Never give up！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanaChen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Electron - app模块
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-05-24 22:42:20 / 修改时间：22:42:46" itemprop="dateCreated datePublished" datetime="2022-05-24T22:42:20+08:00">2022-05-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Electron/" itemprop="url" rel="index">
+                    <span itemprop="name">Electron</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Electron/app模块/" itemprop="url" rel="index">
+                    <span itemprop="name">app模块</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.6k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="app"><a href="#app" class="headerlink" title="app"></a>app</h1><h2 id="事件列表"><a href="#事件列表" class="headerlink" title="事件列表"></a>事件列表</h2><ul>
+<li><p>will-finish-launching 应用完成基础启动时触发</p>
+<ul>
+<li>不同操作系统有差别，window 和 linux 下该事件与 ready 相同</li>
+<li>OS X 中，相当于 NSApplication中的 applicationWiilFinishLaunching 提示</li>
+<li><strong>应该经常在这里为 open-file 和 open-url 设置监听器，并启动奔溃报告和自动更新</strong></li>
+</ul>
+</li>
+<li><p>ready 完成初始化时触发</p>
+</li>
+<li><p>window-all-closed 所有窗口均被关闭时触发</p>
+</li>
+<li><p>before-quit  应用程序开始关闭它的窗口时被触发 </p>
+<ul>
+<li>返回 event Event，调用 event.preventDefautl() 将阻止应用程序的默认行为</li>
+</ul>
+</li>
+<li><p>will-quit 应用程序正在退出时触发</p>
+<ul>
+<li>返回 event Event, exitCode Integer</li>
+</ul>
+</li>
+<li><p>‘open-file’ OS X 用户想在应用中打开一个<strong>文件</strong>时触发</p>
+<ul>
+<li>返回 event Event,path String </li>
+</ul>
+</li>
+<li><p>‘open-url’ OS X 用户想在应用中打开一个<strong>链接</strong>时触发</p>
+<ul>
+<li>返回 event Event,path String </li>
+</ul>
+</li>
+<li><p>‘active’ OS X 应用被激活时触发，点击应用的 dock 图标时</p>
+<ul>
+<li>返回 event Event, hasVisibleWindows Boolean</li>
+</ul>
+</li>
+<li><p>browser-window-blur 当一个 BrowserWindow 失去焦点时触发</p>
+<ul>
+<li>返回 event Event, window BrowserWindow</li>
+</ul>
+</li>
+<li><p>browser-window-focus 当一个 BrowserWindow 获得焦点时触发</p>
+<ul>
+<li>返回 event Event, window BrowserWindow</li>
+</ul>
+</li>
+<li><p>browser-window-created 当一个 BrowserWindow 被创建时触发</p>
+<ul>
+<li>返回 event Event, window BrowserWindow</li>
+</ul>
+</li>
+<li><p>certificate-error 对 url 校验 certificate 证书失败时触发，若需要信任该证书，需要阻止默认行为并调用回调 （<strong>event.preventDefault() 之后 执行 callback(true)</strong>）</p>
+<ul>
+<li>event Event</li>
+<li>WebContents WebCOntents</li>
+<li>url String - URL 地址</li>
+<li>error String - 错误码</li>
+<li>certificate Object</li>
+<li>data Buffer - PEM 编码数据</li>
+<li>issueName String - 发行者的共有名称</li>
+<li>callback Function</li>
+</ul>
+</li>
+<li><p>select-client-certificate 当客户端认证被请求时触发,需要阻止默认事件防止应用自动使用第一个证书进行校验</p>
+<ul>
+<li>event Event</li>
+<li>WebContents WebCOntents</li>
+<li>url String - URL 地址</li>
+<li>error String - 错误码</li>
+<li>certificateList[Object]</li>
+<li>data Buffer - PEM 编码数据</li>
+<li>issueName String - 发行者的共有名称</li>
+<li>callback Function</li>
+</ul>
+</li>
+<li><p>login 当 WebContents 要进行一次 HTTP 登录验证时触发</p>
+</li>
+<li><p>gpu-process-crashed 当 GPU 进程奔溃时触发</p>
+</li>
+</ul><a id="more"></a>
+<h2 id="方法列表"><a href="#方法列表" class="headerlink" title="方法列表"></a>方法列表</h2><blockquote>
+<p>有些方法只能用于特定的操作系统</p>
+</blockquote>
+<ul>
+<li><p>app.quit() 视图关掉所有窗口</p>
+<ul>
+<li>before-quit</li>
+<li>will-quit</li>
+</ul>
+</li>
+<li><p>app.hide() 隐藏所有应用窗口，不是最小化</p>
+</li>
+<li><p>app.show() 隐藏后重新显示所有窗口，不会自动选中</p>
+</li>
+<li><p>app.exit(exitCode)  携带 exitCode 退出应用，立刻关闭，不会询问用户</p>
+<ul>
+<li>exitCode Integer</li>
+<li>不会触发 before-quit 和 will-quit 两个事件</li>
+</ul>
+</li>
+<li><p>app.getAppPath()  获取当前应用所在的文件路径</p>
+</li>
+<li><p>app.getPath(name) 返回与 name 参数相关的特殊文件夹或者文件路径，失败时抛出一个 error</p>
+<ul>
+<li>name String  <ul>
+<li>home 用户的home 文件夹（主目录）</li>
+<li>appData 当前用户的应用数据文件夹，默认对应<ul>
+<li>%APPDATA%  —– windows</li>
+<li>$XDG_CONGIF_HOME or ~/.config —— Linux</li>
+<li>~/Library/Application ——— Support OS X 中</li>
+</ul>
+</li>
+<li>userData 储存应用程序设置文件的文件夹，默认是 appData 文件附加应用的名称</li>
+<li>temp 临时文件夹</li>
+<li>exe 当前可执行文件</li>
+<li>module libchromiumcontent 库</li>
+<li>desktop 当前用户的桌面文件夹</li>
+<li>documents 用户文档目录的路径</li>
+<li>downloads 用户下载目录的路径</li>
+<li>music 用户音乐目录的路径</li>
+<li>pictures 用户图片目录的路径</li>
+<li>videos 用户视频目录的路径</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>app.setPath(name, path) 重写某个 name 路径为 path</p>
+<ul>
+<li>name String </li>
+<li>path String  </li>
+</ul>
+</li>
+<li><p>app.getVersion() 返回加载应用程序的版本，若 package.json 中没有指明 version，则返回当前包或可执行文件的版本</p>
+</li>
+<li><p>app.getName() 返回当前应用程序的 package.json 中的名称</p>
+</li>
+<li><p>app.setName(name) 重写当前应用的名字</p>
+<ul>
+<li>name Stirng </li>
+</ul>
+</li>
+<li><p>app.getLocal() 返回当前应用程序的语言</p>
+</li>
+<li><p>app.addRecentDocument(path) OS X windows 在最近访问的文档列表中添加 path</p>
+<ul>
+<li>path  String </li>
+</ul>
+</li>
+<li><p>app.clearRecentDocuments() OS X windows 清除最近访问的文档列表</p>
+</li>
+<li><p>app.setUserTasks(tasks) Windows</p>
+<ul>
+<li>tasks[Task] 一个由 Task 对象构成的数组</li>
+<li>将 tasks 添加到 windows 中 JumpList 功能放入 Tasks 分类中</li>
+<li>Task Object<ul>
+<li>program String 执行程序的路径</li>
+<li>arguments String 当 program 执行时的命令行参数</li>
+<li>title String JumpList 中显示的标题</li>
+<li>description String 对这个任务的描述</li>
+<li>inconPath String JumpList 中显示的图标的绝对路径，可以是一个任意包含一个图标的资源文件，可通过指明 process.execPath 来显示程序中的图标</li>
+<li>iconIndex Integer 图标文件中的采用的图标位置<ul>
+<li>若一个图标文件中包括了多个图标，需要设置该值，以确定使用哪一个图标</li>
+<li>若图标文件中只包含一个图标，该值为 0</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Electron/" rel="tag"><i class="fa fa-tag"></i>Electron</a>
+              <a href="/tags/app模块/" rel="tag"><i class="fa fa-tag"></i>app模块</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2022/05/24/Electron 与 React/" rel="next" title="Electron 与 React">
+                  <i class="fa fa-chevron-left"></i> Electron 与 React
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2022/05/25/Electron - Menu 模块/" rel="prev" title="Electron - Menu 模块">
+                  Electron - Menu 模块 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#app"><span class="nav-number">1.</span> <span class="nav-text">app</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#事件列表"><span class="nav-number">1.1.</span> <span class="nav-text">事件列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法列表"><span class="nav-number">1.2.</span> <span class="nav-text">方法列表</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yana"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Yana</p>
+  <div class="site-description" itemprop="description">Never give up！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">88</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">90</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yanadev" title="GitHub → https://github.com/yanadev" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yana</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">255k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

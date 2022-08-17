@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="YanaChen" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="特色 完全兼容 css3 变量、嵌套（nesting）、混合（mixins）等 通过函数进行颜色与属性值的计算 自定义输出格式 css 功能扩展嵌套规则（Nested Rules）123456#main p &amp;#123;  ...	  .redbox &amp;#123;    ...  &amp;#125;&amp;#125;">
+<meta name="keywords" content="前端,Student,Coder,Hexo,JavaScript,CSS,HTML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="YanaChen">
+<meta property="og:url" content="https://yanadev.github.io/2022/08/02/sass/index.html">
+<meta property="og:site_name" content="YanaChen">
+<meta property="og:description" content="特色 完全兼容 css3 变量、嵌套（nesting）、混合（mixins）等 通过函数进行颜色与属性值的计算 自定义输出格式 css 功能扩展嵌套规则（Nested Rules）123456#main p &amp;#123;  ...	  .redbox &amp;#123;    ...  &amp;#125;&amp;#125;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2022-08-03T09:25:35.370Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="YanaChen">
+<meta name="twitter:description" content="特色 完全兼容 css3 变量、嵌套（nesting）、混合（mixins）等 通过函数进行颜色与属性值的计算 自定义输出格式 css 功能扩展嵌套规则（Nested Rules）123456#main p &amp;#123;  ...	  .redbox &amp;#123;    ...  &amp;#125;&amp;#125;">
+
+<link rel="canonical" href="https://yanadev.github.io/2022/08/02/sass/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title> | YanaChen</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YanaChen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">_踩坑_填坑_日常</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">94</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">90</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">88</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2022/08/02/sass/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yana">
+      <meta itemprop="description" content="Never give up！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanaChen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-02 17:49:53" itemprop="dateCreated datePublished" datetime="2022-08-02T17:49:53+08:00">2022-08-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-03 17:25:35" itemprop="dateModified" datetime="2022-08-03T17:25:35+08:00">2022-08-03</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.3k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="特色"><a href="#特色" class="headerlink" title="特色"></a>特色</h1><ul>
+<li>完全兼容 css3</li>
+<li>变量、嵌套（nesting）、混合（mixins）等</li>
+<li>通过函数进行颜色与属性值的计算</li>
+<li>自定义输出格式</li>
+</ul><h1 id="css-功能扩展"><a href="#css-功能扩展" class="headerlink" title="css 功能扩展"></a>css 功能扩展</h1><h2 id="嵌套规则（Nested-Rules）"><a href="#嵌套规则（Nested-Rules）" class="headerlink" title="嵌套规则（Nested Rules）"></a>嵌套规则（Nested Rules）</h2><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#main</span> <span class="selector-tag">p</span> &#123;</span><br><span class="line">  ...	</span><br><span class="line">  <span class="selector-class">.redbox</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><a id="more"></a>
+
+
+<h2 id="父选择器-amp"><a href="#父选择器-amp" class="headerlink" title="父选择器 &amp;"></a>父选择器 &amp;</h2><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">a</span> &#123;</span><br><span class="line">  ...</span><br><span class="line">  &amp;:hover &#123; ... &#125;</span><br><span class="line">  <span class="selector-tag">body</span><span class="selector-class">.firefox</span> &amp; &#123; ... &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="属性嵌套（Nested-Properties）"><a href="#属性嵌套（Nested-Properties）" class="headerlink" title="属性嵌套（Nested Properties）"></a>属性嵌套（Nested Properties）</h2><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.funky</span> &#123;</span><br><span class="line">    <span class="attribute">font</span>: &#123;</span><br><span class="line">        family: fantasy;</span><br><span class="line">        size: <span class="number">30em</span>;</span><br><span class="line">        weight: bold;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.funky</span> &#123;</span><br><span class="line">    fonr: <span class="number">20px</span>/<span class="number">24px</span> &#123;</span><br><span class="line">        family: fantasy;</span><br><span class="line">        weight: bold;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="占位符选择器-foo-必须通过-extend-指令调用"><a href="#占位符选择器-foo-必须通过-extend-指令调用" class="headerlink" title="占位符选择器 %foo,必须通过 @extend 指令调用"></a>占位符选择器 %foo,必须通过 @extend 指令调用</h2><p>写法和 id / class 选择器写法相似</p>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><ul>
+<li>多行注释 /**/ 会被完整输出到变异后的 css 文件</li>
+<li>单行注释 // 不会</li>
+</ul>
+<h2 id="SassScript"><a href="#SassScript" class="headerlink" title="SassScript"></a>SassScript</h2><p>在 css 属性的基础上，允许使用变量、算数运算等额外功能</p>
+<h2 id="interactive-shell"><a href="#interactive-shell" class="headerlink" title="interactive shell"></a>interactive shell</h2><p>在命令行中输入 <code>sass -i</code> ，然后输入想要测试的 SassScript 查看输出的结果</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ sass -i</span><br><span class="line">&gt;&gt; <span class="string">"Hello, Sassy World!"</span></span><br><span class="line"><span class="string">"Hello, Sassy World!"</span></span><br><span class="line">&gt;&gt; <span class="number">1</span>px + <span class="number">1</span>px + <span class="number">1</span>px</span><br><span class="line"><span class="number">3</span>px</span><br><span class="line">&gt;&gt; <span class="comment">#777 + #777</span></span><br><span class="line"><span class="comment">#eeeeee</span></span><br><span class="line">&gt;&gt; <span class="comment">#777 + #888</span></span><br><span class="line">white</span><br></pre></td></tr></table></figure>
+
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><ul>
+<li><p>以 $ 符号开头，直接使用即调用变量</p>
+</li>
+<li><p><code>!global</code> 可将局部变量转换为全局变量</p>
+</li>
+<li><p><strong><code>!default</code> 类似 const</strong></p>
+</li>
+<li><p><code>@import</code> 被导入的文件将合并编译到同一个 css 文件中</p>
+<ul>
+<li>特殊情况：@import 仅作为普通的 css 语句，不会导入任何 scss 文件<ul>
+<li>文件扩展名 <code>.css</code></li>
+<li>文件名以 <code>http://</code> 开头</li>
+<li>文件名是 <code>url()</code></li>
+<li><code>@import</code> 包括 <code>media queries</code> </li>
+</ul>
+</li>
+<li>若希望导入的文件不被编译，可将文件名命名为 <code>_xxx</code>，但是导入的时候不需要加下划线，如 <code>@import &quot;xxx&quot;</code></li>
+</ul>
+</li>
+<li><p><code>@extend</code> 将一个选择器下的所有样式继承给另一个选择器（<strong>继承样式</strong>）</p>
+</li>
+</ul>
+<h2 id="数据类型DataType"><a href="#数据类型DataType" class="headerlink" title="数据类型DataType"></a>数据类型DataType</h2><ul>
+<li><p>数字</p>
+</li>
+<li><p>字符串</p>
+<ul>
+<li><p>有引号字符串 ‘bold’</p>
+</li>
+<li><p>无引号字符串 bold</p>
+</li>
+<li><p><strong><code>#{}</code> 将有引号字符编译为无引号字符，便于在 mixin 中引用</strong></p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">mixin</span> firefox-message(<span class="variable">$selector</span>) &#123;</span><br><span class="line">  <span class="selector-tag">body</span><span class="selector-class">.firefox</span> #&#123;<span class="variable">$selector</span>&#125;:before &#123;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">"Hi, Firefox users!"</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">@<span class="keyword">include</span> firefox-message(<span class="string">".header"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>颜色</p>
+</li>
+<li><p>布尔型</p>
+</li>
+<li><p>空值</p>
+</li>
+<li><p>数组（list）</p>
+<ul>
+<li>主要处理 <code>margin: 10px 15px 0 0</code> 这样通过空格或者逗号分隔的一系列的值</li>
+<li>nth 可以访问数组中某一项</li>
+<li>join 连接多个数组</li>
+<li>append 增加新值</li>
+<li>@each 可遍历数组中每一项 </li>
+</ul>
+</li>
+<li><p>maps</p>
+<ul>
+<li>遍历对象中的每个属性值</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2022/08/01/Vue 设计通用组件库/" rel="next" title="">
+                  <i class="fa fa-chevron-left"></i> 
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2022/08/15/React之类组件/" rel="prev" title="React之类组件">
+                  React之类组件 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#特色"><span class="nav-number">1.</span> <span class="nav-text">特色</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#css-功能扩展"><span class="nav-number">2.</span> <span class="nav-text">css 功能扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#嵌套规则（Nested-Rules）"><span class="nav-number">2.1.</span> <span class="nav-text">嵌套规则（Nested Rules）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#父选择器-amp"><span class="nav-number">2.2.</span> <span class="nav-text">父选择器 &amp;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#属性嵌套（Nested-Properties）"><span class="nav-number">2.3.</span> <span class="nav-text">属性嵌套（Nested Properties）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#占位符选择器-foo-必须通过-extend-指令调用"><span class="nav-number">2.4.</span> <span class="nav-text">占位符选择器 %foo,必须通过 @extend 指令调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注释"><span class="nav-number">2.5.</span> <span class="nav-text">注释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SassScript"><span class="nav-number">2.6.</span> <span class="nav-text">SassScript</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#interactive-shell"><span class="nav-number">2.7.</span> <span class="nav-text">interactive shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变量"><span class="nav-number">2.8.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据类型DataType"><span class="nav-number">2.9.</span> <span class="nav-text">数据类型DataType</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yana"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Yana</p>
+  <div class="site-description" itemprop="description">Never give up！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">88</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">90</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yanadev" title="GitHub → https://github.com/yanadev" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yana</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">255k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

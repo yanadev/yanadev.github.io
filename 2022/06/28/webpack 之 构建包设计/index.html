@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="YanaChen" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="将构建配置抽离成 npm 包的意义 通用性 业务开发这无需关注构建配置 统一团队构建脚本   可维护性 构建配置合理的拆分（开发、生产、ssr环境） README文档 changelog 文档等   质量 冒烟测试、单元测试、测试覆盖等 持续集成   可选方案 通过多个配置文件管理不同环境的配置 通过webpack –config参数来控制   将构建配置设计成一个库 抽成一个工具进行管理 将所有">
+<meta name="keywords" content="webpack,npm,构建包">
+<meta property="og:type" content="article">
+<meta property="og:title" content="将构建配置抽离成 npm 包的意义">
+<meta property="og:url" content="https://yanadev.github.io/2022/06/28/webpack 之 构建包设计/index.html">
+<meta property="og:site_name" content="YanaChen">
+<meta property="og:description" content="将构建配置抽离成 npm 包的意义 通用性 业务开发这无需关注构建配置 统一团队构建脚本   可维护性 构建配置合理的拆分（开发、生产、ssr环境） README文档 changelog 文档等   质量 冒烟测试、单元测试、测试覆盖等 持续集成   可选方案 通过多个配置文件管理不同环境的配置 通过webpack –config参数来控制   将构建配置设计成一个库 抽成一个工具进行管理 将所有">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2022-08-15T11:23:16.616Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="将构建配置抽离成 npm 包的意义">
+<meta name="twitter:description" content="将构建配置抽离成 npm 包的意义 通用性 业务开发这无需关注构建配置 统一团队构建脚本   可维护性 构建配置合理的拆分（开发、生产、ssr环境） README文档 changelog 文档等   质量 冒烟测试、单元测试、测试覆盖等 持续集成   可选方案 通过多个配置文件管理不同环境的配置 通过webpack –config参数来控制   将构建配置设计成一个库 抽成一个工具进行管理 将所有">
+
+<link rel="canonical" href="https://yanadev.github.io/2022/06/28/webpack 之 构建包设计/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>将构建配置抽离成 npm 包的意义 | YanaChen</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YanaChen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">_踩坑_填坑_日常</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">94</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">90</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">88</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2022/06/28/webpack 之 构建包设计/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yana">
+      <meta itemprop="description" content="Never give up！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanaChen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          将构建配置抽离成 npm 包的意义
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-06-28 02:56:03" itemprop="dateCreated datePublished" datetime="2022-06-28T02:56:03+08:00">2022-06-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-15 19:23:16" itemprop="dateModified" datetime="2022-08-15T19:23:16+08:00">2022-08-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/npm/" itemprop="url" rel="index">
+                    <span itemprop="name">npm</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/npm/构建包/" itemprop="url" rel="index">
+                    <span itemprop="name">构建包</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/npm/构建包/webpack/" itemprop="url" rel="index">
+                    <span itemprop="name">webpack</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>21k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="将构建配置抽离成-npm-包的意义"><a href="#将构建配置抽离成-npm-包的意义" class="headerlink" title="将构建配置抽离成 npm 包的意义"></a>将构建配置抽离成 npm 包的意义</h1><ul>
+<li>通用性<ul>
+<li>业务开发这无需关注构建配置</li>
+<li>统一团队构建脚本</li>
+</ul>
+</li>
+<li>可维护性<ul>
+<li>构建配置合理的拆分（开发、生产、ssr环境）</li>
+<li>README文档 changelog 文档等</li>
+</ul>
+</li>
+<li>质量<ul>
+<li>冒烟测试、单元测试、测试覆盖等</li>
+<li>持续集成</li>
+</ul>
+</li>
+</ul><h1 id="可选方案"><a href="#可选方案" class="headerlink" title="可选方案"></a>可选方案</h1><ul>
+<li>通过多个配置文件管理不同环境的配置<ul>
+<li>通过webpack –config参数来控制</li>
+</ul>
+</li>
+<li>将构建配置设计成一个库</li>
+<li>抽成一个工具进行管理</li>
+<li>将所有配置都放在一个文件，通过 –env 参数控制分支选择</li>
+</ul><a id="more"></a>
+
+<h1 id="构建配置包设计"><a href="#构建配置包设计" class="headerlink" title="构建配置包设计"></a>构建配置包设计</h1><h2 id="通过多个配置文件管理不同环境的-webpack-配置"><a href="#通过多个配置文件管理不同环境的-webpack-配置" class="headerlink" title="通过多个配置文件管理不同环境的 webpack 配置"></a>通过多个配置文件管理不同环境的 webpack 配置</h2><ul>
+<li>基础环境 webpack.base.js </li>
+<li>开发环境 webpack.dev.js</li>
+<li>生产环境 webpack.prod.js</li>
+<li>ssr 环境 webpack.ssr.js</li>
+<li>…</li>
+</ul>
+<h2 id="抽离成一个-npm-包统一管理"><a href="#抽离成一个-npm-包统一管理" class="headerlink" title="抽离成一个 npm 包统一管理"></a>抽离成一个 npm 包统一管理</h2><ul>
+<li>规范<ul>
+<li>git commit 日志 </li>
+<li>README</li>
+<li>ESlint规范</li>
+<li>Semver 规范</li>
+</ul>
+</li>
+<li>质量<ul>
+<li>冒烟测试</li>
+<li>单元测试</li>
+<li>测试覆盖率</li>
+<li>CI</li>
+</ul>
+</li>
+</ul>
+<h2 id="操作方法：通过-webpack-merge-组合配置"><a href="#操作方法：通过-webpack-merge-组合配置" class="headerlink" title="操作方法：通过 webpack-merge 组合配置"></a>操作方法：通过 webpack-merge 组合配置</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">merge = <span class="built_in">require</span>(<span class="string">'webpack-merge'</span>)</span><br><span class="line">...</span><br><span class="line">merge(</span><br><span class="line">	&#123; a[<span class="number">1</span>], <span class="attr">b</span>: <span class="number">5</span>, <span class="attr">c</span>: <span class="number">20</span> &#125;,</span><br><span class="line">    &#123; a[<span class="number">2</span>], <span class="attr">b</span>: <span class="number">10</span>, <span class="attr">d</span>: <span class="number">421</span> &#125;</span><br><span class="line">)</span><br><span class="line">&#123; <span class="attr">a</span>: [<span class="number">1</span>, <span class="number">2</span>], <span class="attr">b</span>: <span class="number">10</span>, <span class="attr">c</span>: <span class="number">20</span>, <span class="attr">d</span>: <span class="number">421</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>合并配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = merge( baseConfig, devConfig )</span><br></pre></td></tr></table></figure>
+
+<h1 id="功能模块设计与目录结构"><a href="#功能模块设计与目录结构" class="headerlink" title="功能模块设计与目录结构"></a>功能模块设计与目录结构</h1><p>![image-20220629004741996](webpack 之 构建包设计/image-20220629004741996.png)</p>
+<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><ul>
+<li>lib 放置源代码</li>
+<li>test 放置测试代码</li>
+</ul>
+<p>![image-20220629005021061](webpack 之 构建包设计/image-20220629005021061.png)</p>
+<h2 id="新建项目"><a href="#新建项目" class="headerlink" title="新建项目"></a>新建项目</h2><ol>
+<li>新建 <code>builder-webpack</code> 目录</li>
+<li><code>cd builder-webpack</code> 进入目录</li>
+<li><code>yarn init</code> 初始化项目</li>
+<li>新建 <code>lib</code> 目录，其下新建四个文件<ul>
+<li>webpack.base.js</li>
+<li>webpack.dev.js</li>
+<li>webpack.prod.js</li>
+<li>webpack.ssr.js</li>
+</ul>
+</li>
+</ol>
+<h2 id="配置-webpack-base-js-文件"><a href="#配置-webpack-base-js-文件" class="headerlink" title="配置 webpack.base.js 文件"></a>配置 webpack.base.js 文件</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; CleanWebpackPlugin &#125; = <span class="built_in">require</span>(<span class="string">'clean-webpack-plugin'</span>);</span><br><span class="line"><span class="keyword">const</span> FriendlyErrorsWebpackPlugin = <span class="built_in">require</span>(<span class="string">'friendly-errors-webpack-plugin'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>);</span><br><span class="line"><span class="keyword">const</span> HtmlWebpackExternalsPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-externals-plugin'</span>);</span><br><span class="line"><span class="keyword">const</span> MiniCssExtractPlugin = <span class="built_in">require</span>(<span class="string">'mini-css-extract-plugin'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> setMPA = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> entry = &#123;&#125;;</span><br><span class="line">  <span class="keyword">let</span> htmlWebpackPlugins = [];</span><br><span class="line">  <span class="keyword">let</span> HtmlWebpackExternalsPlugins = [];</span><br><span class="line">  <span class="keyword">let</span> url = path.join(__dirname, <span class="string">'/src/*/index.jsx'</span>).replaceAll(<span class="string">'\\'</span>, <span class="string">'/'</span>);</span><br><span class="line">  <span class="keyword">const</span> entryFiles = glob.sync(url);</span><br><span class="line">  <span class="built_in">Object</span>.keys(entryFiles).map(<span class="function"><span class="params">index</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> entryFile = entryFiles[index];</span><br><span class="line">    <span class="keyword">let</span> match = entryFile.match(<span class="regexp">/src\/(.*)\/index.jsx/</span>);</span><br><span class="line">    <span class="keyword">const</span> pageName = match &amp;&amp; match[<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">if</span> (pageName) &#123;</span><br><span class="line">      entry[pageName] = entryFile;</span><br><span class="line">      <span class="comment">// 每个入口文件设置 基础库的cdn</span></span><br><span class="line">      HtmlWebpackExternalsPlugins.push(<span class="keyword">new</span> HtmlWebpackExternalsPlugin(&#123;</span><br><span class="line">        externals: [</span><br><span class="line">          &#123;</span><br><span class="line">            <span class="built_in">module</span>: <span class="string">'react'</span>,</span><br><span class="line">            entry: <span class="string">'https://unpkg.com/react@18/umd/react.development.js'</span>,</span><br><span class="line">            global: <span class="string">'React'</span></span><br><span class="line">          &#125;,</span><br><span class="line">          &#123;</span><br><span class="line">            <span class="built_in">module</span>: <span class="string">'react-dom'</span>,</span><br><span class="line">            entry: <span class="string">'https://unpkg.com/react-dom@18/umd/react-dom.development.js'</span>,</span><br><span class="line">            global: <span class="string">'ReactDOM'</span></span><br><span class="line">          &#125;</span><br><span class="line">        ],</span><br><span class="line">        files: [<span class="string">`<span class="subst">$&#123;pageName&#125;</span>.html`</span>]</span><br><span class="line">      &#125;));</span><br><span class="line">      <span class="comment">// 入口文件生成模板</span></span><br><span class="line">      htmlWebpackPlugins.push(</span><br><span class="line">        <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">          template: path.join(__dirname, <span class="string">`/src/<span class="subst">$&#123;pageName&#125;</span>/index.html`</span>),</span><br><span class="line">          filename: <span class="string">`<span class="subst">$&#123;pageName&#125;</span>.html`</span>,</span><br><span class="line">          chunks: [pageName],</span><br><span class="line">          inject: <span class="literal">true</span>,</span><br><span class="line">          minify: &#123;</span><br><span class="line">            html5: <span class="literal">true</span>,</span><br><span class="line">            collapseWhitespace: <span class="literal">true</span>,</span><br><span class="line">            preserveLineBreaks: <span class="literal">false</span>,</span><br><span class="line">            minifyCSS: <span class="literal">true</span>,</span><br><span class="line">            minifyJS: <span class="literal">true</span>,</span><br><span class="line">            removeComments: <span class="literal">false</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123; entry, htmlWebpackPlugins, HtmlWebpackExternalsPlugins &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; entry, htmlWebpackPlugins, HtmlWebpackExternalsPlugins &#125; = setMPA();</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: entry,</span><br><span class="line">  output:&#123;</span><br><span class="line">    filename: <span class="string">'[name].js'</span>,</span><br><span class="line">    path: path.join(__dirname, <span class="string">'dist'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.(js|jsx)$/</span>,</span><br><span class="line">        exclude: <span class="regexp">/node_modules/</span>,</span><br><span class="line">        use: [<span class="string">'babel-loader'</span>]</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.less$/</span>,</span><br><span class="line">        use: [</span><br><span class="line">          MiniCssExtractPlugin.loader,</span><br><span class="line">          <span class="string">'css-loader'</span>,</span><br><span class="line">          &#123;</span><br><span class="line">            loader: <span class="string">'postcss-loader'</span>,</span><br><span class="line">            options: &#123;</span><br><span class="line">              postcssOptions: &#123;</span><br><span class="line">                plugins: [<span class="string">'autoprefixer'</span>]</span><br><span class="line">              &#125;</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">'less-loader'</span></span><br><span class="line">        ]</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.css$/</span>,</span><br><span class="line">        use: [</span><br><span class="line">          MiniCssExtractPlugin.loader,</span><br><span class="line">          <span class="string">'css-loader'</span>,</span><br><span class="line">          &#123;</span><br><span class="line">            loader: <span class="string">'postcss-loader'</span>,</span><br><span class="line">            options: &#123;</span><br><span class="line">              postcssOptions: &#123;</span><br><span class="line">                plugins: [<span class="string">'autoprefixer'</span>]</span><br><span class="line">              &#125;</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        ]</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.(png|svg|jpeg|jpg|gif|ico)$/i</span>,</span><br><span class="line">        type: <span class="string">'asset'</span>,</span><br><span class="line">        generator: &#123;</span><br><span class="line">          filename: <span class="string">"static/img/[name].[hash:7][ext]"</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> CleanWebpackPlugin(),</span><br><span class="line">    <span class="comment">/* 命令行信息显示优化 */</span></span><br><span class="line">    <span class="keyword">new</span> FriendlyErrorsWebpackPlugin(),</span><br><span class="line">    <span class="comment">/* 打包捕获 error */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.hooks.done.tap(<span class="string">'done'</span>, stats =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (stats.compilation.errors &amp;&amp; stats.compilation.errors.length &amp;&amp; process.argv.indexOf(<span class="string">'--watch'</span>) == <span class="number">-1</span>) &#123;</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">'build error'</span>);</span><br><span class="line">          process.exit(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">/* CSS 提取成一个单独的文件 */</span></span><br><span class="line">    <span class="keyword">new</span> MiniCssExtractPlugin(&#123;</span><br><span class="line">      filename: <span class="string">'[name]_[hash:8].css'</span></span><br><span class="line">    &#125;),</span><br><span class="line">  ]</span><br><span class="line">    .concat(htmlWebpackPlugins)</span><br><span class="line">    .concat(HtmlWebpackExternalsPlugins),</span><br><span class="line">  stats: <span class="string">'errors-only'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装-webpack-merge-配置-webpack-dev-js"><a href="#安装-webpack-merge-配置-webpack-dev-js" class="headerlink" title="安装 webpack-merge,配置 webpack.dev.js"></a>安装 webpack-merge,配置 webpack.dev.js</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add webpack-merge -D</span><br></pre></td></tr></table></figure>
+
+<p>在 webpack.dev.js 中引入</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;merge&#125; = requrie(<span class="string">'webpack-merge'</span>)</span><br><span class="line"><span class="keyword">const</span> baseConfig = <span class="built_in">require</span>(<span class="string">'./webpack.base'</span>)</span><br><span class="line"><span class="keyword">const</span> devConfig = &#123;&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = merge(baseConfig, devConfig)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;merge&#125; = requrie(<span class="string">'webpack-merge'</span>);</span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line"><span class="keyword">const</span> baseConfig = <span class="built_in">require</span>(<span class="string">'./webpack.base'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> devConfig = &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> webpack.HotModuleReplacementPlugin(),</span><br><span class="line">  ],</span><br><span class="line">  devServer: &#123;</span><br><span class="line">    port: <span class="number">3000</span>,</span><br><span class="line">    compress: <span class="literal">false</span>,</span><br><span class="line">    <span class="keyword">static</span>: &#123;</span><br><span class="line">      directory: path.join(process.cwd(), <span class="string">'dist'</span>),</span><br><span class="line">      publicPath: <span class="string">'/'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    client: &#123;</span><br><span class="line">      overlay: &#123;</span><br><span class="line">        errors: <span class="literal">true</span>,</span><br><span class="line">        warnings: <span class="literal">false</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    stats: <span class="string">'errors-only'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  devtools: <span class="string">'cheap-source-map'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">module</span>.exports = merge(baseConfig, devConfig);</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置-webpack-prod-js"><a href="#配置-webpack-prod-js" class="headerlink" title="配置 webpack.prod.js"></a>配置 webpack.prod.js</h2><p>同样是使用 <code>webpack-merge</code> </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> merge = <span class="built_in">require</span>(<span class="string">'webpack-merge'</span>);</span><br><span class="line"><span class="keyword">const</span> CssMinimizerWebpackPlugin = <span class="built_in">require</span>(<span class="string">'css-minimizer-webpack-plugin'</span>);</span><br><span class="line"><span class="keyword">const</span> HtmlWebpackExternalsPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-externals-plugin'</span>);</span><br><span class="line"><span class="keyword">const</span> baseConfig = <span class="built_in">require</span>(<span class="string">'./webpack.base'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> prodConfig = &#123;</span><br><span class="line">  mode: <span class="string">'production'</span>,</span><br><span class="line">  <span class="comment">/* 设置提取的公共文件包的大小 */</span></span><br><span class="line">  optimization: &#123;</span><br><span class="line">  	 <span class="comment">/* 压缩 css */</span></span><br><span class="line">    minimize: <span class="literal">true</span>,</span><br><span class="line">    minimizer: [</span><br><span class="line">      <span class="keyword">new</span> CssMinimizerWebpackPlugin()</span><br><span class="line">    ],</span><br><span class="line">    splitChunks: &#123;</span><br><span class="line">      minSize: <span class="number">0</span>,</span><br><span class="line">      cacheGroups: &#123;</span><br><span class="line">        commons: &#123;</span><br><span class="line">          name: <span class="string">'commons'</span>,</span><br><span class="line">          chunks: <span class="string">'all'</span>,</span><br><span class="line">          minChunks: <span class="number">2</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="comment">/* 速度优化: 引入基础包的 cdn */</span></span><br><span class="line">    <span class="keyword">new</span> HtmlWebpackExternalsPlugin(&#123;</span><br><span class="line">      externals: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="built_in">module</span>: <span class="string">'react'</span>,</span><br><span class="line">          entry: <span class="string">'https://unpkg.com/react@18/umd/react.development.js'</span>,</span><br><span class="line">          global: <span class="string">'React'</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="built_in">module</span>: <span class="string">'react-dom'</span>,</span><br><span class="line">          entry: <span class="string">'https://unpkg.com/react-dom@18/umd/react-dom.development.js'</span>,</span><br><span class="line">          global: <span class="string">'ReactDOM'</span></span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = merge(baseConfig, prodConfig);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>optimize-css-assets-webpack-plugin</code> 插件配合 <code>cssnano</code> css 处理器来<u><strong>压缩处理配置中 ExtractTextPlugin 实例导出的文件的文件名运行，而不是 源css文件的文件名，默认为 <code>/\.css$/g</code></strong></u></p>
+</blockquote>
+<ul>
+<li>assetNameRegExp 一个正则表达式，指示应优化的最小化的资源的名称<ul>
+<li>提供的正则表达式针对配置中 <code>ExtractTextPlugin</code> 实例导出的文件的文件名运行，而不是源css 文件的文件名，默认是 <code>/\.css$/g</code></li>
+</ul>
+</li>
+<li>cssProcessor 用于优化最小化 css 的 <code>css 处理器</code>，默认是 <code>cssnano</code><ul>
+<li>这应该是一个跟随 <code>cssnano.processor</code> 接口的函数（接收 css 和 选项参数并返回一个 Promise）</li>
+</ul>
+</li>
+<li>cssProcessorOptions 传递给 cssProcessor 的选项，默认为 {}</li>
+<li>cssProcessorPluginOptions 传递给 CSSProcessor 的插件选项，默认为 {}</li>
+<li>canPrint 一个布尔值，指示插件是否可以将信息打印到控制台，默认为 true</li>
+</ul>
+<h2 id="配置-webpack-ssr-js"><a href="#配置-webpack-ssr-js" class="headerlink" title="配置 webpack.ssr.js"></a>配置 webpack.ssr.js</h2><p>拷贝一份 <code>webpack.prod.js</code>，需要设置忽略解析 css</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="built_in">module</span>:&#123;</span><br><span class="line">        rules:[</span><br><span class="line">            &#123;</span><br><span class="line">                test:<span class="regexp">/\.css$/</span>,</span><br><span class="line">                use:[</span><br><span class="line">                    <span class="string">'ignore-loader'</span></span><br><span class="line">                ]</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                test:<span class="regexp">/\.less$/</span>,</span><br><span class="line">                use:[</span><br><span class="line">                    <span class="string">'ignore-loader'</span></span><br><span class="line">                ]</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> merge = <span class="built_in">require</span>(<span class="string">'webpack-merge'</span>);</span><br><span class="line"><span class="keyword">const</span> CssMinimizerWebpackPlugin = <span class="built_in">require</span>(<span class="string">'css-minimizer-webpack-plugin'</span>);</span><br><span class="line"><span class="keyword">const</span> HtmlWebpackExternalsPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-externals-plugin'</span>);</span><br><span class="line"><span class="keyword">const</span> baseConfig = <span class="built_in">require</span>(<span class="string">'./webpack.base'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> prodConfig = &#123;</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.css$/</span>,</span><br><span class="line">        use: [<span class="string">'ignore-loader'</span>]</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.less$/</span>,</span><br><span class="line">        use: [<span class="string">'ignore-loader'</span>]</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  mode: <span class="string">'production'</span>,</span><br><span class="line">  <span class="comment">/* 设置提取的公共文件包的大小 */</span></span><br><span class="line">  optimization: &#123;</span><br><span class="line">  	 <span class="comment">/* 压缩 css */</span></span><br><span class="line">    minimize: <span class="literal">true</span>,</span><br><span class="line">    minimizer: [</span><br><span class="line">      <span class="keyword">new</span> CssMinimizerWebpackPlugin()</span><br><span class="line">    ],</span><br><span class="line">    splitChunks: &#123;</span><br><span class="line">      minSize: <span class="number">0</span>,</span><br><span class="line">      cacheGroups: &#123;</span><br><span class="line">        commons: &#123;</span><br><span class="line">          name: <span class="string">'commons'</span>,</span><br><span class="line">          chunks: <span class="string">'all'</span>,</span><br><span class="line">          minChunks: <span class="number">2</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="comment">/* 速度优化: 引入基础包的 cdn */</span></span><br><span class="line">    <span class="keyword">new</span> HtmlWebpackExternalsPlugin(&#123;</span><br><span class="line">      externals: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="built_in">module</span>: <span class="string">'react'</span>,</span><br><span class="line">          entry: <span class="string">'https://unpkg.com/react@18/umd/react.development.js'</span>,</span><br><span class="line">          global: <span class="string">'React'</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="built_in">module</span>: <span class="string">'react-dom'</span>,</span><br><span class="line">          entry: <span class="string">'https://unpkg.com/react-dom@18/umd/react-dom.development.js'</span>,</span><br><span class="line">          global: <span class="string">'ReactDOM'</span></span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = merge(baseConfig, prodConfig);</span><br></pre></td></tr></table></figure>
+
+<h1 id="其他文件"><a href="#其他文件" class="headerlink" title="其他文件"></a>其他文件</h1><ul>
+<li>根目录新建 README.md 文件</li>
+<li>.gitignore 设置 git 忽略文件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/node_modules</span><br><span class="line">/logs</span><br></pre></td></tr></table></figure>
+
+<h1 id="通过-ESLint-规范构建脚本"><a href="#通过-ESLint-规范构建脚本" class="headerlink" title="通过 ESLint 规范构建脚本"></a>通过 ESLint 规范构建脚本</h1><p>使用 <code>eslint-config-airbnb-base</code></p>
+<p> <code>eslint --fix</code>  可自动处理空格</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    "parser": "babal-eslint",</span><br><span class="line">    "extends": "airbnb-base",</span><br><span class="line">    "env": &#123;</span><br><span class="line">        "browser": true,</span><br><span class="line">        "node": true</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>安装 <code>eslint</code> 、<code>@babel/eslint-parser</code>、<code>@babel/core</code>、<code>eslint-plugin-import</code>、<code>eslint-config-airbnb-base</code></li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add eslint @babel/eslint-parser @babel/core eslint-plugin-import eslint-config-airbnb-base -D</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>配置 <code>eslint</code> 配置文件 <code>.eslintrc.js</code></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="string">"parser"</span>: <span class="string">"@babel/eslint-parser"</span>,</span><br><span class="line">  <span class="string">"parserOptions"</span>: &#123;</span><br><span class="line">    <span class="string">"requireConfigFile"</span>: <span class="literal">false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"extends"</span>: <span class="string">"airbnb-base"</span>,</span><br><span class="line">  <span class="string">"env"</span>: &#123;</span><br><span class="line">    <span class="string">"browser"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">"node"</span>: <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>package.json</code> 设置 <code>scripts</code> 脚本</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">        <span class="attr">"fix"</span>: <span class="string">"eslint ./lib --fix"</span>,</span><br><span class="line">        <span class="attr">"eslint"</span>: <span class="string">"eslint ./lib"</span></span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用（根据 eslint 提示对代码进行调整）</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn run eslint</span><br></pre></td></tr></table></figure>
+
+<p><code>yarn run fix</code> 可自动更正一些格式问题</p>
+<h1 id="冒烟测试（预测试）"><a href="#冒烟测试（预测试）" class="headerlink" title="冒烟测试（预测试）"></a>冒烟测试（预测试）</h1><p>指 <strong><u>对提交测试的软件在进行详细深入的测试之前进行的预测试</u></strong></p>
+<p><strong>主要目的</strong>是 <strong><u>暴露导致软件需要重新发布的基本功能失效等严重问题</u></strong></p>
+<h2 id="关注问题"><a href="#关注问题" class="headerlink" title="关注问题"></a>关注问题</h2><ul>
+<li><p>构建是否成功</p>
+</li>
+<li><p>每次构件完成 build 目录是否有内容输出</p>
+<ul>
+<li>是否有 JS、CSS 等静态资源文件</li>
+<li>是否有 HTML 文件</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>每次都手动执行，比较繁琐，可通过一些工具（mocha）来完成这一步骤</p>
+</blockquote>
+<h2 id="检测构建（清空dist、判断是否构建成功）"><a href="#检测构建（清空dist、判断是否构建成功）" class="headerlink" title="检测构建（清空dist、判断是否构建成功）"></a>检测构建（清空dist、判断是否构建成功）</h2><blockquote>
+<p> 在示例项目中原型构建，看是否有报错</p>
+</blockquote>
+<ul>
+<li><p>根目录下创建 test 目录</p>
+</li>
+<li><p>test/smoke/index.js 再次书写冒烟测试相关的代码</p>
+</li>
+<li><p>需要判断否写构建是否正常运作，需要有一个模板项目</p>
+</li>
+<li><p>新建 test/smoke/template 目录下创建模板项目</p>
+<ul>
+<li>拷贝一个项目到 template 目录下，删除 该项目相关的webpack 配置（webpack.prod.js 等文件）</li>
+</ul>
+</li>
+<li><p>需要 <code>rimraf</code> 这个库来处理删除 <code>dist</code> 目录这个操作</p>
+<ul>
+<li><p>每次构建之前否需要将 <code>dist</code> 目录清空</p>
+</li>
+<li><p>执行删除操作之后，会执行一个回调函数 </p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add rimraf -D</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>test/smoke/index.js</code> </p>
+<ul>
+<li>首先删除 dist 目录，清除上次构建内容</li>
+<li>引入配置文件 webpack.prod.js 文件</li>
+<li>webpack 方法接收一个配置文件，后执行回调函数，在回调函数中捕获错误信息，若构建有问题，打印错误信息</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line"><span class="keyword">const</span> rimraf = requir(<span class="string">'rimraf'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 需要现将目录切换到 template  */</span></span><br><span class="line">process.chdir(path.join(__dirname, <span class="string">'template'</span>));</span><br><span class="line"></span><br><span class="line">rimraf(<span class="string">'./dist'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> prodConfig = <span class="built_in">require</span>(<span class="string">'../../lib/webpack.prod'</span>);</span><br><span class="line">  webpack(prodConfig, (err, stats) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(err);</span><br><span class="line">      process.exit(<span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(stats.toString(&#123;</span><br><span class="line">      colors: <span class="literal">true</span>,</span><br><span class="line">      modules: <span class="literal">false</span>,</span><br><span class="line">      children: <span class="literal">false</span></span><br><span class="line">    &#125;));</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>执行 node  index.js 文件</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node ./test/smoke/index.js</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>模板项目中路径均使用 __dirname（以template为根） 来配置路径，需要使用 <code>process.cwd()</code> 来获取整个项目的根路径<ul>
+<li>webpack.base.js 中定义一个全局变量 projectRoot 来替换 __dirname</li>
+</ul>
+</li>
+</ul>
+<p><strong>webpack.prod.js</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; merge &#125; = <span class="built_in">require</span>(<span class="string">'webpack-merge'</span>);</span><br><span class="line"><span class="keyword">const</span> CssMinimizerWebpackPlugin = <span class="built_in">require</span>(<span class="string">'css-minimizer-webpack-plugin'</span>);</span><br><span class="line"><span class="keyword">const</span> HtmlWebpackExternalsPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-externals-plugin'</span>);</span><br><span class="line"><span class="keyword">const</span> baseConfig = <span class="built_in">require</span>(<span class="string">'./webpack.base'</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> prodConfig = &#123;</span><br><span class="line">  mode: <span class="string">'production'</span>,</span><br><span class="line">  <span class="comment">/* 设置提取的公共文件包的大小 */</span></span><br><span class="line">  optimization: &#123;</span><br><span class="line">    <span class="comment">/* 压缩 css */</span></span><br><span class="line">    minimize: <span class="literal">true</span>,</span><br><span class="line">    minimizer: [</span><br><span class="line">      <span class="keyword">new</span> CssMinimizerWebpackPlugin()</span><br><span class="line">    ],</span><br><span class="line">    splitChunks: &#123;</span><br><span class="line">      minSize: <span class="number">0</span>,</span><br><span class="line">      cacheGroups: &#123;</span><br><span class="line">        commons: &#123;</span><br><span class="line">          name: <span class="string">'commons'</span>,</span><br><span class="line">          chunks: <span class="string">'all'</span>,</span><br><span class="line">          minChunks: <span class="number">2</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 速度优化: 引入基础包的 cdn */</span></span><br><span class="line">    <span class="keyword">new</span> HtmlWebpackExternalsPlugin(&#123;</span><br><span class="line">      externals: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="built_in">module</span>: <span class="string">'react'</span>,</span><br><span class="line">          entry: <span class="string">'https://unpkg.com/react@18/umd/react.development.js'</span>,</span><br><span class="line">          global: <span class="string">'React'</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="built_in">module</span>: <span class="string">'react-dom'</span>,</span><br><span class="line">          entry: <span class="string">'https://unpkg.com/react-dom@18/umd/react-dom.development.js'</span>,</span><br><span class="line">          global: <span class="string">'ReactDOM'</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">      ],</span><br><span class="line">    &#125;),</span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = merge(baseConfig, prodConfig);</span><br></pre></td></tr></table></figure>
+
+<p><strong>webpack.base.js</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; CleanWebpackPlugin &#125; = <span class="built_in">require</span>(<span class="string">'clean-webpack-plugin'</span>);</span><br><span class="line"><span class="keyword">const</span> FriendlyErrorsWebpackPlugin = <span class="built_in">require</span>(<span class="string">'friendly-errors-webpack-plugin'</span>);</span><br><span class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>);</span><br><span class="line"><span class="keyword">const</span> MiniCssExtractPlugin = <span class="built_in">require</span>(<span class="string">'mini-css-extract-plugin'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> glob = <span class="built_in">require</span>(<span class="string">'glob'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> projectRoot = process.cwd();</span><br><span class="line"><span class="comment">/* /builder-webpack/test/smoke/template/ */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> setMPA = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> entry = &#123;&#125;;</span><br><span class="line">  <span class="keyword">const</span> htmlWebpackPlugins = [];</span><br><span class="line">  <span class="keyword">const</span> url = path.join(projectRoot, <span class="string">'/src/*/index.jsx'</span>).replaceAll(<span class="string">'\\'</span>, <span class="string">'/'</span>);</span><br><span class="line">  <span class="keyword">const</span> entryFiles = glob.sync(url);</span><br><span class="line">  <span class="built_in">Object</span>.keys(entryFiles).map(<span class="function">(<span class="params">index</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> entryFile = entryFiles[index];</span><br><span class="line">    <span class="keyword">const</span> match = entryFile.match(<span class="regexp">/src\/(.*)\/index.jsx/</span>);</span><br><span class="line">    <span class="keyword">const</span> pageName = match &amp;&amp; match[<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">if</span> (pageName) &#123;</span><br><span class="line">      entry[pageName] = entryFile;</span><br><span class="line">      <span class="comment">// 入口文件生成模板</span></span><br><span class="line">      htmlWebpackPlugins.push(</span><br><span class="line">        <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">          template: path.join(projectRoot, <span class="string">`/src/<span class="subst">$&#123;pageName&#125;</span>/index.html`</span>),</span><br><span class="line">          filename: <span class="string">`<span class="subst">$&#123;pageName&#125;</span>.html`</span>,</span><br><span class="line">          chunks: [pageName],</span><br><span class="line">          inject: <span class="literal">true</span>,</span><br><span class="line">          minify: &#123;</span><br><span class="line">            html5: <span class="literal">true</span>,</span><br><span class="line">            collapseWhitespace: <span class="literal">true</span>,</span><br><span class="line">            preserveLineBreaks: <span class="literal">false</span>,</span><br><span class="line">            minifyCSS: <span class="literal">true</span>,</span><br><span class="line">            minifyJS: <span class="literal">true</span>,</span><br><span class="line">            removeComments: <span class="literal">false</span>,</span><br><span class="line">          &#125;,</span><br><span class="line">        &#125;),</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> htmlWebpackPlugins;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123; entry, htmlWebpackPlugins &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; entry, htmlWebpackPlugins &#125; = setMPA();</span><br><span class="line"><span class="built_in">console</span>.log(entry);</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: entry,</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: <span class="string">'[name].js'</span>,</span><br><span class="line">    path: path.join(projectRoot, <span class="string">'dist'</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.(js|jsx)$/</span>,</span><br><span class="line">        exclude: <span class="regexp">/node_modules/</span>,</span><br><span class="line">        use: [<span class="string">'babel-loader'</span>],</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.less$/</span>,</span><br><span class="line">        use: [</span><br><span class="line">          MiniCssExtractPlugin.loader,</span><br><span class="line">          <span class="string">'css-loader'</span>,</span><br><span class="line">          &#123;</span><br><span class="line">            loader: <span class="string">'postcss-loader'</span>,</span><br><span class="line">            options: &#123;</span><br><span class="line">              postcssOptions: &#123;</span><br><span class="line">                plugins: [<span class="string">'autoprefixer'</span>],</span><br><span class="line">              &#125;,</span><br><span class="line">            &#125;,</span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">'less-loader'</span>,</span><br><span class="line">        ],</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.css$/</span>,</span><br><span class="line">        use: [</span><br><span class="line">          MiniCssExtractPlugin.loader,</span><br><span class="line">          <span class="string">'css-loader'</span>,</span><br><span class="line">          &#123;</span><br><span class="line">            loader: <span class="string">'postcss-loader'</span>,</span><br><span class="line">            options: &#123;</span><br><span class="line">              postcssOptions: &#123;</span><br><span class="line">                plugins: [<span class="string">'autoprefixer'</span>],</span><br><span class="line">              &#125;,</span><br><span class="line">            &#125;,</span><br><span class="line">          &#125;,</span><br><span class="line">        ],</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.(png|svg|jpeg|jpg|gif|ico)$/i</span>,</span><br><span class="line">        type: <span class="string">'asset'</span>,</span><br><span class="line">        generator: &#123;</span><br><span class="line">          filename: <span class="string">'static/img/[name].[hash:7][ext]'</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;,</span><br><span class="line">    ],</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> CleanWebpackPlugin(),</span><br><span class="line">    <span class="comment">/* 命令行信息显示优化 */</span></span><br><span class="line">    <span class="keyword">new</span> FriendlyErrorsWebpackPlugin(),</span><br><span class="line">    <span class="comment">/* 打包捕获 error */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">doneErrorPlugin</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.hooks.done.tap(<span class="string">'done'</span>, (stats) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (stats.compilation.errors &amp;&amp; stats.compilation.errors.length &amp;&amp; process.argv.indexOf(<span class="string">'--watch'</span>) === <span class="number">-1</span>) &#123;</span><br><span class="line">          process.exit(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">/* CSS 提取成一个单独的文件 */</span></span><br><span class="line">    <span class="keyword">new</span> MiniCssExtractPlugin(&#123;</span><br><span class="line">      filename: <span class="string">'[name]_[hash:8].css'</span>,</span><br><span class="line">    &#125;),</span><br><span class="line">  ]</span><br><span class="line">    .concat(htmlWebpackPlugins),</span><br><span class="line">  resolve: &#123;</span><br><span class="line">    alias: &#123;</span><br><span class="line">      <span class="string">'@'</span>: path.join(projectRoot, <span class="string">'/'</span>),</span><br><span class="line">      <span class="string">'@server'</span>: path.join(projectRoot, <span class="string">'/server'</span>),</span><br><span class="line">      <span class="string">'@src'</span>: path.join(projectRoot, <span class="string">'/src'</span>),</span><br><span class="line">      <span class="string">'@comp'</span>: path.join(projectRoot, <span class="string">'/src/components'</span>),</span><br><span class="line">      <span class="string">'@images'</span>: path.join(projectRoot, <span class="string">'/src/assets/images'</span>),</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  stats: <span class="string">'errors-only'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建测试文件"><a href="#创建测试文件" class="headerlink" title="创建测试文件"></a>创建测试文件</h2><ul>
+<li><p><code>/test/smoke/</code>目录下新建两个测试文件</p>
+<ul>
+<li>html-test.js 检测是否生成 HTML 文件</li>
+<li>css-js-test.js 检测是否生成 css、js 文件</li>
+</ul>
+</li>
+<li><p>安装 mocha</p>
+</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add mocha -D</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>安装 glob-all</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add glob-all -D</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>html-test.js</code></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> glob = <span class="built_in">require</span>(<span class="string">'glob-all'</span>);</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'Checking generated html files'</span>, () =&gt; &#123;</span><br><span class="line">  it(<span class="string">'should generate html files'</span>, done =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> files = glob.sync([</span><br><span class="line">      <span class="string">'./dist/index.html'</span>,</span><br><span class="line">      <span class="string">'./dist/search.html'</span>,</span><br><span class="line">    ]);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (files.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      done();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'no html files generate'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>css-js-test.js</code></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> glob = <span class="built_in">require</span>(<span class="string">'glob-all'</span>);</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'Checking generated css js files'</span>, () =&gt; &#123;</span><br><span class="line">  it(<span class="string">'should generate css js files'</span>, done =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> files = glob.sync([</span><br><span class="line">      <span class="string">'./dist/index_*.js'</span>,</span><br><span class="line">      <span class="string">'./dist/index_*.css'</span>,</span><br><span class="line">      <span class="string">'./dist/search_*.js'</span>,</span><br><span class="line">      <span class="string">'./dist/News_*.js'</span>,</span><br><span class="line">    ]);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (files.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      done();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'no css js files generate'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在 index.js 中<ul>
+<li>新建 mocha 实例</li>
+<li>使用 实例方法 <code>addFile()</code> 引入以上两个测试文件</li>
+<li>使用 实例方法 <code>run()</code> 运行 mocha</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line"><span class="keyword">const</span> rimraf = <span class="built_in">require</span>(<span class="string">'rimraf'</span>);</span><br><span class="line"><span class="keyword">const</span> Mocha = <span class="built_in">require</span>(<span class="string">'mocha'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 设置过期时间 */</span></span><br><span class="line"><span class="keyword">const</span> mocha = <span class="keyword">new</span> Mocha(&#123;</span><br><span class="line">  timeout: <span class="string">'10000ms'</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 需要现将目录切换到 template  */</span></span><br><span class="line">process.chdir(path.join(__dirname, <span class="string">'template'</span>));</span><br><span class="line"></span><br><span class="line">rimraf(<span class="string">'./dist'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> prodConfig = <span class="built_in">require</span>(<span class="string">'../../lib/webpack.prod'</span>);</span><br><span class="line">  webpack(prodConfig, (err, stats) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(err);</span><br><span class="line">      process.exit(<span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(stats.toString(&#123;</span><br><span class="line">      colors: <span class="literal">true</span>,</span><br><span class="line">      modules: <span class="literal">false</span>,</span><br><span class="line">      children: <span class="literal">false</span></span><br><span class="line">    &#125;));</span><br><span class="line"></span><br><span class="line">+    <span class="built_in">console</span>.log(<span class="string">'Webpack build success, begin run test'</span>);</span><br><span class="line"></span><br><span class="line">+    mocha.addFile(path.join(__dirname, <span class="string">'html-test.js'</span>));</span><br><span class="line">+    mocha.addFile(path.join(__dirname, <span class="string">'css-js-test.js'</span>));</span><br><span class="line"></span><br><span class="line">+    mocha.run();</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>![image-20220630025133363](webpack 之 构建包设计/image-20220630025133363.png)</p>
+<h1 id="单元测试与测试覆盖率"><a href="#单元测试与测试覆盖率" class="headerlink" title="单元测试与测试覆盖率"></a>单元测试与测试覆盖率</h1><p>冒烟测试保证了 <strong>构建包的基本功能可用</strong></p>
+<p><strong>细节部分的把控</strong>需要单元测试来完成</p>
+<h2 id="可选方案-1"><a href="#可选方案-1" class="headerlink" title="可选方案"></a>可选方案</h2><ul>
+<li><p>单纯测试框架，需要断言库（chai / should.js / expect / better-assert）</p>
+<ul>
+<li>mocha 框架</li>
+<li>ava 框架</li>
+</ul>
+</li>
+<li><p>集成框架，开箱即用</p>
+<ul>
+<li>Jasmine 框架</li>
+<li>Jest 框架</li>
+</ul>
+</li>
+<li><p>极简 API</p>
+</li>
+</ul>
+<h2 id="编写单元测试用例"><a href="#编写单元测试用例" class="headerlink" title="编写单元测试用例"></a>编写单元测试用例</h2><ul>
+<li>技术选型:  Mocha + Chai</li>
+<li>测试代码:  describe, it, expect</li>
+<li>测试命令:  mocha add.test.js</li>
+</ul>
+<hr>
+<ol>
+<li><p>test 目录下新建 unit 目录用来编写测试用例</p>
+<ul>
+<li>创建对应的测试文件 webpack-base-test.js</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">describe(<span class="string">'webpack.base.js test case'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> baseConfig = <span class="built_in">require</span>(<span class="string">'../../lib/webpack.base'</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(baseConfig);</span><br><span class="line">  it(<span class="string">'entry'</span>, () =&gt; &#123;</span><br><span class="line"></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+<ol start="2">
+<li><p>test 目录下新建 index.js 作为单元测试的入口文件（<strong>主要用来引入对应的单元测试用例</strong>）</p>
+<ul>
+<li>每次执行测试用例之前需要进入到模板项目 <code>template</code> 中去</li>
+<li>因此使用 <code>process.chdir()</code> 切换路径到 template 目录</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line">process.chdir(path.join(__dirname, <span class="string">'smoke/template'</span>));</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'builder-webpack test case'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="built_in">require</span>(<span class="string">'./unit/webpack-base-test'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>package.json</code> 新建 <code>scripts</code></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    	<span class="attr">"test"</span>: <span class="string">"./node_modules/.bin/_mocha"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行 <code>yarn run test</code> 时就会自动访问 <code>test</code> 目录下 <code>index.js</code> 入口文件</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn run test</span><br></pre></td></tr></table></figure>
+
+<p>![image-20220702040017966](webpack 之 构建包设计/image-20220702040017966.png)<br>![image-20220702040033551](webpack 之 构建包设计/image-20220702040033551.png)<br>![image-20220702040047582](webpack 之 构建包设计/image-20220702040047582.png)</p>
+</li>
+<li><p>为判断 <code>每次构建是否影响 entry</code> 使用断言库 <code>assert</code></p>
+</li>
+<li><p>安装 assert</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add assert -D</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> assert = <span class="built_in">require</span>(<span class="string">'assert'</span>);</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'webpack.base.js test case'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> baseConfig = <span class="built_in">require</span>(<span class="string">'../../lib/webpack.base'</span>);</span><br><span class="line">  <span class="comment">// console.log(baseConfig);</span></span><br><span class="line">  it(<span class="string">'entry'</span>, () =&gt; &#123;</span><br><span class="line">    assert.equal(baseConfig.entry.index, <span class="string">'D:/Z-workSpace/React/ssr-react/builder-webpack/test/smoke/template/src/index/index.jsx'</span>);</span><br><span class="line">    assert.equal(baseConfig.entry.search, <span class="string">'D:/Z-workSpace/React/ssr-react/builder-webpack/test/smoke/template/src/search/index.jsx'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>![image-20220702040746579](webpack 之 构建包设计/image-20220702040746579.png)</p>
+<p>此时测试用例已经跑通了</p>
+</li>
+</ol>
+<p>​        </p>
+<h2 id="测试覆盖率"><a href="#测试覆盖率" class="headerlink" title="测试覆盖率"></a>测试覆盖率</h2><p>推荐使用 <code>nyc</code></p>
+<ul>
+<li>安装</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add nyc -D</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改 scripts 脚本</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"scripts"</span>: &#123;</span><br><span class="line">        <span class="string">"test"</span>: <span class="string">"mocha"</span>,</span><br><span class="line">        <span class="string">"coverage"</span>: <span class="string">"npx nyc mocha"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>![image-20220702043048723](webpack 之 构建包设计/image-20220702043048723.png)</p>
+<h1 id="单元测试与冒烟测试"><a href="#单元测试与冒烟测试" class="headerlink" title="单元测试与冒烟测试"></a>单元测试与冒烟测试</h1><blockquote>
+<p>单元测试和测试覆盖率一般是在构建前还是构建后完成？</p>
+</blockquote>
+<ul>
+<li>针对<code>基础组件</code>或者<code>构建包</code>，通过<code>单元测试和测试覆盖率</code> 保证组件质量，这需要在<code>发版之前严格遵守</code></li>
+<li>对业务而言，每次 <code>commit</code> 就会进行业务代码的构建。同时异步触发单元测试和测试覆盖率检查，无先后顺序</li>
+</ul>
+<h1 id="持续集成"><a href="#持续集成" class="headerlink" title="持续集成"></a>持续集成</h1><p>![image-20220702043533415](webpack 之 构建包设计/image-20220702043533415.png)</p>
+<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ul>
+<li>快速发现错误</li>
+<li>防止分支大幅偏离主干</li>
+</ul>
+<h2 id="核心措施"><a href="#核心措施" class="headerlink" title="核心措施"></a>核心措施</h2><p>代码集成到主干之前，必须通过自动化测试。<strong>只要有一个测试用例失败，就不能集成</strong></p>
+<h2 id="接入-github-action"><a href="#接入-github-action" class="headerlink" title="接入 github action"></a>接入 <code>github action</code></h2><ul>
+<li>首先创建一个 github 项目，命名为 <code>builder-webpack</code><br>  ![image-20220702175323087](webpack 之 构建包设计/image-20220702175323087.png)</li>
+</ul>
+<ul>
+<li><p>项目根目录下创建 <code>.github/workflow/test.yml</code> 编写 yml 脚本设置自动化测试即可</p>
+</li>
+<li><p>git 链接远程仓库</p>
+  <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 克隆远程仓库到一个干净的目录</span></span><br><span class="line">git clone &lt;远程仓库地址&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入项目</span></span><br><span class="line">cd builder-webpack[项目名称]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前目录绝对路径</span></span><br><span class="line">pwd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将源码复制到该目录下（-r 表示递归，对多个文件操作）</span></span><br><span class="line">cp -r [被复制目录 ./***/ ] [当前目录 ./]</span><br><span class="line"></span><br><span class="line">cd ../../</span><br><span class="line">cp -r ../ssr-react/builder-webpack/ ./</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写 <code>github action</code> 自动化测试脚本 <code>test.yml</code></p>
+  <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># This is a basic workflow to help you get started with Actions</span></span><br><span class="line"></span><br><span class="line"><span class="attr">name:</span> <span class="string">CI</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Controls when the workflow will run</span></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="comment"># Triggers the workflow on push or pull request events but only for the "main" branch</span></span><br><span class="line"><span class="attr">  push:</span></span><br><span class="line"><span class="attr">    branches:</span> <span class="string">[</span> <span class="string">"main"</span> <span class="string">]</span></span><br><span class="line"><span class="attr">  pull_request:</span></span><br><span class="line"><span class="attr">    branches:</span> <span class="string">[</span> <span class="string">"main"</span> <span class="string">]</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Allows you to run this workflow manually from the Actions tab</span></span><br><span class="line"><span class="attr">  workflow_dispatch:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># A workflow run is made up of one or more jobs that can run sequentially or in parallel</span></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="comment"># This workflow contains a single job called "build"</span></span><br><span class="line"><span class="attr">  build:</span></span><br><span class="line">    <span class="comment"># The type of runner that the job will run on</span></span><br><span class="line"><span class="attr">    runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Steps represent a sequence of tasks that will be executed as part of the job</span></span><br><span class="line"><span class="attr">    steps:</span></span><br><span class="line">      <span class="comment"># Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it</span></span><br><span class="line"><span class="attr">      - uses:</span> <span class="string">actions/checkout@v3</span></span><br><span class="line">            </span><br><span class="line"><span class="attr">      - name:</span> <span class="string">setup</span> <span class="string">node.js</span> <span class="string">environment</span></span><br><span class="line"><span class="attr">        uses:</span> <span class="string">actions/setup-node@v3.3.0</span></span><br><span class="line"><span class="attr">        with:</span></span><br><span class="line"><span class="attr">          node-version:</span> <span class="string">"18.X"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">      - name:</span> <span class="string">install</span> <span class="string">dep</span></span><br><span class="line"><span class="attr">        run:</span> <span class="string">yarn</span> <span class="string">install</span> <span class="bullet">-D</span></span><br><span class="line">        </span><br><span class="line"><span class="attr">      - name:</span> <span class="string">switch</span> <span class="string">to</span> <span class="string">template</span> <span class="string">project</span></span><br><span class="line"><span class="attr">        run:</span> <span class="string">cd</span> <span class="string">./test/smoke/template</span></span><br><span class="line">        </span><br><span class="line"><span class="attr">      - name:</span> <span class="string">install</span> <span class="string">template</span> <span class="string">project</span> <span class="string">dep</span></span><br><span class="line"><span class="attr">        run:</span> <span class="string">yarn</span> <span class="string">install</span> <span class="bullet">-D</span></span><br><span class="line">        </span><br><span class="line"><span class="attr">      - name:</span> <span class="string">run</span> <span class="string">test</span> <span class="string">scripts</span></span><br><span class="line"><span class="attr">        run:</span> <span class="string">yarn</span> <span class="string">run</span> <span class="string">test</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>提交代码到远程仓库</p>
+  <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">'feat: builder github action ci'</span></span><br><span class="line">git push origin [branch_name]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>由于之前是在本地测试，entry 入口是本地目录，推送到 github 之后需要修改 <code>webpack-base-test.js</code> 单元测试脚本</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">assert.equal(baseConfig.entry.index, <span class="string">'/home/runner/work/builder-webpack/builder-webpack/test/smoke/template/src/index/index.jsx'</span>);</span><br><span class="line">    assert.equal(baseConfig.entry.search, <span class="string">'/home/runner/work/builder-webpack/builder-webpack/test/smoke/template/src/search/index.jsx'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>具体构建信息可在 github 项目 action 中查看</p>
+<p>![image-20220703185011059](webpack 之 构建包设计/image-20220703185011059.png)</p>
+<p>![image-20220703184921762](webpack 之 构建包设计/image-20220703184921762.png)<br>![image-20220703185044212](webpack 之 构建包设计/image-20220703185044212.png)</p>
+</li>
+<li><p><code>test.yml</code> 设置依赖缓存，减少每次构建安装依赖的时间</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="attr">name:</span> <span class="string">CI</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line"></span><br><span class="line"><span class="attr">  push:</span></span><br><span class="line"><span class="attr">    branches:</span> <span class="string">[</span> <span class="string">"main"</span> <span class="string">]</span></span><br><span class="line"><span class="attr">  pull_request:</span></span><br><span class="line"><span class="attr">    branches:</span> <span class="string">[</span> <span class="string">"main"</span> <span class="string">]</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attr">  workflow_dispatch:</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line"> </span><br><span class="line"><span class="attr">  test:</span></span><br><span class="line"> </span><br><span class="line"><span class="attr">    runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line"></span><br><span class="line">   </span><br><span class="line"><span class="attr">    steps:</span></span><br><span class="line">      <span class="comment"># Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it</span></span><br><span class="line"><span class="attr">      - uses:</span> <span class="string">actions/checkout@v3</span></span><br><span class="line">      </span><br><span class="line"></span><br><span class="line">          </span><br><span class="line">          </span><br><span class="line"><span class="attr">      - name:</span> <span class="string">setup</span> <span class="string">node.js</span> <span class="string">environment</span></span><br><span class="line"><span class="attr">        uses:</span> <span class="string">actions/setup-node@v3.3.0</span></span><br><span class="line"><span class="attr">        with:</span></span><br><span class="line"><span class="attr">          node-version:</span> <span class="string">"18.X"</span></span><br><span class="line">          </span><br><span class="line"><span class="attr">      - name:</span> <span class="string">Cache</span> <span class="string">node_modules</span></span><br><span class="line"><span class="attr">        id:</span> <span class="string">cache-node-modules</span></span><br><span class="line"><span class="attr">        uses:</span> <span class="string">actions/cache@v1</span></span><br><span class="line"><span class="attr">        with:</span></span><br><span class="line"><span class="attr">          path:</span> <span class="string">node_modules</span></span><br><span class="line"><span class="attr">          key:</span> <span class="string">$&#123;&#123;</span> <span class="string">runner.os</span> <span class="string">&#125;&#125;-$&#123;&#123;</span> <span class="string">matrix.node-version</span> <span class="string">&#125;&#125;-nodeModules-$&#123;&#123;</span> <span class="string">hashFiles('package.json')</span> <span class="string">&#125;&#125;</span></span><br><span class="line"><span class="attr">          restore-keys:</span> <span class="string">|</span></span><br><span class="line"><span class="string">            $<span class="template-variable">&#123;&#123; runner.os &#125;&#125;</span>-$<span class="template-variable">&#123;&#123; matrix.node-version &#125;&#125;</span>-nodeModules-</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span><span class="attr">      - name:</span> <span class="string">install</span> <span class="string">dep</span></span><br><span class="line"><span class="attr">        if:</span> <span class="string">steps.cache-node-modules.outputs.cache-hit</span> <span class="string">!=</span> <span class="string">'true'</span></span><br><span class="line"><span class="attr">        run:</span> <span class="string">yarn</span> <span class="string">install</span> <span class="bullet">-D</span></span><br><span class="line">        </span><br><span class="line"><span class="attr">      - name:</span> <span class="string">switch</span> <span class="string">to</span> <span class="string">template</span> <span class="string">project</span></span><br><span class="line"><span class="attr">        run:</span> <span class="string">cd</span> <span class="string">./test/smoke/template</span></span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line"><span class="attr">      - name:</span> <span class="string">Cache</span> <span class="string">node_modules</span></span><br><span class="line"><span class="attr">        id:</span> <span class="string">cache-node-modules-template</span></span><br><span class="line"><span class="attr">        uses:</span> <span class="string">actions/cache@v2</span></span><br><span class="line"><span class="attr">        with:</span></span><br><span class="line"><span class="attr">          path:</span> <span class="string">node_modules</span></span><br><span class="line"><span class="attr">          key:</span> <span class="string">$&#123;&#123;</span> <span class="string">runner.os</span> <span class="string">&#125;&#125;-$&#123;&#123;</span> <span class="string">matrix.node-version</span> <span class="string">&#125;&#125;-nodeModules-$&#123;&#123;</span> <span class="string">hashFiles('package.json')</span> <span class="string">&#125;&#125;</span></span><br><span class="line"><span class="attr">          restore-keys:</span> <span class="string">|</span></span><br><span class="line"><span class="string">            $<span class="template-variable">&#123;&#123; runner.os &#125;&#125;</span>-$<span class="template-variable">&#123;&#123; matrix.node-version &#125;&#125;</span>-nodeModules-</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string"></span><span class="attr">      - name:</span> <span class="string">install</span> <span class="string">template</span> <span class="string">project</span> <span class="string">dep</span></span><br><span class="line"><span class="attr">        if:</span> <span class="string">steps.cache-node-modules-template.outputs.cache-hit</span> <span class="string">!=</span> <span class="string">'true'</span></span><br><span class="line"><span class="attr">        run:</span> <span class="string">yarn</span> <span class="string">install</span> <span class="bullet">-D</span></span><br><span class="line">        </span><br><span class="line"><span class="attr">      - name:</span> <span class="string">run</span> <span class="string">test</span> <span class="string">scripts</span></span><br><span class="line"><span class="attr">        run:</span> <span class="string">yarn</span> <span class="string">run</span> <span class="string">test</span></span><br></pre></td></tr></table></figure>
+
+<p>![image-20220703191837410](webpack 之 构建包设计/image-20220703191837410.png)</p>
+</li>
+</ul>
+<h1 id="发布构建包到-npm-社区"><a href="#发布构建包到-npm-社区" class="headerlink" title="发布构建包到 npm 社区"></a>发布构建包到 npm 社区</h1><ul>
+<li>修改 <code>package.json</code> 中 name 字节（确保 <code>npm 社区</code> 中该包名没有被使用过）</li>
+<li>升级版本<ul>
+<li>补丁版本号 <code>npm version patch</code></li>
+<li>小版本号 <code>npm version minor</code></li>
+<li>大版本号 <code>npm version major</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 登录 npm</span></span><br><span class="line">npm login</span><br><span class="line"></span><br><span class="line"><span class="comment"># 升级版本</span></span><br><span class="line">npm version minor</span><br><span class="line"></span><br><span class="line"><span class="comment"># 发布构建包</span></span><br><span class="line">npm publish</span><br></pre></td></tr></table></figure>
+
+<p>​    </p>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/webpack/" rel="tag"><i class="fa fa-tag"></i>webpack</a>
+              <a href="/tags/npm/" rel="tag"><i class="fa fa-tag"></i>npm</a>
+              <a href="/tags/构建包/" rel="tag"><i class="fa fa-tag"></i>构建包</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2022/06/08/webpack 之 打包组件或者基础库/" rel="next" title="webpack 之打包组件或者基础库">
+                  <i class="fa fa-chevron-left"></i> webpack 之打包组件或者基础库
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2022/07/05/React + TS 实战/" rel="prev" title="">
+                   <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#将构建配置抽离成-npm-包的意义"><span class="nav-number">1.</span> <span class="nav-text">将构建配置抽离成 npm 包的意义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#可选方案"><span class="nav-number">2.</span> <span class="nav-text">可选方案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#构建配置包设计"><span class="nav-number">3.</span> <span class="nav-text">构建配置包设计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通过多个配置文件管理不同环境的-webpack-配置"><span class="nav-number">3.1.</span> <span class="nav-text">通过多个配置文件管理不同环境的 webpack 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抽离成一个-npm-包统一管理"><span class="nav-number">3.2.</span> <span class="nav-text">抽离成一个 npm 包统一管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作方法：通过-webpack-merge-组合配置"><span class="nav-number">3.3.</span> <span class="nav-text">操作方法：通过 webpack-merge 组合配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#功能模块设计与目录结构"><span class="nav-number">4.</span> <span class="nav-text">功能模块设计与目录结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目录结构"><span class="nav-number">4.1.</span> <span class="nav-text">目录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#新建项目"><span class="nav-number">4.2.</span> <span class="nav-text">新建项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-webpack-base-js-文件"><span class="nav-number">4.3.</span> <span class="nav-text">配置 webpack.base.js 文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-webpack-merge-配置-webpack-dev-js"><span class="nav-number">4.4.</span> <span class="nav-text">安装 webpack-merge,配置 webpack.dev.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-webpack-prod-js"><span class="nav-number">4.5.</span> <span class="nav-text">配置 webpack.prod.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-webpack-ssr-js"><span class="nav-number">4.6.</span> <span class="nav-text">配置 webpack.ssr.js</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他文件"><span class="nav-number">5.</span> <span class="nav-text">其他文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通过-ESLint-规范构建脚本"><span class="nav-number">6.</span> <span class="nav-text">通过 ESLint 规范构建脚本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#冒烟测试（预测试）"><span class="nav-number">7.</span> <span class="nav-text">冒烟测试（预测试）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#关注问题"><span class="nav-number">7.1.</span> <span class="nav-text">关注问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#检测构建（清空dist、判断是否构建成功）"><span class="nav-number">7.2.</span> <span class="nav-text">检测构建（清空dist、判断是否构建成功）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建测试文件"><span class="nav-number">7.3.</span> <span class="nav-text">创建测试文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#单元测试与测试覆盖率"><span class="nav-number">8.</span> <span class="nav-text">单元测试与测试覆盖率</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#可选方案-1"><span class="nav-number">8.1.</span> <span class="nav-text">可选方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编写单元测试用例"><span class="nav-number">8.2.</span> <span class="nav-text">编写单元测试用例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试覆盖率"><span class="nav-number">8.3.</span> <span class="nav-text">测试覆盖率</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#单元测试与冒烟测试"><span class="nav-number">9.</span> <span class="nav-text">单元测试与冒烟测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#持续集成"><span class="nav-number">10.</span> <span class="nav-text">持续集成</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#优点"><span class="nav-number">10.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核心措施"><span class="nav-number">10.2.</span> <span class="nav-text">核心措施</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接入-github-action"><span class="nav-number">10.3.</span> <span class="nav-text">接入 github action</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#发布构建包到-npm-社区"><span class="nav-number">11.</span> <span class="nav-text">发布构建包到 npm 社区</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yana"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Yana</p>
+  <div class="site-description" itemprop="description">Never give up！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">88</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">90</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yanadev" title="GitHub → https://github.com/yanadev" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yana</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">255k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
