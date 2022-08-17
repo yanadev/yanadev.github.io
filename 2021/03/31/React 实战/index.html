@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="YanaChen" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="[toc]目标 初始化项目 使用 antd-mobile 组件库 完成项目整体布局 首页轮播图 使用百度地图 API 完成定位功能 使用 react-virtualized 完成城市选择功能 项目项目介绍 租房app - 移动 web 端 在线租房项目，实现类似链家等项目功能，解决用户租房需求 核心业务： 在线找房 用户登录 房源发布 …">
+<meta name="keywords" content="React,实战">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React实战">
+<meta property="og:url" content="https://yanadev.github.io/2021/03/31/React 实战/index.html">
+<meta property="og:site_name" content="YanaChen">
+<meta property="og:description" content="[toc]目标 初始化项目 使用 antd-mobile 组件库 完成项目整体布局 首页轮播图 使用百度地图 API 完成定位功能 使用 react-virtualized 完成城市选择功能 项目项目介绍 租房app - 移动 web 端 在线租房项目，实现类似链家等项目功能，解决用户租房需求 核心业务： 在线找房 用户登录 房源发布 …">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2022-08-17T17:12:06.341Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React实战">
+<meta name="twitter:description" content="[toc]目标 初始化项目 使用 antd-mobile 组件库 完成项目整体布局 首页轮播图 使用百度地图 API 完成定位功能 使用 react-virtualized 完成城市选择功能 项目项目介绍 租房app - 移动 web 端 在线租房项目，实现类似链家等项目功能，解决用户租房需求 核心业务： 在线找房 用户登录 房源发布 …">
+
+<link rel="canonical" href="https://yanadev.github.io/2021/03/31/React 实战/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>React实战 | YanaChen</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YanaChen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">_踩坑_填坑_日常</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">102</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">104</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">86</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2021/03/31/React 实战/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yana">
+      <meta itemprop="description" content="Never give up！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanaChen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          React实战
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-31 11:19:45" itemprop="dateCreated datePublished" datetime="2021-03-31T11:19:45+08:00">2021-03-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-18 01:12:06" itemprop="dateModified" datetime="2022-08-18T01:12:06+08:00">2022-08-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/" itemprop="url" rel="index">
+                    <span itemprop="name">React</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/实战/" itemprop="url" rel="index">
+                    <span itemprop="name">实战</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>8.1k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[toc]</p><h1 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h1><ul>
+<li>初始化项目</li>
+<li>使用 antd-mobile 组件库</li>
+<li>完成项目整体布局</li>
+<li>首页轮播图</li>
+<li>使用百度地图 API 完成定位功能</li>
+<li>使用 react-virtualized 完成城市选择功能</li>
+</ul><h1 id="项目"><a href="#项目" class="headerlink" title="项目"></a>项目</h1><h2 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h2><ul>
+<li>租房app - 移动 web 端</li>
+<li>在线租房项目，实现类似链家等项目功能，解决用户租房需求</li>
+<li>核心业务：<ul>
+<li>在线找房</li>
+<li>用户登录</li>
+<li>房源发布</li>
+<li>…</li>
+</ul>
+</li>
+</ul><a id="more"></a>
+
+
+<h2 id="技术栈"><a href="#技术栈" class="headerlink" title="技术栈"></a>技术栈</h2><ul>
+<li>React 核心库：react、react-dom、react-router-dom</li>
+<li>脚手架： create-react-app</li>
+<li>数据请求：axios</li>
+<li>UI 组件库： ant-mobile</li>
+<li>其他组件库：react-virtualized、formik+yuk、react-spring 等</li>
+<li>百度地图 API</li>
+</ul>
+<h2 id="项目搭建"><a href="#项目搭建" class="headerlink" title="项目搭建"></a>项目搭建</h2><ul>
+<li>本地接口部署（数据库、接口）</li>
+<li>使用脚手架初始化项目</li>
+</ul>
+<h3 id="本地接口部署-服务端"><a href="#本地接口部署-服务端" class="headerlink" title="本地接口部署(服务端)"></a>本地接口部署(服务端)</h3><h4 id="创建并导入数据，数据库名称-hkzf-（固定名称）"><a href="#创建并导入数据，数据库名称-hkzf-（固定名称）" class="headerlink" title="创建并导入数据，数据库名称 hkzf （固定名称）"></a>创建并导入数据，数据库名称 hkzf （固定名称）</h4><h4 id="双击创建连接，右键新建数据库"><a href="#双击创建连接，右键新建数据库" class="headerlink" title="双击创建连接，右键新建数据库"></a>双击创建连接，右键新建数据库</h4><p>![image-20220526034714704](React 实战/image-20220526034714704.png)</p>
+<h4 id="输入数据库名称，选择字符集-utf-8"><a href="#输入数据库名称，选择字符集-utf-8" class="headerlink" title="输入数据库名称，选择字符集 utf-8"></a>输入数据库名称，选择字符集 utf-8</h4><p>![image-20220526034931579](React 实战/image-20220526034931579.png)</p>
+<h4 id="右键运行-sql-文件，将写好的-sql-文件直接导入"><a href="#右键运行-sql-文件，将写好的-sql-文件直接导入" class="headerlink" title="右键运行 sql 文件，将写好的 sql 文件直接导入"></a>右键运行 sql 文件，将写好的 sql 文件直接导入</h4><p>![image-20220526040328551](React 实战/image-20220526040328551.png)</p>
+<p>![image-20220526040503970](React 实战/image-20220526040503970.png)</p>
+<p>![image-20220526041048979](React 实战/image-20220526041048979.png)</p>
+<h4 id="打开-hkzf-v1-服务端项目，启动项目，若-数据库密码修改过的，需要在-config-mysql-js-中将-数据库密码修改，再-npm-start-启动项目"><a href="#打开-hkzf-v1-服务端项目，启动项目，若-数据库密码修改过的，需要在-config-mysql-js-中将-数据库密码修改，再-npm-start-启动项目" class="headerlink" title="打开 hkzf_v1 服务端项目，启动项目，若 数据库密码修改过的，需要在 /config/mysql.js 中将 数据库密码修改，再 npm start 启动项目"></a>打开 hkzf_v1 服务端项目，启动项目，若 数据库密码修改过的，需要在 /config/mysql.js 中将 数据库密码修改，再 <code>npm start</code> 启动项目</h4><p>![image-20220526043457589](React 实战/image-20220526043457589.png)</p>
+<p>![image-20220526043516697](React 实战/image-20220526043516697.png)</p>
+<h4 id="views-swagger-html-中修改一下库的链接"><a href="#views-swagger-html-中修改一下库的链接" class="headerlink" title="/views/swagger.html 中修改一下库的链接"></a>/views/swagger.html 中修改一下库的链接</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- &lt;script src="https://cdn.bootcss.com/swagger-ui/3.22.1/swagger-ui-bundle.js"&gt;&lt;/script&gt; --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- &lt;script src="https://cdn.bootcss.com/swagger-ui/3.22.1/swagger-ui-standalone-preset.js"&gt; &lt;/script&gt; --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.bootcdn.net/ajax/libs/swagger-ui/3.22.1/swagger-ui-bundle.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.bootcdn.net/ajax/libs/swagger-ui/3.22.1/swagger-ui-standalone-preset.js"</span>&gt;</span> <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>![image-20220526044350045](React 实战/image-20220526044350045.png)</p>
+<h3 id="项目启动完毕，访问本地-http-localhost-8080-端口即可查看接口文档"><a href="#项目启动完毕，访问本地-http-localhost-8080-端口即可查看接口文档" class="headerlink" title="项目启动完毕，访问本地 http://localhost:8080/ 端口即可查看接口文档"></a>项目启动完毕，访问本地 <code>http://localhost:8080/</code> 端口即可查看接口文档</h3><p>![image-20220704004820028](React 实战/image-20220704004820028.png)</p>
+<h3 id="脚手架初始化本地项目"><a href="#脚手架初始化本地项目" class="headerlink" title="脚手架初始化本地项目"></a>脚手架初始化本地项目</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 脚手架初始化项目</span></span><br><span class="line">npx create-react-app hkzf_mobile</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入项目根目录</span></span><br><span class="line">cd hkzf_mobile</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动项目</span></span><br><span class="line">yarn run start</span><br></pre></td></tr></table></figure>
+
+<p>![image-20220704153138415](React 实战/image-20220704153138415.png)</p>
+<h1 id="初始项目结构"><a href="#初始项目结构" class="headerlink" title="初始项目结构"></a>初始项目结构</h1><ul>
+<li>public 公共资源<ul>
+<li>index.html 首页（必须）</li>
+<li>manifest.json PWA 应用的元数据</li>
+</ul>
+</li>
+<li>src 项目源码（功能代码）<ul>
+<li>index.js 项目入口文件（必须）</li>
+<li>App.js 项目根组件</li>
+<li>App.test.js App 组件的测试文件</li>
+<li>serviceWorker.js  用来实现 PWA（可选） </li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>PWA（Progressive Web Application），全称“渐进式网页应用”</p>
+<p>即 <strong>可使网页通过某种方式达到离线使用</strong></p>
+</blockquote>
+<h1 id="调整项目结构（src目录）"><a href="#调整项目结构（src目录）" class="headerlink" title="调整项目结构（src目录）"></a>调整项目结构（src目录）</h1><ul>
+<li><p>src</p>
+<ul>
+<li><p>App.js 根组件</p>
+</li>
+<li><p>index.css 全局样式</p>
+</li>
+<li><p>index.js 项目入口文件（渲染根组件、导入组件库等）</p>
+</li>
+<li><p>/assets 资源（图片、字体图标等）</p>
+</li>
+<li><p>/pages 页面</p>
+</li>
+<li><p>/components 公共组件</p>
+</li>
+<li><p>/utils 工具</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>![image-20220704153843877](React 实战/image-20220704153843877.png)</p>
+<h1 id="连接远程仓库"><a href="#连接远程仓库" class="headerlink" title="连接远程仓库"></a>连接远程仓库</h1><ul>
+<li>创建仓库</li>
+<li><code>git remote add origin [仓库 ssh 链接]</code></li>
+<li><code>git push -u origin [远程分支]</code><ul>
+<li>若失败，执行 <code>git pull --allow-unrelated-histories origin main</code></li>
+<li>自动合并，若存在冲突，需要手动选择本地仓库还是远程仓库</li>
+</ul>
+</li>
+<li>项目目录调整完毕之后，保存更改后的文件（ctrl+s）</li>
+<li>可查看本地提交状态 <code>git status</code></li>
+<li>选择修改文件 <code>git add .</code></li>
+<li>git commit -m ‘[输入你想要填写的提交信息]’</li>
+<li>git push origin [需要推送的远程分支]</li>
+</ul>
+<p>![image-20220527041515608](React 实战/image-20220527041515608.png)</p>
+<p>![image-20220527041534965](React 实战/image-20220527041534965.png)</p>
+<p>![image-20220527041450958](React 实战/image-20220527041450958.png)</p>
+<p>![image-20220527041927941](React 实战/image-20220527041927941.png)</p>
+<h1 id="运行项目"><a href="#运行项目" class="headerlink" title="运行项目"></a>运行项目</h1><ul>
+<li><p><code>package.json</code> 文件中已自定义脚本，可执行 对应脚本来启动项目</p>
+<p>![image-20220704153951670](React 实战/image-20220704153951670.png)</p>
+</li>
+</ul>
+<h1 id="项目准备-UI组件库"><a href="#项目准备-UI组件库" class="headerlink" title="项目准备 - UI组件库"></a>项目准备 - UI组件库</h1><h2 id="组件库-antd-mobile"><a href="#组件库-antd-mobile" class="headerlink" title="组件库 antd-mobile"></a>组件库 <code>antd-mobile</code></h2><blockquote>
+<p>可依据对应版本的官方文档指引去安装</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add antd-mobile -D</span><br></pre></td></tr></table></figure>
+
+<h2 id="自动引入实现按需加载"><a href="#自动引入实现按需加载" class="headerlink" title="自动引入实现按需加载"></a>自动引入实现按需加载</h2><p><strong><u>v5 版本不需要手动按需加载，构建工具的 tree-shaking 可将没有用到的组件剔除并最终打包</u></strong></p>
+<ul>
+<li><code>App.js</code> 根组件中导入使用即可（该组件库支持移动端，若是网页打开是一片空白）</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// App.js 根组件</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">'./App.css'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Button &#125; <span class="keyword">from</span> <span class="string">'antd-mobile'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div className=<span class="string">"App"</span>&gt;</span><br><span class="line">      React APP</span><br><span class="line">      &lt;Button color=<span class="string">'primary'</span> fill=<span class="string">'solid'</span>&gt;登录按钮&lt;<span class="regexp">/Button&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App;</span><br></pre></td></tr></table></figure>
+
+<p>![image-20220704155446385](React 实战/image-20220704155446385.png)</p>
+<h1 id="项目准备-配置路由"><a href="#项目准备-配置路由" class="headerlink" title="项目准备 - 配置路由"></a>项目准备 - 配置路由</h1><h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><ul>
+<li><p>安装</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add react-router-dom</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>App.js 根组件中导入常用路由组件 <code>BrowserRouter</code>、<code>Routes</code>、<code>Route</code>、<code>Link</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 路由组件</span></span><br><span class="line"><span class="keyword">import</span> &#123; BrowserRouter <span class="keyword">as</span> Router, Route, Routes, Link &#125; <span class="keyword">from</span> <span class="string">'react-router-dom'</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>pages 目录下，创建两个组件 </p>
+<ul>
+<li><p>Home/index.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">Home</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">  &#125;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="xml">      This is Home Pages</span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/&gt;</span>;</span></span><br><span class="line"><span class="xml">  &#125;</span></span><br><span class="line"><span class="xml">&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>CityList/index.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">CityList</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="xml">      This is CityList Page</span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/&gt;</span>;</span></span><br><span class="line"><span class="xml">  &#125;</span></span><br><span class="line"><span class="xml">&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<ul>
+<li><p>使用 Route 组件配置首页和城市选择页面（<code>所有的路由组件必须由 BrowserRouter 包裹</code>）</p>
+<ul>
+<li>Link 组件相当于 a 标签</li>
+<li>Routes 包裹着多个 Route 组件，来配置路由路径，及对应的组件</li>
+<li>使用 BrowserRouter 等高级 Router 来替代 Router，包裹所有的路由组件完成路由配置<ul>
+<li>BrowserRouter <strong>一个使用 h5 history API 的 <router> （pushState、replaceState、popState 事件）</router></strong>，让 UI 与 URL 的同时，不需要发起对服务器的请求</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'./App.css'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 路由组件</span></span><br><span class="line"><span class="keyword">import</span> &#123; BrowserRouter <span class="keyword">as</span> Router, Route, Routes, Link &#125; <span class="keyword">from</span> <span class="string">'react-router-dom'</span>;</span><br><span class="line"><span class="keyword">import</span> Home <span class="keyword">from</span> <span class="string">'./pages/Home/index'</span>;</span><br><span class="line"><span class="keyword">import</span> CityList <span class="keyword">from</span> <span class="string">'./pages/CityList/index'</span>;</span><br><span class="line"><span class="comment">// UI组件库: antd-mobile</span></span><br><span class="line"><span class="keyword">import</span> &#123; Button &#125; <span class="keyword">from</span> <span class="string">'antd-mobile'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;Router&gt;</span><br><span class="line">      &lt;div className=<span class="string">"App"</span>&gt;</span><br><span class="line">        React APP</span><br><span class="line">        &lt;Button color=<span class="string">'primary'</span> fill=<span class="string">'solid '</span>&gt;登录按钮&lt;<span class="regexp">/Button&gt;</span></span><br><span class="line"><span class="regexp">        &lt;br /</span>&gt;</span><br><span class="line"></span><br><span class="line">        &lt;Link to=<span class="string">"/home"</span>&gt;首页&lt;<span class="regexp">/Link&gt;</span></span><br><span class="line"><span class="regexp">        &lt;Link to="/</span>citylist<span class="string">"&gt;城市列表&lt;/Link&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        &lt;Routes&gt;</span></span><br><span class="line"><span class="string">          &lt;Route path="</span>/<span class="string">" element=&#123;&lt;Home /&gt;&#125;&gt;&lt;/Route&gt;</span></span><br><span class="line"><span class="string">          &lt;Route path="</span>/home<span class="string">" element=&#123;&lt;Home /&gt;&#125;&gt;&lt;/Route&gt;</span></span><br><span class="line"><span class="string">          &lt;Route path="</span>/citylist<span class="string">" element=&#123;&lt;CityList /&gt;&#125;&gt;&lt;/Route&gt;</span></span><br><span class="line"><span class="string">        &lt;/Routes&gt;</span></span><br><span class="line"><span class="string">      &lt;/div&gt;</span></span><br><span class="line"><span class="string">    &lt;/Router&gt;</span></span><br><span class="line"><span class="string">  );</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">export default App;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="集中渲染路由"><a href="#集中渲染路由" class="headerlink" title="集中渲染路由"></a>集中渲染路由</h2><ul>
+<li>src 目录下创建 router/index.js 作为路由的入口文件</li>
+<li>通过使用 <code>react-router-dom</code>库的  <code>useRoutes()</code> 方法，来处理路由跳转</li>
+<li>index.js 中使用 <code>数组的形式来配置路由</code>，将其传递给 <code>useRoutes()</code> 方法，传递给根组件渲染</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* router/index.js */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; lazy, Suspense &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; matchRoutes &#125; <span class="keyword">from</span> <span class="string">'react-router-dom'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> AppLayout <span class="keyword">from</span> <span class="string">'../pages/AppLayout'</span>;</span><br><span class="line"><span class="keyword">import</span> NotFound <span class="keyword">from</span> <span class="string">'../pages/NotFound'</span>;</span><br><span class="line"><span class="keyword">const</span> Home = lazy(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'../pages/Home'</span>));</span><br><span class="line"><span class="keyword">const</span> CityList = lazy(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'../pages/CityList'</span>));</span><br><span class="line"><span class="keyword">const</span> News = lazy(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'../pages/News'</span>));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> lazyLoad = <span class="function">(<span class="params">children</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">Suspense</span> <span class="attr">fallback</span>=<span class="string">&#123;</span>&lt;&gt;</span>Loading...<span class="tag">&lt;/&gt;</span>&#125;&gt;</span></span><br><span class="line"><span class="xml">    &#123;children&#125;</span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">Suspense</span>&gt;</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/'</span>,</span><br><span class="line">    element: <span class="xml"><span class="tag">&lt;<span class="name">AppLayout</span> /&gt;</span>,</span></span><br><span class="line"><span class="xml">    children: [</span></span><br><span class="line"><span class="xml">      &#123;</span></span><br><span class="line"><span class="xml">        index: true,</span></span><br><span class="line"><span class="xml">        element: lazyLoad(<span class="tag">&lt;<span class="name">Home</span> /&gt;</span>)</span></span><br><span class="line"><span class="xml">      &#125;,</span></span><br><span class="line"><span class="xml">      &#123;</span></span><br><span class="line"><span class="xml">        path: 'news',</span></span><br><span class="line"><span class="xml">        element: lazyLoad(<span class="tag">&lt;<span class="name">News</span> /&gt;</span>)</span></span><br><span class="line"><span class="xml">      &#125;,</span></span><br><span class="line"><span class="xml">      &#123;</span></span><br><span class="line"><span class="xml">        path: 'citylist',</span></span><br><span class="line"><span class="xml">        element: lazyLoad(<span class="tag">&lt;<span class="name">CityList</span> /&gt;</span>)</span></span><br><span class="line"><span class="xml">      &#125;,</span></span><br><span class="line"><span class="xml">    ]</span></span><br><span class="line"><span class="xml">  &#125;,</span></span><br><span class="line"><span class="xml">  &#123;</span></span><br><span class="line"><span class="xml">    path: '/404',</span></span><br><span class="line"><span class="xml">    element: <span class="tag">&lt;<span class="name">NotFound</span> /&gt;</span></span></span><br><span class="line"><span class="xml">  &#125;</span></span><br><span class="line"><span class="xml">];</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">const routerListener = (path, navigator) =&gt; &#123;</span></span><br><span class="line"><span class="xml">  return () =&gt; &#123;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">    const isMatch = matchRoutes(routes, path);</span></span><br><span class="line"><span class="xml">    if (!isMatch) &#123;</span></span><br><span class="line"><span class="xml">      navigator('/404');</span></span><br><span class="line"><span class="xml">    &#125;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">    console.log(path, 'enter: routerEnterEvent');</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">    return () =&gt; &#123;</span></span><br><span class="line"><span class="xml">      console.log(path, 'leave: routerLeaveEvent');</span></span><br><span class="line"><span class="xml">    &#125;;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">  &#125;;</span></span><br><span class="line"><span class="xml">&#125;;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">export &#123; routes, routerListener &#125;;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* src/App.js */</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">'./App.css'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// UI组件库: antd-mobile</span></span><br><span class="line"><span class="keyword">import</span> &#123; Button &#125; <span class="keyword">from</span> <span class="string">'antd-mobile'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; routes, routerListener &#125; <span class="keyword">from</span> <span class="string">'./router/index'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; useRoutes, useLocation, useNavigate &#125; <span class="keyword">from</span> <span class="string">'react-router-dom'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; useEffect, useState &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> location = useLocation();</span><br><span class="line">  <span class="keyword">const</span> navigator = useNavigate();</span><br><span class="line">  <span class="keyword">let</span> [pathname, setPathname] = useState(location.pathname);</span><br><span class="line"></span><br><span class="line">  useEffect(</span><br><span class="line">    routerListener(pathname, navigator),</span><br><span class="line">    [pathname]</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> element = useRoutes(routes);</span><br><span class="line">  <span class="keyword">return</span> element;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App;</span><br></pre></td></tr></table></figure>
+
+<h2 id="项目两种布局"><a href="#项目两种布局" class="headerlink" title="项目两种布局"></a>项目两种布局</h2><ul>
+<li>一种是不带 <code>TabBar</code> 页面的，直接使用路由切换页面即可</li>
+<li>一种是页面底部带 <code>TabBar</code> 页面的，需要使用嵌套路由来实现了页面的切换</li>
+</ul>
+<h2 id="嵌套路由"><a href="#嵌套路由" class="headerlink" title="嵌套路由"></a>嵌套路由</h2><p><strong>嵌套路由：路由内部包含路由</strong></p>
+<ul>
+<li>用 Home 组件表示父路由内容</li>
+<li>用 News 组件表示子路由内容</li>
+</ul>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><ul>
+<li>在 pages 目录下创建 News/index.js 组件</li>
+<li>Home 组件中，添加一个 Route 作为子路由（嵌套路由）的出口</li>
+<li>设置嵌套路由的 path ，格式 <strong>以父路由 path 开头（父组件展示，子组件才会展示）</strong></li>
+</ul>
+<h1 id="项目准备-项目全局样式调整"><a href="#项目准备-项目全局样式调整" class="headerlink" title="项目准备 - 项目全局样式调整"></a>项目准备 - 项目全局样式调整</h1><blockquote>
+<p>统一全局样式，以便于后续调整</p>
+</blockquote>
+<ul>
+<li>页面标题：在 index.html 中修改</li>
+<li>基础样式：在 index.css 中修改</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// index.css</span><br><span class="line"><span class="selector-tag">html</span>, <span class="selector-tag">body</span> &#123;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">'Microsoft YaHei'</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#333</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#fff</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">* &#123;</span><br><span class="line">  <span class="attribute">box-sizing</span>: border-box;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="tabbar-组件实现"><a href="#tabbar-组件实现" class="headerlink" title="tabbar 组件实现"></a>tabbar 组件实现</h1><h2 id="安装-less-和-less-loader"><a href="#安装-less-和-less-loader" class="headerlink" title="安装 less 和 less-loader"></a>安装 less 和 less-loader</h2><blockquote>
+<p><strong><u>安装完毕记得重新启动项目</u></strong></p>
+</blockquote>
+<ul>
+<li>安装 less 和 less-loader</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add less less-loader -D</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>释放项目配置文件</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn run eject</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>复制一份 css 配置修改成 less</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    const lessRegex = /\.less$/;</span><br><span class="line">    const lessModuleRegex = /\.module\.less$/;</span><br><span class="line">    ...</span><br><span class="line">     /** less */</span><br><span class="line">            &#123;</span><br><span class="line">              test: lessRegex,</span><br><span class="line">              exclude: lessModuleRegex,</span><br><span class="line">              use: getStyleLoaders(</span><br><span class="line">                &#123;</span><br><span class="line">                  importLoaders: 3,</span><br><span class="line">                  sourceMap: isEnvProduction</span><br><span class="line">                    ? shouldUseSourceMap</span><br><span class="line">                    : isEnvDevelopment,</span><br><span class="line">                  modules: &#123;</span><br><span class="line">                    mode: 'icss',</span><br><span class="line">                  &#125;,</span><br><span class="line">                &#125;,</span><br><span class="line">                'less-loader'</span><br><span class="line">              ),</span><br><span class="line">          </span><br><span class="line">              sideEffects: true,</span><br><span class="line">            &#125;,</span><br><span class="line">        </span><br><span class="line">            &#123;</span><br><span class="line">              test: lessModuleRegex,</span><br><span class="line">              use: getStyleLoaders(</span><br><span class="line">                &#123;</span><br><span class="line">                  importLoaders: 3,</span><br><span class="line">                  sourceMap: isEnvProduction</span><br><span class="line">                    ? shouldUseSourceMap</span><br><span class="line">                    : isEnvDevelopment,</span><br><span class="line">                  modules: &#123;</span><br><span class="line">                    mode: 'local',</span><br><span class="line">                    getLocalIdent: getCSSModuleLocalIdent,</span><br><span class="line">                  &#125;,</span><br><span class="line">                &#125;,</span><br><span class="line">                'less-loader'</span><br><span class="line">              ),</span><br><span class="line">            &#125;,</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="项目中配置-TS-环境"><a href="#项目中配置-TS-环境" class="headerlink" title="项目中配置 TS 环境"></a>项目中配置 TS 环境</h1><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save typescript @types/node @types/react @types/react-dom @types/jest</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/React/" rel="tag"><i class="fa fa-tag"></i>React</a>
+              <a href="/tags/实战/" rel="tag"><i class="fa fa-tag"></i>实战</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/10/16/JS整理/" rel="next" title="JS整理">
+                  <i class="fa fa-chevron-left"></i> JS整理
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2021/05/01/React 实战 - 数据库/" rel="prev" title="React实战之数据库">
+                  React实战之数据库 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#目标"><span class="nav-number">1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目"><span class="nav-number">2.</span> <span class="nav-text">项目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#项目介绍"><span class="nav-number">2.1.</span> <span class="nav-text">项目介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#技术栈"><span class="nav-number">2.2.</span> <span class="nav-text">技术栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目搭建"><span class="nav-number">2.3.</span> <span class="nav-text">项目搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#本地接口部署-服务端"><span class="nav-number">2.3.1.</span> <span class="nav-text">本地接口部署(服务端)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建并导入数据，数据库名称-hkzf-（固定名称）"><span class="nav-number">2.3.1.1.</span> <span class="nav-text">创建并导入数据，数据库名称 hkzf （固定名称）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#双击创建连接，右键新建数据库"><span class="nav-number">2.3.1.2.</span> <span class="nav-text">双击创建连接，右键新建数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输入数据库名称，选择字符集-utf-8"><span class="nav-number">2.3.1.3.</span> <span class="nav-text">输入数据库名称，选择字符集 utf-8</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#右键运行-sql-文件，将写好的-sql-文件直接导入"><span class="nav-number">2.3.1.4.</span> <span class="nav-text">右键运行 sql 文件，将写好的 sql 文件直接导入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#打开-hkzf-v1-服务端项目，启动项目，若-数据库密码修改过的，需要在-config-mysql-js-中将-数据库密码修改，再-npm-start-启动项目"><span class="nav-number">2.3.1.5.</span> <span class="nav-text">打开 hkzf_v1 服务端项目，启动项目，若 数据库密码修改过的，需要在 /config/mysql.js 中将 数据库密码修改，再 npm start 启动项目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#views-swagger-html-中修改一下库的链接"><span class="nav-number">2.3.1.6.</span> <span class="nav-text">/views/swagger.html 中修改一下库的链接</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#项目启动完毕，访问本地-http-localhost-8080-端口即可查看接口文档"><span class="nav-number">2.3.2.</span> <span class="nav-text">项目启动完毕，访问本地 http://localhost:8080/ 端口即可查看接口文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#脚手架初始化本地项目"><span class="nav-number">2.3.3.</span> <span class="nav-text">脚手架初始化本地项目</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#初始项目结构"><span class="nav-number">3.</span> <span class="nav-text">初始项目结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#调整项目结构（src目录）"><span class="nav-number">4.</span> <span class="nav-text">调整项目结构（src目录）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#连接远程仓库"><span class="nav-number">5.</span> <span class="nav-text">连接远程仓库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运行项目"><span class="nav-number">6.</span> <span class="nav-text">运行项目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目准备-UI组件库"><span class="nav-number">7.</span> <span class="nav-text">项目准备 - UI组件库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#组件库-antd-mobile"><span class="nav-number">7.1.</span> <span class="nav-text">组件库 antd-mobile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动引入实现按需加载"><span class="nav-number">7.2.</span> <span class="nav-text">自动引入实现按需加载</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目准备-配置路由"><span class="nav-number">8.</span> <span class="nav-text">项目准备 - 配置路由</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本使用"><span class="nav-number">8.1.</span> <span class="nav-text">基本使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集中渲染路由"><span class="nav-number">8.2.</span> <span class="nav-text">集中渲染路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目两种布局"><span class="nav-number">8.3.</span> <span class="nav-text">项目两种布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#嵌套路由"><span class="nav-number">8.4.</span> <span class="nav-text">嵌套路由</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">8.4.1.</span> <span class="nav-text">使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目准备-项目全局样式调整"><span class="nav-number">9.</span> <span class="nav-text">项目准备 - 项目全局样式调整</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tabbar-组件实现"><span class="nav-number">10.</span> <span class="nav-text">tabbar 组件实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-less-和-less-loader"><span class="nav-number">10.1.</span> <span class="nav-text">安装 less 和 less-loader</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目中配置-TS-环境"><span class="nav-number">11.</span> <span class="nav-text">项目中配置 TS 环境</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yana"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Yana</p>
+  <div class="site-description" itemprop="description">Never give up！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">86</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">104</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yanadev" title="GitHub → https://github.com/yanadev" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yana</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">254k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

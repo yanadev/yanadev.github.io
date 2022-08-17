@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="YanaChen" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="项目构建 初始化 ts-react-demo 项目 1yarn create react-app ts-react-demo --template typescript 切换到项目目录 1cd ts-react-demo 启动项目 1yarn starttsconfig.json 配置文件详解文件选项">
+<meta name="keywords" content="React,TS,实战">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React + TS 实战">
+<meta property="og:url" content="https://yanadev.github.io/2022/04/11/React + TS 实战/index.html">
+<meta property="og:site_name" content="YanaChen">
+<meta property="og:description" content="项目构建 初始化 ts-react-demo 项目 1yarn create react-app ts-react-demo --template typescript 切换到项目目录 1cd ts-react-demo 启动项目 1yarn starttsconfig.json 配置文件详解文件选项">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2022-08-17T17:10:26.624Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React + TS 实战">
+<meta name="twitter:description" content="项目构建 初始化 ts-react-demo 项目 1yarn create react-app ts-react-demo --template typescript 切换到项目目录 1cd ts-react-demo 启动项目 1yarn starttsconfig.json 配置文件详解文件选项">
+
+<link rel="canonical" href="https://yanadev.github.io/2022/04/11/React + TS 实战/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>React + TS 实战 | YanaChen</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YanaChen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">_踩坑_填坑_日常</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">102</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">104</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">86</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2022/04/11/React + TS 实战/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yana">
+      <meta itemprop="description" content="Never give up！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanaChen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          React + TS 实战
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-11 16:19:45" itemprop="dateCreated datePublished" datetime="2022-04-11T16:19:45+08:00">2022-04-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-18 01:10:26" itemprop="dateModified" datetime="2022-08-18T01:10:26+08:00">2022-08-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/" itemprop="url" rel="index">
+                    <span itemprop="name">React</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/TS/" itemprop="url" rel="index">
+                    <span itemprop="name">TS</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/TS/实战/" itemprop="url" rel="index">
+                    <span itemprop="name">实战</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.8k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="项目构建"><a href="#项目构建" class="headerlink" title="项目构建"></a>项目构建</h1><ul>
+<li>初始化 <code>ts-react-demo</code> 项目</li>
+</ul><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn create react-app ts-react-demo --template typescript</span><br></pre></td></tr></table></figure><ul>
+<li>切换到项目目录</li>
+</ul><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd ts-react-demo</span><br></pre></td></tr></table></figure><ul>
+<li>启动项目</li>
+</ul><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn start</span><br></pre></td></tr></table></figure><h1 id="tsconfig-json-配置文件详解"><a href="#tsconfig-json-配置文件详解" class="headerlink" title="tsconfig.json 配置文件详解"></a><code>tsconfig.json</code> 配置文件详解</h1><h2 id="文件选项"><a href="#文件选项" class="headerlink" title="文件选项"></a>文件选项</h2><a id="more"></a>
+
+
+
+
+
+
+
+
+<ul>
+<li>files 表示需要编译的单个文件列表</li>
+<li>include 表示需要编译的文件或者目录</li>
+<li>exclude 表示编译器需要排除的文件或者文件夹</li>
+<li>extends 表示引入其他配置文件，继承配置</li>
+<li>compileOnSave 设置保存文件的时候自动编译（VScode 暂不支持，可使用 Atom）</li>
+</ul>
+<h2 id="编译选项"><a href="#编译选项" class="headerlink" title="编译选项"></a>编译选项</h2><ul>
+<li>compilerOptions 配置编译选项</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">"compilerOptions": &#123;</span><br><span class="line">  "incremental": true, // TS编译器在第一次编译之后会生成一个存储编译信息的文件，第二次编译会在第一次的基础上进行增量编译，可以提高编译的速度</span><br><span class="line">  "tsBuildInfoFile": "./buildFile", // 增量编译文件的存储位置</span><br><span class="line">  "diagnostics": true, // 打印诊断信息 </span><br><span class="line">  "target": "ES5", // 目标语言的版本</span><br><span class="line">  "module": "CommonJS", // 生成代码的模板标准</span><br><span class="line">  "outFile": "./app.js", // 将多个相互依赖的文件生成一个文件，可以用在AMD模块中，即开启时应设置"module": "AMD",</span><br><span class="line">  "lib": ["DOM", "ES2015", "ScriptHost", "ES2019.Array"], // TS需要引用的库，即声明文件，es5 默认引用dom、es5、scripthost,如需要使用es的高级版本特性，通常都需要配置，如es8的数组新特性需要引入"ES2019.Array",</span><br><span class="line">  "allowJS": true, // 允许编译器编译JS，JSX文件</span><br><span class="line">  "checkJs": true, // 允许在JS文件中报错，通常与allowJS一起使用</span><br><span class="line">  "outDir": "./dist", // 指定输出目录</span><br><span class="line">  "rootDir": "./", // 指定输出文件目录(用于输出)，用于控制输出目录结构</span><br><span class="line">  "declaration": true, // 生成声明文件，开启后会自动生成声明文件</span><br><span class="line">  "declarationDir": "./file", // 指定生成声明文件存放目录</span><br><span class="line">  "emitDeclarationOnly": true, // 只生成声明文件，而不会生成js文件</span><br><span class="line">  "sourceMap": true, // 生成目标文件的sourceMap文件</span><br><span class="line">  "inlineSourceMap": true, // 生成目标文件的inline SourceMap，inline SourceMap会包含在生成的js文件中</span><br><span class="line">  "declarationMap": true, // 为声明文件生成sourceMap</span><br><span class="line">  "typeRoots": [], // 声明文件目录，默认时node_modules/@types</span><br><span class="line">  "types": [], // 加载的声明文件包</span><br><span class="line">  "removeComments":true, // 删除注释 </span><br><span class="line">  "noEmit": true, // 不输出文件,即编译后不会生成任何js文件</span><br><span class="line">  "noEmitOnError": true, // 发送错误时不输出任何文件</span><br><span class="line">  "noEmitHelpers": true, // 不生成helper函数，减小体积，需要额外安装，常配合importHelpers一起使用</span><br><span class="line">  "importHelpers": true, // 通过tslib引入helper函数，文件必须是模块</span><br><span class="line">  "downlevelIteration": true, // 降级遍历器实现，如果目标源是es3/5，那么遍历器会有降级的实现</span><br><span class="line">  "strict": true, // 开启所有严格的类型检查</span><br><span class="line">  "alwaysStrict": true, // 在代码中注入'use strict'</span><br><span class="line">  "noImplicitAny": true, // 不允许隐式的any类型</span><br><span class="line">  "strictNullChecks": true, // 不允许把null、undefined赋值给其他类型的变量</span><br><span class="line">  "strictFunctionTypes": true, // 不允许函数参数双向协变</span><br><span class="line">  "strictPropertyInitialization": true, // 类的实例属性必须初始化</span><br><span class="line">  "strictBindCallApply": true, // 严格的bind/call/apply检查</span><br><span class="line">  "noImplicitThis": true, // 不允许this有隐式的any类型</span><br><span class="line">  "noUnusedLocals": true, // 检查只声明、未使用的局部变量(只提示不报错)</span><br><span class="line">  "noUnusedParameters": true, // 检查未使用的函数参数(只提示不报错)</span><br><span class="line">  "noFallthroughCasesInSwitch": true, // 防止switch语句贯穿(即如果没有break语句后面不会执行)</span><br><span class="line">  "noImplicitReturns": true, //每个分支都会有返回值</span><br><span class="line">  "esModuleInterop": true, // 允许export=导出，由import from 导入</span><br><span class="line">  "allowUmdGlobalAccess": true, // 允许在模块中全局变量的方式访问umd模块</span><br><span class="line">  "moduleResolution": "node", // 模块解析策略，ts默认用node的解析策略，即相对的方式导入</span><br><span class="line">  "baseUrl": "./", // 解析非相对模块的基地址，默认是当前目录</span><br><span class="line">  "paths": &#123; // 路径映射，相对于baseUrl</span><br><span class="line">    // 如使用jq时不想使用默认版本，而需要手动指定版本，可进行如下配置</span><br><span class="line">    "jquery": ["node_modules/jquery/dist/jquery.min.js"]</span><br><span class="line">  &#125;,</span><br><span class="line">  "rootDirs": ["src","out"], // 将多个目录放在一个虚拟目录下，用于运行时，即编译后引入文件的位置可能发生变化，这也设置可以虚拟src和out在同一个目录下，不用再去改变路径也不会报错</span><br><span class="line">  "listEmittedFiles": true, // 打印输出文件</span><br><span class="line">  "listFiles": true// 打印编译的文件(包括引用的声明文件)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="工程引用"><a href="#工程引用" class="headerlink" title="工程引用"></a>工程引用</h2><ul>
+<li>reference 指定工程引用依赖</li>
+</ul>
+<blockquote>
+<p>项目开发中，有时候为了方便，将前端项目和后端 node 项目放在同一个目录下开发，<strong>两个项目依赖同一个配置文件和通用文件，希望前后端进行灵活的分别打包，可进行如下配置</strong></p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">Project</span><br><span class="line">  - src</span><br><span class="line">    - client //客户端项目</span><br><span class="line">      - index.ts // 客户端项目文件</span><br><span class="line">      - tsconfig.json // 客户端配置文件</span><br><span class="line">        &#123;</span><br><span class="line">          "extends": "../../tsconfig.json", // 继承基础配置</span><br><span class="line">          "compilerOptions": &#123;</span><br><span class="line">            "outDir": "../../dist/client", // 指定输出目录</span><br><span class="line">          &#125;,</span><br><span class="line">          "references": [ // 指定依赖的工程</span><br><span class="line">            &#123;<span class="attr">"path"</span>: <span class="string">"./common"</span>&#125;</span><br><span class="line">          ]</span><br><span class="line">        &#125;</span><br><span class="line">    - common // 前后端通用依赖工程</span><br><span class="line">      - index.ts  // 前后端通用文件</span><br><span class="line">      - tsconfig.json // 前后端通用代码配置文件</span><br><span class="line">        &#123;</span><br><span class="line">          "extends": "../../tsconfig.json", // 继承基础配置</span><br><span class="line">          "compilerOptions": &#123;</span><br><span class="line">            "outDir": "../../dist/client", // 指定输出目录</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    - server // 服务端项目</span><br><span class="line">      - index.ts // 服务端项目文件</span><br><span class="line">      - tsconfig.json // 服务端项目配置文件</span><br><span class="line">        &#123;</span><br><span class="line">          "extends": "../../tsconfig.json", // 继承基础配置</span><br><span class="line">          "compilerOptions": &#123;</span><br><span class="line">            "outDir": "../../dist/server", // 指定输出目录</span><br><span class="line">          &#125;,</span><br><span class="line">          "references": [ // 指定依赖的工程</span><br><span class="line">            &#123;<span class="attr">"path"</span>: <span class="string">"./common"</span>&#125;</span><br><span class="line">          ]</span><br><span class="line">        &#125;</span><br><span class="line">  - tsconfig.json // 前后端项目通用基础配置</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"compilerOptions"</span>: &#123;</span><br><span class="line">        <span class="attr">"target"</span>: <span class="string">"es5"</span>,</span><br><span class="line">        <span class="attr">"module"</span>: <span class="string">"commonjs"</span>,</span><br><span class="line">        <span class="attr">"strict"</span>: <span class="literal">true</span>,</span><br><span class="line">        "composite": true, // 增量编译</span><br><span class="line">        "declaration": true</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>如此配置之后，可单独构建前后端项目</p>
+</li>
+<li><p>构建前端项目</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tsc -v src/client</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>构建后端项目</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tsc -b src/server</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>输出目录</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Project</span><br><span class="line"> - dist </span><br><span class="line">  - client</span><br><span class="line">    - index.js</span><br><span class="line">    - index.d.ts</span><br><span class="line">  - common</span><br><span class="line">    - index.js</span><br><span class="line">    - index.d.ts</span><br><span class="line">  - server</span><br><span class="line">    - index.js</span><br><span class="line">    - index.d.ts</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="添加配置-redux-状态管理"><a href="#添加配置-redux-状态管理" class="headerlink" title="添加配置 redux(状态管理)"></a>添加配置 redux(状态管理)</h1><blockquote>
+<p>应用整体全局状态以 <code>对象树</code> 的方式存于 <code>单个store</code></p>
+<ul>
+<li>唯一改变状态树的方式是 <code>创建 action（描述发生了什么）、并 dispatch 给 store</code></li>
+<li>需要指定状态树如何响应 action 来进行更新，可以编写 <code>纯reducer</code> 函数，这些函数根据旧 state 和 action 来计算新 state</li>
+</ul>
+</blockquote>
+<h2 id="安装-redux"><a href="#安装-redux" class="headerlink" title="安装 redux"></a>安装 redux</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add @reduxjs/toolkit react-redux</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置-入口文件"><a href="#配置-入口文件" class="headerlink" title="配置 入口文件"></a>配置 入口文件</h2><ul>
+<li><p><code>src</code> 目录下新建 redux 入口文件 <code>store/index.ts</code></p>
+</li>
+<li><p>配置 <code>index.ts</code> 文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createSlice, configureStore &#125; <span class="keyword">from</span> <span class="string">'@reduxjs/toolkit'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> counterSlice = createSlice(&#123;</span><br><span class="line">  name: <span class="string">'counter'</span>,</span><br><span class="line">  initialState: &#123;</span><br><span class="line">    value: <span class="number">0</span></span><br><span class="line">  &#125;,</span><br><span class="line">  reducers: &#123;</span><br><span class="line">    incremented: <span class="function"><span class="params">state</span> =&gt;</span> &#123;</span><br><span class="line">      state.value += <span class="number">1</span></span><br><span class="line">    &#125;,</span><br><span class="line">    decremented: <span class="function"><span class="params">state</span> =&gt;</span> &#123;</span><br><span class="line">      state.value -= <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> &#123; incremented, decremented &#125; = counterSlice.actions</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = configureStore(&#123;</span><br><span class="line">  reducer: counterSlice.reducer</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">/** 订阅 */</span></span><br><span class="line">store.subscribe(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(store.getState());</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">/**触发 */</span></span><br><span class="line">store.dispatch(incremented())</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> store</span><br><span class="line"></span><br><span class="line"><span class="comment">// type RootState = ReturnType&lt;typeof store.getState&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// type AppDispatch = typeof store.dispatch</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>项目入口文件中引入 <code>react-redux</code> 包中的 Provider ，将以上写好的 store 传递给 Provider 组件的 store 参数</p>
+<ul>
+<li>引入 store 文件只需要引入到 store 文件夹即可，会自动在该目录下寻找 <code>index.ts</code> 文件的</li>
+<li>传入store，App 根组件及其所有子组件都可以共享这个store</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">import React from &apos;react&apos;;</span><br><span class="line">import ReactDOM from &apos;react-dom/client&apos;;</span><br><span class="line">import &apos;./index.css&apos;;</span><br><span class="line">import App from &apos;./App&apos;;</span><br><span class="line">import reportWebVitals from &apos;./reportWebVitals&apos;;</span><br><span class="line">import &#123; Provider &#125; from &apos;react-redux&apos;</span><br><span class="line">import store from &apos;./store&apos;</span><br><span class="line"></span><br><span class="line">const root = ReactDOM.createRoot(</span><br><span class="line">  document.getElementById(&apos;root&apos;) as HTMLElement</span><br><span class="line">);</span><br><span class="line">root.render(</span><br><span class="line">  &lt;React.StrictMode&gt;</span><br><span class="line">    &lt;Provider store=&#123;store&#125;&gt;</span><br><span class="line">      &lt;App /&gt;</span><br><span class="line">    &lt;/Provider&gt;</span><br><span class="line">  &lt;/React.StrictMode&gt;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">// If you want to start measuring performance in your app, pass a function</span><br><span class="line">// to log results (for example: reportWebVitals(console.log))</span><br><span class="line">// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals</span><br><span class="line">reportWebVitals();</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><ul>
+<li><code>react-redux</code> 库中的 useSelector()</li>
+</ul>
+<h2 id="关于-redux-与-redux-Toolkit"><a href="#关于-redux-与-redux-Toolkit" class="headerlink" title="关于 redux 与 redux Toolkit"></a>关于 redux 与 redux Toolkit</h2><p><strong>Redux Toolkit 简化了编写 redux 逻辑和设置 store 的过程</strong> </p>
+<h3 id="redux-设置"><a href="#redux-设置" class="headerlink" title="redux 设置"></a>redux 设置</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createStore &#125; <span class="keyword">from</span> <span class="string">'redux'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">counterReducer</span>(<span class="params">state = &#123; value: 0 &#125;, action</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">switch</span> (action.type) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'counter/incremented'</span>: <span class="keyword">return</span> &#123; value: state.value + <span class="number">1</span> &#125;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'counter/decremented'</span>: <span class="keyword">return</span> &#123; value: state.value - <span class="number">1</span> &#125;</span><br><span class="line">    <span class="keyword">default</span>: <span class="keyword">return</span> state</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> store = createStore(counterReducer)</span><br><span class="line"></span><br><span class="line">store.subscribe(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(store.getState());</span><br><span class="line">&#125;)</span><br><span class="line">store.dispatch(&#123; <span class="keyword">type</span>: <span class="string">'counter/incremented'</span> &#125;)</span><br><span class="line">store.dispatch(&#123; <span class="keyword">type</span>: <span class="string">'counter/incremented'</span> &#125;)</span><br><span class="line">store.dispatch(&#123; <span class="keyword">type</span>: <span class="string">'counter/decremented'</span> &#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="redux-toolkit-设置"><a href="#redux-toolkit-设置" class="headerlink" title="redux toolkit 设置"></a>redux toolkit 设置</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createSlice, configureStore &#125; <span class="keyword">from</span> <span class="string">'@reduxjs/toolkit'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> counterSlice = createSlice(&#123;</span><br><span class="line">  name: <span class="string">'counter'</span>,</span><br><span class="line">  initialState: &#123;</span><br><span class="line">    value: <span class="number">0</span></span><br><span class="line">  &#125;,</span><br><span class="line">  reducers: &#123;</span><br><span class="line">    incremented: <span class="function"><span class="params">state</span> =&gt;</span> &#123;</span><br><span class="line">      state.value += <span class="number">1</span></span><br><span class="line">    &#125;,</span><br><span class="line">    decremented: <span class="function"><span class="params">state</span> =&gt;</span> &#123;</span><br><span class="line">      state.value -= <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> &#123; incremented, decremented &#125; = counterSlice.actions</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = configureStore(&#123;</span><br><span class="line">  reducer: counterSlice.reducer</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">/** 订阅 */</span></span><br><span class="line">store.subscribe(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(store.getState());</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">/**触发 */</span></span><br><span class="line">store.dispatch(incremented())</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/React/" rel="tag"><i class="fa fa-tag"></i>React</a>
+              <a href="/tags/TS/" rel="tag"><i class="fa fa-tag"></i>TS</a>
+              <a href="/tags/实战/" rel="tag"><i class="fa fa-tag"></i>实战</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2022/04/11/webpack5 之 css 优化/" rel="next" title="webpack5之css优化">
+                  <i class="fa fa-chevron-left"></i> webpack5之css优化
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2022/05/21/React 中使用 TS/" rel="prev" title="React中使用TS">
+                  React中使用TS <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#项目构建"><span class="nav-number">1.</span> <span class="nav-text">项目构建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tsconfig-json-配置文件详解"><span class="nav-number">2.</span> <span class="nav-text">tsconfig.json 配置文件详解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#文件选项"><span class="nav-number">2.1.</span> <span class="nav-text">文件选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译选项"><span class="nav-number">2.2.</span> <span class="nav-text">编译选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工程引用"><span class="nav-number">2.3.</span> <span class="nav-text">工程引用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#添加配置-redux-状态管理"><span class="nav-number">3.</span> <span class="nav-text">添加配置 redux(状态管理)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-redux"><span class="nav-number">3.1.</span> <span class="nav-text">安装 redux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-入口文件"><span class="nav-number">3.2.</span> <span class="nav-text">配置 入口文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">3.3.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于-redux-与-redux-Toolkit"><span class="nav-number">3.4.</span> <span class="nav-text">关于 redux 与 redux Toolkit</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#redux-设置"><span class="nav-number">3.4.1.</span> <span class="nav-text">redux 设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redux-toolkit-设置"><span class="nav-number">3.4.2.</span> <span class="nav-text">redux toolkit 设置</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yana"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Yana</p>
+  <div class="site-description" itemprop="description">Never give up！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">86</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">104</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yanadev" title="GitHub → https://github.com/yanadev" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yana</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">254k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
