@@ -54,15 +54,15 @@
 <meta property="og:site_name" content="YanaChen">
 <meta property="og:description" content="从零配置 webpack 包含 指定默认入口 entry 指定默认出口 output 指定 mode 打包模式 指定 module 中的 loader：支持其他文件类型并转化为有效模块，添加到依赖图 loader 本身是一个函数，接收源文件，返回转换结果   指定 plugins 中的 插件：bundle 文件优化，资源管理和环境变量注入（整个构建过程）">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://yanadev.github.io/2022/08/15/webpack实战/image-20220816235739690.png">
-<meta property="og:image" content="https://yanadev.github.io/2022/08/15/webpack实战/image-20220817000257135.png">
-<meta property="og:image" content="https://yanadev.github.io/2022/08/15/webpack实战/image-20220817004339742.png">
-<meta property="og:image" content="https://yanadev.github.io/2022/08/15/webpack实战/image-20220817004445679.png">
-<meta property="og:updated_time" content="2022-08-18T16:28:03.697Z">
+<meta property="og:image" content="https://yanadev.github.io/2022/08/15/webpack实战/image-20220819231248332.png">
+<meta property="og:image" content="https://yanadev.github.io/2022/08/15/webpack实战/image-20220819231255875.png">
+<meta property="og:image" content="https://yanadev.github.io/2022/08/15/webpack实战/image-20220819231306852.png">
+<meta property="og:image" content="https://yanadev.github.io/2022/08/15/webpack实战/image-20220819231312751.png">
+<meta property="og:updated_time" content="2022-08-19T15:13:13.935Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="webpack实战">
 <meta name="twitter:description" content="从零配置 webpack 包含 指定默认入口 entry 指定默认出口 output 指定 mode 打包模式 指定 module 中的 loader：支持其他文件类型并转化为有效模块，添加到依赖图 loader 本身是一个函数，接收源文件，返回转换结果   指定 plugins 中的 插件：bundle 文件优化，资源管理和环境变量注入（整个构建过程）">
-<meta name="twitter:image" content="https://yanadev.github.io/2022/08/15/webpack实战/image-20220816235739690.png">
+<meta name="twitter:image" content="https://yanadev.github.io/2022/08/15/webpack实战/image-20220819231248332.png">
 
 <link rel="canonical" href="https://yanadev.github.io/2022/08/15/webpack实战/">
 
@@ -154,17 +154,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">99</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">104</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">101</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">86</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">85</span></a>
 
   </li>
   </ul>
@@ -223,7 +223,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-19 00:28:03" itemprop="dateModified" datetime="2022-08-19T00:28:03+08:00">2022-08-19</time>
+                <time title="修改时间：2022-08-19 23:13:13" itemprop="dateModified" datetime="2022-08-19T23:13:13+08:00">2022-08-19</time>
               </span>
 
           
@@ -358,7 +358,7 @@
 <p>适用于灵活定制场景</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">const express = require(&apos;express&apos;)</span><br><span class="line">const webpack = require(&apos;webpack&apos;)</span><br><span class="line">const webpackDevMiddleware = require(&apos;webpack-dev-middleware&apos;)</span><br><span class="line"></span><br><span class="line">const app = express()</span><br><span class="line">const config = require(&apos;./webpack.config.js&apos;)</span><br><span class="line">const compiler = webpack(config)</span><br><span class="line"></span><br><span class="line">app.use(webpackDevMiddleware(compiler, &#123;</span><br><span class="line">	publicPath: config.output.publicPath </span><br><span class="line">&#125;))</span><br><span class="line"></span><br><span class="line">app.listen(3000, function() &#123;</span><br><span class="line">	console.log(&apos;Example app listening on port 3000!\n&apos;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
-<h2 id="热更新原理分析"><a href="#热更新原理分析" class="headerlink" title="热更新原理分析"></a>热更新原理分析</h2><p><img src="//yanadev.github.io/2022/08/15/webpack实战/image-20220816235739690.png" alt="image-20220816235739690"></p>
+<h2 id="热更新原理分析"><a href="#热更新原理分析" class="headerlink" title="热更新原理分析"></a>热更新原理分析</h2><p><img src="//yanadev.github.io/2022/08/15/webpack实战/image-20220819231248332.png" alt="image-20220819231248332"></p>
 <h1 id="文件指纹（打包输出的文件名后缀）"><a href="#文件指纹（打包输出的文件名后缀）" class="headerlink" title="文件指纹（打包输出的文件名后缀）"></a>文件指纹（打包输出的文件名后缀）</h1><ul>
 <li>hash 整个项目构建相关，只要项目文件修改，hash 值改变</li>
 <li>chunkhash 和 webpack 打包的 chunk 有关，不同的 entry 会生成不同的 chunkhash</li>
@@ -373,7 +373,7 @@
 </li>
 <li><p>图片设置 file-loader 的 name，使用 hash</p>
 <p><strong>注意：文件的 hash 同js 、css 的 hash标准不同，图片的 hash 表示的是内容的hash</strong></p>
-<p><img src="//yanadev.github.io/2022/08/15/webpack实战/image-20220817000257135.png" alt="image-20220817000257135"></p>
+<p><img src="//yanadev.github.io/2022/08/15/webpack实战/image-20220819231255875.png" alt="image-20220819231255875"></p>
 </li>
 </ul>
 <h1 id="代码压缩"><a href="#代码压缩" class="headerlink" title="代码压缩"></a>代码压缩</h1><ul>
@@ -453,10 +453,10 @@
 <p>cheap 不包含列信息</p>
 <p>inline 将 .map 作为 DataURL 嵌入，不单独生成 .map 文件</p>
 <p>module 包含 loader 的 sourcemap</p>
-<h2 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h2><p><img src="//yanadev.github.io/2022/08/15/webpack实战/image-20220817004339742.png" alt="image-20220817004339742"></p>
+<h2 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h2><p><img src="//yanadev.github.io/2022/08/15/webpack实战/image-20220819231306852.png" alt="image-20220819231306852"></p>
 <h1 id="基础库分离"><a href="#基础库分离" class="headerlink" title="基础库分离"></a>基础库分离</h1><p>思路：将 react、react-dom 基础包通过 cdn 引入，不打入 bundle</p>
 <p>方法：使用 html-webpack-externals-plugin</p>
-<p><img src="//yanadev.github.io/2022/08/15/webpack实战/image-20220817004445679.png" alt="image-20220817004445679"></p>
+<p><img src="//yanadev.github.io/2022/08/15/webpack实战/image-20220819231312751.png" alt="image-20220819231312751"></p>
 <h1 id="SplitChunksPlugin公共脚本分离（内置插件）"><a href="#SplitChunksPlugin公共脚本分离（内置插件）" class="headerlink" title="SplitChunksPlugin公共脚本分离（内置插件）"></a>SplitChunksPlugin公共脚本分离（内置插件）</h1>
     </div>
 
@@ -546,20 +546,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">86</span>
+          <span class="site-state-item-count">85</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">104</span>
+        <span class="site-state-item-count">101</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-count">99</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -606,7 +606,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">253k</span>
+    <span title="站点总字数">251k</span>
 </div>
 
         

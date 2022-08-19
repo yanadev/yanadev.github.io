@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="YanaChen" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="项目搭建  composition API  精简代码，根据模块需求引入对应的功能   响应式  组件化  动画  搭建 vue3工程化项目 使用 vite 搭建项目 1yarn create vite myVue3 --template vue  输入项目名称 myVue3  选择框架名 vue  选择数据类型 variant ： vue-ts / vue">
+<meta name="keywords" content="vue3,项目搭建,组件化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初始Vue3">
+<meta property="og:url" content="https://yanadev.github.io/2022/07/12/初始Vue3/index.html">
+<meta property="og:site_name" content="YanaChen">
+<meta property="og:description" content="项目搭建  composition API  精简代码，根据模块需求引入对应的功能   响应式  组件化  动画  搭建 vue3工程化项目 使用 vite 搭建项目 1yarn create vite myVue3 --template vue  输入项目名称 myVue3  选择框架名 vue  选择数据类型 variant ： vue-ts / vue">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://yanadev.github.io/2022/07/12/初始Vue3/image-20220712160445080.png">
+<meta property="og:image" content="https://yanadev.github.io/2022/07/12/初始Vue3/image-20220712180305890.png">
+<meta property="og:image" content="https://yanadev.github.io/2022/07/12/初始Vue3/image-20220712183014733.png">
+<meta property="og:image" content="https://yanadev.github.io/2022/07/12/初始Vue3/image-20220713165859984.png">
+<meta property="og:image" content="https://yanadev.github.io/2022/07/12/初始Vue3/image-20220727000702653.png">
+<meta property="og:updated_time" content="2022-08-19T14:58:56.499Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="初始Vue3">
+<meta name="twitter:description" content="项目搭建  composition API  精简代码，根据模块需求引入对应的功能   响应式  组件化  动画  搭建 vue3工程化项目 使用 vite 搭建项目 1yarn create vite myVue3 --template vue  输入项目名称 myVue3  选择框架名 vue  选择数据类型 variant ： vue-ts / vue">
+<meta name="twitter:image" content="https://yanadev.github.io/2022/07/12/初始Vue3/image-20220712160445080.png">
+
+<link rel="canonical" href="https://yanadev.github.io/2022/07/12/初始Vue3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>初始Vue3 | YanaChen</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YanaChen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">_踩坑_填坑_日常</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">99</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">101</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">85</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yanadev.github.io/2022/07/12/初始Vue3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yana">
+      <meta itemprop="description" content="Never give up！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanaChen">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          初始Vue3
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-12 16:17:26" itemprop="dateCreated datePublished" datetime="2022-07-12T16:17:26+08:00">2022-07-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-19 22:58:56" itemprop="dateModified" datetime="2022-08-19T22:58:56+08:00">2022-08-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/vue3/" itemprop="url" rel="index">
+                    <span itemprop="name">vue3</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/vue3/项目搭建/" itemprop="url" rel="index">
+                    <span itemprop="name">项目搭建</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/vue3/项目搭建/组件化/" itemprop="url" rel="index">
+                    <span itemprop="name">组件化</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>23k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ul>
+<li><p>项目搭建</p>
+</li>
+<li><p>composition API</p>
+<ul>
+<li>精简代码，根据模块需求引入对应的功能</li>
+</ul>
+</li>
+<li><p>响应式</p>
+</li>
+<li><p>组件化</p>
+</li>
+<li><p>动画</p>
+</li>
+</ul><h1 id="搭建-vue3工程化项目"><a href="#搭建-vue3工程化项目" class="headerlink" title="搭建 vue3工程化项目"></a>搭建 vue3工程化项目</h1><ul>
+<li><p>使用 vite 搭建项目</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn create vite myVue3 --template vue</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>输入项目名称 myVue3</p>
+</li>
+<li><p>选择框架名 vue</p>
+</li>
+<li><p>选择数据类型 variant ： vue-ts / vue</p>
+</li>
+</ul><a id="more"></a>
+
+<p><img src="//yanadev.github.io/2022/07/12/初始Vue3/image-20220712160445080.png" alt="image-20220712160445080"></p>
+<h1 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h1><ul>
+<li>index.html 项目入口</li>
+<li>package.json 管理项目依赖和配置的文件</li>
+<li>public目录 放置静态资源</li>
+<li>vite.config.json 和 vite 相关的所有工程化的配置</li>
+<li>src 源码</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── README.md</span><br><span class="line">├── index.html           入口文件</span><br><span class="line">├── package.json</span><br><span class="line">├── public               资源文件</span><br><span class="line">│   └── favicon.ico</span><br><span class="line">├── src                  源码</span><br><span class="line">│   ├── App.vue          单文件组件</span><br><span class="line">│   ├── assets</span><br><span class="line">│   │   └── logo.png</span><br><span class="line">│   ├── components   </span><br><span class="line">│   │   └── HelloWorld.vue</span><br><span class="line">│   └── main.js          入口</span><br><span class="line">└── vite.config.js vite工程化配置文件</span><br></pre></td></tr></table></figure>
+
+<h1 id="启动项目"><a href="#启动项目" class="headerlink" title="启动项目"></a>启动项目</h1><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install </span><br><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+
+<p><strong>整体架构</strong></p>
+<p><img src="//yanadev.github.io/2022/07/12/初始Vue3/image-20220712180305890.png" alt="image-20220712180305890"></p>
+<h1 id="vuex管理数据，vue-router-管理路由"><a href="#vuex管理数据，vue-router-管理路由" class="headerlink" title="vuex管理数据，vue-router 管理路由"></a>vuex管理数据，vue-router 管理路由</h1><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install vue-router@next vuex@next</span><br></pre></td></tr></table></figure>
+
+<h1 id="规范（src组织结构）"><a href="#规范（src组织结构）" class="headerlink" title="规范（src组织结构）"></a>规范（src组织结构）</h1><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">├── src</span><br><span class="line">│   ├── api            数据请求</span><br><span class="line">│   ├── assets         静态资源</span><br><span class="line">│   ├── components     组件</span><br><span class="line">│   ├── pages          页面</span><br><span class="line">│   ├── router         路由配置</span><br><span class="line">│   ├── store          vuex数据</span><br><span class="line">│   └── utils          工具函数</span><br></pre></td></tr></table></figure>
+
+<h1 id="引入路由系统"><a href="#引入路由系统" class="headerlink" title="引入路由系统"></a>引入路由系统</h1><ul>
+<li><p>router 目录下创建 index.js 文件</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createRouter, createWebHashHistory &#125; <span class="keyword">from</span> <span class="string">'vue-router'</span>;</span><br><span class="line"><span class="keyword">import</span> Home <span class="keyword">from</span> <span class="string">'../pages/Home.vue'</span>;</span><br><span class="line"><span class="keyword">import</span> About <span class="keyword">from</span> <span class="string">'../pages/About.vue'</span>;</span><br><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/'</span>,</span><br><span class="line">    name: <span class="string">'Home'</span>,</span><br><span class="line">    component: Home</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/about'</span>,</span><br><span class="line">    name: <span class="string">'About'</span>,</span><br><span class="line">    component: About</span><br><span class="line">  &#125;</span><br><span class="line">];</span><br><span class="line"><span class="keyword">const</span> router = createRouter(&#123;</span><br><span class="line">  history: createWebHashHistory(),</span><br><span class="line">  routes</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> router;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在入口文件 <code>main.ts</code> 中引入 <code>router</code></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App.vue'</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">'./router/index'</span></span><br><span class="line">createApp(App)</span><br><span class="line">  .use(router)</span><br><span class="line">  .mount(<span class="string">'#app'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>根组件 App.vue 中，删除之前的代码，加入以下内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;router-link to=&quot;/&quot;&gt;首页&lt;/router-link&gt;</span><br><span class="line">    |</span><br><span class="line">    &lt;router-link to=&quot;/about&quot;&gt;关于&lt;/router-link&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;router-view&gt;&lt;/router-view&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="工具集成"><a href="#工具集成" class="headerlink" title="工具集成"></a>工具集成</h1><ul>
+<li>stylus 或者 sass css 预处理工具</li>
+<li>Element3 组件库</li>
+<li>axios 处理网络请求</li>
+<li>Eslint + Prettier 规范代码格式</li>
+<li>Github 托管代码，使用 commitizen 来规范日志信息</li>
+<li>配置 github Action 来实现自动化部署</li>
+</ul>
+<p><img src="//yanadev.github.io/2022/07/12/初始Vue3/image-20220712183014733.png" alt="image-20220712183014733"></p>
+<h1 id="composition-API-setup"><a href="#composition-API-setup" class="headerlink" title="composition API + setup"></a>composition API + setup</h1><ul>
+<li>components 目录下新建 Todolist.vue</li>
+<li>使用 template 标签放置模板、script 标签放置逻辑代码</li>
+<li>setup 标记使用 <code>&lt;script setup&gt;</code> </li>
+<li>style 标签放置 CSS 样式</li>
+</ul>
+<hr>
+<h2 id="TodoList-组件"><a href="#TodoList-组件" class="headerlink" title="TodoList 组件"></a>TodoList 组件</h2><ul>
+<li><p>components 目录下创建 Todolist.vue 组件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">import &#123; ref &#125; from &apos;vue&apos;;</span><br><span class="line">let count = ref(1);</span><br><span class="line">function add() &#123;</span><br><span class="line">  count.value++;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;h1 @click=&quot;add&quot;&gt;&#123;&#123; count &#125;&#125;&lt;/h1&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">h1 &#123;</span><br><span class="line">  color: red;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将该组件引入到  <code>/pages/home.vue</code> 中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;h1&gt;这是首页&lt;/h1&gt;</span><br><span class="line">  &lt;TodoList&gt;&lt;/TodoList&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">import TodoList from &apos;../components/TodoList.vue&apos;;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>完善 Todolist.vue 组件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">import &#123; ref &#125; from &apos;vue&apos;;</span><br><span class="line">let title = ref(&apos;&apos;);</span><br><span class="line">let count = ref(1);</span><br><span class="line">let todos = ref([&#123; title: &apos;vue study&apos;, done: false &#125;]);</span><br><span class="line">function add() &#123;</span><br><span class="line">  count.value++;</span><br><span class="line">&#125;</span><br><span class="line">function addTodo() &#123;</span><br><span class="line">  todos.value.push(&#123;</span><br><span class="line">    title: title.value,</span><br><span class="line">    done: false,</span><br><span class="line">  &#125;);</span><br><span class="line">  title.value = &apos;&apos;;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;input type=&quot;text&quot; v-model=&quot;title&quot; @keyword.enter=&quot;addTodo&quot; /&gt;</span><br><span class="line">    &lt;ul v-if=&quot;todos.length&quot;&gt;</span><br><span class="line">      &lt;li v-for=&quot;(todo, index) in todos&quot; :key=&quot;index&quot;&gt;</span><br><span class="line">        &lt;input type=&quot;checkbox&quot; v-model=&quot;todo.done&quot; /&gt;</span><br><span class="line">        &lt;span :class=&quot;&#123; done: todo.done &#125;&quot;&gt;&#123;&#123; todo.title &#125;&#125;&lt;/span&gt;</span><br><span class="line">      &lt;/li&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">h1 &#123;</span><br><span class="line">  color: red;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">import &#123; ref, computed &#125; from &apos;vue&apos;;</span><br><span class="line">let title = ref(&apos;&apos;);</span><br><span class="line">let todos = ref([&#123; title: &apos;vue study&apos;, done: false &#125;]);</span><br><span class="line">function add() &#123;</span><br><span class="line">  count.value++;</span><br><span class="line">&#125;</span><br><span class="line">function addTodo() &#123;</span><br><span class="line">  todos.value.push(&#123;</span><br><span class="line">    title: title.value,</span><br><span class="line">    done: false,</span><br><span class="line">  &#125;);</span><br><span class="line">  title.value = &apos;&apos;;</span><br><span class="line">&#125;</span><br><span class="line">function clear() &#123;</span><br><span class="line">  todos.value = todos.value.filter((v) =&gt; !v.done);</span><br><span class="line">&#125;</span><br><span class="line">let active = computed(() =&gt; &#123;</span><br><span class="line">  return todos.value.filter((v) =&gt; !v.done).length;</span><br><span class="line">&#125;);</span><br><span class="line">let all = computed(() =&gt; todos.value.length);</span><br><span class="line">let allDone = computed(&#123;</span><br><span class="line">  get: function () &#123;</span><br><span class="line">    return active.value === 0;</span><br><span class="line">  &#125;,</span><br><span class="line">  set: function (value) &#123;</span><br><span class="line">    todos.value.forEach((todo) =&gt; &#123;</span><br><span class="line">      todo.done = value;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;input type=&quot;text&quot; v-model=&quot;title&quot; @keyword.enter=&quot;addTodo&quot; /&gt;</span><br><span class="line">    &lt;button v-if=&quot;active &lt; all&quot; @click=&quot;clear&quot;&gt;清理&lt;/button&gt;</span><br><span class="line">    &lt;ul v-if=&quot;todos.length&quot;&gt;</span><br><span class="line">      &lt;li v-for=&quot;(todo, index) in todos&quot; :key=&quot;index&quot;&gt;</span><br><span class="line">        &lt;input type=&quot;checkbox&quot; v-model=&quot;todo.done&quot; /&gt;</span><br><span class="line">        &lt;span :class=&quot;&#123; done: todo.done &#125;&quot;&gt;&#123;&#123; todo.title &#125;&#125;&lt;/span&gt;</span><br><span class="line">      &lt;/li&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">    &lt;div v-else&gt;暂无数据&lt;/div&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      全选</span><br><span class="line">      &lt;input type=&quot;checkbox&quot; v-model=&quot;allDone&quot; /&gt;</span><br><span class="line">      &lt;span&gt;&#123;&#123; active &#125;&#125; / &#123;&#123; all &#125;&#125;&lt;/span&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">h1 &#123;</span><br><span class="line">  color: red;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>进一步拆分代码，把功能独立的模块封装成一个独立的函数，做到按需拆分</p>
+</li>
+<li><p>新建一个函数 /utils/useTodos.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ref, computed &#125; <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">useTodos</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> title = ref(<span class="string">""</span>);</span><br><span class="line">  <span class="keyword">let</span> todos = ref([&#123; <span class="attr">title</span>: <span class="string">"学习Vue"</span>, <span class="attr">done</span>: <span class="literal">false</span> &#125;]);</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">addTodo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    todos.value.push(&#123;</span><br><span class="line">      title: title.value,</span><br><span class="line">      done: <span class="literal">false</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">    title.value = <span class="string">""</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">clear</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    todos.value = todos.value.filter(<span class="function">(<span class="params">v</span>) =&gt;</span> !v.done);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">let</span> active = computed(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> todos.value.filter(<span class="function">(<span class="params">v</span>) =&gt;</span> !v.done).length;</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">let</span> all = computed(<span class="function"><span class="params">()</span> =&gt;</span> todos.value.length);</span><br><span class="line">  <span class="keyword">let</span> allDone = computed(&#123;</span><br><span class="line">    <span class="keyword">get</span>: function () &#123;</span><br><span class="line">      <span class="keyword">return</span> active.value === <span class="number">0</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="keyword">set</span>: function (value) &#123;</span><br><span class="line">      todos.value.forEach(<span class="function">(<span class="params">todo</span>) =&gt;</span> &#123;</span><br><span class="line">        todo.done = value;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> &#123; title, todos, addTodo, clear, active, all, allDone &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> useTodos;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将该方法引入到 TodoList 组件中即可使用，减轻 TodoList 中script的压力</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line">import &#123; ref, computed &#125; from &apos;vue&apos;;</span><br><span class="line">import useTodos from &apos;../utils/useTodos.js&apos;;</span><br><span class="line">let count = ref(1);</span><br><span class="line">function add() &#123;</span><br><span class="line">  count.value++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let &#123; title, todos, addTodo, clear, active, all, allDone &#125; = useTodos();</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;h1&gt;这是 todoList 组件&lt;/h1&gt;</span><br><span class="line">  &#123;&#123; count &#125;&#125;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="Mouse-js-获取鼠标位置"><a href="#Mouse-js-获取鼠标位置" class="headerlink" title="Mouse.js 获取鼠标位置"></a>Mouse.js 获取鼠标位置</h2><ul>
+<li><p>utils 目录下新建 mouse.js 文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ref &#125; <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">useMouse</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> x = ref(<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">const</span> y = ref(<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">return</span> &#123; x, y &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>要获取鼠标位置，需要监听 mousemove 事件</p>
+</li>
+<li><p>并且需要在组件加载完毕后执行</p>
+</li>
+<li><p>在 composition API 中直接引入 onMounted 和 onUnmounted 来实现生命周期的功能</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ref, onMounted, onUnmounted &#125; <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">useMouse</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> x = ref(<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">const</span> y = ref(<span class="number">0</span>);</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">update</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    x.value = e.pageX;</span><br><span class="line">    y.value = e.pageY;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onMounted(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">window</span>.addEventListener(<span class="string">'mousemove'</span>, update);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  onUnmounted(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">window</span>.removeEventListener(<span class="string">'mousemove'</span>, update);</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> &#123; x, y &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="style样式"><a href="#style样式" class="headerlink" title="style样式"></a>style样式</h1><ul>
+<li><p>避免项目样式冲突，可在项目样式中加上 <code>scoped</code> ，确保样式只在当前组件生效</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="selector-tag">style</span> <span class="selector-tag">scoped</span>&gt;</span><br><span class="line"><span class="selector-tag">h1</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: red;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 scoped 中若想写全局的样式，可用 <code>:global</code> 来标记</p>
+</li>
+<li><p>可以通过 v-bind 函数，直接在 css 中使用 js 中的变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;h1 @click=&quot;add&quot;&gt;&#123;&#123; count &#125;&#125;&lt;/h1&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">import &#123; ref &#125; from &quot;vue&quot;;</span><br><span class="line">let count = ref(1)</span><br><span class="line">let color = ref(&apos;red&apos;)</span><br><span class="line">function add() &#123;</span><br><span class="line">  count.value++</span><br><span class="line">  color.value = Math.random()&gt;0.5? &quot;blue&quot;:&quot;red&quot;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">h1 &#123;</span><br><span class="line">  color:v-bind(color);</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="vue-的三种响应式方案"><a href="#vue-的三种响应式方案" class="headerlink" title="vue 的三种响应式方案"></a>vue 的三种响应式方案</h1><ul>
+<li><p>defineProperty     —- vue2</p>
+<ul>
+<li>定义object 对象，使用 defineProperty 代理 count 属性</li>
+<li>以上即对 obj 对象的 value 属性实现了拦截</li>
+<li>读取时执行 get 函数，修改时执行 set 函数</li>
+<li><strong>存在缺陷：删除属性时，set 行数不会执行</strong></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> getDouble = <span class="function"><span class="params">n</span> =&gt;</span> n * <span class="number">2</span>;</span><br><span class="line"><span class="keyword">let</span> obj = &#123;&#125;;</span><br><span class="line"><span class="keyword">let</span> count = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">let</span> double = getDouble(count);</span><br><span class="line"><span class="comment">/** Object.defineProperty */</span></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(obj, <span class="string">'count'</span>, &#123;</span><br><span class="line">  <span class="keyword">get</span>() &#123;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="keyword">set</span>(val) &#123;</span><br><span class="line">    count = val;</span><br><span class="line">    double = getDouble(val);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(double);</span><br><span class="line">obj.count = <span class="number">2</span>;</span><br><span class="line"><span class="built_in">console</span>.log(double);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Proxy    —- vue3 （<strong><u>重点在于解决了 vue2 的缺陷</u></strong>）</p>
+<ul>
+<li>通过 new Proxy 代理 obj 这个对象</li>
+<li>通过 get 、set 、deleteProperty 函数代理了对象的读取、修改和删除</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">let</span> getDouble = <span class="function"><span class="params">n</span> =&gt;</span> n * <span class="number">2</span>;</span><br><span class="line"><span class="keyword">let</span> obj = &#123;&#125;;</span><br><span class="line"><span class="keyword">let</span> count = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">let</span> double = getDouble(count);</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Proxy 代理 */</span></span><br><span class="line"><span class="keyword">let</span> proxy = <span class="keyword">new</span> <span class="built_in">Proxy</span>(obj, &#123;</span><br><span class="line">  <span class="keyword">get</span>: function (target, prop) &#123;</span><br><span class="line">    <span class="keyword">return</span> target[prop];</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="keyword">set</span>: function (target, prop, value) &#123;</span><br><span class="line">    target[prop] = value;</span><br><span class="line">    <span class="keyword">if</span> (prop === <span class="string">'count'</span>) &#123;</span><br><span class="line">      double = getDouble(value);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  deleteProperty(target, prop) &#123;</span><br><span class="line">    <span class="keyword">delete</span> target[prop];</span><br><span class="line">    <span class="keyword">if</span> (prop === <span class="string">'count'</span>) &#123;</span><br><span class="line">      double = <span class="literal">NaN</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(obj.count, double);</span><br><span class="line">proxy.count = <span class="number">2</span>;</span><br><span class="line"><span class="built_in">console</span>.log(obj.count, double);</span><br><span class="line"><span class="keyword">delete</span> proxy.count;</span><br><span class="line"><span class="built_in">console</span>.log(obj.count, double);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>value setter</p>
+<ul>
+<li>利用对象的 set 和 get 函数进行监听</li>
+<li>只能拦截某一属性的修改</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> getDouble = <span class="function"><span class="params">n</span> =&gt;</span> n * <span class="number">2</span>;</span><br><span class="line"><span class="keyword">let</span> _value = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">let</span> double = getDouble(_value);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> count = &#123;</span><br><span class="line">  <span class="keyword">get</span> value() &#123;</span><br><span class="line">    <span class="keyword">return</span> _value;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="keyword">set</span> value(val) &#123;</span><br><span class="line">    _value = val;</span><br><span class="line">    double = getDouble(_value);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(count.value, double);</span><br><span class="line">count.value = <span class="number">2</span>;</span><br><span class="line"><span class="built_in">console</span>.log(count.value, double);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<blockquote>
+<p>defineProperty 与 Proxy：</p>
+<ul>
+<li>proxy 针对对象监听，而不是某个具体属性，<strong>不仅可以代理定义时不存在的属性，还可代理更加丰富的数据结构，如 Set、Map 等，并且可通过 deleteProperty 实现对删除操作的代理</strong></li>
+</ul>
+</blockquote>
+<ul>
+<li><strong>vue3 的 reactive 就是基于 Proxy 实现的</strong></li>
+<li><strong>vue3 的 ref 就是基于 value setter 赖斯翔的</strong></li>
+</ul>
+<p><img src="//yanadev.github.io/2022/07/12/初始Vue3/image-20220713165859984.png" alt="image-20220713165859984"></p>
+<h1 id="响应式修改图标"><a href="#响应式修改图标" class="headerlink" title="响应式修改图标"></a>响应式修改图标</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ref, watch &#125; <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">useFavicon</span>(<span class="params">newIcon</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> favicon = ref(newIcon);</span><br><span class="line">  <span class="keyword">const</span> updateIcon = <span class="function"><span class="params">icon</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">document</span>.head</span><br><span class="line">      .querySelectorAll(<span class="string">`link[ref*="icon"]`</span>)</span><br><span class="line">      .forEach(<span class="function"><span class="params">el</span> =&gt;</span> el.href = <span class="string">`<span class="subst">$&#123;icon&#125;</span>`</span>);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> reset = <span class="function"><span class="params">()</span> =&gt;</span> favicon.value = <span class="string">'/favicon.ico'</span>;</span><br><span class="line"></span><br><span class="line">  watch(favicon, i =&gt; &#123;</span><br><span class="line">    updateIcon(i);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123; favicon, reset &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="组件化开发"><a href="#组件化开发" class="headerlink" title="组件化开发"></a>组件化开发</h1><ul>
+<li>通用型组件<ul>
+<li>各大组件库的组件风格，包括按钮、表单、弹窗等通用功能</li>
+</ul>
+</li>
+<li>业务性组件<ul>
+<li>包含业务的交互逻辑，包括购物车、登录注册等，会和不同的业务强绑定</li>
+</ul>
+</li>
+<li>组件开发<ul>
+<li>考虑代码的复用性、可维护性、稳定性</li>
+</ul>
+</li>
+</ul>
+<h2 id="评级组件案例"><a href="#评级组件案例" class="headerlink" title="评级组件案例"></a>评级组件案例</h2><h3 id="最简易版"><a href="#最简易版" class="headerlink" title="最简易版"></a>最简易版</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;&#123;&#123; &apos;★★★★★☆☆☆☆☆&apos;.slice(5 - rate, 10 - rate) &#125;&#125;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="支持传值"><a href="#支持传值" class="headerlink" title="支持传值"></a>支持传值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">import &#123; ref, defineProps, computed &#125; from &apos;vue&apos;;</span><br><span class="line">let props = defineProps(&#123;</span><br><span class="line">  value: Number,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">let rate = computed(() =&gt;</span><br><span class="line">  &apos;★★★★★☆☆☆☆☆&apos;.slice(5 - props.value, 10 - props.value)</span><br><span class="line">);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;&#123;&#123; rate &#125;&#125;&lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="支持颜色选择"><a href="#支持颜色选择" class="headerlink" title="支持颜色选择"></a>支持颜色选择</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">import &#123; ref, defineProps, computed &#125; from &apos;vue&apos;;</span><br><span class="line">let props = defineProps(&#123;</span><br><span class="line">  value: Number,</span><br><span class="line">  theme: &#123; type: String, default: &apos;orange&apos; &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">let rate = computed(() =&gt;</span><br><span class="line">  &apos;★★★★★☆☆☆☆☆&apos;.slice(5 - props.value, 10 - props.value)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">const themeObj = &#123;</span><br><span class="line">  black: &apos;#00&apos;,</span><br><span class="line">  white: &apos;#fff&apos;,</span><br><span class="line">  red: &apos;#f5222d&apos;,</span><br><span class="line">  orange: &apos;#fa541c&apos;,</span><br><span class="line">  yellow: &apos;#fadb14&apos;,</span><br><span class="line">  green: &apos;#73d13d&apos;,</span><br><span class="line">  blue: &apos;#40a9ff&apos;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const fontstyle = computed(() =&gt; &#123;</span><br><span class="line">  return `color:$&#123;themeObj[props.theme]&#125;`;</span><br><span class="line">&#125;);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div :style=&quot;fontstyle&quot;&gt;&#123;&#123; rate &#125;&#125;&lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;Rate :value=&quot;2&quot;&gt;&lt;/Rate&gt;</span><br><span class="line">  &lt;Rate :value=&quot;2&quot; theme=&quot;green&quot;&gt;&lt;/Rate&gt;</span><br><span class="line">  &lt;Rate :value=&quot;2&quot; theme=&quot;black&quot;&gt;&lt;/Rate&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">import Rate from &apos;../components/Rate.vue&apos;;</span><br><span class="line"></span><br><span class="line">import &#123; ref &#125; from &apos;vue&apos;;</span><br><span class="line">let color = ref(&apos;red&apos;);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改评分"><a href="#修改评分" class="headerlink" title="修改评分"></a>修改评分</h3><ul>
+<li>使用 <strong>绝对定位</strong> 定义选中图标</li>
+<li>通过选中星星的 <code>index</code> 来控制选中图案的 <code>width</code>，配合绝对定位的 overflow: hidden 来隐藏超出的宽度</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">import &#123; toRefs, defineProps, ref, computed &#125; from &apos;vue&apos;;</span><br><span class="line">const props = defineProps(&#123;</span><br><span class="line">  modelValue: &#123;</span><br><span class="line">    type: Number,</span><br><span class="line">    defualt: 1,</span><br><span class="line">  &#125;,</span><br><span class="line">  theme: &#123;</span><br><span class="line">    type: String,</span><br><span class="line">    default: &apos;orange&apos;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line">const &#123; modelValue, theme &#125; = toRefs(props);</span><br><span class="line">const width = ref(modelValue.value);</span><br><span class="line">const themeObj = &#123;</span><br><span class="line">  black: &apos;#00&apos;,</span><br><span class="line">  white: &apos;#fff&apos;,</span><br><span class="line">  red: &apos;#f5222d&apos;,</span><br><span class="line">  orange: &apos;#fa541c&apos;,</span><br><span class="line">  yellow: &apos;#fadb14&apos;,</span><br><span class="line">  green: &apos;#73d13d&apos;,</span><br><span class="line">  blue: &apos;#40a9ff&apos;,</span><br><span class="line">&#125;;</span><br><span class="line">const fontstyle = computed(() =&gt; &#123;</span><br><span class="line">  return `color: $&#123;themeObj[theme.value]&#125;`;</span><br><span class="line">&#125;);</span><br><span class="line">const emits = defineEmits([&apos;update:modelValue&apos;]);</span><br><span class="line">const fontwidth = computed(() =&gt; &#123;</span><br><span class="line">  return `width: $&#123;width.value&#125;em`;</span><br><span class="line">&#125;);</span><br><span class="line">const mouseOver = (num) =&gt; &#123;</span><br><span class="line">  width.value = num;</span><br><span class="line">&#125;;</span><br><span class="line">const mouseOut = () =&gt; &#123;</span><br><span class="line">  width.value = modelValue.value;</span><br><span class="line">&#125;;</span><br><span class="line">const onRate = (num) =&gt; &#123;</span><br><span class="line">  emits(&apos;update:modelValue&apos;, num);</span><br><span class="line">&#125;;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;rate&quot; :style=&quot;fontstyle&quot; @mouseout=&quot;mouseOut&quot;&gt;</span><br><span class="line">    &lt;span class=&quot;solid&quot; :style=&quot;fontwidth&quot;&gt;</span><br><span class="line">      &lt;span</span><br><span class="line">        v-for=&quot;(num, index) in 5&quot;</span><br><span class="line">        :key=&quot;index&quot;</span><br><span class="line">        @click=&quot;onRate(num)&quot;</span><br><span class="line">        @mouseover=&quot;mouseOver(num)&quot;</span><br><span class="line">        &gt;★&lt;/span</span><br><span class="line">      &gt;</span><br><span class="line">    &lt;/span&gt;</span><br><span class="line">    &lt;span v-for=&quot;(num, index) in 5&quot; :key=&quot;index&quot; @mouseover=&quot;mouseOver(num)&quot;</span><br><span class="line">      &gt;☆&lt;/span</span><br><span class="line">    &gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">* &#123;</span><br><span class="line">  font: 12px/1.5 \5b8b\4f53, Arial, sans-serif;</span><br><span class="line">&#125;</span><br><span class="line">.rate &#123;</span><br><span class="line">  position: relative;</span><br><span class="line">  display: inline-block;</span><br><span class="line">&#125;</span><br><span class="line">.rate &gt; span &#123;</span><br><span class="line">  cursor: pointer;</span><br><span class="line">&#125;</span><br><span class="line">.rate &gt; span.solid &#123;</span><br><span class="line">  position: absolute;</span><br><span class="line">  display: inline-block;</span><br><span class="line">  top: 0;</span><br><span class="line">  left: 0;</span><br><span class="line">  width: 0;</span><br><span class="line">  overflow: hidden;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="过渡和动效"><a href="#过渡和动效" class="headerlink" title="过渡和动效"></a>过渡和动效</h1><ul>
+<li>直接使用变量操控 dom ，效果很生硬<ul>
+<li>width.value += 100</li>
+</ul>
+</li>
+<li>需要配合 css 属性 <code>transition</code> 来实现<strong>过渡</strong></li>
+<li>通过 <code>animation</code> 和 <code>keyframe</code> 组合实现 <strong>动画</strong><ul>
+<li>keyframe 定义一段动画</li>
+<li>通过 animation 属性将这个帧赋给某个元素</li>
+</ul>
+</li>
+</ul>
+<h2 id="vue3-动画：使用内置的-transition-组件来控制组件的动画"><a href="#vue3-动画：使用内置的-transition-组件来控制组件的动画" class="headerlink" title="vue3 动画：使用内置的 transition 组件来控制组件的动画"></a>vue3 动画：使用内置的 transition 组件来控制组件的动画</h2><ul>
+<li>使用 transition 组件包裹需要动画的元素即可</li>
+<li>需要使用 <strong>判断语句 v-if / v-show</strong> 控制元素的显隐</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">import &#123; ref &#125; from &apos;vue&apos;;</span><br><span class="line">let show = ref(true);</span><br><span class="line">const handleClick = () =&gt; &#123;</span><br><span class="line">  show.value = !show.value;</span><br><span class="line">&#125;;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;button @click=&quot;handleClick&quot;&gt;btn&lt;/button&gt;</span><br><span class="line">  &lt;br /&gt;</span><br><span class="line">  &lt;div class=&quot;bg&quot;&gt;</span><br><span class="line">    &lt;transition name=&quot;fade&quot;&gt;</span><br><span class="line">      &lt;h2 v-show=&quot;show&quot;&gt;hello world&lt;/h2&gt;</span><br><span class="line">    &lt;/transition&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">.bg &#123;</span><br><span class="line">  display: inline-block;</span><br><span class="line">  text-align: center;</span><br><span class="line">  overflow: hidden;</span><br><span class="line">&#125;</span><br><span class="line">.fade-enter-from &#123;</span><br><span class="line">  transform: translateX(100px);</span><br><span class="line">  opacity: 0;</span><br><span class="line">&#125;</span><br><span class="line">.fade-enter-to &#123;</span><br><span class="line">  opacity: 1;</span><br><span class="line">  transition: all 0.5s ease-in-out;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.fade-leave-active &#123;</span><br><span class="line">  opacity: 0.1;</span><br><span class="line">&#125;</span><br><span class="line">.fade-leave-to &#123;</span><br><span class="line">  opacity: 0;</span><br><span class="line">  transform: translateY(10px);</span><br><span class="line">  transition: all 0.5s ease-out;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Vuex-状态管理"><a href="#Vuex-状态管理" class="headerlink" title="Vuex 状态管理"></a>Vuex 状态管理</h1><h2 id="前端数据管理思路"><a href="#前端数据管理思路" class="headerlink" title="前端数据管理思路"></a>前端数据管理思路</h2><ul>
+<li>定义全局变量，任何组件需要数据的时候在全局变量中获取<ul>
+<li>通用数据：用户登录信息等</li>
+<li>跨层级组件的通信</li>
+</ul>
+</li>
+</ul>
+<h2 id="vuex-安装配置"><a href="#vuex-安装配置" class="headerlink" title="vuex 安装配置"></a>vuex 安装配置</h2><ul>
+<li><p>安装 vuex</p>
+  <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add vuex@next</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<ul>
+<li><p>src/store 目录下新建 <code>index.js</code></p>
+</li>
+<li><p>使用 createStore 创建数据存储，配置数据后将 store 对象导出</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createRouter, createWebHashHistory &#125; <span class="keyword">from</span> <span class="string">'vue-router'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> Home <span class="keyword">from</span> <span class="string">'../pages/home.vue'</span>;</span><br><span class="line"><span class="keyword">import</span> About <span class="keyword">from</span> <span class="string">'../pages/about.vue'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/'</span>,</span><br><span class="line">    name: <span class="string">'Home'</span>,</span><br><span class="line">    component: Home</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/about'</span>,</span><br><span class="line">    name: <span class="string">'About'</span>,</span><br><span class="line">    component: About</span><br><span class="line">  &#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = createRouter(&#123;</span><br><span class="line">  history: createWebHashHistory(),</span><br><span class="line">  routes</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> router;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在入口文件中引入，使用 app.use(store) 进行注册，这样 vue 和 vuex 就连接上了</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App.vue'</span>;</span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">'./router/index'</span>;</span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">'./store/index'</span>;</span><br><span class="line"></span><br><span class="line">createApp(App)</span><br><span class="line">  .use(store)</span><br><span class="line">  .use(router)</span><br><span class="line">  .mount(<span class="string">'#app'</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在页面或组件中使用</p>
+<ul>
+<li><p>引入 useStore 方法</p>
+</li>
+<li><p>创建实例 <code>let store = useStore()</code></p>
+</li>
+<li><p>实例使用 commit 触发对应 mutations 来改变状态 <code>store.commit(&#39;add&#39;)</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;h1&gt;&#123;&#123; store.state.count &#125;&#125;&lt;/h1&gt;</span><br><span class="line">    &lt;button @click=&quot;handleClick&quot;&gt;+1&lt;/button&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">import &#123; toRefs &#125; from &apos;vue&apos;;</span><br><span class="line">import &#123; useStore &#125; from &apos;vuex&apos;;</span><br><span class="line"></span><br><span class="line">let store = useStore();</span><br><span class="line"></span><br><span class="line">const handleClick = () =&gt; &#123;</span><br><span class="line">  store.commit(&apos;add&apos;);</span><br><span class="line">&#125;;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="手写迷你-vuex"><a href="#手写迷你-vuex" class="headerlink" title="手写迷你 vuex"></a>手写迷你 vuex</h2><ul>
+<li>创建变量 store 来存储数据</li>
+<li>将 store  转换成响应式数据，提供给 vue</li>
+<li>在 vue 中通过 <code>provide / inject</code> 两个函数做数据共享<ul>
+<li>provide 注册数据之后，所有的子组件都可通过 inject 来获取数据 </li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li>在 src/store/gvuex.js</li>
+<li>创建 Store 类来管理数据</li>
+<li>类内部<ul>
+<li>使用 _state 存储数据</li>
+<li>使用 _mutations 来存储 用户传递过来的 mutations 数据修改函数</li>
+<li>gvuex.js 中向外暴露 createStore 创建的 Store 实例</li>
+<li>项目入口文件中引入 store/index.js 配置文件，使用 app.use(xxx) 将 gvuex 注入到 项目中去<ul>
+<li>会触发 Store 类内部的  install  方法</li>
+</ul>
+</li>
+<li>在项目使用 vuex 处导入 gvuex 文件中的 useStore 方法以获取 Store 实例</li>
+</ul>
+</li>
+</ul>
+<p><strong>手写mini vuex：gvuex.js</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; inject, reactive &#125; <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> STORE_KEY = <span class="string">'__store__'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">useStore</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> inject(STORE_KEY);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createStore</span>(<span class="params">options</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> Store(options);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Store</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(options) &#123;</span><br><span class="line">    <span class="keyword">this</span>.$options = options;</span><br><span class="line">    <span class="keyword">this</span>._state = reactive(&#123;</span><br><span class="line">      data: options.state()</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">this</span>._mutations = options.mutations;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">get</span> state() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>._state.data;</span><br><span class="line">  &#125;</span><br><span class="line">  commit = <span class="function">(<span class="params">type, payload</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> entry = <span class="keyword">this</span>._mutations[type];</span><br><span class="line">    entry &amp;&amp; entry(<span class="keyword">this</span>.state, payload);</span><br><span class="line">  &#125;;</span><br><span class="line">  install(app) &#123;</span><br><span class="line">    app.provide(STORE_KEY, <span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123; createStore, useStore &#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>store/index.js gvuex 配置文件</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// import &#123; createStore &#125; from "vuex";</span></span><br><span class="line"><span class="keyword">import</span> &#123; createStore &#125; <span class="keyword">from</span> <span class="string">"./gvuex"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> store = createStore(&#123;</span><br><span class="line">  state() &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      count: <span class="number">4</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  mutations: &#123;</span><br><span class="line">    add(state) &#123;</span><br><span class="line">      state.count++;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> store;</span><br></pre></td></tr></table></figure>
+
+<p><strong>项目入口文件 main.js</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App.vue'</span>;</span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">'./router/index'</span>;</span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">'./store'</span>;</span><br><span class="line"></span><br><span class="line">createApp(App)</span><br><span class="line">  .use(store)</span><br><span class="line">  .use(router)</span><br><span class="line">  .mount(<span class="string">'#app'</span>);</span><br></pre></td></tr></table></figure>
+
+<p><strong>项目中使用 home.vue</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;&#123;&#123; count &#125;&#125;&lt;/div&gt;</span><br><span class="line">  &lt;br /&gt;</span><br><span class="line">  &lt;div&gt;&#123;&#123; count &#125;&#125;&lt;/div&gt;</span><br><span class="line">  &lt;button @click=&quot;add&quot;&gt;+1&lt;/button&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">import &#123; computed, ref &#125; from &apos;vue&apos;;</span><br><span class="line">import &#123; useStore &#125; from &apos;../store/gvuex&apos;;</span><br><span class="line">let store = useStore();</span><br><span class="line"></span><br><span class="line">let count = computed(() =&gt; store.state.count);</span><br><span class="line">const add = () =&gt; &#123;</span><br><span class="line">  store.commit(&apos;add&apos;);</span><br><span class="line">  console.log(&apos;count + 1 = &apos; + count.value);</span><br><span class="line">&#125;;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<p>总体上看，vuex 就是一个<code>公用的响应式数据 ref</code>，除了简单的数据更改、还有一些异步任务的触发，这些场景 vuex 都有对应的处理方式</p>
+<ul>
+<li>vuex 中的 getters 配置可实现 computed 功能</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 配置 */</span></span><br><span class="line"><span class="keyword">import</span> &#123; createStore &#125; <span class="keyword">from</span> <span class="string">"vuex"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> store = createStore(&#123;</span><br><span class="line">  ...</span><br><span class="line">  getters: &#123;</span><br><span class="line">    double: <span class="function">(<span class="params">state</span>) =&gt;</span> state.count * <span class="number">2</span></span><br><span class="line">  &#125;,</span><br><span class="line">  ...</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> store; </span><br><span class="line">    </span><br><span class="line"><span class="comment">/* 使用 */</span></span><br><span class="line"><span class="keyword">let</span> double = computed(<span class="function"><span class="params">()</span> =&gt;</span> store.getters.double);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>mutation 实现<strong>同步</strong>修改数据</li>
+<li>action 实现<strong>同步/异步</strong>修改数据，<strong>注意：并非直接修改 state，而是通过 mutations 去修改数据</strong></li>
+</ul>
+<h1 id="前端路由"><a href="#前端路由" class="headerlink" title="前端路由"></a>前端路由</h1><h2 id="前后端混合开发模式特点"><a href="#前后端混合开发模式特点" class="headerlink" title="前后端混合开发模式特点"></a>前后端混合开发模式特点</h2><ul>
+<li>优点<ul>
+<li>开发速度快</li>
+<li>后端可承担部分前端任务</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>前后端项目无法分离</li>
+<li>页面跳转由于需要重新刷新整个页面，等待时间较长，交互体验下降</li>
+</ul>
+</li>
+</ul>
+<h2 id="主流框架使用的路由模式"><a href="#主流框架使用的路由模式" class="headerlink" title="主流框架使用的路由模式"></a>主流框架使用的路由模式</h2><p><strong>Pjax（pushState + Ajax）</strong> 浏览器路由的变化通过 <code>pushState</code> 来操作</p>
+<h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><ul>
+<li><p>两种实现方式</p>
+<ul>
+<li>hash 模式 通过 URL 中的 # 后面的内容做区分（hash-router）</li>
+<li>history 模式 该方式下路由和正常的 URL 完全一致</li>
+</ul>
+<p><img src="//yanadev.github.io/2022/07/12/初始Vue3/image-20220727000702653.png" alt="image-20220727000702653"></p>
+</li>
+<li><p>以上两种方式分别对应 vue 中的两个函数</p>
+<ul>
+<li>createWebHashHistory</li>
+<li>createWebHistory</li>
+</ul>
+</li>
+<li><p>hash模式</p>
+<ul>
+<li><p>2014年之前都是通过 hash 来实现前端路由的</p>
+</li>
+<li><p>hash 值的变化不会导致浏览器页面刷新，只会触发 hashChange 事件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// hash 路由</span></span><br><span class="line">http:<span class="comment">//www.xxx.com/#/login</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 事件监听</span></span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'hashchange'</span>,fn)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>history模式</p>
+<ul>
+<li><p>2014年之后，HTML5 标准发布，浏览器多了两个 API <code>pushState</code> 和 <code>replaceState</code>，通过这两个 API 可以改变 URL 地址，且 <strong>浏览器不会向后端发送请求</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'popstate'</span>, fn)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="手写迷你-vue-router（hash模式）"><a href="#手写迷你-vue-router（hash模式）" class="headerlink" title="手写迷你 vue-router（hash模式）"></a>手写迷你 vue-router（hash模式）</h2><ul>
+<li>src/router 目录下新建一个 <code>grouter</code> 文件夹，文件夹内部在新建一个 <code>index.js</code></li>
+<li>使用 Router 类管理路由</li>
+<li>使用 createWebHashHistory 来返回 hash 模式相关的监听代码，并返回当前 URL 和监听 hashChange 事件的方法</li>
+<li>通过 Router 类的 install 方法注册了 Router 实例，并对外暴露 createRouter 方法取创建 Router 实例</li>
+<li>最后暴露 useRouter 方法来获取路由实例</li>
+</ul>
+<p><strong>src/router/grouter/index.js</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ref, inject &#125; <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> ROUTER_KEY = <span class="string">'__router__'</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createWebHashHistory</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">bindEvents</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">window</span>.addEventListener(<span class="string">'hashChange'</span>, fn);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    bindEvents,</span><br><span class="line">    url: <span class="built_in">window</span>.location.hash.slice(<span class="number">1</span>) || <span class="string">'/'</span></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createRouter</span>(<span class="params">options</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> Router(options);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">useRouter</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> inject(ROUTER_KEY);</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Router</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(options) &#123;</span><br><span class="line">    <span class="keyword">this</span>.history = options.history;</span><br><span class="line">    <span class="keyword">this</span>.routes = options.routes;</span><br><span class="line">    <span class="keyword">this</span>.current = ref(<span class="keyword">this</span>.history.url);</span><br><span class="line">    <span class="keyword">this</span>.history.bindEvents(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.current.value = <span class="built_in">window</span>.location.hash.slice(<span class="number">1</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  install(app) &#123;</span><br><span class="line">    app.provide(ROUTER_KEY, <span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123; createRouter, createWebHashHistory, useRouter &#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注册两个内置组件 <code>router-view</code> 和 <code>router-link</code> <ul>
+<li>current 返回当前路由地址</li>
+<li>router-view 组件即 current 发生变化的时候，匹配对应 current 地址对应的组件，动态渲染到 router-view 即可</li>
+</ul>
+</li>
+<li>src/router/grouter 下新建 <code>RouterView.vue</code><ul>
+<li>使用 useRouter 获取当前路由实例</li>
+<li>通过 router.current.value 获取当前路由地址</li>
+<li>在用户路由配置 route 中计算出匹配的组件</li>
+<li>通过计算属性 computed 返回 comp 变量</li>
+<li>template 内部使用 component 组件动态渲染</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">import &#123; computed &#125; from &apos;vue&apos;;</span><br><span class="line">import &#123; useRouter &#125; from &apos;./index&apos;;</span><br><span class="line">let router = useRouter();</span><br><span class="line"></span><br><span class="line">const comp = computed(() =&gt; &#123;</span><br><span class="line">  const route = router.routes.find(</span><br><span class="line">    (route) =&gt; route.path === route.current.value</span><br><span class="line">  );</span><br><span class="line">  return route ? route.component : null;</span><br><span class="line">&#125;);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;component :is=&quot;comp&quot;&gt;&lt;/component&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>实现 router-link 组件</li>
+<li>template 依然渲染一个 a 标签，a 标签的 href 属性前面加 <code>#</code> 就实现了 hash 的修改</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">import &#123; defineProps &#125; from &apos;vue&apos;;</span><br><span class="line">let props = defineProps(&#123;</span><br><span class="line">  to: &#123; type: String, required: true &#125;,</span><br><span class="line">&#125;);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;a :href=&quot;`#$&#123;props.to&#125;`&quot;&gt;</span><br><span class="line">    &lt;slot /&gt;</span><br><span class="line">  &lt;/a&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>需要在 Router 类中注册这两个内置组件</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ref, inject &#125; <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"><span class="keyword">import</span> RouterLink <span class="keyword">from</span> <span class="string">'./RouterLink'</span>;</span><br><span class="line"><span class="keyword">import</span> RouterView <span class="keyword">from</span> <span class="string">'./RouterView'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> ROUTER_KEY = <span class="string">'__router__'</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createWebHashHistory</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">bindEvents</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">window</span>.addEventListener(<span class="string">'hashChange'</span>, fn);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    bindEvents,</span><br><span class="line">    url: <span class="built_in">window</span>.location.hash.slice(<span class="number">1</span>) || <span class="string">'/'</span></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createRouter</span>(<span class="params">options</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> Router(options);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">useRouter</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> inject(ROUTER_KEY);</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Router</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(options) &#123;</span><br><span class="line">    <span class="keyword">this</span>.history = options.history;</span><br><span class="line">    <span class="keyword">this</span>.routes = options.routes;</span><br><span class="line">    <span class="keyword">this</span>.current = ref(<span class="keyword">this</span>.history.url);</span><br><span class="line">    <span class="keyword">this</span>.history.bindEvents(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.current.value = <span class="built_in">window</span>.location.hash.slice(<span class="number">1</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  install(app) &#123;</span><br><span class="line">    app.provide(ROUTER_KEY, <span class="keyword">this</span>);</span><br><span class="line">+    app.component(<span class="string">'router-link'</span>, RouterLink);</span><br><span class="line">+    app.component(<span class="string">'router-view'</span>, RouterView);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123; createRouter, createWebHashHistory, useRouter &#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="路由使用要点"><a href="#路由使用要点" class="headerlink" title="路由使用要点"></a>路由使用要点</h2><ul>
+<li><p>路由匹配语法</p>
+<ul>
+<li><p>根据用户信息匹配单独的路由入口</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">    &#123;</span><br><span class="line">        path: <span class="string">'/users/:id'</span>, <span class="attr">component</span>: User</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>有些页面只有管理员可访问，需要 <strong>导航守卫功能</strong></p>
+</li>
+<li><p>项目庞大之后，首屏加载文件太大就可能影响性能，可使用 vue-router 的<strong>动态导入功能</strong>（<strong>懒加载</strong>）</p>
+</li>
+</ul>
+<h1 id="Vue-Devtools-调试工具"><a href="#Vue-Devtools-调试工具" class="headerlink" title="Vue Devtools 调试工具"></a>Vue Devtools 调试工具</h1><p>打开任意一个页面，点击鼠标右键，再点击<strong>审查元素（检查）/ f12</strong> 就可看到调试窗口</p>
+<ul>
+<li>Elements 调试 HTML 和 CSS</li>
+<li>console 调试 JavaScript</li>
+<li>Source 调试开发中的源码</li>
+<li>Application 调试本地存储和一些浏览器服务（cookie、localstorage、通知等）</li>
+<li>network 查看网络请求的状态和参数</li>
+<li>Performance 调试网页性能</li>
+<li>lighthouse 是 Google 官方开发的插件，用来获取网页性能报告</li>
+<li>animation 调试动画</li>
+<li>security 调试安全特性</li>
+<li>…</li>
+</ul>
+<h1 id="JSX-应对更灵活的开发场景"><a href="#JSX-应对更灵活的开发场景" class="headerlink" title="JSX 应对更灵活的开发场景"></a>JSX 应对更灵活的开发场景</h1><h2 id="h函数"><a href="#h函数" class="headerlink" title="h函数"></a>h函数</h2><ul>
+<li><p>vue中</p>
+<ul>
+<li>template 解析为 render 函数，组件运行的时候通过 render 函数来返回虚拟 DOM</li>
+</ul>
+</li>
+<li><p>除了 template ，某些场景下可直接使用 render 函数来实现组件</p>
+</li>
+</ul>
+<p><strong>需求</strong>： 通过一个值的返回在数字 1-6 之间的变量，来渲染组件 h1-h6，根据传递的 props 渲染标签名</p>
+<ul>
+<li><p>在 src/components 下新建一个 Heading.jsx 文件</p>
+</li>
+<li><p>使用 defineComponent 定义一个组件</p>
+</li>
+<li><p>组件内部配置 props 和 setup </p>
+<ul>
+<li>setup 函数返回值为一个函数（即 render 函数），render函数返回 h 函数的执行结果，h 函数第一个参数就是标签名</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; defineComponent, h &#125; <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> defineComponent(&#123;</span><br><span class="line">  props: &#123;</span><br><span class="line">    level: &#123;</span><br><span class="line">      type: <span class="built_in">Number</span>,</span><br><span class="line">      required: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  setup(props, &#123; slots &#125;) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> h(</span><br><span class="line">      <span class="string">`h<span class="subst">$&#123;props.level&#125;</span>`</span>,</span><br><span class="line">      &#123;&#125;,<span class="comment">// prop 或者 attribute</span></span><br><span class="line">      slots.default <span class="comment">// 子节点</span></span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 src/pages/about.vue 中引入以上组件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;h1&gt;这是关于页面&lt;/h1&gt;</span><br><span class="line">  &lt;Heading :level=&quot;3&quot;&gt;&lt;/Heading&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">import &#123; ref &#125; from &apos;vue&apos;;</span><br><span class="line">import Heading from &apos;../components/Heading&apos;;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/vue3/" rel="tag"><i class="fa fa-tag"></i>vue3</a>
+              <a href="/tags/项目搭建/" rel="tag"><i class="fa fa-tag"></i>项目搭建</a>
+              <a href="/tags/组件化/" rel="tag"><i class="fa fa-tag"></i>组件化</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2022/07/08/webpack 之 SSR（服务端渲染）/" rel="next" title="webpack之SSR">
+                  <i class="fa fa-chevron-left"></i> webpack之SSR
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2022/07/13/MVVM与MVC/" rel="prev" title="MVVM 与 MVC">
+                  MVVM 与 MVC <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#搭建-vue3工程化项目"><span class="nav-number">1.</span> <span class="nav-text">搭建 vue3工程化项目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目结构"><span class="nav-number">2.</span> <span class="nav-text">项目结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启动项目"><span class="nav-number">3.</span> <span class="nav-text">启动项目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vuex管理数据，vue-router-管理路由"><span class="nav-number">4.</span> <span class="nav-text">vuex管理数据，vue-router 管理路由</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#规范（src组织结构）"><span class="nav-number">5.</span> <span class="nav-text">规范（src组织结构）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#引入路由系统"><span class="nav-number">6.</span> <span class="nav-text">引入路由系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#工具集成"><span class="nav-number">7.</span> <span class="nav-text">工具集成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#composition-API-setup"><span class="nav-number">8.</span> <span class="nav-text">composition API + setup</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#TodoList-组件"><span class="nav-number">8.1.</span> <span class="nav-text">TodoList 组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mouse-js-获取鼠标位置"><span class="nav-number">8.2.</span> <span class="nav-text">Mouse.js 获取鼠标位置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#style样式"><span class="nav-number">9.</span> <span class="nav-text">style样式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vue-的三种响应式方案"><span class="nav-number">10.</span> <span class="nav-text">vue 的三种响应式方案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#响应式修改图标"><span class="nav-number">11.</span> <span class="nav-text">响应式修改图标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#组件化开发"><span class="nav-number">12.</span> <span class="nav-text">组件化开发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#评级组件案例"><span class="nav-number">12.1.</span> <span class="nav-text">评级组件案例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最简易版"><span class="nav-number">12.1.1.</span> <span class="nav-text">最简易版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#支持传值"><span class="nav-number">12.1.2.</span> <span class="nav-text">支持传值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#支持颜色选择"><span class="nav-number">12.1.3.</span> <span class="nav-text">支持颜色选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改评分"><span class="nav-number">12.1.4.</span> <span class="nav-text">修改评分</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#过渡和动效"><span class="nav-number">13.</span> <span class="nav-text">过渡和动效</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#vue3-动画：使用内置的-transition-组件来控制组件的动画"><span class="nav-number">13.1.</span> <span class="nav-text">vue3 动画：使用内置的 transition 组件来控制组件的动画</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Vuex-状态管理"><span class="nav-number">14.</span> <span class="nav-text">Vuex 状态管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前端数据管理思路"><span class="nav-number">14.1.</span> <span class="nav-text">前端数据管理思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vuex-安装配置"><span class="nav-number">14.2.</span> <span class="nav-text">vuex 安装配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手写迷你-vuex"><span class="nav-number">14.3.</span> <span class="nav-text">手写迷你 vuex</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#前端路由"><span class="nav-number">15.</span> <span class="nav-text">前端路由</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前后端混合开发模式特点"><span class="nav-number">15.1.</span> <span class="nav-text">前后端混合开发模式特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主流框架使用的路由模式"><span class="nav-number">15.2.</span> <span class="nav-text">主流框架使用的路由模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现方式"><span class="nav-number">15.3.</span> <span class="nav-text">实现方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手写迷你-vue-router（hash模式）"><span class="nav-number">15.4.</span> <span class="nav-text">手写迷你 vue-router（hash模式）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#路由使用要点"><span class="nav-number">15.5.</span> <span class="nav-text">路由使用要点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Vue-Devtools-调试工具"><span class="nav-number">16.</span> <span class="nav-text">Vue Devtools 调试工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JSX-应对更灵活的开发场景"><span class="nav-number">17.</span> <span class="nav-text">JSX 应对更灵活的开发场景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#h函数"><span class="nav-number">17.1.</span> <span class="nav-text">h函数</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yana"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Yana</p>
+  <div class="site-description" itemprop="description">Never give up！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">85</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">101</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">99</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yanadev" title="GitHub → https://github.com/yanadev" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yana</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">251k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
