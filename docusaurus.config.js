@@ -14,6 +14,7 @@ module.exports = {
   organizationName: 'yanadev', // Usually your GitHub org/user name.
   projectName: 'yanadev.github.io', // Usually your repo name.
   trailingSlash: false,
+  deploymentBranch: 'gh-pages',
   presets: [
     [
       '@docusaurus/preset-classic',
@@ -98,7 +99,7 @@ module.exports = {
               },
               {
                 label: 'GitHub',
-                href: 'https://yanadev.github.io'
+                href: 'https://github.com/facebook/docusaurus'
               }
             ]
           }
