@@ -4,16 +4,16 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula')
 // With JSDoc @type annotations, IDEs can provide config autocompletion
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
+  title: 'yana-blog',
+  tagline: 'Just do it',
   url: 'https://yanadev.github.io',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'yanadev', // Usually your GitHub org/user name.
-  projectName: 'yana.github.io', // Usually your repo name.
-
+  projectName: 'yanadev.github.io', // Usually your repo name.
+  trailingSlash: false,
   presets: [
     [
       '@docusaurus/preset-classic',
@@ -22,12 +22,12 @@ module.exports = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
-          editUrl: 'https://yanadev.github.io/yana.github.io/'
+          editUrl: 'https://yanadev.github.io/yanadev.github.io/'
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
-          editUrl: 'https://yanadev.github.io/yana.github.io/blog/'
+          editUrl: 'https://yanadev.github.io/yanadev.github.io/blog/'
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css')
@@ -54,7 +54,7 @@ module.exports = {
           },
           { to: '/blog', label: 'Blog', position: 'left' },
           {
-            href: 'https://github.com/facebook/docusaurus',
+            href: 'https://yanadev.github.io',
             label: 'GitHub',
             position: 'right'
           }
@@ -98,7 +98,7 @@ module.exports = {
               },
               {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus'
+                href: 'https://yanadev.github.io'
               }
             ]
           }
