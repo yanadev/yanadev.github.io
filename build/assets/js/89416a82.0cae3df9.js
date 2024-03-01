@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkyana_github_io=self.webpackChunkyana_github_io||[]).push([[8814],{6493:a=>{a.exports=JSON.parse('{"label":"\u5b9e\u6218\uff0cdatabase","permalink":"/blog/tags/\u5b9e\u6218\uff0cdatabase","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);

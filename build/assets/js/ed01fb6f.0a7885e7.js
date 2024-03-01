@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkyana_github_io=self.webpackChunkyana_github_io||[]).push([[7689],{1245:a=>{a.exports=JSON.parse('{"label":"v-clock","permalink":"/blog/tags/v-clock","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);

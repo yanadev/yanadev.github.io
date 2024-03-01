@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkyana_github_io=self.webpackChunkyana_github_io||[]).push([[982],{2256:a=>{a.exports=JSON.parse('{"label":"ESlint","permalink":"/blog/tags/e-slint","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);

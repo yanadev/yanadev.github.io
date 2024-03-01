@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkyana_github_io=self.webpackChunkyana_github_io||[]).push([[4341],{8362:a=>{a.exports=JSON.parse('{"label":"computed","permalink":"/blog/tags/computed","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);
