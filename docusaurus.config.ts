@@ -113,7 +113,7 @@ const config = {
             type: 'doc',
             position: 'left',
             docId: 'intro',
-            label: '关于我/Skills'
+            label: 'ME/Skills'
           },
 
           {
