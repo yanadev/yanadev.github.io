@@ -1,0 +1,85 @@
+---
+sidebar_position: 0
+authors: yana
+---
+export const Highlight = ({children, color}) => (
+  <span
+    style={{
+      backgroundColor: color,
+      borderRadius: '2px',
+      color: '#fff',
+      padding: '0.2rem',
+    }}>
+    {children}
+  </span>
+);
+
+## 关于我
+
+### 前端
+
+* Vue
+* React
+* JavaScript
+* Typescript
+* Electron
+* uni-app 跨端框架
+* Node
+
+### UI 框架
+
+* Ant-Design（Vue、React）
+* Arco-Design
+* ElementUI
+* UView
+* ...
+
+### 后端
+
+* Java
+* PHP
+* Express
+* Koa
+* MySQL
+* ...
+
+### 本科专业技能（数字媒体技术）
+
+* Unity
+* Maya 3D建模
+* C4D 产品渲染
+* PR/AE 剪辑
+* ...
+
+### 其他
+
+* 熟悉 <Highlight color="#4285f4">B端</Highlight> 复杂表单的设计
+* 高度还原 <Highlight color="#fbbc05">C端</Highlight> 动效，高复用
+
+### 联系方式
+
+import Link from '@docusaurus/Link'
+export const CopyTextButton = ({ text, title }) => {
+  const copyText = () => {
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        console.log('文本已成功复制到剪贴板：', text);
+        alert('文本已复制：'+text );
+
+      })
+      .catch(err => {
+        console.error('文本复制失败：', err);
+       
+      });
+  };
+
+  return (
+    <Link
+     className="button button--secondary button--lg" onClick={copyText}
+     title="复制">
+      {title}
+    </Link>
+  );
+};
+
+<CopyTextButton text='cyn711089' title='cyn711089'/>  

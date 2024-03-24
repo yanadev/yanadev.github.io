@@ -8,8 +8,6 @@
   text-align: left;
   position: relative;
   overflow: hidden;
-  background: 95% / contain no-repeat url('/static/svg/working.png'),
-    #71be89 40%;
 }
 
 @media screen and (max-width: 996px) {
@@ -22,4 +20,49 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.bg {
+  background: pink;
+  padding: 40px;
+  position: relative;
+  width: 20vh;
+  height: 20vh;
+}
+.pink {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, yellow 10%, black 20%, white 0%);
+  transform: rotateZ(20deg);
+}
+.blue {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: blue;
+  transform: rotateZ(-80deg);
+}
+.orange {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  transform: rotateZ(80deg);
+}
+.features {
+  display: flex;
+  align-items: center;
+  padding: 2rem 0;
+  width: 100%;
+}
+
+.featureImage {
+  height: 200px;
+  width: 200px;
 }
