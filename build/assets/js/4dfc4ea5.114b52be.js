@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkyana_github_io=self.webpackChunkyana_github_io||[]).push([[9309],{54784:a=>{a.exports=JSON.parse('{"label":"v-clock","permalink":"/vue/tags/v-clock","allTagsPath":"/vue/tags","count":1,"unlisted":false}')}}]);

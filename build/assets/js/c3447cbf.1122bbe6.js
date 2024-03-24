@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkyana_github_io=self.webpackChunkyana_github_io||[]).push([[995],{6929:a=>{a.exports=JSON.parse('{"permalink":"/blog/tags/\u539f\u751f","page":1,"postsPerPage":10,"totalPages":1,"totalCount":1,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);

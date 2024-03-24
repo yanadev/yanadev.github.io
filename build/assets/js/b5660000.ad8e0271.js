@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkyana_github_io=self.webpackChunkyana_github_io||[]).push([[6500],{66942:a=>{a.exports=JSON.parse('{"label":"\u811a\u624b\u67b6","permalink":"/vue/tags/\u811a\u624b\u67b6","allTagsPath":"/vue/tags","count":1,"unlisted":false}')}}]);

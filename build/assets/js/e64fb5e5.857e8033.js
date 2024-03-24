@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkyana_github_io=self.webpackChunkyana_github_io||[]).push([[8869],{26344:e=>{e.exports=JSON.parse('{"label":"directive","permalink":"/vue/tags/directive","allTagsPath":"/vue/tags","count":1,"unlisted":false}')}}]);

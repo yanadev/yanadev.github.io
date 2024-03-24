@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkyana_github_io=self.webpackChunkyana_github_io||[]).push([[3107],{56321:a=>{a.exports=JSON.parse('{"label":"JS\u57fa\u7840","permalink":"/frontend/tags/js\u57fa\u7840","allTagsPath":"/frontend/tags","count":1,"unlisted":false}')}}]);

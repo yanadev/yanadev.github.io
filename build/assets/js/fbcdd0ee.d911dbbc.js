@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkyana_github_io=self.webpackChunkyana_github_io||[]).push([[9840],{613:a=>{a.exports=JSON.parse('{"label":"MySQL","permalink":"/blog/tags/my-sql","allTagsPath":"/blog/tags","count":3,"unlisted":false}')}}]);

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkyana_github_io=self.webpackChunkyana_github_io||[]).push([[5730],{96876:a=>{a.exports=JSON.parse('{"label":"\u6ed1\u52a8\u7a97\u53e3","permalink":"/algorithm/tags/\u6ed1\u52a8\u7a97\u53e3","allTagsPath":"/algorithm/tags","count":1,"unlisted":false}')}}]);

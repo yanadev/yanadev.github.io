@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkyana_github_io=self.webpackChunkyana_github_io||[]).push([[5211],{23539:a=>{a.exports=JSON.parse('{"permalink":"/algorithm/tags/\u6ed1\u52a8\u7a97\u53e3","page":1,"postsPerPage":10,"totalPages":1,"totalCount":1,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);

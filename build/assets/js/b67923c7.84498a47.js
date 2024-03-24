@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkyana_github_io=self.webpackChunkyana_github_io||[]).push([[4200],{41793:e=>{e.exports=JSON.parse('{"title":"PHP","slug":"/category/php","permalink":"/docs/category/php","navigation":{"previous":{"title":"intro","permalink":"/docs/intro"},"next":{"title":"Apache \u4e0e PHP - 01","permalink":"/docs/PHP/2020-01-02-Apache-PHP-01/apache-php-01"}}}')}}]);

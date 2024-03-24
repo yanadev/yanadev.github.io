@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkyana_github_io=self.webpackChunkyana_github_io||[]).push([[7132],{37965:a=>{a.exports=JSON.parse('{"label":"modal","permalink":"/tags/modal","allTagsPath":"/tags","count":1,"unlisted":false}')}}]);

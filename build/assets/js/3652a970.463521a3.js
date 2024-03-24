@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkyana_github_io=self.webpackChunkyana_github_io||[]).push([[3878],{71940:a=>{a.exports=JSON.parse('{"label":"path","permalink":"/docs/tags/path","allTagsPath":"/docs/tags","count":1,"items":[{"id":"2020-03-31-node-path","title":"nodejs-path","description":"\u5f15\u5165\u6a21\u5757","permalink":"/docs/nodejs-path"}],"unlisted":false}')}}]);
