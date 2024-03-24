@@ -62,7 +62,7 @@ const config = {
           routeBasePath: '/', // Serve the blog at the site's root
           showReadingTime: true,
           blogSidebarCount: 'ALL',
-          blogSidebarTitle: '工作小记',
+          blogSidebarTitle: '最近博客',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           postsPerPage: 10
@@ -118,7 +118,7 @@ const config = {
 
           {
             to: '/',
-            label: '工作小记',
+            label: '最近博客',
             position: 'left'
           },
           {
