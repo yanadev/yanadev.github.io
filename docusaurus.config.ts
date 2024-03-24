@@ -210,11 +210,11 @@ const config = {
             items: [
               {
                 label: 'yana的自建博客',
-                to: '/blog'
+                to: '/'
               },
               {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus'
+                href: 'https://github.com/yanadev'
               }
             ]
           }
