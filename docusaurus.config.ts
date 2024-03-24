@@ -21,11 +21,11 @@ const defaultLocale = 'en'
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Yana',
-  tagline: 'Just Do It',
+  tagline: 'Just Do It!',
   favicon: 'img/logo.svg',
 
   // Set the production url of your site here
-  url: 'https://yanadev.github.io/',
+  url: 'https://github.com/yanadev/yanadev.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
@@ -173,7 +173,7 @@ const config = {
             ]
           },
           {
-            href: 'https://yanadev.github.io/',
+            href: 'https://github.com/yanadev',
             label: 'GitHub',
             position: 'right'
           }
