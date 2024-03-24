@@ -21,7 +21,7 @@ const defaultLocale = 'en'
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Yana',
-  tagline: 'Just Do It!',
+  tagline: 'Just Do It',
   favicon: 'img/logo.svg',
 
   // Set the production url of your site here
