@@ -5,8 +5,6 @@ authors: yana
 tags: [sentry, 监控]
 ---
 
-
-
 ## 概览
 
 总共分三个步骤：
@@ -57,7 +55,6 @@ tags: [sentry, 监控]
     "project": "payssion-dashboard-frontend",
     "url": ""
 }
-
 ```
 
 ![image-20230731090703960](./image-20230731090703960.png)
@@ -67,7 +64,7 @@ tags: [sentry, 监控]
 
 ![image-20230731090828006](./image-20230731090828006.png)
 
-## sentry 后台：启动项目 webhook 通知，并将上面获得的 webhook地址设置到对应的 webhook 设置中
+## sentry 后台：启动项目 webhook 通知，并将上面获得的 webhook 地址设置到对应的 webhook 设置中
 
 ![image-20230731091306780](./image-20230731091306780.png)
 
@@ -77,7 +74,7 @@ tags: [sentry, 监控]
 
 ![image-20230731091712665](./image-20230731091712665.png)
 
-## 开启后台 webhook 警告，新增警报规则开启webhook 通知
+## 开启后台 webhook 警告，新增警报规则开启 webhook 通知
 
 ![image-20230731091829942](./image-20230731091829942.png)
 
@@ -103,14 +100,14 @@ tags: [sentry, 监控]
 
 :::tip 在请求体中输入一下 JSON，并手动替换其中的变量
 
-* event.user.data.time
-* project
-* event.type
-* event.tile
-* event.exception.values[0].stacktrace.frames
-* event.user.data.environment
-* url
-:::
+-   event.user.data.time
+-   project
+-   event.type
+-   event.tile
+-   event.exception.values[0].stacktrace.frames
+-   event.user.data.environment
+-   url
+    :::
 
 ```json
 {
@@ -158,7 +155,6 @@ tags: [sentry, 监控]
         }
     }
 }
-
 ```
 
 ![image-20230731093912749](./image-20230731093912749.png)

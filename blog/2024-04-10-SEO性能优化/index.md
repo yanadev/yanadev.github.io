@@ -37,7 +37,7 @@ lighthouse https://yourwebsite.com --only-categories=performance,accessibility,b
 
 #### 原生写法
 
-:::tips
+:::tip
 原生实现: 页面加载的时候，只加载可视区域内的图片，当用户滚动页面的时候，再去加载其他区域的图片
 :::
 
@@ -92,7 +92,7 @@ lazyload.js、lozad.js
 
 4. 合适的数据结构
 
-    :::tips
+    :::tip
     使用 Map 或者 Set 来存储唯一值
     :::
 
@@ -104,7 +104,7 @@ lazyload.js、lozad.js
 
 1.  将第三方的代码放在页面底部，使用 async/defer 来异步加载代码
 
-    :::tips
+    :::tip
     异步加载
     :::
 
@@ -112,7 +112,7 @@ lazyload.js、lozad.js
     <script async src="https://third-party.com/third-party.js"></script>
     ```
 
-    :::tips
+    :::tip
     延迟加载
     :::
 
