@@ -7925,11 +7925,6 @@ type-is@~1.6.18:
     media-typer "0.3.0"
     mime-types "~2.1.24"
 
-typed@^10.0.0-beta.2:
-  version "10.0.0-beta.2"
-  resolved "https://registry.npmjs.org/typed/-/typed-10.0.0-beta.2.tgz#d08a28cdd98089781f7388b4748921976a21771d"
-  integrity sha512-stHFaoVsixvGsL9bD1+pq6rB6+c46VEaOdjgBxl7ezRihiG485A8gmDIw1jheHWKN+VqOKDRXJBJSlfuAjyGRw==
-
 typedarray-to-buffer@^3.1.5:
   version "3.1.5"
   resolved "https://registry.npmjs.org/typedarray-to-buffer/-/typedarray-to-buffer-3.1.5.tgz#a97ee7a9ff42691b9f783ff1bc5112fe3fca9080"
