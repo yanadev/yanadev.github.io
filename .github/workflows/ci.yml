@@ -3,7 +3,7 @@ name: Deploy Docusaurus Blog to GitHub Pages
 on:
   push:
     branches:
-      - master  # 可以根据实际情况修改分支名称
+      - master # 可以根据实际情况修改分支名称
 
 jobs:
   deploy:
@@ -19,10 +19,10 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        run: npm install
+        run: yarn
 
       - name: Build static files
-        run: npm run build
+        run: yarn build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
