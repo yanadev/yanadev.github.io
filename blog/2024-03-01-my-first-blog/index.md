@@ -118,10 +118,10 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies # 下载依赖
-        run: npm install
+        run: yarn
 
       - name: Build static files # 打包
-        run: npm run build
+        run: yarn build
 
       - name: Deploy to GitHub Pages # 发布到 gh-pages 分支
         uses: peaceiris/actions-gh-pages@v3
@@ -147,7 +147,8 @@ jobs:
 
 至此，github 仓库的配置已经完成了
 
-可以在本地做一些修改，推送到 main 分支检查是否能够正常更新（如果你在脚本中监听的是别的分支，那这里只要更新那个分支就可以触发自动化部署 ）
+可以在本地做一些修改，推送到 main 分支检查是否能够正常更新（如果你在脚本中监听的
+是别的分支，那这里只要更新那个分支就可以触发自动化部署 ）
 
 :::
 
