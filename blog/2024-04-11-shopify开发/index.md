@@ -157,3 +157,103 @@ theme get --password=<PASSWORD> --store=xxxx.myshopify.com --themeid=xxxxx
     ```shell
     shopify theme publish
     ```
+
+## 工程化项目
+
+1. 安装 tailwind css 库
+2. laravel mix 作为打包工具
+   在 webpack.mix.config 中定义入口文件，将出口位置设置为 assets
+
+    ```js
+    let mix = require('laravel-mix')
+
+    mix.js('src/js/app.js', 'assets').sass('src/js/app.scss', 'assets')
+    ```
+
+3. 文件目录限定
+    - src
+        - js
+            - app.js
+        - css
+            - app.scss
+4. app.scss 中重置网页 css
+
+    ```scss
+    body {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        color: #333;
+        background-color: #fff;
+    }
+    ```
+
+5. 启动编译
+
+    ```shell
+    npx mix
+    ```
+
+6. 安装 tailwind
+
+    ```shell
+    # 安装依赖
+    npm install -D tailwindcss
+
+    # 初始化，获得一个配置文件 tailwind.config.js
+    npx tailwindcss init
+
+
+    # 如果报错 postcss not found，需要再安装一个 postcss
+    ```
+
+7. tailwindcss 配置 tailwind.config.js
+
+    ```js
+    module.exports = {
+        // 监听文件变化来生成对应的 css
+        content: [
+            './config/*.json',
+            './layout/*.liquid',
+            './assets/*.liquid',
+            './sections/*.liquid',
+            './snippets/*.liquid',
+            './templates/*.liquid',
+            './templates/*.json',
+            './templates/customers/*.liquid',
+        ],
+    }
+    ```
+
+8. 设置 larevel-mix 对 tailwind 代码做处理
+
+    ```css
+    /* app.scss */
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+    ```
+
+    ```js
+    /* webpack.mix.js */
+    let mix = require('laravel-mix')
+
+    const tailwindcss = require('tailwindcss')
+    mix.js('src/js/app.js', 'assets')
+        .sass('src/js/app.scss', 'assets')
+        .options({
+            processCssUrls: false,
+            postCss: [tailwindcss('tailwind.config.js')],
+        })
+    ```
+
+9. 引入 Apline（jquery）
+
+```js
+/* app.js*/
+
+import Alpine from 'alpinejs'
+window.Alpine = Alpine
+
+Alpine.start()
+```

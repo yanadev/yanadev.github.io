@@ -1,6 +1,6 @@
 ---
 slug: shopify-cli-use
-title: \@shopify/cli 使用
+title: shopify/cli 使用
 authors: yana
 date: 2024-01-11
 tags: ['shopify', 'tool']
@@ -17,13 +17,12 @@ eg: shopify theme dev --store xxx.myshopify.com
 
 ```
 
-随后就会打开一个网页链接，要求你登陆账号，才能继续后续操作
-登录成功之后，会在控制台显示当前状态 `logged in`
-可以 `ctrl+c` 推出当前进程
+随后就会打开一个网页链接，要求你登陆账号，才能继续后续操作登录成功之后，会在控制
+台显示当前状态 `logged in` 可以 `ctrl+c` 推出当前进程
 
 ## 切换店铺账号操作
 
-如果需要在账户之间切换，可先注销当前用户之后，在重新登录
+如果需要在账户之间切换，可先注销当前用户之后，再重新登录
 
 ```shell
 shopify auth logout
