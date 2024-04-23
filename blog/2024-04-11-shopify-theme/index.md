@@ -88,7 +88,7 @@ TD:
 customeElements.define('tag-name', TagFile)
 ```
 
-## snippet yinru
+## snippet 引入
 
 ```liquid
 {% render 'snippet-file-name', class: 'w-10' %}

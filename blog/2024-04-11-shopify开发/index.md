@@ -374,3 +374,77 @@ Alpine.start()
     }, 3000); // 3 秒延迟加载
   </script>
 ```
+
+## 轮播组件 swiper 引入
+
+1. 安装依赖
+
+```bash
+yarn add swiper
+```
+
+2. 配置 webpack.mix.js
+
+```diff
+const mix = require('laravel-mix')
+const tailwindcss = require('tailwindcss')
+
+mix
+  .js('src/js/app.js', 'assets')
+  .sass('src/scss/app.scss', 'assets')
++  .copyIfNotExist(
++    'node_modules/swiper/swiper-bundle.min.css',
++    'assets/css/swiper-bundle.min.css'
++  )
++  .copyIfNotExist(
++    'node_modules/swiper/swiper-bundle.min.js',
++    'assets/js/swiper-bundle.min.js'
++  )
+  .options({
+    processCssUrls: false, // 禁止对 css 中的 url 做处理
+    postCss: [tailwindcss('tailwind.config.js')], // 处理 css 文件的时候使用 postcss 插件，其中包含 tailwind css
+  })
+
+```
+
+3. shopify theme.liquid 主题文件中引入
+
+```liquid
+<link rel="stylesheet" href="{{ 'assets/css/swiper-bundle.min.css' | asset_url }}">
+<script src="{{ 'assets/js/swiper-bundle.min.js' | asset_url }}"></script>
+
+```
+
+## 引入文件的优先级
+
+### CSS 文件
+
+- 重要的全局样式表
+- shopify 主题样式表
+- 三方样式表
+
+```liquid
+{{ 'assets/css/reset.css' | asset_url | stylesheet_tag }}
+{{ 'assets/css/theme.css' | asset_url | stylesheet_tag }}
+{{ 'assets/css/third-party.css' | asset_url | stylesheet_tag }}
+```
+
+### JS 文件
+
+- 引入 Alpine/jQuery 或者其他类库
+- shopify 主题的 JS
+- 三方 JS
+
+```liquid
+{{ 'assets/js/jquery.min.js' | asset_url | script_tag }}
+{{ 'assets/js/theme.js' | asset_url | script_tag }}
+{{ 'assets/js/third-party.js' | asset_url | script_tag }}
+```
+
+## 优化 Tailwind CSS 的构建
+
+使用 laravel-mix-tailwind 插件，它可以优化 Tailwind CSS 的构建过程
+
+```bash
+npm install laravel-mix-tailwind --save-dev
+```
