@@ -31,7 +31,7 @@ config 中定义全局变量
 
 section 模块注意事项：
 
-- 只有静态的 section 才能通过 {{section 'section name'}} 引入
+- 只有静态的 section 才能通过 `{{section 'section name'}}` 引入
 - 动态的 section 只能通过在 index.liquid 中引入 content_for_index 才可以在 json
   中引用
 

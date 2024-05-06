@@ -1,8 +1,8 @@
 ---
 slug: mern-stack-dev
-title: MongoDB + Express + React + Node 开发
+title: MERN 全栈项目搭建
 authors: yana
-date: 2024-01-11
+date: 2024-05-06
 tags: ['mongodb', 'express', 'node', 'React']
 draft: true
 ---
@@ -13,12 +13,87 @@ draft: true
 - 后端框架：Express.js + Node.js
 - 数据库：MongoDB
 
+## 预期的项目结构
+
+```bash
+my-mern-project/   # 项目根目录
+│
+├── backend/       # 后端代码目录
+│   ├── models/    # 数据模型目录
+│   ├── routes/    # 路由目录(将 controllers 和 routes 合并到同一个目录，便与后续维护)
+│   ├── config/    # 配置文件目录
+│   ├── index.js   # 后端入口文件
+│   └── package.json   # 后端依赖管理文件
+│
+├── frontend/      # 前端代码目录
+│   ├── public/    # 静态资源目录
+│   ├── src/       # 源代码目录
+│   │   ├── components/   # React 组件目录
+│   │   ├── pages/    # 页面组件目录
+│   │   ├── App.js    # React 应用入口文件
+│   │   └── index.js   # React 应用渲染入口文件
+│   └── package.json   # 前端依赖管理文件
+│
+└── README.md      # 项目说明文档
+```
+
+## 项目搭建步骤
+
+1. 新建文件夹 my-mern-project 保存前后端项目
+2. 新建前后端项目根目录 /frontend, /backend
+3. 在 frontend、backend 中各自用脚手架初始化项目
+4. 分别优化前后端项目目录结构
+5. 基于优化的项目结构启动项目并联调协作
+
+```bash
+# 新建项目文件夹
+mkdirmkdir my-mern-project
+cd my-mern-project
+
+# 脚手架初始化前端项目，会创建名为 frontend 的 react 项目
+npx create-react-app@latest frontend
+
+# 全局安装 express-generator
+npm install -g express-generator
+# 脚手架初始化后端项目，会创建名为 backend 的后端项目
+express backend --no-view
+```
+
+> 至此项目结构已经基本搭建起来了，接下来是按照预期的项目结构来优化一下目录结构
+
+## 后端项目结构优化
+
+```bash
+└─── backend/       # 后端代码目录
+    ├── models/    # 数据模型目录
+    ├── routes/    # 路由目录(将 controllers 和 routes 合并到同一个目录，便与后续维护)
+    ├── config/    # 配置文件目录
+    ├── index.js   # 后端入口文件
+    └── package.json   # 后端依赖管理文件
+```
+
+### routes/index.js 统一管理路由，让路由配置更为集中和清晰
+
+```js
+module.exports = router
+const express = require('express')
+const router = express.Router()
+
+const userRoutes = require('./userRoutes')
+const postRoutes = require('./postRoutes')
+
+router.use('/users', userRoutes)
+router.use('/posts', postRoutes)
+
+module.exports = router
+```
+
 ## 项目搭建
 
 ### 利用常用的脚手架 create-react-app 和 express-generator 快速搭建项目
 
 ```shell
-# 创建项目目录
+# 创建后端项目目录
 mkdir surprise-box
 cd suprise-box
 
