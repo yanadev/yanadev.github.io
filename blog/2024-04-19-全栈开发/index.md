@@ -21,6 +21,8 @@ my-mern-project/   # 项目根目录
 ├── backend/       # 后端代码目录
 │   ├── models/    # 数据模型目录
 │   ├── routes/    # 路由目录(将 controllers 和 routes 合并到同一个目录，便与后续维护)
+│   │   ├── userRoutes.js
+│   │   └── userController.js
 │   ├── config/    # 配置文件目录
 │   ├── index.js   # 后端入口文件
 │   └── package.json   # 后端依赖管理文件
@@ -74,8 +76,11 @@ express backend --no-view
 
 ### routes/index.js 统一管理路由，让路由配置更为集中和清晰
 
+#### routes/index.js
+
 ```js
-module.exports = router
+// routes/index.js
+
 const express = require('express')
 const router = express.Router()
 
@@ -86,6 +91,179 @@ router.use('/users', userRoutes)
 router.use('/posts', postRoutes)
 
 module.exports = router
+```
+
+#### routes/userRoutes.js
+
+```js
+// userRoutes.js
+
+const express = require('express')
+const router = express.Router()
+const { getUser, createUser } = require('./userController')
+
+// GET 请求处理
+router.get('/', getUser)
+
+// POST 请求处理
+router.post('/', createUser)
+
+// 导出路由对象
+module.exports = router
+```
+
+#### routes/userController.js
+
+```js
+// userController.js
+
+// 中间件函数 - 获取用户
+const getUser = (req, res) => {
+  // 中间件处理逻辑
+  res.send('GET request to the homepage')
+}
+
+// 中间件函数 - 创建用户
+const createUser = (req, res) => {
+  // 中间件处理逻辑
+  res.send('POST request to the homepage')
+}
+
+// 使用ES6解构导出中间件函数
+module.exports = {
+  getUser,
+  createUser,
+}
+```
+
+:::tip
+
+postRoutes.js postController.js 的初始化文件结构也基本一致，只是修改一下变量名称
+:::
+
+### 数据库与环境变量配置
+
+#### 安装 dotenv 创建 .env 文件配置全局环境变量
+
+```bash
+# .env
+
+DB_HOST=localhost
+DB_PORT=27017
+DB_NAME=mydatabase
+DB_USER=myusername
+DB_PASS=mypassword
+```
+
+#### config/env.js 中引入环境变量，配置各个环境的启动参数
+
+```js
+// config/env.js
+
+require('dotenv').config()
+
+module.exports = {
+  development: {
+    PORT: process.env.PORT || 3000,
+    MONGO_URI: `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
+    // 其他开发环境配置...
+  },
+  test: {
+    PORT: process.env.PORT || 4000,
+    MONGO_URI: `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
+    // 其他测试环境配置...
+  },
+  production: {
+    PORT: process.env.PORT || 5000,
+    MONGO_URI: process.env.MONGODB_URI,
+    // 其他生产环境配置...
+  },
+}
+```
+
+:::tip
+
+注意：这里测试环境和开发环境的本地环境配置脚本和上面的 .env 一致
+
+生产环境的话只需要配置 MONGODB_URI=xxxxxx 这一项就可以了
+
+:::
+
+#### 随后在 config/database.js 中引入环境变量，根据不同环境自动读取环境变量
+
+```js
+// config/database.js
+
+const envConfig = require('./env')
+
+// 获取当前环境
+const ENV = process.env.NODE_ENV || 'development'
+
+// 根据当前环境加载对应的数据库配置信息
+const config = envConfig[ENV]
+
+module.exports = config
+```
+
+#### 接下来在 utils/database.js 中创建数据库的连接函数
+
+```js
+// utils/database.js
+
+const mongoose = require('mongoose')
+
+const connectDB = async (mongoURI) => {
+  try {
+    await mongoose.connect(mongoURI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
+    console.log('MongoDB connected successfully')
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error.message)
+    process.exit(1) // Exit process with failure
+  }
+}
+
+module.exports = connectDB
+```
+
+#### 最终在入口文件 app.js 中引入配置信息
+
+```js
+var express = require('express')
+var path = require('path')
+var cookieParser = require('cookie-parser')
+var logger = require('morgan')
+
+const routes = require('./routes')
+// 引入数据库配置
+const config = require('./config/database')
+
+// 引入数据库连接函数
+const connectDB = require('./utils/database')
+
+var app = express()
+
+app.use(logger('dev'))
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+app.use(cookieParser())
+app.use(express.static(path.join(__dirname, 'public')))
+
+// 连接数据库
+connectDB(config.MONGO_URI)
+
+// 所有以 /api 开头的请求都会交给 routes 对象处理
+app.use('/api', routes)
+
+module.exports = app
+```
+
+### 创建数据库，配置数据库密钥信息，更新不同环境中的环境变量
+
+```js
+// todo
 ```
 
 ## 项目搭建
