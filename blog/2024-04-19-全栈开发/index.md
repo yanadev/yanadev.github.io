@@ -260,6 +260,8 @@ app.use('/api', routes)
 module.exports = app
 ```
 
+## mongodb 注册、安装与配置
+
 ### 创建数据库，配置数据库密钥信息，更新不同环境中的环境变量
 
 #### 注册账号，并登录账号
@@ -354,7 +356,7 @@ module.exports = app
 
 ![image-20240508222052586](image-20240508222052586.png)
 
-#### 获取连接云服务器链接
+#### 获取链接并且连接到云服务器
 
 ![image-20240510222040394](image-20240510222040394.png)
 
@@ -362,30 +364,192 @@ module.exports = app
 
 ![image-20240510222259940](image-20240510222259940.png)
 
-#### 打开 MongoDB compass 客户端
+:::tip
 
-1. 在 compass 连接界面中输入 MongoDB 服务器的连接信息
+连接成功则表示现在设置的这个链接是确实可以连接到云服务器的，下一步我们要开始创建
+后端程序，更多的还是通过 API 来操作数据库
 
-- hostname MongoDB 服务器的主机名或 IP 地址
-- port MongoDB 服务器端口号（默认是 27017）
-- Authentication 如果 MongoDB 服务器需要用户名和密码认证的话，需要输入认证信息
-- SSL 根据实际情况选择是否使用 SSL 连接
+:::
 
-填写完毕之后，点击 `Connect` 连接到 MongoDB 服务器
+#### 生产环境与开发环境
 
-2. 创建数据库
+```yml
+# e.g. mongodb+srv://admin:kkkkkkkkkk@yyyyyyyy.hhhhhh.mongodb.net/
 
-- 连接成功之后可以在 MongoDB Compass 的界面看到服务器上的数据库信息
-- 在左侧的导航栏中，点击 `Create Database` 可以创建一个新的数据库
-- 输入数据库名称（e.g. mydatabase）并点击 `Create Database` 完成创建
+# 对应的 .env 文件的配置如下
 
-3. 创建集合（其实就是创建数据库表）
+# DB_HOST=yyyyyyyy.hhhhhh.mongodb.net
+# DB_PORT=27017
+# DB_NAME=<改成你自己创建的数据库名字>
+# DB_USER=admin
+# DB_PASS=kkkkkkkkkk
+```
 
-- 点击刚才创建的数据库，点击数据库名称就可以进入数据库界面
-- 在界面中点击 `Add My Own Data` 按钮就可以添加数据，选择 `Create Collection` 就
-  可以创建集合
-- 输入集合名称（e.g. users）后点击 `Create` 完成创建
--
+> 如果是本地开发的话，直接启动 dev 模式，然后用 compass 连接本地的数据库就可以实
+> 时看到最新的数据库数据总览了
+
+![image-20240511172301832](image-20240511172301832.png)
+
+![image-20240511172316441](image-20240511172316441.png)
+
+## 后端项目中初始化数据库配置
+
+首先进入项目根目录，访问 ./backend/package.json 文件，确定项目是否已经安装了
+`mongoose` 依赖
+
+```json
+// package.json
+{
+  "name": "backend",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^16.4.5",
+    "express": "~4.16.1",
+    "mongoose": "^8.3.4",
+    "morgan": "~1.9.1"
+  }
+}
+```
+
+:::tip
+
+如果没有个 mongoose 这个依赖需要手动安装一下
+
+```bash
+npm install mongoose
+
+# 或者
+
+yarn add mongoose
+```
+
+:::
+
+### backend 目录下创建 models 文件夹
+
+- 创建 index.js 文件，再此处统一引入所有的 model
+- 同级目录下创建各个功能模块的 xxxModel.js,后续使用的时候只需要引入 models 这个
+  文件然后做解构就可以了（这个文件夹中主要是对各个功能的表做定义）
+- 接着，在 routes/xxxController.js 文件中对各个模块的功能做封装，对应的
+  xxxRoute.js 中调用 controller 中的方法
+
+#### models 中文件
+
+```js
+// models/index.js
+
+const UserModel = require('./userModel')
+const PostModel = require('./postModel')
+// 引入其他模块的模型...
+
+module.exports = {
+  UserModel,
+  PostModel,
+  // 导出其他模块的模型...
+}
+```
+
+```js
+// models/userModel.js
+
+const mongoose = require('mongoose')
+
+// 定义用户模型的数据结构
+const userSchema = new mongoose.Schema({
+  username: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now },
+})
+
+// 创建用户模型并导出
+const UserModel = mongoose.model('User', userSchema)
+
+module.exports = UserModel
+```
+
+```js
+// models/postModel.js
+
+const mongoose = require('mongoose')
+
+// 定义帖子模型的数据结构
+const postSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  content: { type: String, required: true },
+  author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  createdAt: { type: Date, default: Date.now },
+})
+
+// 创建帖子模型并导出
+const PostModel = mongoose.model('Post', postSchema)
+
+module.exports = PostModel
+```
+
+#### routes 中文件
+
+```js
+// controllers/userController.js
+
+const { UserModel } = require('../models')
+
+// 用户控制器
+const UserController = {
+  async createUser(req, res) {
+    try {
+      const newUser = await UserModel.create(req.body)
+      res.status(201).json(newUser)
+    } catch (error) {
+      res.status(500).json({ message: error.message })
+    }
+  },
+
+  async getUser(req, res) {
+    try {
+      const userId = req.params.userId
+      const user = await UserModel.findById(userId)
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' })
+      }
+      res.status(200).json(user)
+    } catch (error) {
+      res.status(500).json({ message: error.message })
+    }
+  },
+
+  // 其他用户操作方法...
+}
+
+module.exports = UserController
+```
+
+```js
+// userRoutes.js
+
+const express = require('express')
+const router = express.Router()
+const { getUser, createUser } = require('./userController')
+
+// GET 请求处理
+router.get('/', getUser)
+
+// POST 请求处理
+router.post('/:userId', createUser)
+
+// 导出路由对象
+module.exports = router
+```
+
+### 启动项目，用 postman 或者 apifox 来测试接口是否可以正常访问
+
+<!-- todo -->
 
 ## 项目搭建
 
