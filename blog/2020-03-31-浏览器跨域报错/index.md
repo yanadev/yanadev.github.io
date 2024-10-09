@@ -31,9 +31,8 @@ Server: Apache/2.4.37 (Win64) OpenSSL/1.1.0i PHP/7.2.24
 X-Powered-By: PHP/7.2.24
 ```
 
-:::tip 解决方案，在服务端设置可接收请求的头信息
-:::
+:::tip 解决方案，在服务端设置可接收请求的头信息 :::
 
 ```js
-header('Access-Control-Allow-Headers: Content-Type,XFILENAME,XFILECATEGORY,XFILESIZE');
+header('Access-Control-Allow-Headers: Content-Type,XFILENAME,XFILECATEGORY,XFILESIZE')
 ```

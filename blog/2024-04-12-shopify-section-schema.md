@@ -14,8 +14,7 @@ draft: true
 
 ## schema - 描述页面数据
 
-> 相当于 schema 里面的 data 对象，描述页面中元素的具体使用 schema 是一个 liquid
-> 对象，在这个标签中间存储着一个对象
+> 相当于 schema 里面的 data 对象，描述页面中元素的具体使用 schema 是一个 liquid 对象，在这个标签中间存储着一个对象
 
 该对象描述这个 section 中的信息
 

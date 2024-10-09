@@ -32,21 +32,18 @@ config 中定义全局变量
 section 模块注意事项：
 
 - 只有静态的 section 才能通过 `{{section 'section name'}}` 引入
-- 动态的 section 只能通过在 index.liquid 中引入 content_for_index 才可以在 json
-  中引用
+- 动态的 section 只能通过在 index.liquid 中引入 content_for_index 才可以在 json 中引用
 
 关于 schema 中可以定义的属性：
 
 - name 展示的名字
 - class 额外添加在 section 的 p 标签上的样式
-- settings 这里的 id 在该 section 中十一唯一的，可以通过
-  `{{sections.settings.[id]}}` 来获得对应的 settings
+- settings 这里的 id 在该 section 中十一唯一的，可以通过 `{{sections.settings.[id]}}` 来获得对应的 settings
 
 关于 blocks
 
 - tag 指定该部分的 html 标签
-- blocks 可以增删重排的容器，必须有 name 和 type（type 可由主题开发者自定义任何
-  值）
+- blocks 可以增删重排的容器，必须有 name 和 type（type 可由主题开发者自定义任何值）
 - limit 限制单个模块的总个数
 - max_blocks 可限制最大模块数
 - presets section 的默认配置
@@ -54,8 +51,7 @@ section 模块注意事项：
 
 关于 snippets：比 section 更小的代码块(**主要是提高代码复用率**)
 
-templates 定义了 header 与 footer 之间的内容，会动态替换 layout 中的
-content_for_layout
+templates 定义了 header 与 footer 之间的内容，会动态替换 layout 中的 content_for_layout
 
 config.yml 包含主题配置
 

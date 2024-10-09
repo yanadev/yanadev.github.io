@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkyana_github_io=self.webpackChunkyana_github_io||[]).push([[5920],{48448:t=>{t.exports=JSON.parse('{"blogBasePath":"/frontend","blogTitle":"Blog","authorsListPath":"/frontend/authors"}')}}]);

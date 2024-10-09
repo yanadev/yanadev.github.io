@@ -11,7 +11,8 @@ tags: [sentry, 监控]
 
 1. 通过飞书机器人助手设置 **webhook 触发器**，发起一个 HTTP 请求，触发群组机器人群内消息通知
 2. 启动 sentry webhook 通知，并设置对应 webhook 地址为 **飞书触发器的 webhook 地址**
-3. 设置 sentry alert 信息，开启消息通知到 webhook，**因为 sentry 类型限制，默认设置下，同类型的预警 5 分钟内不通知，仅显示在后台**
+3. 设置 sentry alert 信息，开启消息通知到 webhook，**因为 sentry 类型限制，默认设置下，同类型的预警 5 分钟内不通知，仅显
+   示在后台**
 
 ## 创建飞书机器人指令
 
@@ -27,40 +28,38 @@ tags: [sentry, 监控]
 
 ![image-20230731090045453](./image-20230731090045453.png)
 
-:::tip 将以下 JSON 填写到 触发器 JSON 中，**暴露 sentry 传递的对象变量给下游的操作**
-:::
+:::tip 将以下 JSON 填写到 触发器 JSON 中，**暴露 sentry 传递的对象变量给下游的操作** :::
 
 ```json
 {
-    "event": {
-        "exception": {
-            "values": [
-                {
-                    "stacktrace": {
-                        "frames": []
-                    }
-                }
-            ]
-        },
-        "type": "Error",
-        "title": "Event Title",
-        "user": {
-            "data": {
-                "time": "",
-                "environment": ""
-            }
+  "event": {
+    "exception": {
+      "values": [
+        {
+          "stacktrace": {
+            "frames": []
+          }
         }
+      ]
     },
-    "level": "error",
-    "project": "payssion-dashboard-frontend",
-    "url": ""
+    "type": "Error",
+    "title": "Event Title",
+    "user": {
+      "data": {
+        "time": "",
+        "environment": ""
+      }
+    }
+  },
+  "level": "error",
+  "project": "payssion-dashboard-frontend",
+  "url": ""
 }
 ```
 
 ![image-20230731090703960](./image-20230731090703960.png)
 
-:::tip 复制该 webhook 地址并保存
-:::
+:::tip 复制该 webhook 地址并保存 :::
 
 ![image-20230731090828006](./image-20230731090828006.png)
 
@@ -100,60 +99,59 @@ tags: [sentry, 监控]
 
 :::tip 在请求体中输入一下 JSON，并手动替换其中的变量
 
--   event.user.data.time
--   project
--   event.type
--   event.tile
--   event.exception.values[0].stacktrace.frames
--   event.user.data.environment
--   url
-    :::
+- event.user.data.time
+- project
+- event.type
+- event.tile
+- event.exception.values[0].stacktrace.frames
+- event.user.data.environment
+- url :::
 
 ```json
 {
-    "msg_type": "post",
-    "content": {
-        "post": {
-            "zh_cn": {
-                "title": "event.user.data.time 【 project 】异常通知：",
-                "content": [
-                    [
-                        {
-                            "tag": "text",
-                            "text": "【 event.type 】event.tile"
-                        }
-                    ],
-                    [
-                        {
-                            "tag": "text",
-                            "text": "event.exception.values[0].stacktrace.frames"
-                        }
-                    ],
-                    [
-                        {
-                            "tag": "text",
-                            "text": "【环境】："
-                        },
-                        {
-                            "tag": "text",
-                            "text": "event.user.data.environment"
-                        }
-                    ],
-                    [
-                        {
-                            "tag": "text",
-                            "text": "【操作】："
-                        },
-                        {
-                            "tag": "a",
-                            "text": "查看详情",
-                            "href": "url"
-                        }
-                    ]
-                ]
+  "msg_type": "post",
+  "content": {
+    "post": {
+      "zh_cn": {
+        "title": "event.user.data.time 【 project 】异常通知：",
+        "content": [
+          [
+            {
+              "tag": "text",
+              "text": "【 event.type 】event.tile"
             }
-        }
+          ],
+          [
+            {
+              "tag": "text",
+              "text": "event.exception.values[0].stacktrace.frames"
+            }
+          ],
+          [
+            {
+              "tag": "text",
+              "text": "【环境】："
+            },
+            {
+              "tag": "text",
+              "text": "event.user.data.environment"
+            }
+          ],
+          [
+            {
+              "tag": "text",
+              "text": "【操作】："
+            },
+            {
+              "tag": "a",
+              "text": "查看详情",
+              "href": "url"
+            }
+          ]
+        ]
+      }
     }
+  }
 }
 ```
 

@@ -138,8 +138,7 @@ module.exports = {
 
 :::tip
 
-postRoutes.js postController.js 的初始化文件结构也基本一致，只是修改一下变量名称
-:::
+postRoutes.js postController.js 的初始化文件结构也基本一致，只是修改一下变量名称 :::
 
 ### 数据库与环境变量配置
 
@@ -366,8 +365,8 @@ module.exports = app
 
 :::tip
 
-连接成功则表示现在设置的这个链接是确实可以连接到云服务器的，下一步我们要开始创建
-后端程序，更多的还是通过 API 来操作数据库
+连接成功则表示现在设置的这个链接是确实可以连接到云服务器的，下一步我们要开始创建后端程序，更多的还是通过 API 来操作数据
+库
 
 :::
 
@@ -385,8 +384,7 @@ module.exports = app
 # DB_PASS=kkkkkkkkkk
 ```
 
-> 如果是本地开发的话，直接启动 dev 模式，然后用 compass 连接本地的数据库就可以实
-> 时看到最新的数据库数据总览了
+> 如果是本地开发的话，直接启动 dev 模式，然后用 compass 连接本地的数据库就可以实时看到最新的数据库数据总览了
 
 ![image-20240511172301832](image-20240511172301832.png)
 
@@ -394,8 +392,7 @@ module.exports = app
 
 ## 后端项目中初始化数据库配置
 
-首先进入项目根目录，访问 ./backend/package.json 文件，确定项目是否已经安装了
-`mongoose` 依赖
+首先进入项目根目录，访问 ./backend/package.json 文件，确定项目是否已经安装了 `mongoose` 依赖
 
 ```json
 // package.json
@@ -434,10 +431,9 @@ yarn add mongoose
 ### backend 目录下创建 models 文件夹
 
 - 创建 index.js 文件，再此处统一引入所有的 model
-- 同级目录下创建各个功能模块的 xxxModel.js,后续使用的时候只需要引入 models 这个
-  文件然后做解构就可以了（这个文件夹中主要是对各个功能的表做定义）
-- 接着，在 routes/xxxController.js 文件中对各个模块的功能做封装，对应的
-  xxxRoute.js 中调用 controller 中的方法
+- 同级目录下创建各个功能模块的 xxxModel.js,后续使用的时候只需要引入 models 这个文件然后做解构就可以了（这个文件夹中主要
+  是对各个功能的表做定义）
+- 接着，在 routes/xxxController.js 文件中对各个模块的功能做封装，对应的 xxxRoute.js 中调用 controller 中的方法
 
 #### models 中文件
 

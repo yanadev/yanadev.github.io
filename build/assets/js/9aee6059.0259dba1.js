@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkyana_github_io=self.webpackChunkyana_github_io||[]).push([[2639],{81843:a=>{a.exports=JSON.parse('{"label":"GET","permalink":"/tags/get","allTagsPath":"/tags","count":1,"unlisted":false}')}}]);
