@@ -137,7 +137,9 @@ module.exports = {
 
 :::tip
 
-postRoutes.js postController.js 的初始化文件结构也基本一致，只是修改一下变量名称 :::
+postRoutes.js postController.js 的初始化文件结构也基本一致，只是修改一下变量名称
+
+:::
 
 ### 数据库与环境变量配置
 
@@ -322,7 +324,9 @@ module.exports = app
 
 :::tip
 
-可以直接点击连接安装 :::
+可以直接点击连接安装
+
+:::
 
 [🔗MongoDB 安装地址](https://www.mongodb.com/try/download/community)
 
