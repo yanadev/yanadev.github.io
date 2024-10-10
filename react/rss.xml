@@ -35,7 +35,7 @@
 <li>单向数据流： <strong>flux 架构</strong></li>
 <li>完善的错误提示</li>
 </ol>
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="flux-架构单�向数据流">flux 架构（单向数据流）<a href="https://yanadev.github.io/react/react#flux-%E6%9E%B6%E6%9E%84%E5%8D%95%E5%90%91%E6%95%B0%E6%8D%AE%E6%B5%81" class="hash-link" aria-label="flux 架构（单向数据流）的直接链接" title="flux 架构（单向数据流）的直接链接">​</a></h4>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="flux-架构单向数据流">flux 架构（单向数据流）<a href="https://yanadev.github.io/react/react#flux-%E6%9E%B6%E6%9E%84%E5%8D%95%E5%90%91%E6%95%B0%E6%8D%AE%E6%B5%81" class="hash-link" aria-label="flux 架构（单向数据流）的直接链接" title="flux 架构（单向�数据流）的直接链接">​</a></h4>
 <p><img decoding="async" loading="lazy" alt="image-20230908105023004" src="https://yanadev.github.io/assets/images/image-20230908105023004-8ae4cc679ada2de6a69915a5ed66b09c.png" width="1468" height="700" class="img_ev3q"></p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="组件方式考虑-ui-的构建方式">组件方式考虑 UI 的构建方式<a href="https://yanadev.github.io/react/react#%E7%BB%84%E4%BB%B6%E6%96%B9%E5%BC%8F%E8%80%83%E8%99%91-ui-%E7%9A%84%E6%9E%84%E5%BB%BA%E6%96%B9%E5%BC%8F" class="hash-link" aria-label="组件方式考虑 UI 的构建方式的直接链接" title="组件方式考虑 UI 的构建方式的直接链接">​</a></h2>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="react-组件props--state--view">React 组件（<strong>props + state = view</strong>）<a href="https://yanadev.github.io/react/react#react-%E7%BB%84%E4%BB%B6props--state--view" class="hash-link" aria-label="react-组件props--state--view的直接链接" title="react-组件props--state--view的直接链接">​</a></h3>
@@ -73,7 +73,7 @@
 <p>render 之前调用，state 已经更新了</p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="componentdidupdate页面根据-props-变化重获数据">componentDidUpdate（页面根据 props 变化重获数据）<a href="https://yanadev.github.io/react/react#componentdidupdate%E9%A1%B5%E9%9D%A2%E6%A0%B9%E6%8D%AE-props-%E5%8F%98%E5%8C%96%E9%87%8D%E8%8E%B7%E6%95%B0%E6%8D%AE" class="hash-link" aria-label="componentDidUpdate（页面根据 props 变化重获数据）的直接链接" title="componentDidUpdate（页面根据 props 变化重获数据）的直接链接">​</a></h4>
 <p>每次 UI 更新都会调用</p>
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="shouldcomponentupdate性能优化">shouldComponentUpdate（性能优化）<a href="https://yanadev.github.io/react/react#shouldcomponentupdate%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96" class="hash-link" aria-label="shouldComponentUpdate（性能优化）的直接链��接" title="shouldComponentUpdate（性能优化）的直接链接">​</a></h4>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="shouldcomponentupdate性能优化">shouldComponentUpdate（性能优化）<a href="https://yanadev.github.io/react/react#shouldcomponentupdate%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96" class="hash-link" aria-label="shouldComponentUpdate（性能优化）的直接链接" title="shouldComponentUpdate（性能优化）的直接链接">​</a></h4>
 <p>Virtual DOM 是否会重新绘制</p>
 <p>一般用 PureComponent 自动实现</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="virtual-dom-与-key-属性">Virtual DOM 与 key 属性<a href="https://yanadev.github.io/react/react#virtual-dom-%E4%B8%8E-key-%E5%B1%9E%E6%80%A7" class="hash-link" aria-label="Virtual DOM 与 key 属性的直接链接" title="Virtual DOM 与 key 属性的直接链接">​</a></h2>

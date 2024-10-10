@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkyana_github_io=self.webpackChunkyana_github_io||[]).push([[2198],{9693:a=>{a.exports=JSON.parse('{"label":"ESLint","permalink":"/tags/es-lint","allTagsPath":"/tags","count":1,"unlisted":false}')}}]);

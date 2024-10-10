@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkyana_github_io=self.webpackChunkyana_github_io||[]).push([[8702],{39264:e=>{e.exports=JSON.parse('{"name":"docusaurus-plugin-content-blog","id":"chore"}')}}]);

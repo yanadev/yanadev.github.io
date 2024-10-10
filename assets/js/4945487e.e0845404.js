@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkyana_github_io=self.webpackChunkyana_github_io||[]).push([[8363],{78990:a=>{a.exports=JSON.parse('{"label":"computed","permalink":"/vue/tags/computed","allTagsPath":"/vue/tags","count":1,"unlisted":false}')}}]);

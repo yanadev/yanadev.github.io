@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkyana_github_io=self.webpackChunkyana_github_io||[]).push([[9876],{90475:a=>{a.exports=JSON.parse('{"authors":[{"name":"Yana Ching","title":"Front End Engineer","url":"https://yamadev.github.io/","imageURL":"https://github.com/yanadev.png","key":"yana","page":null,"count":4}]}')}}]);
