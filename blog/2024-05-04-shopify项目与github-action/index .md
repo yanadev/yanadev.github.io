@@ -1,6 +1,6 @@
 ---
 slug: shopify-github-action
-title: shopify项目设置自动化部署到 main 分支实现联动
+title: shopify项目设置自动化部署
 authors: yana
 tags: [shopify, 'github/action']
 ---

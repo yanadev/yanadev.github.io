@@ -4,7 +4,6 @@ title: MERN 全栈项目搭建
 authors: yana
 date: 2024-05-06
 tags: ['mongodb', 'express', 'node', 'React']
-draft: true
 ---
 
 ## 技术选型
@@ -820,3 +819,5 @@ module.exports = middlewaresConfig
 ```
 
 ## MongoDB 数据库安装
+
+未完待续

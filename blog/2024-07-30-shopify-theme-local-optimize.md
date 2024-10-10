@@ -1,9 +1,8 @@
 ---
 slug: shopify-theme-local-optimize
-title: Shopify 主题本地开发脚手架
+title: Shopify开发流程优化
 authors: yana
 tags: [shopify, 'local', 'optimize']
-draft: true
 ---
 
 # 性能优化
@@ -93,6 +92,18 @@ src/
 # 开发流程优化
 
 ## 本地开发
+
+:::info
+
+server 服务器只是一次尝试，发现还是需要 ruby 来自定义一些 filter 的开发
+
+短时间内没法做，因此实际工作中还是无法真正提升开发体验
+
+或许得创建 独立的 shopify app 用插件形式来操作主题更为灵活
+
+如果依赖 shopify 的 liquid 来渲染 html 结构，几乎得重写 shopify 中的 filter 功能，需要斟酌
+
+:::
 
 使用 Vite 和 Express 创建本地开发环境，尽量减少对 Shopify 服务器的依赖
 

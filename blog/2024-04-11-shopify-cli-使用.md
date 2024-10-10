@@ -4,7 +4,6 @@ title: shopify/cli 使用
 authors: yana
 date: 2024-01-11
 tags: ['shopify', 'tool']
-draft: true
 ---
 
 ## 首次登录

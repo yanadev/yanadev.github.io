@@ -1,10 +1,9 @@
 ---
-slug: shopify-dev
-title: shopify 开发
+slug: shopify-themekit-dev
+title: shopify Themekit开发
 authors: yana
-tags: ['shopify']
+tags: [shopify，themekit]
 date: 2024-04-11
-draft: true
 ---
 
 ## 开发前准备
@@ -25,11 +24,15 @@ theme 与 app 有不同的职责和作用：
 
 主题（Theme）：主题是定义了商店外观和布局的模板文件集合。在 Shopify 主题开发中，您主要是对页面的 HTML 结构和 Liquid 模板
 进行操作，以实现商店的视觉效果和布局。**可以使用 HTML 和 Liquid 模板语言来动态生成页面内容，包括产品列表、购物车、结账页
-面等，从而实现页面的视图渲染和交互效果**。 :::
+面等，从而实现页面的视图渲染和交互效果**。
+
+:::
 
 :::info 应用（App）：应用是为商店提供特定功能或服务的独立软件。在 Shopify 应用开发中，您可以使用后端技术（如
 Node.js、PHP）和前端技术（如 JavaScript、HTML）来开发您的应用。您的应用可以**通过 Shopify API 与商店进行交互，例如获取商
-店数据、修改产品信息、处理订单等**。应用通常是独立于主题的，可以实现更多的功能和定制选项。 :::
+店数据、修改产品信息、处理订单等**。应用通常是独立于主题的，可以实现更多的功能和定制选项。
+
+:::
 
 总的来说，主题和应用在 Shopify 中具有不同的功能和作用。
 
@@ -44,7 +47,11 @@ Node.js、PHP）和前端技术（如 JavaScript、HTML）来开发您的应用�
 
 ![image-20240410120045640](image-20240410120045640.png)
 
-:::tip 商店创建完毕之后可以直接 install 一个默认的 theme，点击小眼睛就可以预览店铺效果了 :::
+:::tip
+
+商店创建完毕之后可以直接 install 一个默认的 theme，点击小眼睛就可以预览店铺效果了
+
+:::
 
 ![image-20240410134904532](image-20240410134904532.png)
 
@@ -54,7 +61,11 @@ Node.js、PHP）和前端技术（如 JavaScript、HTML）来开发您的应用�
 
 ## 点击 customize 可在图形化操作界面修改店铺
 
-:::tip 在这里可以快速定位模块所处的文件位置 :::
+:::tip
+
+在这里可以快速定位模块所处的文件位置
+
+:::
 
 ![image-20240410142059896](image-20240410142059896.png)
 
@@ -110,49 +121,57 @@ theme get --password=<PASSWORD> --store=xxxx.myshopify.com --themeid=xxxxx
 
 2. 获取主题代码
 
-   :::tip 本地创建主题 :::
+:::tip
 
-   使用 @shopify/cli 创建本地主题
+本地创建主题
 
-   ```shell
-   shopify theme init
-   # 会要求你输入主题的名称
+:::
 
-   cd <your-theme-name>
-   ```
+使用 @shopify/cli 创建本地主题
 
-   :::tip 拉去店铺主题进行开发 :::
+```shell
+shopify theme init
+# 会要求你输入主题的名称
 
-   ```shell
-   shopify theme pull -store <store-name>
-   ```
+cd <your-theme-name>
+```
 
-3. 本地运行
+:::tip
 
-   ```shell
-   shopify theme dev --store <your-store-name>
+拉取店铺主题进行开发
 
-   # 启动完毕之后直接在命令行随便点击一下就可以获得本地预览的地址
-   # 一般情况下，在 9292 端口不被占用的时候，都是 使用 http://localhost:9292 OR http://127.0.0.1:9292
-   ```
+:::
 
-4. 主题上传
+```shell
+shopify theme pull -store <store-name>
+```
 
-   ```shell
-   shopify theme push --unpublished
-   # 这是将目前主题当作首次上传、未发布的主题
+1. 本地运行
 
-   shopify theme push
-   # 这是针对已经上传的主题，更新主题的代码
-   ```
+```shell
+shopify theme dev --store <your-store-name>
 
-5. 发布主题
+# 启动完毕之后直接在命令行随便点击一下就可以获得本地预览的地址
+# 一般情况下，在 9292 端口不被占用的时候，都是 使用 http://localhost:9292 OR http://127.0.0.1:9292
+```
+
+2. 主题上传
+
+```shell
+shopify theme push --unpublished
+# 这是将目前主题当作首次上传、未发布的主题
+
+shopify theme push
+# 这是针对已经上传的主题，更新主题的代码
+```
+
+3. 发布主题
 
    **PS: 一定要确保主题在本地开发完毕之后，才能发布主题**
 
-   ```shell
-   shopify theme publish
-   ```
+```shell
+shopify theme publish
+```
 
 ## 工程化项目
 

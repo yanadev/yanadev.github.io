@@ -4,7 +4,6 @@ title: shopify 主题开发
 authors: yana
 tags: ['shopify', 'theme']
 date: 2024-04-11
-draft: true
 ---
 
 ## 初始化项目
