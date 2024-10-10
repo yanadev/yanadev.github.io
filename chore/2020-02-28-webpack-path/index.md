@@ -37,7 +37,11 @@ path.normalize('C:\\temp\\\\foo\\bar\\..\\')
 
 ### 获取所在路径
 
-:::tip `__dirname` 是`node.js` 中的一个全局变量，用来获取`当前模块文件`所在目录的完整绝对路径 :::
+:::tip
+
+`__dirname` 是`node.js` 中的一个全局变量，用来获取`当前模块文件`所在目录的完整绝对路径
+
+:::
 
 ```js
 var path = require('path')
@@ -57,7 +61,11 @@ console.log(myPath)
 
 ### 获取文件名
 
-:::tip 严格来说，path.basename(filepath) 只是输出路径的最后一部分，并不会判断文件名 :::
+:::tip
+
+严格来说，path.basename(filepath) 只是输出路径的最后一部分，并不会判断文件名
+
+:::
 
 ```js
 var path = require('path')
@@ -68,7 +76,11 @@ console.log(path.basename('tmp/demo/js/test')) // test
 
 ![image-20200228031327206](./image-20200228031327206.png)
 
-:::info 如果不想包括文件扩展名，可使用第二个参数 :::
+:::info
+
+如果不想包括文件扩展名，可使用第二个参数
+
+:::
 
 ```js
 console.log(path.basename('tmp/demo/js/test.js', '.js')) // test
@@ -86,7 +98,9 @@ console.log(path.extname(filepath)) // .js
 
 ![image-20200228031831335](./image-20200228031831335.png)
 
-:::tip 更详细的规则是如下：（假设 path.basename(filepath) === B ）
+:::tip
+
+更详细的规则是如下：（假设 path.basename(filepath) === B ）
 
 - 从 B 的最后一个`.`开始截取，直到最后一个字符
 - 如果 B 中不存在`.`，或者 B 的第一个字符就是`.`，那么返回空字符串
@@ -128,7 +142,11 @@ path.join('/foo', 'bar', 'baz/asdf', 'quux', '..')
 
 ![image-20200228032521758](./image-20200228032521758.png)
 
-:::tip path 定义的伪代码如下： :::
+:::tip
+
+path 定义的伪代码如下：
+
+:::
 
 ```js
 module.exports.join = function () {

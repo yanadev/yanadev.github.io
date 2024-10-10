@@ -42,9 +42,15 @@ module.exports = {
 :::info webpack 的 4.x 版本中默认约定：
 
 - 打包的入口文件为 src -> index.js
-- 打包的输出文件为 dist -> main.js :::
+- 打包的输出文件为 dist -> main.js
 
-:::tip 添加一下配置可修改打包的入口及出口 \_\_dirname 是当前文件所在的目录 :::
+:::
+
+:::tip
+
+添加一下配置可修改打包的入口及出口 \_\_dirname 是当前文件所在的目录
+
+:::
 
 ```js
 module.exports = {
@@ -80,8 +86,13 @@ module.exports = {
 
 运行 npm run dev 命令，重新进行打包在浏览器中访问 `http://localhost:8080` 地址，查看自动打包效果
 
-:::info webpack-dev-server 会启动一个实时打包的 http 服务器 webpack-dev-server 打包生成的输出文件，默认放到了项目根目录
-中，而且是虚拟的、看不见的 :::
+:::info
+
+webpack-dev-server 会启动一个实时打包的 http 服务器
+
+webpack-dev-server 打包生成的输出文件，默认放到了项目根目录中，而且是虚拟的、看不见的
+
+:::
 
 ## webpack 是什么？
 
@@ -91,7 +102,11 @@ module.exports = {
 
 ## webpack 安装的两种方式
 
-:::tip 前提：需要先安装 `node` 和 `npm` 为了方便管理项目，最好在项目中也包含一份独立的 `webpack` :::
+:::tip
+
+前提：需要先安装 `node` 和 `npm` 为了方便管理项目，最好在项目中也包含一份独立的 `webpack`
+
+:::
 
 1. 运行 `npm i webpack -g` 全局安装 webpack，这样就能在全局使用 webpack 的命令了
 2. 在项目根目录中运行 `npm i webpack --save-dev` 安装到项目依赖中
@@ -107,7 +122,11 @@ import $ from 'jquery' // 使用 $ 变量接收 'jquery'文件（ES6）
 webpack  要打包的文件的路径   打包好的输出文件路径
 ```
 
-:::tip 运行结果 :::
+:::tip
+
+运行结果
+
+:::
 
 ```bash
 
@@ -132,7 +151,11 @@ Entrypoint main [big] = bundle,js
 
 ![image-20200218222513510](./image-20200218222513510.png)
 
-:::tip index.html :::
+:::tip
+
+index.html
+
+:::
 
 ```html
 <!DOCTYPE html>
@@ -163,7 +186,11 @@ Entrypoint main [big] = bundle,js
 </html>
 ```
 
-:::tip main.js :::
+:::tip
+
+main.js
+
+:::
 
 ```javascript
 // 这个 main.js 是我们项目的 JS 入口文件
@@ -182,7 +209,11 @@ $(function () {
 })
 ```
 
-:::tip webpack.config.js :::
+:::tip
+
+webpack.config.js
+
+:::
 
 ```javascript
 const path = require('path')
@@ -204,11 +235,15 @@ module.exports = {
 
 运行 npm i webpack-dev-server -D 把工具安装到项目的本地开发依赖
 
-:::tip 由于只是在本项目中，本地安装的 webpack-dev-server ，因此无法把它当做脚本命令在 powershell 终端中直接运行（只有安
-装到 全局 -g 的工具，才能在 终端 中正常执行）
+:::tip
+
+由于只是在本项目中，本地安装的 webpack-dev-server ，因此无法把它当做脚本命令在 powershell 终端中直接运行（只有安装到 全
+局 -g 的工具，才能在 终端 中正常执行）
 
 webpack-dev-server 打包生成的 bundle.js 以虚拟形式托管到了 项目的根目录（电脑内存中而非磁盘）中虽然看不到但是，可以认为
-和 dist src node_module 平级 :::
+和 dist src node_module 平级
+
+:::
 
 ![image-20200218225059167](./image-20200218225059167.png)
 
@@ -374,8 +409,12 @@ module: {
 }
 ```
 
-:::danger 安装 postCSS 的时候报错找不到 `style-loader` ，原因是 `style-loader`全局安装，需要在本项目中安装
-`cnpm install css-loader style-loader --save` :::
+:::danger
+
+安装 postCSS 的时候报错找不到 `style-loader` ，原因是 `style-loader`全局安装，需要在本项目中安装
+`cnpm install css-loader style-loader --save`
+
+:::
 
 ## 打包处理 js 文件中的高级语法
 
@@ -384,16 +423,26 @@ module: {
    @babel/plugin-proposal-class-properties -D
 3. 在项目根目录中，创建 babel 配置文件 babel.config.js
 
-   :::tip 始化基本配置如下 :::
+:::tip
 
-   ```js
-   module.exports = {
-     presets: ['@babel/preset-env'],
-     plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-proposal-class-properties'],
-   }
-   ```
+始化基本配置如下
 
-4. 在 webpack.config.js 的 module -> rules 数组中，添加 loader 规则 :::tip 规则如下： :::
+:::
+
+```js
+module.exports = {
+  presets: ['@babel/preset-env'],
+  plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-proposal-class-properties'],
+}
+```
+
+在 webpack.config.js 的 module -> rules 数组中，添加 loader 规则
+
+:::tip
+
+规则如下：
+
+:::
 
 ```js
   // exclude 为排除项，表示 babel-loader 不需要处理 node_modules 中的 js 文件
