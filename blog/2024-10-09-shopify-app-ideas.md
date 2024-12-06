@@ -98,3 +98,70 @@ shopify node create
 3. Google Chrome Extensions/Workspace App
 4. Zoom App Marketplace
 5. Notion market, market.notion.vip
+
+# 提升开发体验
+
+> 使用 vite 实现开发阶段的热加载（Hot Module Replacement）
+
+## 配置 vite 开发服务器
+
+```js
+/** vite.config.js */
+
+import { defineConfig } from 'vite'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
+import path from 'path'
+
+export default defineConfig({
+  server: {
+    host: 'localhost', // 本地开发服务器地址
+    port: 3000, // Vite 开发服务器端口
+    https: false, // 可以根据需要启用 https
+  },
+  plugins: [
+    // 使用 `vite-plugin-static-copy` 插件复制资源
+    viteStaticCopy({
+      targets: [
+        {
+          src: 'src/assets/**/*',
+          dest: 'assets',
+        },
+      ],
+    }),
+  ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+})
+```
+
+## 创建 shopify Proxy 或者 ngrok 隧道
+
+因 shopify 模板无法在本地直接预览，需要将 vite 开发服务器代理到 shopify 本地环境中：
+
+1. ngrok 、 LocalTunnels 等隧道工具
+2. shopify cli 提供的 theme serve 命令结合代理
+
+```bash
+# 安装 ngrok
+brew install ngrok
+
+# 运行 ngrok 并将 vite 暴露出来: 会生成一个 https://abc123.ngrok.io
+# 可在开发阶段通过 这个 url 获取开发阶段的资源
+ngrok http 3000
+```
+
+```liquid
+{% if request.host contains 'ngrok.io' %}
+  <!-- 开发环境下引入 Vite 开发服务器资源 -->
+  <link rel="stylesheet" href="https://abc123.ngrok.io/src/style.css">
+  <script type="module" src="https://abc123.ngrok.io/src/main.js"></script>
+{% else %}
+  <!-- 生产环境下引入构建后的资源 -->
+  <link rel="stylesheet" href="{{ 'assets/style.[hash].css' | asset_url }}">
+  <script src="{{ 'assets/main.[hash].js' | asset_url }}"></script>
+{% endif %}
+
+```
