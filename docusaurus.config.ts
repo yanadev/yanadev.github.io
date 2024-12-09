@@ -122,6 +122,11 @@ const config = {
             position: 'right',
           },
           {
+            to: '/shopify',
+            label: 'Shopify',
+            position: 'left',
+          },
+          {
             to: '/frontend',
             label: '前端',
             position: 'left',
@@ -359,6 +364,21 @@ const config = {
         showReadingTime: true,
         blogSidebarCount: 'ALL',
         blogSidebarTitle: '算法',
+        // Please change this to your repo.
+        // Remove this to remove the "edit this page" links.
+        postsPerPage: 10,
+        onUntruncatedBlogPosts: 'ignore',
+      } satisfies BlogOptions,
+    ],
+    [
+      '@docusaurus/plugin-content-blog',
+      {
+        id: 'shopify',
+        path: './shopify',
+        routeBasePath: 'shopify',
+        showReadingTime: true,
+        blogSidebarCount: 'ALL',
+        blogSidebarTitle: 'Shopify',
         // Please change this to your repo.
         // Remove this to remove the "edit this page" links.
         postsPerPage: 10,
