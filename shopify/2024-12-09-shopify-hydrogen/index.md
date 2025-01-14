@@ -385,7 +385,7 @@ http://localhost:3000/subrequest-profiler 预览网络请求过程
 2. 输入邮箱获取免费使用
 3. 配置 hydrogen 插件
 
-​	![image-20241211001754596](image-20241211001754596.png)
+​ ![image-20241211001754596](image-20241211001754596.png)
 
 ![image-20241211001923743](image-20241211001923743.png)
 
@@ -447,7 +447,7 @@ Support for loading ES Module in require() is an experimental feature and might 
    mang-he (mang-he.myshopify.com)
 ```
 
-:::info 
+:::info
 
 登陆成功选择你要连接的 store
 
@@ -458,13 +458,13 @@ Support for loading ES Module in require() is an experimental feature and might 
 1. 登陆 partner.shopify.com 之后，点击 stores 创建一个测试店铺，店铺创建成功之后会直接跳转到这个店铺的后台
    `admin.shopify.com/store/nf89`
 
- ![image-20241210224551851](image-20241210224551851.png)![image-20241210224617899](image-20241210224617899.png)
+![image-20241210224551851](image-20241210224551851.png)![image-20241210224617899](image-20241210224617899.png)
 
 ![image-20241210225031276](image-20241210225031276.png)
 
 2. 设置支持自定义 app
 
- ![image-20241210225922495](image-20241210225922495.png)
+![image-20241210225922495](image-20241210225922495.png)
 
 ![image-20241210225947371](image-20241210225947371.png)
 
@@ -476,7 +476,7 @@ Support for loading ES Module in require() is an experimental feature and might 
 
 4. 获取 admin API ，勾选所有的权限之后，安装 app
 
- ![image-20241210230423614](image-20241210230423614.png)
+![image-20241210230423614](image-20241210230423614.png)
 
 ![image-20241210230956494](image-20241210230956494.png)
 
@@ -488,15 +488,15 @@ Support for loading ES Module in require() is an experimental feature and might 
 
 > token(admin)
 >
-> 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
+> xxxxxx
 
 > API key
 >
-> 867883d229b138060ead819afc9ca97f
+> xxxxxx
 >
 > API secret key
 >
-> 612fd0e37c5d20cf7d8a616139e2672c
+> xxxxx
 
 5. Storefront API 配置
 
