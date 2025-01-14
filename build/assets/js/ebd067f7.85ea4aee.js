@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkyana_github_io=self.webpackChunkyana_github_io||[]).push([[9074],{65561:a=>{a.exports=JSON.parse('{"tag":{"label":"local","permalink":"/tags/local","allTagsPath":"/tags","count":2,"unlisted":false},"listMetadata":{"permalink":"/tags/local","page":1,"postsPerPage":10,"totalPages":1,"totalCount":2,"blogDescription":"Blog","blogTitle":"Blog"}}')}}]);

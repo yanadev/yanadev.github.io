@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkyana_github_io=self.webpackChunkyana_github_io||[]).push([[4492],{84669:e=>{e.exports=JSON.parse('{"title":"Shopify","items":[{"title":"intro","permalink":"/shopify/intro","unlisted":false,"date":"2024-12-05T00:00:00.000Z"}]}')}}]);
