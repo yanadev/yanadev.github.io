@@ -4,6 +4,7 @@ title: 自动化部署脚本
 authors: yana
 date: 2024-05-06
 tags: ['github', 'action', 'yml', 'blog']
+draft: true
 ---
 
 ## 通用版本

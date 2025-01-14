@@ -3,6 +3,7 @@ slug: shopify-theme-local-optimize
 title: Shopify开发流程优化
 authors: yana
 tags: [shopify, 'local', 'optimize']
+draft: true
 ---
 
 # 性能优化
