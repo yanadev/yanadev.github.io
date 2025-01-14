@@ -190,7 +190,7 @@
 修改页面内容(样式)）</li>
 </ul>
 <p><img decoding="async" loading="lazy" alt="image-20200218235149200" src="https://yanadev.github.io/assets/images/image-20200218235149200-725a99837d8ae427ab2a736c4edaa337.png" width="1861" height="203" class="img_ev3q"></p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="使用-html-webpack-plugin-插件配置启动页面">使用 html-webpack-plugin 插件配置启动页面<a href="https://yanadev.github.io/chore/webpack#%E4%BD%BF%E7%94%A8-html-webpack-plugin-%E6%8F%92%E4%BB%B6%E9%85%8D%E7%BD%AE%E5%90%AF%E5%8A%A8%E9%A1%B5%E9%9D%A2" class="hash-link" aria-label="使用 html-webpack-plugin 插件配置启动页面的直接链接" title="使用 html-webpack-plugin 插件配置启动页面的直接链接">​</a></h2>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="使用-html-webpack-plugin-插件配置启动页面">使用 html-webpack-plugin 插件配置启动页面<a href="https://yanadev.github.io/chore/webpack#%E4%BD%BF%E7%94%A8-html-webpack-plugin-%E6%8F%92%E4%BB%B6%E9%85%8D%E7%BD%AE%E5%90%AF%E5%8A%A8%E9%A1%B5%E9%9D%A2" class="hash-link" aria-label="使用 html-webpack-plugin 插件配置启动页面的直接链接" title="使用 html-webpack-plugin �插件配置启动页面的直接链接">​</a></h2>
 <p>由于使用 <code>--contentBase</code> 指令的过程比较繁琐，需要制定启动的目录，同时需要修改 index.html 中的 script 标签的 src 属性，因
 此更加推荐使用 <code>html-webpack-plugin</code> 插件配置启动页面</p>
 <ol>
