@@ -3,6 +3,7 @@ slug: shopify-headless-project-init（quick start）
 title: Build a shopify headless project
 authors: yana
 tags: [shopify, 'headless']
+draft: true
 ---
 
 # 环境要求
@@ -78,6 +79,5 @@ shopify hydrogen dev
 3. 我们需要可以完全控制整个店铺，因此 admin API 和 stroefront API 都需配置
 4. `overview` / `Config Admin API scopeds` / select all access / `API credentials` / `install app` / `install`
 5. 你会得到以下数据
-
 
 [未完待续...]

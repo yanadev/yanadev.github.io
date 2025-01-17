@@ -6,6 +6,8 @@ authors: yana
 draft: true
 ---
 
+[toc]
+
 # Headless Shopify 项目
 
 〉 前后端分离，通过 API 获取商品、订单等，通过前端技术（React、nextjs）渲染和展示
@@ -374,4 +376,132 @@ http://localhost:3000/subrequest-profiler 预览网络请求过程
 
 :::
 
+# 安装 hydrogen 插件(关联店铺前必做)
+
+1. 首先在 store 中 安装 hydrogen app
+
+![image-20241211001347444](image-20241211001347444.png)
+
+2. 输入邮箱获取免费使用
+3. 配置 hydrogen 插件
+
+​ ![image-20241211001754596](image-20241211001754596.png)
+
+![image-20241211001923743](image-20241211001923743.png)
+
+![image-20241211002035719](image-20241211002035719.png)
+
+# 获取并设置环境变量
+
+```.env
+# 命令行中执行 `openssl rand -base64 32` 获得
+SESSION_SECRET="foobar"
+
+# 店铺域名 xxx.shopify.com
+PUBLIC_STORE_DOMAIN="nf89.shopify.com"
+
+# hydrogen 插件中获取
+PUBLIC_STOREFRONT_ID="nf89"
+
+# storefront api token
+PUBLIC_STOREFRONT_API_TOKEN=""
+
+# admin api token
+PRIVATE_STOREFRONT_API_TOKEN=[TOKEN]
+
+# settings/customer Accounts 中启动 enable customer Accounts ，即可获得一个 client_id
+PUBLIC_CUSTOMER_ACCOUNT_API_CLIENT_ID=[ID]
+
+# 将 hydrogen 中id替换到目标位置
+PUBLIC_CUSTOMER_ACCOUNT_API_URL=https://shopify.com/[ID]
+```
+
+![image-20241211005852734](image-20241211005852734.png)
+
+![image-20241211010112305](image-20241211010112305.png)
+
+![image-20241211010343146](image-20241211010343146.png)
+
+# 关联店铺
+
+```zsh
+# 更新 shopify/cli 脚手架
+npm install @shopify/cli@latest
+#  将 hydrogen 项目关联到 store
+npx shopify hydrogen link
+```
+
+接着在命令行中任意按下一个键盘，网页中登陆授权登陆脚手架
+
+```zsh
+ hydrogen-quickstart git:(main) npx shopify hydrogen link
+(node:59003) ExperimentalWarning: CommonJS module /opt/homebrew/lib/node_modules/npm/node_modules/debug/src/node.js is loading ES Module /opt/homebrew/lib/node_modules/npm/node_modules/supports-color/index.js using require().
+Support for loading ES Module in require() is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+💡 Version 3.71.4 available! Run `npm install @shopify/cli@latest`
+?  Select a shop to log in to:
+
+>  nf89 (nf89.myshopify.com)
+   My Store (ipvvmm-ri.myshopify.com)
+   Quickstart (c73cafdf) (quickstart-c73cafdf.myshopify.com)
+   mang-he (mang-he.myshopify.com)
+```
+
+:::info
+
+登陆成功选择你要连接的 store
+
+:::
+
 # 创建店铺
+
+1. 登陆 partner.shopify.com 之后，点击 stores 创建一个测试店铺，店铺创建成功之后会直接跳转到这个店铺的后台
+   `admin.shopify.com/store/nf89`
+
+![image-20241210224551851](image-20241210224551851.png)![image-20241210224617899](image-20241210224617899.png)
+
+![image-20241210225031276](image-20241210225031276.png)
+
+2. 设置支持自定义 app
+
+![image-20241210225922495](image-20241210225922495.png)
+
+![image-20241210225947371](image-20241210225947371.png)
+
+3. 创建 app 获取 storefront API 和 amdin API 所需 token 和密钥【用于后续项目设置环境变量】
+
+![image-20241210230031686](image-20241210230031686.png)
+
+![image-20241210230309617](image-20241210230309617.png)
+
+4. 获取 admin API ，勾选所有的权限之后，安装 app
+
+![image-20241210230423614](image-20241210230423614.png)
+
+![image-20241210230956494](image-20241210230956494.png)
+
+![image-20241210231152493](image-20241210231152493.png)
+
+![image-20241210231218351](image-20241210231218351.png)
+
+![image-20241210231514019](image-20241210231514019.png)
+
+> token(admin)
+>
+> xxxxxx
+
+> API key
+>
+> xxxxxx
+>
+> API secret key
+>
+> xxxxx
+
+5. Storefront API 配置
+
+   ![image-20241210232840021](image-20241210232840021.png)
+
+   ![image-20241210233021453](image-20241210233021453.png)
+
+   ![image-20241210233536411](image-20241210233536411.png)
