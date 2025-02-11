@@ -145,8 +145,6 @@ nginx -v # 检查版本
 
 # 📂 第 4 步：上传 React 项目
 
-## 方式 1：使用 Git
-
 1. 安装 Git
 
 ```sh
@@ -157,10 +155,30 @@ apt install git -y
 
 2. 克隆你的 React 项目
 
+   :::info
+
+   拉取项目的时候需要登录你的 github 账户，首先去创建一个 personal token 用于验证
+
+   1.  登录 github
+
+   2. 创建token，确保有 repo 的权限
+
+      在 settings / Developer Settings / Personal  access tokens / Tokens (classic) / Generate new token / Generate new token (classic) 创建 token
+
+   3. 创建完毕之后复制保存这个 personal token，用于登录服务器操作仓库代码
+
+   :::
+
+   ![image-20250211111147026](image-20250211111147026.png)
+
+   ![image-20250211111234993](image-20250211111234993.png)
+
+   ![image-20250211111119955](image-20250211111119955.png)
+
 ```zsh
 cd /var/www
-git clone https://github.com/your-repo.git my-react-app
-cd my-react-app
+git clone https://github.com/your-repo.git surprise-gift-frontend
+cd surprise-gift-frontend
 ```
 
 3. 安装依赖 & 构建
@@ -170,28 +188,30 @@ npm install
 npm run build
 ```
 
-## 方式 2：使用 SCP（适合无 Git 的情况）
-
-本地运行（Mac / Linux 终端 或 Windows Git Bash）：
-
-```zsh
-scp -r ./my-react-app root@你的服务器 IP:/var/www/my-react-app
-```
+ 
 
 # 🚀 第 5 步：使用 PM2 启动 React
 
 1. 进入构建目录
 
 ```zsh
-cd /var/www/my-react-app/next
-# 我这里项目打包出来的目录是 next，如果你的是 dist，需要修改一下
+cd /var/www/surprise-gift-frontend
+# 我这里项目打包出来的目录是 .next，如果你的是 dist，需要修改一下
 ```
 
 2. 使用 serve 启动 React
 
 ```zsh
+# 安装 serve
 npm install -g serve
-pm2 start serve --name react-app -- -s -l 3000
+
+# 执行打包命令
+npm run build
+
+# 使用 serve 和 pm2 启动项目的 start 命令
+pm2 start serve --name surprise-gift-frontend -- -s -l 3000
+
+# 保存进程到 pm2
 pm2 save
 ```
 
@@ -206,7 +226,7 @@ pm2 startup
 1️⃣ 创建 Nginx 配置
 
 ```zsh
-nano /etc/nginx/sites-available/react-app
+nano /etc/nginx/sites-available/surprise-gift-frontend
 ```
 
 2️⃣ 添加以下内容
@@ -230,7 +250,8 @@ server {
 3️⃣ 启用配置
 
 ```sh
-ln -s /etc/nginx/sites-available/react-app /etc/nginx/sites-enabled/
+# 设置软链接，这样就不需要手动复制配置文件到 sites-enabled（注意：如果要删除配置文件的时候，两个位置的配置文件都要删除，否则执行 nginx -t 的时候会报错）
+ln -s /etc/nginx/sites-available/surprise-gift-frontend /etc/nginx/sites-enabled/
 nginx -t # 检查配置是否正确
 systemctl restart nginx
 ```
@@ -255,6 +276,47 @@ certbot --nginx -d your-domain.com
 ```zsh
 certbot renew --dry-run
 ```
+
+# 🔖本地可访问，外部无法访问: 检查防火墙
+
+ 确保你当前使用的端口允许访问
+
+```zsh
+# 确保服务器的 80 端口开放，可以通过一下命令检查
+sudo ufw allow 80
+sudo ufw allow 80/tcp    # 允许 80 端口
+sudo ufw allow 3000/tcp  # 允许 3000 端口
+
+sudo ufw status # 检查防火墙状态
+```
+
+:::info
+
+如果在服务器防火墙都没有设置的情况下，依旧无法访问站点，但是本地可以正常访问，检查服务器的安全组设置是否没有开放对应的端口
+
+:::
+
+ ![image-20250211112631430](image-20250211112631430.png)
+
+![image-20250211112653573](image-20250211112653573.png)
+
+# 🧐关于域名解析
+
+1. 购买一个 域名之后，将服务器的公网 ip 映射到这个域名上
+
+   ![image-20250211113106827](image-20250211113106827.png)
+
+2. 设置多级域名访问主域名
+
+   ![image-20250211113312430](image-20250211113312430.png)
+
+   > 这样在服务器的 nginx 配置中  server_name 这一项可以输入多个配置好的 域名解析，都支持访问你的站点
+   >
+   > e.g. server_name yanammm.top www.yanammm.top 
+
+# 👀 域名备案
+
+在站点还没有完成之前可以直接用 ip:端口的方式来访问，然后再去申请备案即可
 
 # ✅ 最终测试
 
