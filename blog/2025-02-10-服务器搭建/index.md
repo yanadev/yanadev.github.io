@@ -3,7 +3,6 @@ slug: alibaba-server-build
 title: 搭建部署云服务器
 authors: yana
 tags: [alibaba, server, nginx, node]
-draft: true
 ---
 
 # 总览
