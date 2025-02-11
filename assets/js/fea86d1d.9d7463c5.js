@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkyana_github_io=self.webpackChunkyana_github_io||[]).push([[1366],{85780:a=>{a.exports=JSON.parse('{"tag":{"label":"nginx","permalink":"/tags/nginx","allTagsPath":"/tags","count":1,"unlisted":false},"listMetadata":{"permalink":"/tags/nginx","page":1,"postsPerPage":10,"totalPages":1,"totalCount":1,"blogDescription":"Blog","blogTitle":"Blog"}}')}}]);
