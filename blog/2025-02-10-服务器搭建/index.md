@@ -50,7 +50,7 @@ x.xxx.xx.xx
 
 # 🖥 第 2 步：连接服务器
 
-## 方式1：直接通过阿里云登录到服务器
+## 方式 1：直接通过阿里云登录到服务器
 
 ![image-20250210163215517](image-20250210163215517.png)
 
@@ -62,7 +62,7 @@ x.xxx.xx.xx
 
 ![image-20250210163512319](image-20250210163512319.png)
 
-## 方式2：Windows（使用 Xshell / PuTTY）
+## 方式 2：Windows（使用 Xshell / PuTTY）
 
 1. 下载 Xshell
 2. 使用 SSH 连接
@@ -75,8 +75,6 @@ ssh root@你的服务器IP
 
    ![image-20250210163830536](image-20250210163830536.png)
 
-
-
 # 📦 第 3 步：安装 Node.js、PM2、Nginx
 
 1. 更新服务器
@@ -86,7 +84,7 @@ ssh root@你的服务器IP
 apt update && apt upgrade -y
 ```
 
-​	![image-20250210164330422](image-20250210164330422.png)
+​ ![image-20250210164330422](image-20250210164330422.png)
 
 ![image-20250210164616732](image-20250210164616732.png)
 
@@ -133,7 +131,7 @@ pm2 save
 ```zsh
 # 更新 nginx，直接点击回车键 enter 继续就行
 apt install nginx -y
-# 启用 nginx 服务 
+# 启用 nginx 服务
 systemctl enable nginx
 # 启动 nginx
 systemctl start nginx
@@ -150,7 +148,7 @@ nginx -v # 检查版本
 apt install git -y
 ```
 
-​	![image-20250210174556540](image-20250210174556540.png)
+​ ![image-20250210174556540](image-20250210174556540.png)
 
 2. 克隆你的 React 项目
 
@@ -158,11 +156,11 @@ apt install git -y
 
    拉取项目的时候需要登录你的 github 账户，首先去创建一个 personal token 用于验证
 
-   1.  登录 github
+   1. 登录 github
 
-   2. 创建token，确保有 repo 的权限
+   2. 创建 token，确保有 repo 的权限
 
-      在 settings / Developer Settings / Personal  access tokens / Tokens (classic) / Generate new token / Generate new token (classic) 创建 token
+      在 settings / Developer Settings / Personal access tokens / Tokens (classic) / Generate new token / Generate new token (classic) 创建 token
 
    3. 创建完毕之后复制保存这个 personal token，用于登录服务器操作仓库代码
 
@@ -187,8 +185,6 @@ npm install
 npm run build
 ```
 
- 
-
 # 🚀 第 5 步：使用 PM2 启动 React
 
 1. 进入构建目录
@@ -209,6 +205,8 @@ npm run build
 
 # 使用 serve 和 pm2 启动项目的 start 命令
 pm2 start serve --name surprise-gift-frontend -- -s -l 3000
+pm2 start npm --name surprise-gift-frontend -- build
+
 
 # 保存进程到 pm2
 pm2 save
@@ -276,9 +274,9 @@ certbot --nginx -d your-domain.com
 certbot renew --dry-run
 ```
 
-# 🔖本地可访问，外部无法访问: 检查防火墙
+# 🔖 本地可访问，外部无法访问: 检查防火墙
 
- 确保你当前使用的端口允许访问
+确保你当前使用的端口允许访问
 
 ```zsh
 # 确保服务器的 80 端口开放，可以通过一下命令检查
@@ -295,11 +293,11 @@ sudo ufw status # 检查防火墙状态
 
 :::
 
- ![image-20250211112631430](image-20250211112631430.png)
+![image-20250211112631430](image-20250211112631430.png)
 
 ![image-20250211112653573](image-20250211112653573.png)
 
-# 🧐关于域名解析
+# 🧐 关于域名解析
 
 1. 购买一个 域名之后，将服务器的公网 ip 映射到这个域名上
 
@@ -309,9 +307,9 @@ sudo ufw status # 检查防火墙状态
 
    ![image-20250211113312430](image-20250211113312430.png)
 
-   > 这样在服务器的 nginx 配置中  server_name 这一项可以输入多个配置好的 域名解析，都支持访问你的站点
+   > 这样在服务器的 nginx 配置中 server_name 这一项可以输入多个配置好的 域名解析，都支持访问你的站点
    >
-   > e.g. server_name yanammm.top www.yanammm.top 
+   > e.g. server_name yanammm.top www.yanammm.top
 
 # 👀 域名备案
 
