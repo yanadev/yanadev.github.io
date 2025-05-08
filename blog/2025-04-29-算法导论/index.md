@@ -246,12 +246,273 @@ var majorityElement = function(nums) {
 0 <= nums1[i], nums2[i] <= 1000
 ```
 
-思路
+思路:
+
+**两个集合并入一个新的集合**
 
 1. 遍历 nums1 和 nums2，分别放进两个 set（或哈希表的 key）。
-
 2. 遍历其中一个 set，看元素是否存在于另一个 set 中。
-
 3. 如果存在，就加入结果的 set。
-
 4. 最后把结果 set 转成数组返回。
+
+```js
+/**
+ * 初始 3 个 Set，2个遍历数组，1个收集遍历后 Set 重叠处合集
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number[]}
+ */
+var intersection = function (nums1, nums2) {
+  let set1 = new Set()
+  let set2 = new Set()
+  for (let i = 0; i < nums1.length; i++) {
+    set1.add(nums1[i])
+  }
+  for (let i = 0; i < nums2.length; i++) {
+    set2.add(nums2[i])
+  }
+  let ret = new Set()
+  for (let i of set1) {
+    if (set2.has(i)) {
+      ret.add(i)
+    }
+  }
+  return [...ret]
+}
+
+// 或者
+
+/**
+ * 初始 3 个 Set，2个遍历数组，1个收集遍历后 Set 重叠处合集
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number[]}
+ */
+var intersection = function (nums1, nums2) {
+  const set1 = new Set(nums1)
+  const set2 = new Set(nums2)
+  let res = new Set()
+  for (let i of set1) {
+    if (set2.has(i)) {
+      res.add(i)
+    }
+  }
+  return [...res]
+}
+
+/**
+ * 一个 Set存储 nums1，另一个 Set 处理重叠元素
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number[]}
+ */
+var intersection = function (nums1, nums2) {
+  const set1 = new Set(nums1)
+  let res = new Set()
+  for (let i = 0; i < nums2.length; i++) {
+    if (set1.has(nums2[i])) {
+      res.add(nums2[i])
+    }
+  }
+  return [...res]
+}
+```
+
+## 350. 两个数组的交集 Ⅱ
+
+```js
+给你两个整数数组 nums1 和 nums2 ，请你以数组形式返回两数组的交集。返回结果中每个元素出现的次数，应与元素在两个数组中都出现的次数一致（如果出现次数不一致，则考虑取较小值）。可以不考虑输出结果的顺序。
+
+
+
+示例 1：
+
+输入：nums1 = [1,2,2,1], nums2 = [2,2]
+输出：[2,2]
+示例 2:
+
+输入：nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+输出：[4,9]
+
+
+提示：
+
+1 <= nums1.length, nums2.length <= 1000
+0 <= nums1[i], nums2[i] <= 1000
+
+
+进阶：
+
+如果给定的数组已经排好序呢？你将如何优化你的算法？
+如果 nums1 的大小比 nums2 小，哪种方法更优？
+如果 nums2 的元素存储在磁盘上，内存是有限的，并且你不能一次加载所有的元素到内存中，你该怎么办？
+```
+
+### 思路 1（单个哈希表）
+
+1. 数组一先遍历得出`元素-个数` 哈希表
+2. 然后通过遍历第二个数组
+3. 若元素在数组一中存在，更新数组一的个数，将目标元素推入结果数组
+
+```js
+/**
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number[]}
+ */
+var intersect = function (nums1, nums2) {
+  let map1 = new Map()
+  for (let i = 0; i < nums1.length; i++) {
+    map1.set(nums1[i], (map1.get(nums1[i]) || 0) + 1)
+  }
+
+  let res = []
+  for (let i = 0; i < nums2.length; i++) {
+    let old = map1.get(nums2[i])
+    if (map1.has(nums2[i]) && old > 0) {
+      res.push(nums2[i])
+      map1.set(nums2[i], old - 1)
+    }
+  }
+  return res
+}
+```
+
+### 思路 2（3 个哈希表）
+
+1. 两个数组分别遍历得出`元素-个数` 哈希表
+2. 遍历其中一个哈希表，判断另一个哈希表中有无该元素，若有，更新到 ret 哈希表中，取数量小的数量值
+3. 遍历 ret 哈希表，将目标值逐个遍历导入最终结果 res 数组
+
+```js
+/**
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number[]}
+ */
+var intersect = function (nums1, nums2) {
+  let map1 = new Map()
+  for (let i = 0; i < nums1.length; i++) {
+    map1.set(nums1[i], (map1.get(nums1[i]) || 0) + 1)
+  }
+
+  let map2 = new Map()
+  for (let i = 0; i < nums2.length; i++) {
+    map2.set(nums2[i], (map2.get(nums2[i]) || 0) + 1)
+  }
+
+  let ret = new Map()
+  for (let [val, count] of map1.entries()) {
+    if (map2.has(val)) {
+      const count2 = map2.get(val)
+      const retCount = count2 < count ? count2 : count
+      ret.set(val, retCount)
+    }
+  }
+  let res = []
+  for (let [val, count] of ret) {
+    for (let i = 0; i < count; i++) {
+      res.push(val)
+    }
+  }
+  return res
+}
+```
+
+##
+
+### 思路（单哈希表 - 题目中强调了数组内部元素各不相同，如果相同的情况需要先逐个处理数组）
+
+1. 创建哈希表，遍历二维数组中的第一位 nums[0]，默认长度为一维数组的长度 `len(nums.length)`
+2. 依次遍历二维数组中的元素 `nums[0] - nums[len]`，判断元素是否在哈希表中存在，如果存在，哈希表中该元素的数量 - 1
+3. 依次遍历哈希表，寻找元素数量为 0 的元素，将元素推入到结果数组
+4. 最后给结果数组排序（升序）
+
+```js
+/**
+ * @param {number[][]} nums
+ * @return {number[]}
+ */
+var intersection = function (nums) {
+  let len = nums.length
+  let map = new Map()
+
+  for (let i = 0; i < nums[0].length; i++) {
+    map.set(nums[0][i], len)
+  }
+  for (let i = 0; i < len; i++) {
+    for (let j = 0; j < nums[i].length; j++) {
+      if (map.has(nums[i][j])) {
+        let old = map.get(nums[i][j])
+        map.set(nums[i][j], old - 1)
+      }
+    }
+  }
+  let res = []
+  for (let [val, count] of map.entries()) {
+    if (count == 0) {
+      res.push(val)
+    }
+  }
+
+  return res.sort((a, b) => a - b) // 符合 a-b>0 条件的元素交换位置，所以元素按照从小到大排序
+}
+```
+
+## 560. 和为 K 的子数组
+
+```js
+给你一个整数数组 nums 和一个整数 k ，请你统计并返回 该数组中和为 k 的子数组的个数 。
+
+子数组是数组中元素的连续非空序列。
+
+
+
+示例 1：
+
+输入：nums = [1,1,1], k = 2
+输出：2
+示例 2：
+
+输入：nums = [1,2,3], k = 3
+输出：2
+
+
+提示：
+
+1 <= nums.length <= 2 * 104
+-1000 <= nums[i] <= 1000
+-107 <= k <= 107
+```
+
+### 思路【前缀和 i~j 其实要求的是 j 减去 i-1 得到区间值】
+
+1. 重点理解 `为什么使用前缀和`,把求 `和为 k 的子数组`，换成 `求两个前缀和的差值为 k 的前缀区间`
+2. 转换完毕之后需要注意
+   `初始化空数组或首元素前缀和为 0 的情况，mp.set(0, 1) => 前缀和为 0 的有一种（第一个元素或者空数组）`
+3. 遍历整个数组，
+
+```js
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var subarraySum = function (nums, k) {
+  let mp = new Map()
+  mp.set(0, 1) // 初始化空数组或者首位元素的前缀和为 0 的可能性
+  let prev = 0
+  let sum = 0
+  nums.forEach((e, i) => {
+    prev += e // 获取当前位置的前缀和
+    // 由 当前前缀和 - 之前前缀和 = k 求之前前缀和 = 当前前缀和 - k，判断前缀和哈希表中是否有符合的之前位置的前缀和
+    if (mp.has(prev - k)) {
+      sum += mp.get(prev - k)
+      // 如果有，累计这个次数到结果集
+    }
+    mp.set(prev, (mp.get(prev) || 0) + 1) // 判断是否累加完毕后将当前前缀和记录到哈希表，以供后续元素使用
+  })
+
+  return sum
+}
+```
