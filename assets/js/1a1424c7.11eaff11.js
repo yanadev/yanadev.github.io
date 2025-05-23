@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkyana_github_io=self.webpackChunkyana_github_io||[]).push([[5434],{26119:a=>{a.exports=JSON.parse('{"metadata":{"permalink":"/","page":1,"postsPerPage":10,"totalPages":3,"totalCount":23,"nextPage":"/page/2","blogDescription":"Blog","blogTitle":"Blog"}}')}}]);
