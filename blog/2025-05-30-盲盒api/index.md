@@ -6,6 +6,58 @@ tags: [surprise]
 draft: true
 ---
 
+# 汇总
+
+- 用户
+  - 登录注册功能
+  - 资料页面功能
+
+# 格式化工具安装
+
+```zsh
+npm install --save-dev eslint prettier eslint-plugin-prettier eslint-config-prettier
+
+# 初始化
+npx eslint --init
+
+```
+
+## 创建配置文件
+
+```js
+// .eslintrc.js
+module.exports = {
+  env: {
+    node: true,
+    es2021: true,
+  },
+  extends: [
+    'eslint:recommended',
+    'plugin:prettier/recommended', // 关键一行：开启 prettier 支持
+  ],
+  parserOptions: {
+    ecmaVersion: 12,
+    sourceType: 'module',
+  },
+  rules: {
+    // 可以自定义，比如
+    'no-unused-vars': 'warn',
+    'no-console': 'off',
+  },
+}
+```
+
+```js
+// .prettierrc
+{
+  "semi": false,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "es5"
+}
+
+```
+
 # 用户表
 
 一个用户表，字段区别角色（role）
