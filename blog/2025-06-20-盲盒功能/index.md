@@ -205,11 +205,6 @@ mutation loginWithCode($phone: String!, $code: String!) {
 - 用户信息中的 `id` 是字符串类型，确保前端使用时正确解析。
 - 所有接口均返回统一结构 `{ success, statusCode, message, data }`，方便统一处理。
 
-以下是你提供的 GraphQL 接口代码的完整接口文档，适用于前端使用及后端接口对接说明，结构参照你之前的登录与验证码模块文档风
-格整理。
-
----
-
 # 接口文档 — 分类管理模块（Category）
 
 ## 1. 查询分类列表
@@ -217,7 +212,7 @@ mutation loginWithCode($phone: String!, $code: String!) {
 ### 请求类型
 
 ```graphql
-query categories($input: categoriesInput!) {
+query categories($input: CategoriesInput) {
   categories(input: $input) {
     success
     statusCode
@@ -249,35 +244,6 @@ query categories($input: categoriesInput!) {
 | showOnlyVisible | Boolean | 否   | false  | 是否仅显示可见分类 |
 | page            | Int     | 否   | 1      | 当前页码           |
 | pageSize        | Int     | 否   | 20     | 每页数量           |
-
-### 返回示例
-
-```json
-{
-  "data": {
-    "categories": {
-      "success": true,
-      "statusCode": 200,
-      "message": "分类查询成功",
-      "data": {
-        "items": [
-          {
-            "id": "60f7c3bd4a3c2b0012345678",
-            "name": "家具",
-            "description": "所有家具类商品",
-            "parent": null,
-            "order": 1,
-            "visible": true
-          }
-        ],
-        "total": 1,
-        "page": 1,
-        "pageSize": 20
-      }
-    }
-  }
-}
-```
 
 ---
 
@@ -319,7 +285,7 @@ query category($id: ID!) {
 ### 请求类型
 
 ```graphql
-mutation createCategory($input: createCategoryInput!) {
+mutation createCategory($input: CreateCategoryInput!) {
   createCategory(input: $input) {
     success
     statusCode
@@ -341,22 +307,22 @@ mutation createCategory($input: createCategoryInput!) {
 
 ### 参数说明
 
-| 参数名      | 类型    | 必填 | 默认值 | 说明                  |
-| ----------- | ------- | ---- | ------ | --------------------- |
-| name        | String  | 是   | -      | 分类名称              |
-| description | String  | 否   | -      | 分类描述              |
-| parentId    | ID      | 否   | null   | 父级分类 ID（可为空） |
-| order       | Int     | 否   | 0      | 排序字段，越小越靠前  |
-| visible     | Boolean | 否   | true   | 是否显示              |
+| 参数名      | 类型   | 必填 | 说明                  |
+| ----------- | ------ | ---- | --------------------- |
+| name        | String | 是   | 分类名称（唯一）      |
+| description | String | 否   | 分类描述              |
+| parentId    | ID     | 否   | 父级分类 ID           |
+| order       | Int    | 否   | 排序值，越小越靠前    |
+| visible     | Bool   | 否   | 是否显示（默认 true） |
 
 ---
 
-## 4. 更新分类
+## 4. 修改分类
 
 ### 请求类型
 
 ```graphql
-mutation updateCategory($input: updateCategoryInput!) {
+mutation updateCategory($input: UpdateCategoryInput!) {
   updateCategory(input: $input) {
     success
     statusCode
@@ -378,14 +344,14 @@ mutation updateCategory($input: updateCategoryInput!) {
 
 ### 参数说明
 
-| 参数名      | 类型    | 必填 | 说明        |
-| ----------- | ------- | ---- | ----------- |
-| id          | ID      | 是   | 分类 ID     |
-| name        | String  | 否   | 分类名称    |
-| description | String  | 否   | 分类描述    |
-| parentId    | ID      | 否   | 父级分类 ID |
-| order       | Int     | 否   | 排序值      |
-| visible     | Boolean | 否   | 是否可见    |
+| 参数名      | 类型   | 必填 | 说明                |
+| ----------- | ------ | ---- | ------------------- |
+| id          | ID     | 是   | 要修改的分类 ID     |
+| name        | String | 否   | 分类名称（可选）    |
+| description | String | 否   | 分类描述            |
+| parentId    | ID     | 否   | 父级分类 ID（可选） |
+| order       | Int    | 否   | 排序值              |
+| visible     | Bool   | 否   | 是否显示            |
 
 ---
 
@@ -399,20 +365,72 @@ mutation deleteCategory($id: ID!) {
     success
     statusCode
     message
+    data # Boolean，是否删除成功
+  }
+}
+```
+
+### 特别说明
+
+- 删除分类时，如果存在子分类，会将其 `parent` 设置为 `null`，并 **不会级联删除子分类**。
+
+---
+
+## 6. 查询分类树结构
+
+### 请求类型
+
+```graphql
+query categoryTree {
+  categoryTree {
+    success
+    statusCode
+    message
     data {
       id
       name
+      description
+      order
+      visible
+      children {
+        id
+        name
+        children {
+          id
+          name
+        }
+      }
     }
   }
 }
 ```
 
-### 参数说明
+### 返回说明
 
-| 参数名 | 类型 | 必填 | 说明    |
-| ------ | ---- | ---- | ------- |
-| id     | ID   | 是   | 分类 ID |
+- 返回完整的分类树结构，嵌套形式组织（无限层级支持）。
+- 每个节点的 `children` 字段为该分类下的子分类数组。
 
-### 特殊说明
+---
 
-- 删除分类时，会**自动断开子分类的父级关联**（即设置其 `parent = null`）。
+## 🧱 接口统一返回结构
+
+所有接口返回结构如下：
+
+```ts
+type Result<T = any> {
+  success: boolean
+  statusCode: number
+  message: string
+  data: T
+}
+```
+
+---
+
+## 📎 附加说明
+
+- 所有分类 ID 均为字符串，前端需正确处理。
+- 查询接口统一支持 `populate` 获取父分类信息。
+- `toJSON` 自动将 `_id` 转换为 `id` 字段。
+- 删除、更新、创建操作均做了错误处理与提示信息返回。
+- 如果需要使用分页查询，请传入 `page` 和 `pageSize`，否则返回全部数据。

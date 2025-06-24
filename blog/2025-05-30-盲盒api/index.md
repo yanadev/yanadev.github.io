@@ -1,123 +1,174 @@
 ---
 slug: surprise-gift-api
-title: 盲盒API
+title: 盲盒API设计
 authors: yana
 tags: [surprise]
 draft: true
 ---
 
-# 汇总
+好的，我们现在正式进入 **商品管理模块** 的开发。下面是根据你的需求整理的结构规划和开发清单，供你逐步实现。
 
-- 用户
-  - 登录注册功能
-  - 资料页面功能
+---
 
-# 格式化工具安装
+## 🛒 商品模型设计（Product Schema）
 
-```zsh
-npm install --save-dev eslint prettier eslint-plugin-prettier eslint-config-prettier
+### ✅ 字段设计
 
-# 初始化
-npx eslint --init
+| 字段名      | 类型      | 必填 | 说明                       |
+| ----------- | --------- | ---- | -------------------------- |
+| `title`     | String    | ✅   | 商品标题                   |
+| `price`     | Number    | ✅   | 商品标价                   |
+| `realPrice` | Number    | ✅   | 商品实际售价               |
+| `soldCount` | Number    | 否   | 历史成交数量，默认 0       |
+| `inventory` | Number    | ✅   | 库存数量                   |
+| `category`  | ObjectId  | ✅   | 商品分类，引用 Category    |
+| `images`    | \[String] | ✅   | 商品图片数组（可多张）     |
+| `video`     | String    | 否   | 商品视频 URL（可选）       |
+| `order`     | Number    | 否   | 排序值，越小越靠前         |
+| `visible`   | Boolean   | ✅   | 是否上架/展示，默认 `true` |
+| `createdAt` | Date      | 自动 | 创建时间                   |
+| `updatedAt` | Date      | 自动 | 更新时间                   |
 
-```
+---
 
-## 创建配置文件
-
-```js
-// .eslintrc.js
-module.exports = {
-  env: {
-    node: true,
-    es2021: true,
-  },
-  extends: [
-    'eslint:recommended',
-    'plugin:prettier/recommended', // 关键一行：开启 prettier 支持
-  ],
-  parserOptions: {
-    ecmaVersion: 12,
-    sourceType: 'module',
-  },
-  rules: {
-    // 可以自定义，比如
-    'no-unused-vars': 'warn',
-    'no-console': 'off',
-  },
-}
-```
+## 📘 数据模型定义（Mongoose）
 
 ```js
-// .prettierrc
-{
-  "semi": false,
-  "singleQuote": true,
-  "tabWidth": 2,
-  "trailingComma": "es5"
-}
+// models/Product.js
 
-```
+import { Schema, model } from 'mongoose'
 
-# 用户表
-
-一个用户表，字段区别角色（role）
-
-```js
-{
-  _id: ...,
-  username: "...",
-  email: "...",
-  password: "...",
-  role: "admin" | "client"  // 标识管理员或普通用户
-}
-
-```
-
-# 需求
-
-设计一个手机号+验证码登录（兼含隐式注册）接口，关键点是：
-
-- 用户传手机号请求验证码
-- 用户提交手机号+验证码登录
-- 后端验证验证码，判断手机号是否已注册
-
-  - 没注册就自动创建用户
-  - 注册了就直接登录
-
-- 返回统一的登录结果（比如 token、用户信息）
-
-# 接口设计
-
-- sendLoginCode(phone: String!): Boolean — 给手机号发送验证码
-
-- loginWithCode(phone: String!, code: String!): User — 用手机号+验证码登录，未注册就自动注册
-
-# sendLoginCode(phone: String!): Boolean — 给手机号发送验证码
-
-1. 第一步先设计数据库需要存储哪些信息
-2. 确定要保存的结构后设置对应 Schema
-3. 明确接口是什么类型，查询操作用 get - query,操作类型用 post\put\delete - mutations
-4. 定义 mutation 或者 query 信息，在 rootMuataion 或者 RootQuery 中声明接口名称、IO 参数
-5. 定义需要返回的数据类型，简单类型直接返回即可
-
-## 定义用户表
-
-```js
-const mongoose = require('mongoose')
-
-const userSchema = new mongoose.Schema(
+const productSchema = new Schema(
   {
-    username: { type: String, required: [true, '用户名是必填项'] },
-    phone: { type: String, unique: true, required: [true, '手机号是必填项'] },
-    password: { type: String, default: '123456' },
-    role: { type: String, enum: ['client', 'admin'], default: 'client' },
-    loginCode: String,
-    loginCodeExpires: Date,
+    title: { type: String, required: true },
+    price: { type: Number, required: true },
+    realPrice: { type: Number, required: true },
+    soldCount: { type: Number, default: 0 },
+    inventory: { type: Number, required: true },
+    category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
+    images: [{ type: String }],
+    video: { type: String, default: '' },
+    order: { type: Number, default: 0 },
+    visible: { type: Boolean, default: true },
   },
   {
-    timestamps: true, // ✅ 自动添加 createdAt 和 updatedAt 字段
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
+      versionKey: false,
+      transform(doc, ret) {
+        ret.id = ret._id.toString()
+        delete ret._id
+      },
+    },
   }
 )
 
-module.exports = mongoose.model('User', userSchema)
+export default model('Product', productSchema)
 ```
+
+---
+
+## 🔧 GraphQL 类型定义草案
+
+```graphql
+type Product {
+  id: ID!
+  title: String!
+  price: Float!
+  realPrice: Float!
+  soldCount: Int
+  inventory: Int!
+  category: Category!
+  images: [String!]!
+  video: String
+  order: Int
+  visible: Boolean!
+  createdAt: String
+  updatedAt: String
+}
+
+input CreateProductInput {
+  title: String!
+  price: Float!
+  realPrice: Float!
+  inventory: Int!
+  category: ID!
+  images: [String!]!
+  video: String
+  order: Int
+  visible: Boolean
+}
+
+input UpdateProductInput {
+  id: ID!
+  title: String
+  price: Float
+  realPrice: Float
+  inventory: Int
+  category: ID
+  images: [String!]
+  video: String
+  order: Int
+  visible: Boolean
+}
+
+type ProductResult {
+  success: Boolean!
+  statusCode: Int!
+  message: String!
+  data: Product
+}
+
+type ProductListResult {
+  success: Boolean!
+  statusCode: Int!
+  message: String!
+  data: ProductListData
+}
+
+type ProductListData {
+  items: [Product!]!
+  total: Int!
+  page: Int!
+  pageSize: Int!
+}
+```
+
+---
+
+## 🔧 GraphQL 接口列表
+
+### Query
+
+```graphql
+products(input: ProductFilterInput): ProductListResult!
+product(id: ID!): ProductResult!
+```
+
+### Mutation
+
+```graphql
+createProduct(input: CreateProductInput!): ProductResult!
+updateProduct(input: UpdateProductInput!): ProductResult!
+deleteProduct(id: ID!): ProductResult!
+toggleProductVisibility(id: ID!, visible: Boolean!): ProductResult!
+```
+
+---
+
+## ✅ 接下来可以做的开发步骤
+
+1. ✅ 建立 `models/Product.js`
+2. ✅ 定义 GraphQL `Product.graphql` 类型
+3. ✅ 写 resolver：`createProduct`
+4. ✅ 实现分页 `products` 查询
+5. ✅ 实现 `updateProduct` 和 `deleteProduct`
+6. ✅ 实现上/下架接口 `toggleProductVisibility`
+
+---
+
+你现在想从哪个接口开始写？比如：
+
+- 先写 `createProduct`
+- 或者先做 `products` 列表分页接口
