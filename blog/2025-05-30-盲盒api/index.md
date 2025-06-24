@@ -166,9 +166,206 @@ toggleProductVisibility(id: ID!, visible: Boolean!): ProductResult!
 5. ✅ 实现 `updateProduct` 和 `deleteProduct`
 6. ✅ 实现上/下架接口 `toggleProductVisibility`
 
+好的，这里是完整的集成方案，包含：
+
+1. ✅ 图片与视频上传接口（REST）
+2. ✅ 集成到现有 GraphQL + Express 项目中
+3. ✅ 文件访问路径配置
+4. ✅ 使用方式与接口文档
+
 ---
 
-你现在想从哪个接口开始写？比如：
+## ✅ 1. 文件上传模块（Express + Multer）
 
-- 先写 `createProduct`
-- 或者先做 `products` 列表分页接口
+### 📁 创建目录结构（建议）
+
+```
+/uploads
+  /images
+  /videos
+/routes
+  upload.js
+```
+
+### 📦 安装依赖
+
+```bash
+npm install multer
+```
+
+### 📄 routes/upload.js
+
+```js
+import express from 'express'
+import multer from 'multer'
+import path from 'path'
+import fs from 'fs'
+
+const router = express.Router()
+
+// 保证上传目录存在
+const ensureDir = (dir) => {
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
+}
+ensureDir('uploads/images')
+ensureDir('uploads/videos')
+
+// 图片存储
+const imageStorage = multer.diskStorage({
+  destination: 'uploads/images',
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname)
+    cb(null, Date.now() + ext)
+  },
+})
+
+// 视频存储
+const videoStorage = multer.diskStorage({
+  destination: 'uploads/videos',
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname)
+    cb(null, Date.now() + ext)
+  },
+})
+
+const uploadImage = multer({ storage: imageStorage })
+const uploadVideo = multer({ storage: videoStorage })
+
+// 上传图片接口
+router.post('/upload/image', uploadImage.single('file'), (req, res) => {
+  if (!req.file) return res.status(400).json({ success: false, message: '未上传文件' })
+  res.json({
+    success: true,
+    path: `/uploads/images/${req.file.filename}`,
+  })
+})
+
+// 上传视频接口
+router.post('/upload/video', uploadVideo.single('file'), (req, res) => {
+  if (!req.file) return res.status(400).json({ success: false, message: '未上传文件' })
+  res.json({
+    success: true,
+    path: `/uploads/videos/${req.file.filename}`,
+  })
+})
+
+export default router
+```
+
+---
+
+## ✅ 2. 集成到主服务（server.js）
+
+在 `server.js` 中加入以下内容：
+
+```js
+import express from 'express'
+import uploadRoutes from './routes/upload.js'
+import path from 'path'
+
+const app = express()
+
+// 静态资源访问
+app.use('/uploads', express.static(path.resolve('uploads')))
+
+// 注册上传路由
+app.use('/api', uploadRoutes)
+```
+
+---
+
+## ✅ 3. 图片/视频在 GraphQL 的使用方式
+
+上传接口返回 `path` 字符串，前端在创建商品时带入 GraphQL 接口：
+
+```graphql
+mutation createProduct($input: CreateProductInput!) {
+  createProduct(input: $input) {
+    success
+    message
+    data {
+      id
+      title
+      images
+      videos
+    }
+  }
+}
+```
+
+```json
+{
+  "input": {
+    "title": "沙发A款",
+    "price": 899,
+    "realPrice": 699,
+    "inventory": 10,
+    "categoryId": "xxxxx",
+    "images": ["/uploads/images/1721919053234.jpg", "/uploads/images/1721919053235.jpg"],
+    "videos": ["/uploads/videos/1721919053236.mp4"]
+  }
+}
+```
+
+---
+
+## ✅ 4. 接口文档（Markdown）
+
+````markdown
+# 文件上传接口
+
+## 1. 上传图片
+
+- 接口地址：`POST /api/upload/image`
+- Content-Type: `multipart/form-data`
+- 参数：formData 字段为 `file`
+
+### 返回示例
+
+```json
+{
+  "success": true,
+  "path": "/uploads/images/1721919053234.jpg"
+}
+```
+````
+
+## 2. 上传视频
+
+- 接口地址：`POST /api/upload/video`
+- Content-Type: `multipart/form-data`
+- 参数：formData 字段为 `file`
+
+### 返回示例
+
+```json
+{
+  "success": true,
+  "path": "/uploads/videos/1721919053236.mp4"
+}
+```
+
+## ⚠️ 图片/视频展示注意事项
+
+- 前端展示时手动拼接访问前缀：
+
+  - `http://localhost:3000` + path
+  - 例如：`http://localhost:3000/uploads/images/xxx.jpg`
+
+- 后续替换为 OSS/CDN 只需统一替换前缀即可。
+
+```
+
+---
+
+## ✅ 可选增强建议（后续）
+
+- 上传大小/类型校验（Multer 提供）
+- 登录鉴权（JWT 中间件）
+- 上传结果写入数据库（如记录用户、时间等）
+- 替换为云存储（如阿里 OSS、Cloudflare R2）
+
+---
+
+如需我帮你生成前端上传图片的 `fetch` 示例代码或组件，也可以告诉我。你已经打下非常好的基础了，继续保持！👍
+```
