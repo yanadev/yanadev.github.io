@@ -38,9 +38,32 @@ draft: true
 
 ---
 
-# 接口文档 — 用户登录 & 验证码模块
+# 状态码说明（示例）
 
----
+| 状态码 | 含义                     |
+| ------ | ------------------------ |
+| 200    | 请求成功                 |
+| 400    | 请求参数错误             |
+| 401    | 未授权（登录失败等）     |
+| 403    | 禁止访问                 |
+| 404    | 资源未找到               |
+| 409    | 冲突（如手机号已注册等） |
+| 500    | 服务器内部错误           |
+| 1001   | 验证码过期               |
+| 1002   | 验证码已使用             |
+
+# 公共响应结构说明
+
+所有接口返回统一结构如下：
+
+| 字段名     | 类型    | 说明                       |
+| ---------- | ------- | -------------------------- |
+| success    | Boolean | 请求是否成功               |
+| statusCode | Int     | 状态码（参考后端定义）     |
+| message    | String  | 接口提示信息               |
+| data       | Mixed   | 实际返回数据（结构见上文） |
+
+# 接口文档 — 用户登录 & 验证码模块
 
 ## 1. 发送验证码接口
 
@@ -77,8 +100,6 @@ mutation sendCode($phone: String!) {
   }
 }
 ```
-
----
 
 ## 2. 验证码登录接口
 
@@ -177,25 +198,221 @@ mutation loginWithCode($phone: String!, $code: String!) {
 
 ---
 
-## 3. 状态码说明（示例）
-
-| 状态码 | 含义                     |
-| ------ | ------------------------ |
-| 200    | 请求成功                 |
-| 400    | 请求参数错误             |
-| 401    | 未授权（登录失败等）     |
-| 403    | 禁止访问                 |
-| 404    | 资源未找到               |
-| 409    | 冲突（如手机号已注册等） |
-| 500    | 服务器内部错误           |
-| 1001   | 验证码过期               |
-| 1002   | 验证码已使用             |
-
----
-
 ## 4. 备注
 
 - 开发环境下 `sendCode` 接口会返回验证码，方便调试。正式环境返回 `code: null`。
 - `loginWithCode` 返回的 `token` 是 JWT 令牌，用于后续接口鉴权。
 - 用户信息中的 `id` 是字符串类型，确保前端使用时正确解析。
 - 所有接口均返回统一结构 `{ success, statusCode, message, data }`，方便统一处理。
+
+以下是你提供的 GraphQL 接口代码的完整接口文档，适用于前端使用及后端接口对接说明，结构参照你之前的登录与验证码模块文档风
+格整理。
+
+---
+
+# 接口文档 — 分类管理模块（Category）
+
+## 1. 查询分类列表
+
+### 请求类型
+
+```graphql
+query categories($input: categoriesInput!) {
+  categories(input: $input) {
+    success
+    statusCode
+    message
+    data {
+      items {
+        id
+        name
+        description
+        parent {
+          id
+          name
+        }
+        order
+        visible
+      }
+      total
+      page
+      pageSize
+    }
+  }
+}
+```
+
+### 参数说明
+
+| 参数名          | 类型    | 必填 | 默认值 | 说明               |
+| --------------- | ------- | ---- | ------ | ------------------ |
+| showOnlyVisible | Boolean | 否   | false  | 是否仅显示可见分类 |
+| page            | Int     | 否   | 1      | 当前页码           |
+| pageSize        | Int     | 否   | 20     | 每页数量           |
+
+### 返回示例
+
+```json
+{
+  "data": {
+    "categories": {
+      "success": true,
+      "statusCode": 200,
+      "message": "分类查询成功",
+      "data": {
+        "items": [
+          {
+            "id": "60f7c3bd4a3c2b0012345678",
+            "name": "家具",
+            "description": "所有家具类商品",
+            "parent": null,
+            "order": 1,
+            "visible": true
+          }
+        ],
+        "total": 1,
+        "page": 1,
+        "pageSize": 20
+      }
+    }
+  }
+}
+```
+
+---
+
+## 2. 查询单个分类详情
+
+### 请求类型
+
+```graphql
+query category($id: ID!) {
+  category(id: $id) {
+    success
+    statusCode
+    message
+    data {
+      id
+      name
+      description
+      parent {
+        id
+        name
+      }
+      order
+      visible
+    }
+  }
+}
+```
+
+### 参数说明
+
+| 参数名 | 类型 | 必填 | 说明           |
+| ------ | ---- | ---- | -------------- |
+| id     | ID   | 是   | 分类的唯一标识 |
+
+---
+
+## 3. 创建分类
+
+### 请求类型
+
+```graphql
+mutation createCategory($input: createCategoryInput!) {
+  createCategory(input: $input) {
+    success
+    statusCode
+    message
+    data {
+      id
+      name
+      description
+      parent {
+        id
+        name
+      }
+      order
+      visible
+    }
+  }
+}
+```
+
+### 参数说明
+
+| 参数名      | 类型    | 必填 | 默认值 | 说明                  |
+| ----------- | ------- | ---- | ------ | --------------------- |
+| name        | String  | 是   | -      | 分类名称              |
+| description | String  | 否   | -      | 分类描述              |
+| parentId    | ID      | 否   | null   | 父级分类 ID（可为空） |
+| order       | Int     | 否   | 0      | 排序字段，越小越靠前  |
+| visible     | Boolean | 否   | true   | 是否显示              |
+
+---
+
+## 4. 更新分类
+
+### 请求类型
+
+```graphql
+mutation updateCategory($input: updateCategoryInput!) {
+  updateCategory(input: $input) {
+    success
+    statusCode
+    message
+    data {
+      id
+      name
+      description
+      parent {
+        id
+        name
+      }
+      order
+      visible
+    }
+  }
+}
+```
+
+### 参数说明
+
+| 参数名      | 类型    | 必填 | 说明        |
+| ----------- | ------- | ---- | ----------- |
+| id          | ID      | 是   | 分类 ID     |
+| name        | String  | 否   | 分类名称    |
+| description | String  | 否   | 分类描述    |
+| parentId    | ID      | 否   | 父级分类 ID |
+| order       | Int     | 否   | 排序值      |
+| visible     | Boolean | 否   | 是否可见    |
+
+---
+
+## 5. 删除分类
+
+### 请求类型
+
+```graphql
+mutation deleteCategory($id: ID!) {
+  deleteCategory(id: $id) {
+    success
+    statusCode
+    message
+    data {
+      id
+      name
+    }
+  }
+}
+```
+
+### 参数说明
+
+| 参数名 | 类型 | 必填 | 说明    |
+| ------ | ---- | ---- | ------- |
+| id     | ID   | 是   | 分类 ID |
+
+### 特殊说明
+
+- 删除分类时，会**自动断开子分类的父级关联**（即设置其 `parent = null`）。
