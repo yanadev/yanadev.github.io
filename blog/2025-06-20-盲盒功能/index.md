@@ -434,3 +434,765 @@ type Result<T = any> {
 - `toJSON` 自动将 `_id` 转换为 `id` 字段。
 - 删除、更新、创建操作均做了错误处理与提示信息返回。
 - 如果需要使用分页查询，请传入 `page` 和 `pageSize`，否则返回全部数据。
+
+好的！我帮你写一个简洁的接口文档和对应的测试用例示范，方便你后续开发和维护。
+
+---
+
+# 商品模块接口文档（GraphQL）
+
+## Query
+
+### 1. 查询单个商品 `product`
+
+- **参数**
+
+```graphql
+query product($id: ID!) {
+  product(id: $id) {
+    success
+    code
+    message
+    data {
+      _id
+      title
+      price
+      realPrice
+      inventory
+      visible
+      order
+      images
+      videos
+      category {
+        _id
+        name
+        parent {
+          _id
+          name
+        }
+      }
+    }
+  }
+}
+```
+
+- **说明** 根据商品 ID 查询单个商品详情，包含分类及父分类信息。
+
+---
+
+### 2. 查询商品列表 `products`
+
+- **参数**
+
+```graphql
+query products($input: ProductsInput) {
+  products(input: { keyword: String, categoryId: ID, visible: Boolean, page: Int, pageSize: Int }) {
+    success
+    code
+    message
+    data {
+      total
+      page
+      pageSize
+      items {
+        _id
+        title
+        price
+        realPrice
+        inventory
+        visible
+        order
+        images
+        videos
+        category {
+          _id
+          name
+          parent {
+            _id
+            name
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+- **说明** 支持按关键字、分类、上下架状态分页查询商品列表。
+
+---
+
+## Mutation
+
+### 3. 新建商品 `createProduct`
+
+- **参数**
+
+```graphql
+mutation createProduct($input: CreateProductInput!) {
+  createProduct(input: $input) {
+    success
+    code
+    message
+    data {
+      _id
+      title
+      price
+      realPrice
+      inventory
+      visible
+      order
+      images
+      videos
+      category {
+        _id
+        name
+      }
+    }
+  }
+}
+```
+
+- **输入类型示例**
+
+```json
+{
+  "input": {
+    "title": "商品标题",
+    "price": 100,
+    "realPrice": 90,
+    "inventory": 50,
+    "categoryId": "1234567890abcdef",
+    "images": ["url1", "url2"],
+    "videos": ["url1"],
+    "order": 0,
+    "visible": true
+  }
+}
+```
+
+- **说明** 分类可选，若传入分类 ID 会校验是否存在。
+
+---
+
+### 4. 更新商品 `updateProduct`
+
+- **参数**
+
+```graphql
+mutation updateProduct($id: ID!, $input: UpdateProductInput!) {
+  updateProduct(id: $id, input: $input) {
+    success
+    code
+    message
+    data {
+      _id
+      title
+      price
+      realPrice
+      inventory
+      visible
+      order
+      images
+      videos
+      category {
+        _id
+        name
+        parent {
+          _id
+          name
+        }
+      }
+    }
+  }
+}
+```
+
+- **说明** 可更新商品的任意字段，分类会校验是否存在。
+
+---
+
+### 5. 批量更新商品 `batchUpdateProducts`
+
+- **参数**
+
+```graphql
+mutation batchUpdateProducts($input: [BatchUpdateProductInput!]!) {
+  batchUpdateProducts(input: $input) {
+    success
+    code
+    message
+    data {
+      updated {
+        _id
+        title
+        order
+      }
+      failed {
+        productId
+        error
+      }
+    }
+  }
+}
+```
+
+- **说明** 批量更新，单个失败不影响其他商品。
+
+---
+
+### 6. 删除商品 `deleteProduct`
+
+- **参数**
+
+```graphql
+mutation deleteProduct($id: ID!) {
+  deleteProduct(id: $id) {
+    success
+    code
+    message
+    data {
+      _id
+      title
+    }
+  }
+}
+```
+
+---
+
+### 7. 批量删除商品 `batchDeleteProducts`
+
+- **参数**
+
+```graphql
+mutation batchDeleteProducts($ids: [ID!]!) {
+  batchDeleteProducts(ids: $ids) {
+    success
+    code
+    message
+    data {
+      deleted {
+        id
+      }
+      failed {
+        id
+        error
+      }
+    }
+  }
+}
+```
+
+---
+
+### 8. 商品上下架切换 `toggleProductVisibility`
+
+- **参数**
+
+```graphql
+mutation toggleProductVisibility($id: ID!, $visible: Boolean!) {
+  toggleProductVisibility(id: $id, visible: $visible) {
+    success
+    code
+    message
+    data {
+      _id
+      visible
+    }
+  }
+}
+```
+
+---
+
+### 9. 批量商品上下架切换 `batchToggleProductVisibility`
+
+- **参数**
+
+```graphql
+mutation batchToggleProductVisibility($ids: [ID!]!, $visible: Boolean!) {
+  batchToggleProductVisibility(ids: $ids, visible: $visible) {
+    success
+    code
+    message
+    data {
+      updated {
+        _id
+        visible
+      }
+      failed {
+        productId
+        error
+      }
+    }
+  }
+}
+```
+
+---
+
+### 10. 置顶商品 `setProductTop`
+
+- **参数**
+
+```graphql
+mutation setProductTop($id: ID!) {
+  setProductTop(id: $id) {
+    success
+    code
+    message
+    data {
+      _id
+      order
+    }
+  }
+}
+```
+
+---
+
+### 11. 批量置顶商品 `batchSetProductsTop`
+
+- **参数**
+
+```graphql
+mutation batchSetProductsTop($ids: [ID!]!) {
+  batchSetProductsTop(ids: $ids) {
+    success
+    code
+    message
+    data {
+      updated {
+        id
+      }
+      failed {
+        id
+        error
+      }
+    }
+  }
+}
+```
+
+# 订单 model
+
+## ✅ 拆分模型方案汇总如下：
+
+### ✅ 1. `Order.js`（订单主表）
+
+```js
+import mongoose from 'mongoose'
+
+const OrderSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  addressId: { type: mongoose.Schema.Types.ObjectId, ref: 'Address', required: true },
+  itemSnapshotIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'OrderItemSnapshot' }], // 商品快照
+  shippingInfoIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ShippingInfo' }], // 多条物流
+
+  totalAmount: { type: Number, required: true },
+  paymentStatus: {
+    type: String,
+    enum: ['UNPAID', 'PAID', 'REFUNDED'],
+    default: 'UNPAID',
+  },
+  shippingStatus: {
+    type: String,
+    enum: ['PENDING', 'SHIPPED', 'DELIVERED'],
+    default: 'PENDING',
+  },
+
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
+})
+
+export default mongoose.model('Order', OrderSchema)
+```
+
+---
+
+### ✅ 2. `OrderItemSnapshot.js`（商品快照表）
+
+```js
+import mongoose from 'mongoose'
+
+const OrderItemSnapshotSchema = new mongoose.Schema({
+  orderId: { type: mongoose.Schema.Types.ObjectId, ref: 'Order', required: true },
+
+  // 快照字段
+  productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' }, // 可为空
+  title: { type: String, required: true },
+  cover: { type: String },
+  price: { type: Number, required: true },
+  quantity: { type: Number, required: true },
+
+  createdAt: { type: Date, default: Date.now },
+})
+
+export default mongoose.model('OrderItemSnapshot', OrderItemSnapshotSchema)
+```
+
+---
+
+### ✅ 3. `ShippingInfo.js`（物流信息表）
+
+```js
+import mongoose from 'mongoose'
+
+const ShippingInfoSchema = new mongoose.Schema({
+  orderId: { type: mongoose.Schema.Types.ObjectId, ref: 'Order', required: true },
+  carrier: { type: String }, // 快递公司
+  trackingNumber: { type: String }, // 单号
+  status: {
+    type: String,
+    enum: ['PENDING', 'SHIPPED', 'DELIVERED'],
+    default: 'PENDING',
+  },
+  shippedAt: { type: Date },
+  deliveredAt: { type: Date },
+  remark: { type: String }, // 可选说明
+  createdAt: { type: Date, default: Date.now },
+})
+
+export default mongoose.model('ShippingInfo', ShippingInfoSchema)
+```
+
+---
+
+### ✅ 4. `Address.js`（用户地址表）
+
+```js
+import mongoose from 'mongoose'
+
+const AddressSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  recipientName: { type: String, required: true },
+  phone: { type: String, required: true },
+  address: { type: String, required: true },
+  isDefault: { type: Boolean, default: false },
+  createdAt: { type: Date, default: Date.now },
+})
+
+export default mongoose.model('Address', AddressSchema)
+```
+
+---
+
+## ✅ 下一步推荐操作：
+
+我可以帮你接着做：
+
+1. `createOrder`：创建订单时，自动写入快照表、关联主订单
+2. `addShippingInfo`：添加物流记录到独立表并关联订单
+3. `getOrderDetail`：聚合查询，返回订单 + 快照 + 物流既然你已经设计了模型结构，接下来写接口的顺序可以根据依赖关系和业务
+   需求来安排。一般来说，建议按照以下顺序逐步开发，确保前后端能够顺畅对接并逐步实现功能：
+
+### 推荐接口开发顺序：
+
+#### 1. **用户地址相关接口**
+
+订单依赖用户地址，所以首先开发 **地址管理接口**，包括新增、查询、修改、删除等功能。这些接口用于管理用户的收货地址。
+
+**接口示例：**
+
+- `createAddress(input: AddressInput!)` — 新增收货地址
+- `updateAddress(id: ID!, input: AddressInput!)` — 更新地址
+- `getUserAddresses(userId: ID!)` — 查询用户所有地址
+- `deleteAddress(id: ID!)` — 删除地址
+
+#### 2. **订单创建相关接口**
+
+订单是整个业务流程的核心，所以紧接着开发 **订单创建** 接口。订单创建时需要选择地址，并生成商品快照、计算总金额、设置支付
+状态等。
+
+**接口示例：**
+
+- `createOrder(input: CreateOrderInput!)` — 创建订单
+
+  - 需要从 `Address` 模型获取地址信息，并将商品快照（OrderItemSnapshot）与订单关联。
+  - 需要计算总金额，生成支付状态。
+
+#### 3. **订单商品快照相关接口**
+
+快照是订单的一部分，所以需要开发接口来管理订单中的商品快照。虽然快照在创建订单时会自动生成，但可能有一些后续的查询和管理
+需求。
+
+**接口示例：**
+
+- `getOrderItemSnapshots(orderId: ID!)` — 查询订单商品快照列表
+- `getOrderItemSnapshot(id: ID!)` — 获取单个商品快照信息
+
+#### 4. **订单留言相关接口**
+
+订单留言通常在订单创建后、支付前或发货前进行。开发 **订单留言接口** 以便用户可以为订单添加留言。
+
+**接口示例：**
+
+- `addOrderMessage(input: AddOrderMessageInput!)` — 新增订单留言
+- `getOrderMessages(orderId: ID!)` — 获取订单留言列表
+
+#### 5. **物流信息相关接口**
+
+订单创建后，物流信息（例如配送状态、跟踪编号等）会被记录和更新。开发 **物流信息管理接口**，实现订单的状态追踪。
+
+**接口示例：**
+
+- `createShippingInfo(orderId: ID!, input: ShippingInfoInput!)` — 新增物流信息
+- `updateShippingInfo(id: ID!, input: ShippingInfoInput!)` — 更新物流信息
+- `getShippingInfo(orderId: ID!)` — 查询订单的物流信息
+
+#### 6. **订单状态更新接口**
+
+订单状态包括支付状态、发货状态等，可以独立写接口来更新状态。通常涉及到支付、发货和签收等操作。
+
+**接口示例：**
+
+- `updatePaymentStatus(orderId: ID!, status: String!)` — 更新支付状态
+- `updateShippingStatus(orderId: ID!, status: String!)` — 更新发货状态
+
+#### 7. **订单查询接口**
+
+完成订单和相关信息的管理后，最后开发 **订单查询接口**，支持按条件查询订单、订单详情、商品快照、留言等信息。
+
+**接口示例：**
+
+- `getOrder(id: ID!)` — 获取单个订单详细信息
+- `getOrders(userId: ID!, page: Int!, pageSize: Int!)` — 查询用户的订单列表，支持分页
+
+---
+
+### 开发顺序总结：
+
+1. **地址接口**：提供用户收货地址管理功能
+2. **订单创建接口**：订单的创建与商品快照生成
+3. **订单商品快照接口**：管理订单中的商品信息快照
+4. **订单留言接口**：支持用户对订单进行留言
+5. **物流信息接口**：管理订单物流信息，追踪发货进度
+6. **订单状态接口**：处理支付、发货等订单状态的更新
+7. **订单查询接口**：查询订单详情、商品信息、留言和物流状态等
+
+---
+
+### 为什么这样顺序开发？
+
+- **数据依赖顺序**：订单创建依赖地址信息，所以地址接口必须先实现；订单创建还会生成商品快照，快照紧接着进行管理。
+- **业务流顺序**：留言和物流信息是订单后期业务的一部分，因此在订单创建和商品快照管理之后开发。
+- **查询和状态更新是后期操作**：订单创建、商品快照生成、物流更新和留言基本完成后，再实现订单查询和状态更新功能。
+
+这个代码看起来已经是一个完整的处理地址相关 GraphQL 查询和变更操作的模块了。为了帮助你更好地理解和使用这段代码，以下是一
+个详细的文档描述，解释了每个部分的功能以及如何使用。
+
+---
+
+## 地址相关 GraphQL API 文档
+
+### **1. 查询接口：获取用户地址列表**
+
+#### 请求类型：
+
+- **Query**
+
+#### 请求路径：
+
+- `getUserAddresses`
+
+#### 输入参数：
+
+- `userId` (必填): 用户的唯一标识符。
+- `page` (必填): 当前页码（分页）。
+- `pageSize` (必填): 每页的地址数量。
+
+#### 返回字段：
+
+- `success`: 操作是否成功（布尔值）。
+- `statusCode`: 响应状态码。
+- `message`: 返回信息。
+- `data`: 用户地址数据，包含以下字段：
+
+  - `items`: 地址数组，每个地址包括：
+
+    - `id`: 地址的唯一标识符。
+    - `userId`: 所属用户的 ID。
+    - `recipientName`: 收货人姓名。
+    - `phone`: 收货人电话。
+    - `address`: 地址详情。
+    - `isDefault`: 是否为默认地址（布尔值）。
+
+  - `total`: 用户地址的总数。
+  - `page`: 当前页码。
+  - `pageSize`: 每页数量。
+
+#### 响应示例：
+
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "获取用户地址列表成功",
+  "data": {
+    "items": [
+      {
+        "id": "1",
+        "userId": "12345",
+        "recipientName": "张三",
+        "phone": "1234567890",
+        "address": "北京市朝阳区xx路xx号",
+        "isDefault": true
+      },
+      {
+        "id": "2",
+        "userId": "12345",
+        "recipientName": "李四",
+        "phone": "9876543210",
+        "address": "上海市浦东新区xx路xx号",
+        "isDefault": false
+      }
+    ],
+    "total": 2,
+    "page": 1,
+    "pageSize": 10
+  }
+}
+```
+
+### **2. 变更接口：删除地址**
+
+#### 请求类型：
+
+- **Mutation**
+
+#### 请求路径：
+
+- `deleteAddress`
+
+#### 输入参数：
+
+- `id` (必填): 地址的唯一标识符。
+
+#### 返回字段：
+
+- `success`: 操作是否成功（布尔值）。
+- `statusCode`: 响应状态码。
+- `message`: 返回信息。
+- `data`: 删除的地址数据。
+
+#### 响应示例：
+
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "删除地址成功",
+  "data": {
+    "id": "2",
+    "userId": "12345",
+    "recipientName": "李四",
+    "phone": "9876543210",
+    "address": "上海市浦东新区xx路xx号",
+    "isDefault": false
+  }
+}
+```
+
+### **3. 变更接口：更新地址**
+
+#### 请求类型：
+
+- **Mutation**
+
+#### 请求路径：
+
+- `updateAddress`
+
+#### 输入参数：
+
+- `id` (必填): 地址的唯一标识符。
+- `input` (必填): 包含以下字段的对象：
+
+  - `userId` (可选): 用户唯一标识符。
+  - `recipientName` (可选): 收货人姓名。
+  - `phone` (可选): 收货人电话。
+  - `address` (可选): 地址详情。
+  - `isDefault` (可选): 是否为默认地址（布尔值）。
+
+#### 返回字段：
+
+- `success`: 操作是否成功（布尔值）。
+- `statusCode`: 响应状态码。
+- `message`: 返回信息。
+- `data`: 更新后的地址数据。
+
+#### 响应示例：
+
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "更新用户地址成功",
+  "data": {
+    "id": "1",
+    "userId": "12345",
+    "recipientName": "张三",
+    "phone": "1234567890",
+    "address": "北京市海淀区xx路xx号",
+    "isDefault": true
+  }
+}
+```
+
+### **4. 变更接口：新增地址**
+
+#### 请求类型：
+
+- **Mutation**
+
+#### 请求路径：
+
+- `createAddress`
+
+#### 输入参数：
+
+- `input` (必填): 包含以下字段的对象：
+
+  - `userId` (必填): 用户唯一标识符。
+  - `recipientName` (必填): 收货人姓名。
+  - `phone` (必填): 收货人电话。
+  - `address` (必填): 地址详情。
+  - `isDefault` (可选): 是否为默认地址（布尔值）。
+
+#### 返回字段：
+
+- `success`: 操作是否成功（布尔值）。
+- `statusCode`: 响应状态码。
+- `message`: 返回信息。
+- `data`: 新创建的地址数据。
+
+#### 响应示例：
+
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "新增地址成功",
+  "data": {
+    "id": "3",
+    "userId": "12345",
+    "recipientName": "王五",
+    "phone": "1122334455",
+    "address": "广州市天河区xx路xx号",
+    "isDefault": false
+  }
+}
+```
+
+### **错误处理：**
+
+- **400**: 请求参数错误。
+- **404**: 用户或地址未找到。
+- **500**: 服务器内部错误。
+
+### **状态码说明：**
+
+- **200 (OK)**: 请求成功，返回数据。
+- **404 (Not Found)**: 请求的资源（如用户或地址）未找到。
+- **500 (Internal Server Error)**: 服务器内部错误，通常是由于服务器故障或代码错误引起的。
