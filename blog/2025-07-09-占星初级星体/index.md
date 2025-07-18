@@ -1,6 +1,6 @@
 ---
-slug: zhanxing-primary
-title: 占星初阶
+slug: zhanxing-primary-星体
+title: 占星初阶星体
 authors: yana
 tags: [占星]
 draft: true
