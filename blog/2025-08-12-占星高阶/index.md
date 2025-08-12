@@ -10,6 +10,7 @@ draft: true
 
 - 组合中点盘 composite Chart 长期目标与期望
 - 空中点盘 space and time midpoint chart 实际生活磨合的困难点和问题点 （预测并处理生活实际困难）
+- 马克思盘 Marks chart 心里的感受，彼此内心的写照
 
 # 组合中点盘 composite Chart
 
@@ -138,3 +139,7 @@ draft: true
 3. 一开始就不平等，双方都很累，3宫金星对冲9宫海王（异地-沟通不畅），刑克下降火星土星，形成T三角
 最开始双方异地，且男方没有离婚，最终两人等了几年才结婚
 ```
+
+# 马克思盘 Marks chart
+
+心里的感受，彼此内心的写照
