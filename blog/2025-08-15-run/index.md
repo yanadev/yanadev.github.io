@@ -76,3 +76,102 @@ useEffect(() => {},[
 3. 对象/数组/函数依赖要缓存
 4. 复杂链条尽量合并更新或拆成安全的多层 effect
 5. 外部事件触发的更新是安全的
+
+# 类组件完整的生命周期
+
+## 挂载阶段
+
+当组件首次被创建并插入到 DOM 时候，执行顺序分别为
+
+- constructor(props)
+
+  - 初始化 state
+  - 绑定事件处理函数
+
+- static getDerivedStateFromProps(props,state)
+
+  - 每次 render 之前都会执行，包括挂载和更新
+  - 用来根据 props 派生出 state
+
+- render()
+
+  - 必须有，返回 React 元素（JSX）
+  - 不能调用 setState 否则死循环
+
+- ComponentDidMount()
+
+  - 挂载后立即调用
+  - 常用：发起网络请求、DOM 操作、订阅事件
+
+## 更新阶段
+
+当 props 或者 state 发生变化时触发，执行的顺序是
+
+- static getDerivedStateFromProps(props, state)
+
+  - 每次 render 之前都会执行，包括挂载和更新
+  - 用来根据 props 派生 state
+
+- shouldComponentUpdate(prevProps,prevState)
+
+  - 决定是否要重新渲染，返回 True[default]/False
+  - 常用于性能优化
+
+- render()
+
+  - 返回新的 JSX
+
+- getSnapshotBeforeUpdate(prevProps,prevState)
+
+  - 在 DOM 更新前执行，可以获得 DOM 的状态（比如滚动条的位置）
+  - 返回值作为参数传给 componentDidUpdate
+
+- componentDidUpdate(prevProps,prevState,snapshot)
+
+  - DOM 更新后执行
+  - 常用：根据更新后的 DOM 做一些副作用，如滚动到底部
+
+## 卸载阶段
+
+当组件从 DOM 中被移除时执行
+
+componentWillUnmount()
+
+用于清理副作用：清除定时器、取消订阅、移除事件监听
+
+## 错误处理阶段
+
+额外的生命周期用于捕获子组件的错误
+
+- static getDerivedStateFromError(error)
+- componentDidCatch(error, info)
+
+---
+
+constructor
+
+getDerivedStateFromProps
+
+render
+
+componentDidMount
+
+---
+
+getDerivedStateFromProps
+
+shouldComponentUpdate
+
+render
+
+getSnapshotBeforeUpdate
+
+componentDidUpdate
+
+---
+
+componentWillUnmount
+
+getDerivedStateFromError
+
+componentDidCatch
