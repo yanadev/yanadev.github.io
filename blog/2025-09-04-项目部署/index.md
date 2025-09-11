@@ -143,6 +143,7 @@ npm install
 # 配置环境变量
 nano .env   # 写入 DATABASE_URL, JWT_SECRET 等
 
+# ctrl + o 保存，ctrl + x 退出编辑
 ```
 
 ## 使用 PM2 管理进程
