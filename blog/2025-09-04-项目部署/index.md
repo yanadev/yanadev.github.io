@@ -187,6 +187,8 @@ sudo nano /etc/nginx/sites-available/your-project
 
 > 写入文件
 
+**正式环境，有域名的写法**
+
 ```nginx
 server {
     listen 80;
@@ -194,6 +196,25 @@ server {
 
     location / {
         proxy_pass http://127.0.0.1:4000;  # 你的 Node.js 服务端口
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+
+```
+
+**测试环境，无域名有 IP 的写法**
+
+```nginx
+server {
+    listen 80;
+    server_name _;
+
+    location / {
+        proxy_pass http://127.0.0.1:4000;  # 你的 Node.js 服务端口，端口匹配项目中设置的启动端口
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
