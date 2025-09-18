@@ -135,3 +135,11 @@ getDerivedStateFromProps() 和 getSnapshotBeforeUpdate() 取代了 componentWill
     - 用户信息（用户登录/登出、权限控制）
     - 异步数据（API 请求结果、订单状态）
     - 多步骤表单，涉及多个组件的协同操作
+
+## super() 与 super(props) 区别
+
+super 函数的作用是**执行父类的构造函数**，让子类可以通过 `this.xx` 读取到 父类的 state
+
+- super() 调用父类的构造函数，但是不传递 props。通常父组件没有 props 使用
+- super(props) 调用父类的构造函数并且传递 props。**React 推荐的标准做法**
+  - 无论父组件是否传递 props，都应该使用 super(props)，确保父类构造函数正常工作，避免潜在错误
