@@ -352,3 +352,85 @@ console.log('script end')
 2. async 函数的后续代码总是会推入 微任务队列，无论是异步还是同步操作。
 
 3. Promise 的 resolve 或 reject 才会触发回调，其他时候是同步执行的
+
+# Promise
+
+## 核心考点
+
+1. 状态与链式调用：理解“Promise 三态只改变一次”，以及链式返回值
+2. 微任务队列：为什么 Promise.then 总是优先于 setTimeout
+3. 错误穿透：catch 捕获后返回值如何传下去
+4. 静态方法：Promise.all、race、any、allSettled 的区别
+5. async/await 对应关系：本质还是 Promise
+
+## Promise 本质：是一个表示异步操作最终结果的对象（完成 or 失败）
+
+- Pending（等待中）：初始状态，还没有完成 or 失败
+- Fulfilled（已完成）：异步操作成功完成
+- Rejected（已拒绝）：异步操作失败
+
+- 只是值的容器，只会返回一个值 or 一个 Error
+- **状态只能改变一次**，一旦从 Pending -> Fulfilled/Rejected 就不能再变了
+
+## Promise 与回调函数的区别
+
+- 回调函数容易出现“回调地狱”，不易链式处理
+  - 什么是回调地狱？
+- Promise 可以链式调用，便于写顺序清晰的异步代码
+- Promise 让错误处理更集中（`.catch`）
+
+## 基本使用
+
+- 创建 Promise
+
+```js
+const p = new Promise((resolve, reject) => {
+  // 异步操作
+  setTimeout(() => {
+    const success = true
+    if (success) resolve('成功结果')
+    else reject('失败返回')
+  }, 1000)
+})
+```
+
+- 消费 Promise
+- **`.then` 可以链式调用，每一个 `.then` 的返回值都会被下一步接收**
+
+```js
+p.then((result) => {
+  console.log('处理成功：', result)
+}).catch((error) => {
+  console.log('处理失败：', error)
+})
+```
+
+- Promise 链式调用
+  - `.then` 的回调可以返回一个普通值，下一个 `.then` 接受这个值
+  - `.then` 的回调可以返回 Promise，下一个 `.then` 会等待它完成
+
+```js
+Promise.resolve(1)
+  .then((x) => x + 1) // 2
+  .then((x) => x * 2) // 4
+  .then(console.log) // 输出 4
+```
+
+```js
+Promise.resolve(1)
+  .then((x) => Promise.resolve(x + 2))
+  .then(console.log)
+```
+
+## Promise 静态方法
+
+- Promise.resolve(value) 立刻返回一个已完成的 Promise，等价于 new Promise(resolve => resolve(value))
+- Promise.reject(reason) 立刻返回一个已拒绝的 Promise，模拟错误
+- Promise.all([p1,p2,...]) 所有成功才成功，任意失败即拒绝
+- Promise.allSettled([p1,p2,...]) 等待所有完成，返回每个状态，失败成功都收集
+- Promise.race([p1,p2,...]) 谁先成功用谁的结果，包括成功或失败
+- Promise.any([p1,p2,...]) 谁先成功就用谁，全部失败才 reject
+
+这些方法之间有什么差异？一般是在什么场景下使用？
+
+> 笔试或面试题：区别 all 和 race、any、allSettled
