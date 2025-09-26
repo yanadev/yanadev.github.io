@@ -455,3 +455,13 @@ doA((err, resA) => {
   })
 })
 ```
+
+Promise 出现之后，把嵌套拉平了
+
+```js
+doA()
+  .then((resA) => doB(resA))
+  .then((resB) => doC(resB))
+  .then((resC) => console.log(resC))
+  .catch((err) => handleErr(err))
+```
