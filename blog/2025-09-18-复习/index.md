@@ -434,3 +434,24 @@ Promise.resolve(1)
 这些方法之间有什么差异？一般是在什么场景下使用？
 
 > 笔试或面试题：区别 all 和 race、any、allSettled
+
+# 回调地狱 Callback Hell
+
+多层嵌套回调函数导致的代码混乱、难读、难维护情况
+
+- 层层嵌套：“金字塔”结构
+- 错误处理分散，每一层都要写 if(err)
+- 逻辑顺序难读，很难直管看到执行顺序
+
+```js
+doA((err, resA) => {
+  if (err) return handleErr(err)
+  doB(resA, (err, resB) => {
+    if (err) return handleErr(err)
+    doC(resB, (err, resC) => {
+      if (err) return handleErr(err)
+      console.log(resC)
+    })
+  })
+})
+```
