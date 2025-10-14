@@ -780,3 +780,46 @@ for (let i = 0; i < 3; i++) {
   - 值拷贝：每个闭包修改的是自己的拷贝，外部或其他闭包不受影响
 
   **闭包抓的是变量“现存的快照”，快照里是地址就同步，快照里是值拷贝就独立**
+
+```js
+for (var i = 0; i < 3; i++) {
+  setTimeout(function () {
+    console.log('A', i)
+  }, 0)
+
+  Promise.resolve().then(function () {
+    console.log('B', i)
+  })
+}
+```
+
+- 1️⃣ 为什么打印结果是 B3 B3 B3 A3 A3 A3
+  - 循环变量：var i → 只有一个 i，函数作用域共享
+  - 循环结束：i = 3
+  - 异步任务类型：
+  - Promise.then → 微任务 → 主代码执行完立即执行
+  - setTimeout → 宏任务 → 微任务清空后执行
+  - 执行顺序：
+  - 主线循环完成 → i=3
+  - 微任务执行 → 打印 B3 B3 B3
+  - 宏任务执行 → 打印 A3 A3 A3
+- 2️⃣ 如何打印 B0 A0 B1 A1 B2 A2
+
+```js
+// 把循环变量改成 let i，同时使用 IIFE 包裹 i 自调用
+for (let i = 0; i < 3; i++) {
+  ;(function (j) {
+    Promise.resolve().then(() => {
+      console.log('B', j)
+      console.log('A', j)
+    })
+  })(i)
+}
+// 直接改成 let，将setTimeout移动到Promise.then 内部去
+for (let i = 0; i < 3; i++) {
+  Promise.resolve().then(() => {
+    console.log('B', i)
+    console.log('A', i)
+  })
+}
+```
