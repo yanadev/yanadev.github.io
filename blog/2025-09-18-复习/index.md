@@ -465,3 +465,318 @@ doA()
   .then((resC) => console.log(resC))
   .catch((err) => handleErr(err))
 ```
+
+# 类型判断
+
+1. 基本类型用 `typeof`，不适合判断对象
+
+```js
+typeof 123 // 'number'
+
+typeof 'abc' // 'string'
+
+typeof true // 'boolean'
+
+typeof undefined // 'undefined'
+
+typeof null // 'object' 历史遗留问题
+
+typeof [] // 'object'
+
+typeof {} // 'object'
+
+typeof function () {} // 'function'
+
+typeof Symbol() // 'symbol'
+
+typeof 123n // 'bigint'
+```
+
+2. 对象用 instanceof 判断实例是否属于否某个构造函数
+
+```js
+[] instanceof Array // true
+
+({}) instanceof Object // true
+
+new Date() instanceof Date // true
+
+/abc/ instanceof RegExp // true
+```
+
+3. Object.prototype.toString.call() 最稳妥 `强制指定this，并调用最原始的toString()方法，避免使用被重写的 toString()`
+
+```js
+Object.prototype.toString.call(123) // '[object Number]'
+
+Object.prototype.toString.call('abc') // '[object String]'
+
+Object.prototype.toString.call(true) // '[object Boolean]'
+
+Object.prototype.toString.call(undefined) // '[object Undefined]'
+
+Object.prototype.toString.call(null) // '[object Null]'
+
+Object.prototype.toString.call([]) // '[object Array]'
+
+Object.prototype.toString.call({}) // '[object Object]'
+
+Object.prototype.toString.call(new Date()) // '[object Date]'
+
+Object.prototype.toString.call(/abc/) // '[object RegExp]'
+
+Object.prototype.toString.call(() => {}) // '[object Function]'
+```
+
+4. 判断数组 Array.isArray()
+
+```js
+Array.isArray([]) // true
+
+Array.isArray({}) // false
+```
+
+5. 用构造函数判断 xxx.constructor (不建议使用，可能被改写)
+
+```js
+(123).constructor === Number // true
+
+'abc'.constructor === String // true
+
+[].constructor === Array // true
+
+({}).constructor === Object // true
+```
+
+# 高阶函数 —— 接收一个函数，返回一个函数
+
+均不改变原数组
+
+1. forEach 遍历数组，干事不回值
+2. map 映射：一对一转换，一变一
+3. filter 过滤：保留满足条件的值，要啥留啥
+4. reduce 累加、汇总，汇总数
+5. some 有一个满足就返回 true
+6. every 全部满足才返回 true
+
+```js
+arr.reduce((accumulator,currentValue,currentIndex,array)=>{}, initialValue)
+
+- accumulator 累加器，上一次的返回结果
+- currentValue 当前遍历的元素的值
+- currentIndex 当前下标
+- array 当前数组本身
+- initialValue 初始值（可选）
+
+```
+
+```js
+const arr = [1, 2, 3, 4, 5]
+
+const res2 = arr.forEach((e) => console.log(e * 2))
+//   输出
+//      1
+//      2
+//      3
+//      4
+//      5
+// 返回 undefined
+
+const res3 = arr.map((e) => e * 2)
+console.log(res3) // [(2, 4, 6, 8, 10)]
+
+const res4 = arr.filter((e) => e % 2 === 0)
+console.log(res4) // [2, 4]
+
+const res5 = arr.some((e) => e > 1)
+console.log(res5) // true
+
+const res6 = arr.every((e) => e > 4)
+console.log(res6) // false
+```
+
+# delete 关键字的使用
+
+```js
+let a = 1
+let obj = {
+  x: 1,
+}
+delete a
+delete obj.x
+delete 2
+console.log(a) // 1
+console.log(obj.x) // undefined
+console.log(2) // 2
+```
+
+核心：**delete 只能删除对象的属性。基本类型值无法被删除，只能被重新赋值或置为 undefined**
+
+# 跨域
+
+浏览器的**同源策略（SOP：Same-Origin Policy）**：浏览器限制从一个源加载的网页，去访问另一个源的资源，要求**三同**：
+
+1. 协议（http/https）
+2. 域名（example.com）
+3. 端口（80/443/3000）
+
+有一个不一样的时候就跨域
+
+以下行为会触发跨域：
+
+1. AJAX 请求（fetch、XMLHttpRequest）
+2. iframe 内容操作（访问 iframe 或父 iframe DOM）
+3. WebSocket 也有跨域限制（协议、端口）
+4. postMessage 是安全跨域通信手段
+
+跨域方案：
+
+1. CORS（最主流）：服务器通过响应头允许跨域访问
+
+```http
+Access-Control-Allow-Origin: http://example.com
+Access-Control-Allow-Methods: GET,POST,PUT
+Access-Control-Allow-Headers: Content-Type
+Access-Control-Allow-Credentials: true
+```
+
+2. JSONP（老方法，只支持 GET，安全性低）
+
+- 利用 script 标签不受同源策略限制的特性
+- 服务端返回一段 JS 代码调用函数
+
+```js
+<script src="http://example.com/api?callback=handle"></script>
+```
+
+3. 代理 Proxy
+
+- 前端请求同源服务器（或本地开发服务器），服务器再请求目标接口，常用于本地开发解决跨域
+- 浏览器 -> 本地 Node 代理 -> 目标服务器
+- 常用工具 `webpack-dev-server proxy`、`vite proxy`
+
+4. Websocket 跨域
+
+- WebSocket 本身没有同源策略限制
+- 但是初始 HTTP 握手遵循 CORS，可配置 Origin 检查
+
+5. document.domain 老方法
+
+- 只能解决二级域名跨域，如 `a.example.com <--> b.example.com`
+- 通过设置想通 `document.domain = 'example.com'` 实现通信
+
+6. postMessage 安全跨域通信
+
+父子窗口或 iframe 通信
+
+```js
+// 父窗口
+iframe.contentWindow.postMessage('hello', 'http://target.com')
+
+// 子窗口
+window.addEventListener('message', (e) => {
+  console.log(e.data)
+})
+```
+
+# 正则表达式
+
+```js
+(2024_美团)'\\\\\\'.replace(new RegExp('\\\\\\\\', 'gi'), '/') 的执行结果是？
+```
+
+- 正则表达式 `new RegExp('\\\\\\\\','gi')` 首先`\\\\\\\\`做一次 js 转义处理，即本质是 `/\\\\gi/`
+- 其次是在正则中 `\\` 代表着匹配一个反斜杠
+- 所以正则表达式匹配的是两个 `\`
+- 接着是被验证的字符本身需要做 js 转义处理，结果是 `\\\`
+- 那么整个替换操作是在 `\\\` 中遇到 `\\` 就替换成 `/`
+- 最终的结果是 `/\`(真实值)
+
+- 源码字面量写法是 `/\\`
+- 真实值或者 console.log 打印结果是 `/\`
+
+# 执行题目
+
+```js
+function test() {
+  var n = 4399
+  function add() {
+    n++
+    console.log(n)
+  }
+  return { n: n, add: add }
+}
+var result = test()
+var result2 = test()
+result.add()
+result.add()
+console.log(result.n)
+result2.add()
+```
+
+- test 函数返回的是代码执行完毕时候并没有执行 add() 函数 n 的拷贝值，所以 test().n 一直都是 4399
+
+- var result = test()
+  - result = {n:4399, add:function(){}}
+- var result2 = test()
+  - result = {n:4399, add:function(){}}
+- result.add() add 函数的执行结果是打印了累加之后的值 4400
+- result.add() add 函数内部已经累加过一回了，因此再次累加之后的值是 4401
+- console.log(result.n) 返回的是 test() 执行完毕时候拷贝的 n，因此是 4399
+- result2.add() add 函数的执行结果是打印了累加之后的值 4400
+
+- 打印结果是 `4400 4401 4399 4400`
+- **本题目最核心的问题其实是返回值的类型**
+- 因为返回的 n 是基本类型，就算是内部函数引用做了运算，本质还是只是拷贝了上层作用域 n 的字面量而已
+- 如果是对象的话，修改的才是地址，才能同步变化
+- 如果没有直接返回 n，然后访问 console.log(result.n)，这个时候读取的才是闭包的最新值
+
+# let 与 var / 块作用域 与函数作用域
+
+```js
+for (var i = 0; i < 3; i++) {
+  setTimeout(function () {
+    console.log(i)
+  }, 0)
+}
+// 整个循环过程中修改的 i 一直都是同一个变量
+// 因此跳出循环的时候 i 已经是 3 了
+// 此时执行计时器，打印出来的是 3 3 3
+
+// -------------------------------------
+// 如果想要打印出来是 0 1 2
+// 需要改成块作用域，let 在每个循环中都定义了一个同名变量，但是作用域相互独立
+for (let i = 0; i < 3; i++) {
+  setTimeout(function () {
+    console.log(i)
+  }, 0)
+}
+```
+
+# 闭包与循环
+
+1. 先看变量的类型
+
+- 基本类型 --> 闭包捕获的是值拷贝
+- 对象/数组/函数 --> 闭包捕获的是地址引用
+
+2. 再看循环声明
+
+- var 共享一个变量 or 地址，闭包访问的是同一个值
+- let/const 每次循环都会生成新的变量 or 地址，闭包访问的是各自独立值
+
+3. 再看异步
+
+- 微任务（Promise.then） 主代码执行完毕后立刻执行
+- 宏任务（setTimeout）微任务执行完毕后才执行
+
+---
+
+- 打印结果 = 闭包访问的地址 or 值
+- 循环次数=闭包执行次数
+- 累加/修改
+
+  - 地址：多个闭包累加会影响同一个对象
+  - 值拷贝：每个闭包修改的是自己的拷贝，外部或其他闭包不受影响
+
+  **闭包抓的是变量“现存的快照”，快照里是地址就同步，快照里是值拷贝就独立**
