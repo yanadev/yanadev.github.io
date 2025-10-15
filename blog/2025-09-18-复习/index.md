@@ -777,7 +777,7 @@ for (let i = 0; i < 3; i++) {
 - 累加/修改
 
   - 地址：多个闭包累加会影响同一个对象
-  - 值拷贝：每个闭包修改的是自己的拷贝，外部或其他闭包不受影响
+  - 值拷贝：每个闭包修改的是自己的拷贝，外部或其他闭包 不受影响
 
   **闭包抓的是变量“现存的快照”，快照里是地址就同步，快照里是值拷贝就独立**
 
@@ -821,5 +821,30 @@ for (let i = 0; i < 3; i++) {
     console.log('B', i)
     console.log('A', i)
   })
+}
+```
+
+# Object.is(A, B) 与 ===
+
+- `Object.is(NaN, NaN)` // true
+- `Object.is(+0, -0)` // false
+
+- `(NaN === NaN)` // false
+- `(+0 === -0)` // true
+
+# 遍历对象属性名、属性值
+
+- for(let key in obj){}
+- Object.keys(obj)
+- Object.values(obj)
+- let [key, value] of Object.entries(obj)
+
+# 浏览器阻止默认行为
+
+```js
+if (event.preventDefault) {
+  event.preventDefault()
+} else {
+  window.event.returnValue = false
 }
 ```
