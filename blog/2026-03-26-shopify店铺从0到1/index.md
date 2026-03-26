@@ -204,8 +204,50 @@ project/
 npm install -g @shopify/cli @shopify/theme
 ```
 
-## 创建测试店铺
+## 实操部分
 
-1. 登录 partner 账号之后，/stores/add store 创建测试店铺
+### 顺序
+
+- 创建测试店铺
+- 创建 custom app 确保 Metafield 数据
+- 自定义主题
+
+### 创建测试店铺
+
+登录 partner 账号之后，/stores/add store 创建测试店铺
 
 ![创建测试店铺1](image.png)
+![创建测试店铺2](image-1.png)
+![创建测试店铺3](image-2.png)
+
+### 创建 custom app + 打通 API
+
+shopify 后台 settings/Apps/Develop apps
+
+![shopify后台点击 settings](image-3.png)
+
+![settings/apps/Develop apps](image-4.png)
+
+![buildBuild and manage apps in your Dev Dashboard](image-5.png)
+
+![dev dashboard](image-6.png)
+
+![dev dashboard/create app](image-7.png)
+
+![dev dashboard/create app/start from dev dashboard](image-8.png)
+
+- 本地安装完 shopify cli 之后执行以下脚本，选择你的 partner 账号的组织
+
+![terminal command/select your organization](image-12.png)
+
+![ternimal command/connect to an existing app](image-13.png)
+
+![ternimal command/select your existing app](image-14.png)
+
+![shopify app linked successful](image-15.png)
+
+![init and publish first version](image-9.png)
+
+![init first release](image-10.png)
+
+![app changelog](image-11.png)
