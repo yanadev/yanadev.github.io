@@ -236,18 +236,56 @@ shopify 后台 settings/Apps/Develop apps
 
 ![dev dashboard/create app/start from dev dashboard](image-8.png)
 
-- 本地安装完 shopify cli 之后执行以下脚本，选择你的 partner 账号的组织
-
-![terminal command/select your organization](image-12.png)
-
-![ternimal command/connect to an existing app](image-13.png)
-
-![ternimal command/select your existing app](image-14.png)
-
-![shopify app linked successful](image-15.png)
-
 ![init and publish first version](image-9.png)
 
 ![init first release](image-10.png)
 
 ![app changelog](image-11.png)
+
+- 本地初始化项目并连接在线的app
+
+```zsh
+shopify app init --template=https://github.com/Shopify/shopify-app-template-react-router    
+?  Which organization is this work for?
+✔  TEST
+
+?  Create this project as a new app on Shopify?
+✔  No, connect it to an existing app
+
+?  Which existing app is this for?
+✔  local-dev-app
+```
+
+![init local app projects and link to existing app](image-16.png)
+
+- 设置 app 的 distribution 为 custom
+
+![config app distribution](image-17.png)
+
+![select custom as your app distribution](image-18.png)
+
+- 填写测试店铺的域名，授权店铺安装 custom app
+
+![fill in your test store domain](image-19.png)
+
+- 获取 custom app 安装链接
+
+![get custom app install link](image-20.png)
+
+- 访问链接，安装即可
+
+![install custom app](image-21.png)
+
+- app 同步完毕之后，创建测试店铺，安装自定义app
+- 登录ngrok创建账号，获得 auth 之后，使用 ngrok 创建公共隧道
+
+```zsh
+# 安装
+npm install -g ngrok
+
+# 执行并获得一个 url，e.g. https://abc123.ngrok.io
+ngrok http 3000
+
+# 本地运行app
+shopify app dev --tunnel-url=https://abc123.ngrok.io
+```
