@@ -502,3 +502,35 @@ shopify app dev --tunnel-url=https://abc123.ngrok.io
     ```
 
 3. 项目本身是前后端一体，可以在同一个文件中写 loader(GET) 和 action(POST)
+
+👉 🔥 完整自动化链路（最关键）
+
+1. 创建 Metaobject Definition
+2. 上传图片（fileCreate）
+3. 创建 Metaobject Entry（带 media）
+4. 绑定 Product
+
+```zsh
+project/
+├── app/              👈 你主要写代码的地方
+│   ├── routes/       👈 页面 + 接口（最重要）
+│   ├── entry.server.tsx
+│   ├── entry.client.tsx
+│   └── root.tsx
+│
+├── prisma/           👈 session 存储（先不用管）
+├── public/           👈 静态资源
+├── shopify.server.ts 👈 Shopify API 客户端（非常重要）
+├── shopify.app.toml  👈 配置（你已经改过）
+```
+
+## Metaobject 定义
+
+### variant_media（变体媒体组）
+
+| 字段名         | 类型        | 说明           |
+| ----------- | --------- | ------------ |
+| name        | text      | 后台管理用名称      |
+| spec_image  | file      | 规格图（单图）      |
+| scene_image | file      | 场景图（单图）      |
+| gallery     | list.file | 多媒体（图片 / 视频） |
