@@ -7,6 +7,191 @@ date: 2026-03-26
 draft: true
 ---
 
+## 整体架构图
+
+```zsh
+CSV / 外部数据
+     ↓
+你的 App
+     ↓
+1. 创建 Metaobject（结构数据）
+2. 创建 Product
+3. 绑定 Metafield → Metaobject
+     ↓
+Shopify Store
+     ↓
+Theme (Liquid)
+读取并展示
+```
+
+## App 开发完整流程
+
+1. 创建 app
+
+    ```zsh
+    npm create @shopify/app@latest
+    ```
+
+2. 配置权限
+
+    ```zsh
+    scopes = "write_products,read_products,write_metaobjects,read_metaobjects,write_metafields"
+    ```
+
+3. 创建 metaobject definition（表结构，只需要执行一次）
+
+    ```ruby
+    mutation {
+    metaobjectDefinitionCreate(definition: {
+        name: "Material",
+        type: "material",
+        fieldDefinitions: [
+        {
+            name: "Name",
+            key: "name",
+            type: "single_line_text_field"
+        },
+        {
+            name: "Description",
+            key: "description",
+            type: "multi_line_text_field"
+        }
+        ]
+    }) {
+        metaobjectDefinition {
+        id
+        }
+    }
+    }
+    ```
+
+4. 创建 metaobject（核心数据）
+
+    ```ruby
+    mutation {
+        metaobjectCreate(metaobject: {
+            type: "material",
+            fields: [
+            { key: "name", value: "Cotton" },
+            { key: "description", value: "Soft fabric" }
+            ]
+        }) {
+            metaobject {
+            id
+            handle
+            }
+        }
+    }
+    ```
+
+5. 创建 Product
+
+    ```ruby
+        mutation {
+            productCreate(input: {
+                title: "T-shirt",
+                status: ACTIVE
+            }) {
+                product {
+                id
+                }
+            }
+            }
+    ```
+
+6. 将 Metaobject 捆绑到 Product 上（用 Metafield 引用 Metaobject）
+
+    ```ruby
+    mutation {
+    metafieldsSet(metafields: [
+        {
+        ownerId: "PRODUCT_ID",
+        namespace: "custom",
+        key: "material",
+        type: "metaobject_reference",
+        value: "METAOBJECT_ID"
+        }
+    ]) {
+        metafields {
+        id
+        }
+    }
+    }
+    ```
+
+7. 批量化：CSV -> APP -> 批量执行
+
+    **CSV 示范**
+
+    ```text
+    title,material
+    T-shirt,Cotton
+    Hoodie,Wool
+    ```
+
+    **APP 逻辑**
+
+    ```js
+    for (row of csv) {
+
+        // 1. 查找 / 创建 Metaobject
+        material = findOrCreateMetaobject(row.material)
+
+        // 2. 创建 Product
+        product = createProduct(row.title)
+
+        // 3. 绑定 metafield
+        attachMetaobject(product.id, material.id)
+
+    }
+    ```
+
+    **优化（作缓存）**
+
+    ```js
+    const cache = {
+        "Cotton": metaobjectId
+    }
+    ```
+
+    **主题中读取**
+
+    ```liquid
+    {% assign material = product.metafields.custom.material.value %}
+
+    {{ material.name }}
+    {{ material.description }}
+    
+    ```
+
+## APP 功能
+
+- CSV 上传
+  - 上传文件
+  - 解析
+- Metaobject 管理
+  - 自动创建
+  - 去重
+- 商品导入
+  - 批量创建
+  - 绑定 metaobject
+- 日志系统
+  - 成功/失败
+  - 导入报告
+
+---
+
+进阶需求
+
+- Bulk API（大规模）
+  - 1000+ 商品用 bulkOperation
+- Metaobject 预同步
+  - 导入所有 Metaobject
+  - 再导入商品
+- Theme App Extension
+  - 做 block
+  - 自动显示 metaobject，不修改主题代码
+
 ## Shopify 本地开发与自动化工具需求文档
 
 ### 项目目标
@@ -289,3 +474,31 @@ ngrok http 3000
 # 本地运行app
 shopify app dev --tunnel-url=https://abc123.ngrok.io
 ```
+
+## shopify 模板架构
+
+- 后端：Node + Remix（现在叫 React Router）
+- 前端：React
+- 存储：Prisma（SQLite / Postgres）
+- SDK：@shopify/shopify-app-react-router
+
+项目核心入口是 `/app`
+
+### 重点理解
+
+1. API 调用入口 `shopify.server.ts`，授权+服务入口
+
+    ```js
+    import { authenticate } from "../shopify.server";
+
+    const { admin } = await authenticate.admin(request);
+    ```
+
+2. 路由等于一个接口 + 页面
+
+    ```zsh
+        # 创建一个页面相当于一个接口和页面
+        /app/routes/aa.xxx.tsx
+    ```
+
+3. 项目本身是前后端一体，可以在同一个文件中写 loader(GET) 和 action(POST)
